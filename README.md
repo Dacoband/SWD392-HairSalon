@@ -1,18 +1,18 @@
 - # SWD392-HairSalon
 Hair Salon Booking App Web Application & Mobile
   - ### Logo
-    ![Artix Logo](images/icon_demo.png)
+    ![Hair Salon Logo](images/icon_demo.png)
 - # **Project Synopsis :**
-  - **Class:** SWP391-SE1705-SP2024
-  - **Project Supervisor:** Nguyen The Hoang - HoangNT20
-  - **Topic:** Topic 10 (Artix)
+  - **Class:** SWD392-SE1705-FA2024
+  - **Project Supervisor:** Lam - Lam
+  - **Topic:** Topic 14 (Hair Salon)
   - **Authors:**
-    - Nguyễn Dương Gia Bảo - SE171697 - Rous1141 - FE | BE | PM
-    - Huỳnh Thiện Nhân - SE171117 - Dacoband - BE | Database Desgin
+    - Trịnh Quốc Thái - SE171697 - Rous1141 - FE | BE | Mobile
+    - Huỳnh Thiện Nhân - SE171117 - Dacoband - BE | Database Desgin | Documentation
     - Trần Ánh Tuyết - SE170234 - GUI Design | FE
     - Nguyễn Minh Thức - SE170592 - Database Design | BE
-    - Phạm Minh Triều - SE172937 - FE | Documentation
-  - **Project:** Artworks Sharing and Selling Platform - Social Media, E-Commerce hybrid - Consumer to Consumer
+    - Thảo Nguyễn - SE172937 - FE | Documentation
+  - **Project:** Hair Salon Booking App - Service, E-Commerce - Business to Consumer
   - **Techs:** RestfulAPI - mySQL - ReactJS - MaterializeCSS - Bootstrap - JavaScript - Paypal - MUI - .NET 8 with C# - Vercel - Azure - Avien 
   - **Structure:** 
     - Back-End:  Using MVC Structure, Database-First
