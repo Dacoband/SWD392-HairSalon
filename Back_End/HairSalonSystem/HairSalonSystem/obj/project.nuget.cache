@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "cz6POvzY+Ug=",
+  "dgSpecHash": "mUtYflViUh8=",
   "success": true,
-  "projectFilePath": "D:\\FPT_Learning\\SWD392\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem\\HairSalonSystem.csproj",
+  "projectFilePath": "D:\\FPT_Learning\\SWD392\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem\\HairSalonSystem.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\bolic\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\bolic\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
