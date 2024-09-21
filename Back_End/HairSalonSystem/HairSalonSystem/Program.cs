@@ -1,3 +1,5 @@
+using HairSalonSystem.BusinessObject;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -8,6 +10,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+var connectionString = app.Configuration.GetConnectionString("MongoDbConnection");
+var databaseName = builder.Configuration["MongoDb:DatabaseName"];
+builder.Services.AddSingleton(new HairSalonDbContext(connectionString, databaseName));
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
