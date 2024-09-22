@@ -1,4 +1,5 @@
-﻿namespace HairSalonSystem.API.DTO
+﻿namespace HairSalonSystem.API.DTOs
+
 {
     public class Login
     {
