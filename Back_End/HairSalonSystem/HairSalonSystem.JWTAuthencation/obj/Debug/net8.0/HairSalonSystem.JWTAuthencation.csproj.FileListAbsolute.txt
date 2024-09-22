@@ -1,0 +1,13 @@
+D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.JWTAuthencation\bin\Debug\net8.0\HairSalonSystem.JWTAuthencation.deps.json
+D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.JWTAuthencation\bin\Debug\net8.0\HairSalonSystem.JWTAuthencation.dll
+D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.JWTAuthencation\bin\Debug\net8.0\HairSalonSystem.JWTAuthencation.pdb
+D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.JWTAuthencation\obj\Debug\net8.0\HairSalonSystem.JWTAuthencation.GeneratedMSBuildEditorConfig.editorconfig
+D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.JWTAuthencation\obj\Debug\net8.0\HairSalonSystem.JWTAuthencation.AssemblyInfoInputs.cache
+D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.JWTAuthencation\obj\Debug\net8.0\HairSalonSystem.JWTAuthencation.AssemblyInfo.cs
+D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.JWTAuthencation\obj\Debug\net8.0\HairSalonSystem.JWTAuthencation.csproj.CoreCompileInputs.cache
+D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.JWTAuthencation\obj\Debug\net8.0\HairSalonSystem.JWTAuthencation.sourcelink.json
+D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.JWTAuthencation\obj\Debug\net8.0\HairSalonSystem.JWTAuthencation.dll
+D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.JWTAuthencation\obj\Debug\net8.0\refint\HairSalonSystem.JWTAuthencation.dll
+D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.JWTAuthencation\obj\Debug\net8.0\HairSalonSystem.JWTAuthencation.pdb
+D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.JWTAuthencation\obj\Debug\net8.0\ref\HairSalonSystem.JWTAuthencation.dll
+D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.JWTAuthencation\obj\Debug\net8.0\HairSalonSystem.JWTAuthencation.csproj.AssemblyReference.cache
