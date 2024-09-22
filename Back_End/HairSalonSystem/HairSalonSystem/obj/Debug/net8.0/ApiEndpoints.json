@@ -21,22 +21,6 @@
   },
   {
     "ContainingType": "HairSalonSystem.API.Controllers.AccountController",
-    "Method": "AddAccount",
-    "RelativePath": "api/Account",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "accountDto",
-        "Type": "HairSalonSystem.BusinessObject.Entities.Account",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "HairSalonSystem.API.Controllers.AccountController",
     "Method": "GetAccountById",
     "RelativePath": "api/Account/{id}",
     "HttpMethod": "GET",
@@ -99,22 +83,48 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "HairSalonSystem.API.Controllers.SysAdminController",
+    "Method": "AddAccountAll",
+    "RelativePath": "api/v1/account/sys-admin",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "accountDto",
+        "Type": "HairSalonSystem.API.PayLoads.Requests.Accounts.CreateNewAccountRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "HairSalonSystem.API.PayLoads.Responses.Accounts.CreateNewAccountResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "HairSalonSystem.API.Controllers.AccountController",
     "Method": "Login",
-    "RelativePath": "api/Account/login",
+    "RelativePath": "api/v1/auth/login",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "request",
-        "Type": "HairSalonSystem.API.DTO.Login",
+        "Type": "HairSalonSystem.API.PayLoads.Requests.LoginRequest",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "System.String",
+        "Type": "HairSalonSystem.API.DTOs.Login",
         "MediaTypes": [
           "text/plain",
           "application/json",
