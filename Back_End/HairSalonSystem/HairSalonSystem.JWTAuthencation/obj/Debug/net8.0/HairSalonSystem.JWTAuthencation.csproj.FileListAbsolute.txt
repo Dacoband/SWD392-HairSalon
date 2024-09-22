@@ -10,3 +10,4 @@ D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem
 D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.JWTAuthencation\obj\Debug\net8.0\refint\HairSalonSystem.JWTAuthencation.dll
 D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.JWTAuthencation\obj\Debug\net8.0\HairSalonSystem.JWTAuthencation.pdb
 D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.JWTAuthencation\obj\Debug\net8.0\ref\HairSalonSystem.JWTAuthencation.dll
+D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.JWTAuthencation\obj\Debug\net8.0\HairSalonSystem.JWTAuthencation.csproj.AssemblyReference.cache

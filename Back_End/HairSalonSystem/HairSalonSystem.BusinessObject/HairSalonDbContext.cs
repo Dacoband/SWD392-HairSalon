@@ -14,10 +14,10 @@ namespace HairSalonSystem.BusinessObject
 
         private readonly IMongoDatabase _database;
 
-        public HairSalonContext(IOptions<MongoDbSettings> settings)
+        public HairSalonContext(string connectionString, string databaseName)
         {
-            var client = new MongoClient(settings.Value.ConnectionString);
-            _database = client.GetDatabase(settings.Value.DatabaseName);
+            var client = new MongoClient(connectionString);
+            _database = client.GetDatabase(databaseName);
         }
 
         public IMongoCollection<Account> Accounts => _database.GetCollection<Account>("Accounts");

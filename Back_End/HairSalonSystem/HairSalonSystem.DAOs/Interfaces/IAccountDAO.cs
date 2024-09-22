@@ -5,14 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HairSalonSystem.Repositories.Interface
+namespace HairSalonSystem.DAOs.Interface
 {
     public interface IAccountDAO
     {
+        Task CreateAccount(Account account);
         Task<Account> GetAccountById(Guid id);
         Task<List<Account>> GetAllAccounts();
-        Task CreateAccount(Account account);
         Task UpdateAccount(Guid id, Account account);
         Task DeleteAccount(Guid id);
+        Task<Account> GetAccountByEmail(string email);
     }
 }

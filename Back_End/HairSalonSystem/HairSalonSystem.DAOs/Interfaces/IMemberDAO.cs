@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HairSalonSystem.Repositories.Interface
+namespace HairSalonSystem.DAOs.Interface
 {
     public interface IMemberDAO
     {
+        Task CreateMember(Member member);
         Task<Member> GetMemberById(Guid id);
         Task<List<Member>> GetAllMembers();
-        Task CreateMember(Member member);
         Task UpdateMember(Guid id, Member member);
         Task DeleteMember(Guid id);
     }

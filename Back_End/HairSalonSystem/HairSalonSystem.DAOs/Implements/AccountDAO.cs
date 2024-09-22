@@ -1,6 +1,6 @@
 ﻿using HairSalonSystem.BusinessObject.Entities;
 using HairSalonSystem.BusinessObject;
-using HairSalonSystem.Repositories.Interface;
+using HairSalonSystem.DAOs.Interface;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HairSalonSystem.Repositories.Implement
+namespace HairSalonSystem.DAOs.Implement
 {
     public class AccountDAO : IAccountDAO
     {
@@ -16,7 +16,12 @@ namespace HairSalonSystem.Repositories.Implement
 
         public AccountDAO(HairSalonContext context)
         {
-            _accounts = context.Accounts;
+            _accounts = context.Accounts;  // Assuming Accounts collection is set up in the context
+        }
+
+        public async Task CreateAccount(Account account)
+        {
+            await _accounts.InsertOneAsync(account);
         }
 
         public async Task<Account> GetAccountById(Guid id)
@@ -29,11 +34,6 @@ namespace HairSalonSystem.Repositories.Implement
             return await _accounts.Find(_ => true).ToListAsync();
         }
 
-        public async Task CreateAccount(Account account)
-        {
-            await _accounts.InsertOneAsync(account);
-        }
-
         public async Task UpdateAccount(Guid id, Account account)
         {
             await _accounts.ReplaceOneAsync(a => a.AccountId == id, account);
@@ -42,6 +42,10 @@ namespace HairSalonSystem.Repositories.Implement
         public async Task DeleteAccount(Guid id)
         {
             await _accounts.DeleteOneAsync(a => a.AccountId == id);
+        }
+        public async Task<Account> GetAccountByEmail(string email)
+        {
+            return await _accounts.Find(a => a.Email == email).FirstOrDefaultAsync();
         }
     }
 }
