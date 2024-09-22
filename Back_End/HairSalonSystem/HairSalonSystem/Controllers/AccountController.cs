@@ -73,7 +73,7 @@ namespace HairSalonSystem.API.Controllers
 
 
         [HttpPost(APIEndPointConstant.Authentication.Login)]
-        [ProducesResponseType(typeof(Login), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(LoginResponse), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(UnauthorizedObjectResult))]
        
         public async Task<ActionResult<string>> Login([FromBody] LoginRequest request)
