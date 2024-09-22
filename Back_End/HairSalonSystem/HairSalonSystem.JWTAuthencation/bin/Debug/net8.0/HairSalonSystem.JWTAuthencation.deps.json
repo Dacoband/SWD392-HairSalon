@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "HairSalonSystem.JWTAuthencation/1.0.0": {
+        "runtime": {
+          "HairSalonSystem.JWTAuthencation.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "HairSalonSystem.JWTAuthencation/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

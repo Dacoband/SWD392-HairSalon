@@ -1,4 +1,5 @@
 using HairSalonSystem.BusinessObject;
+using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,9 +11,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-var connectionString = app.Configuration.GetConnectionString("MongoDbConnection");
-var databaseName = builder.Configuration["MongoDb:DatabaseName"];
-builder.Services.AddSingleton(new HairSalonDbContext(connectionString, databaseName));
+
+builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDb"));
+builder.Services.AddSingleton<HairSalonContext>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
