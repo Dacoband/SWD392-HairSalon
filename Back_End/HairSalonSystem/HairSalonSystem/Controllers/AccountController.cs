@@ -1,4 +1,10 @@
-﻿using HairSalonSystem.API.DTO;
+﻿using Amazon.Runtime.Internal;
+using HairSalonSystem.API.Constant;
+using HairSalonSystem.API.DTOs;
+using HairSalonSystem.API.PayLoads;
+using HairSalonSystem.API.PayLoads.Requests;
+using HairSalonSystem.API.PayLoads.Requests.Accounts;
+using HairSalonSystem.API.PayLoads.Responses.Accounts;
 using HairSalonSystem.API.Util;
 using HairSalonSystem.BusinessObject.Entities;
 using HairSalonSystem.Services.Interfaces;
@@ -37,19 +43,7 @@ namespace HairSalonSystem.API.Controllers
             return Ok(accounts);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> AddAccount([FromBody] Account accountDto)
-        {
-            var account = new Account
-            {
-                // Map các trường từ accountDto vào Account
-                Email = accountDto.Email,
-                Password = PasswordUtil.HashPassword(accountDto.Password), // Giả sử đã có mã hóa trong dịch vụ
-                RoleName = accountDto.RoleName
-            };
-            await _accountService.AddAccount(account);
-            return CreatedAtAction(nameof(GetAccountById), new { id = account.AccountId }, account);
-        }
+        
 
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateAccount(Guid id, [FromBody] Account accountDto)
@@ -77,17 +71,32 @@ namespace HairSalonSystem.API.Controllers
             return NoContent();
         }
 
-        [HttpPost("login")]
-        public async Task<ActionResult<string>> Login([FromBody] Login request)
+
+        [HttpPost(APIEndPointConstant.Authentication.Login)]
+        [ProducesResponseType(typeof(Login), StatusCodes.Status200OK)]
+        [ProducesErrorResponseType(typeof(UnauthorizedObjectResult))]
+       
+        public async Task<ActionResult<string>> Login([FromBody] LoginRequest request)
         {
             var account = await _authService.Authenticate(request.Email, PasswordUtil.HashPassword(request.Password));
             if (account == null)
             {
-                return Unauthorized();
+                return Unauthorized(new PayLoads.ErrorResponse()
+                {
+                    StatusCode = StatusCodes.Status401Unauthorized,
+                    Error = MessageConstant.LoginMessage.InvalidUsernameOrPassword,
+                    TimeStamp = DateTime.Now
+                });
             }
 
             var token = await _authService.GenerateJwtToken(account);
-            return Ok(token);
+            var loginResponse = new LoginResponse
+            {
+                Token = token,
+                Email = account.Email,
+                RoleName = account.RoleName
+            };
+            return Ok(loginResponse);
         }
     }
 }
