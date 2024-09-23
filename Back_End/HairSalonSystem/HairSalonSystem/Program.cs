@@ -80,15 +80,18 @@ builder.Services.AddAuthentication(options =>
 // Register services and repositories
 builder.Services.AddScoped<IAccountDAO, AccountDAO>(); 
 builder.Services.AddScoped<IBranchDAO, BranchDAO>();
+builder.Services.AddScoped<IMemberDAO, MemberDAO>();
 
 // Register Repositories
 builder.Services.AddScoped<IAccountRepository, AccountRepository>(); 
 builder.Services.AddScoped<IBranchRespository,BranchRespository>();
+builder.Services.AddScoped<IMemberRepository, MemberRepository>();
 
 // Register Services
 builder.Services.AddScoped<IAccountService, AccountService>(); // Register IAccountService
 builder.Services.AddScoped<IAuthService, AuthService>(); // Register IAuthService
 builder.Services.AddScoped<IBranchService, BranchService>();
+builder.Services.AddScoped<IMemberService, MemberService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

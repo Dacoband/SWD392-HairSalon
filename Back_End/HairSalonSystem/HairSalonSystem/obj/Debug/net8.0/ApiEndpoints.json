@@ -169,7 +169,7 @@
       },
       {
         "Name": "memberRequest",
-        "Type": "HairSalonSystem.API.PayLoads.Requests.Members.CreateNewMemberRequest",
+        "Type": "HairSalonSystem.API.PayLoads.Requests.Members.UpdateMemberRequest",
         "IsRequired": true
       }
     ],
@@ -245,7 +245,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "HairSalonSystem.API.DTOs.Login",
+        "Type": "HairSalonSystem.API.PayLoads.LoginResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",

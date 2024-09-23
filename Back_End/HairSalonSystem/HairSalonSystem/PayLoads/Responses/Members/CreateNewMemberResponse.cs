@@ -2,7 +2,10 @@
 {
     public class CreateNewMemberResponse
     {
+        public string Email { get; set; }
+
         public string MemberName { get; set; }
+        public string RoleName { get; set; }
 
         public DateTime DateOfBirth { get; set; }  
 

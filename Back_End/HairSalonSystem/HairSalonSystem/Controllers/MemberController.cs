@@ -13,10 +13,12 @@ namespace HairSalonSystem.API.Controllers
     public class MemberController : ControllerBase
     {
         private readonly IMemberService _memberService;
+        private readonly IAccountService _accountService;
 
-        public MemberController(IMemberService memberService)
+        public MemberController(IMemberService memberService, IAccountService accountService)
         {
             _memberService = memberService;
+            _accountService = accountService;
         }
 
         // Get Member by ID
@@ -48,6 +50,19 @@ namespace HairSalonSystem.API.Controllers
         [ProducesErrorResponseType(typeof(ProblemDetails))]
         public async Task<ActionResult> CreateNewMember([FromBody] CreateNewMemberRequest memberRequest)
         {
+            var roleName = UserUtil.GetRoleName(HttpContext);
+    
+            var account = new Account()
+            {
+                AccountId = Guid.NewGuid(),
+                Email = memberRequest.Email,
+                Password = PasswordUtil.HashPassword(memberRequest.Password),
+                RoleName = Enums.RoleEnums.MB.GetDescriptionFromEnum(),
+                InsDate = TimeUtils.GetCurrentSEATime(),
+                UpdDate = TimeUtils.GetCurrentSEATime(),
+                DelFlg = true
+            };
+            await _accountService.AddAccount(account);
             var member = new Member
             {
                 MemberId = Guid.NewGuid(),
@@ -58,14 +73,16 @@ namespace HairSalonSystem.API.Controllers
                 AvatarImage = memberRequest.AvatarImage,
                 InsDate = TimeUtils.GetCurrentSEATime(),
                 UpdDate = TimeUtils.GetCurrentSEATime(),
-                DelFlg = false
+                DelFlg = true
             };
 
             await _memberService.AddMember(member);
 
             var memberResponse = new CreateNewMemberResponse
             {
+                Email = account.Email,
                 MemberName = member.MemberName,
+                RoleName = account.RoleName,
                 DateOfBirth = member.DateOfBirth,   
                 PhoneNumber = member.PhoneNumber,
                 Address = member.Address,
@@ -80,23 +97,31 @@ namespace HairSalonSystem.API.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesErrorResponseType(typeof(BadRequestResult))]
-        public async Task<ActionResult> UpdateMember(Guid id, [FromBody] CreateNewMemberRequest memberRequest)
+        public async Task<ActionResult> UpdateMember(Guid id, [FromBody] UpdateMemberRequest memberRequest)
         {
+            var RoleName = UserUtil.GetRoleName(HttpContext);
+            if (RoleName != "SA" || RoleName != "SM" || RoleName != "SL" || RoleName != "MB" || string.IsNullOrEmpty(RoleName)) 
+            { 
+                return Problem(MessageConstant.MemberMessage.MemberUpdated, statusCode: StatusCodes.Status400BadRequest);
+            }
+            var existingAccount = await _accountService.GetAccountById(id);
             var existingMember = await _memberService.GetMemberById(id);
             if (existingMember == null)
             {
                 return NotFound();
             }
-
             existingMember.MemberName = memberRequest.MemberName;
+            existingAccount.Email = memberRequest.Email;
             existingMember.PhoneNumber = memberRequest.PhoneNumber;
             existingMember.Address = memberRequest.Address;
             existingMember.DateOfBirth = memberRequest.DateOfBirth;
+            existingMember.AvatarImage = memberRequest.AvatarImage;
             existingMember.UpdDate = TimeUtils.GetCurrentSEATime();
 
             await _memberService.UpdateMember(existingMember);
+            await _accountService.UpdateAccount(existingAccount);
 
-            return NoContent();
+            return Problem(MessageConstant.MemberMessage.MemberCreated);
         }
 
         // Delete Member

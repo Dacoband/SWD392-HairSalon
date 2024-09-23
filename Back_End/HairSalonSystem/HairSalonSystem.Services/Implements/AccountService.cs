@@ -23,6 +23,8 @@ namespace HairSalonSystem.Services.Implements
             return await _accountRepository.GetAccountById(id);
         }
 
+
+
         public async Task<List<Account>> GetAllAccounts()
         {
             return await _accountRepository.GetAllAccounts();

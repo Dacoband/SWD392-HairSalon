@@ -20,5 +20,15 @@
 
 
         }
+
+        public static class MemberMessage
+        {
+            public const string MemberCreated = "Thành viên đã được tạo thành công";
+            public const string MemberUpdated = "Cập nhật thành viên thành công";
+            public const string MemberDeleted = "Thành viên đã được xoá";
+            public const string MemberNotFound = "Không tìm thấy thành viên";
+            public const string NotRights = "Bạn không có quyền tạo thành viên";
+            public const string MemberNotRightsDelete = "Bạn không có quyền xóa thành viên";
+        }
     }
 }
