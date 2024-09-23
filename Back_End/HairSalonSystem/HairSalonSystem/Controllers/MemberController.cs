@@ -66,6 +66,7 @@ namespace HairSalonSystem.API.Controllers
             var member = new Member
             {
                 MemberId = Guid.NewGuid(),
+                AccountId = account.AccountId,
                 MemberName = memberRequest.MemberName,
                 DateOfBirth = memberRequest.DateOfBirth,
                 PhoneNumber = memberRequest.PhoneNumber,
@@ -100,16 +101,27 @@ namespace HairSalonSystem.API.Controllers
         public async Task<ActionResult> UpdateMember(Guid id, [FromBody] UpdateMemberRequest memberRequest)
         {
             var RoleName = UserUtil.GetRoleName(HttpContext);
-            if (RoleName != "SA" || RoleName != "SM" || RoleName != "SL" || RoleName != "MB" || string.IsNullOrEmpty(RoleName)) 
-            { 
-                return Problem(MessageConstant.MemberMessage.MemberUpdated, statusCode: StatusCodes.Status400BadRequest);
+            Guid accountIdFromToken = UserUtil.GetAccountId(HttpContext);
+
+            // Kiểm tra RoleName có hợp lệ không
+            if (RoleName != "SA" && RoleName != "SM" && RoleName != "SL" && RoleName != "MB" || string.IsNullOrEmpty(RoleName))
+            {
+                return BadRequest(MessageConstant.MemberMessage.NotRights);
             }
-            var existingAccount = await _accountService.GetAccountById(id);
+
+            var existingAccount = await _accountService.GetAccountById(accountIdFromToken);
+            if (existingAccount == null)
+            {
+                return NotFound(MessageConstant.LoginMessage.NotFoundAccount);
+            }
+
             var existingMember = await _memberService.GetMemberById(id);
             if (existingMember == null)
             {
-                return NotFound();
+                return NotFound(MessageConstant.MemberMessage.MemberNotFound);
             }
+
+            // Cập nhật các thông tin của member và account
             existingMember.MemberName = memberRequest.MemberName;
             existingAccount.Email = memberRequest.Email;
             existingMember.PhoneNumber = memberRequest.PhoneNumber;
@@ -118,11 +130,14 @@ namespace HairSalonSystem.API.Controllers
             existingMember.AvatarImage = memberRequest.AvatarImage;
             existingMember.UpdDate = TimeUtils.GetCurrentSEATime();
 
+            // Gọi service để cập nhật
             await _memberService.UpdateMember(existingMember);
             await _accountService.UpdateAccount(existingAccount);
 
-            return Problem(MessageConstant.MemberMessage.MemberCreated);
+            // Trả về kết quả thành công
+            return NoContent();  // HTTP 204 No Content khi update thành công
         }
+
 
         // Delete Member
         [HttpDelete("{id}")]
