@@ -6,7 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace HairSalonSystem.DAOs.Interfaces
-{     public interface IBranchDao
+{
+    public interface IBranchDAO
     {
         Task AddBranchAsync(Branch branch);
         Task UpdateBranchAsync(Branch branch);
@@ -14,6 +15,5 @@ namespace HairSalonSystem.DAOs.Interfaces
         Task<Branch> GetBranchByIdAsync(Guid branchId);
         Task<List<Branch>> GetAllBranchesAsync();
         Task<List<Branch>> GetBranchesByManagerIdAsync(Guid managerId);
-        
     }
 }

@@ -11,9 +11,9 @@ namespace HairSalonSystem.Repositories.Implement
 {
     public class BranchRespository : IBranchRespository
     {
-        private readonly IBranchDao _branchDao;
+        private readonly IBranchDAO _branchDao;
 
-        public BranchRespository(IBranchDao branchDao)
+        public BranchRespository(IBranchDAO branchDao)
         {
             _branchDao = branchDao;
         }

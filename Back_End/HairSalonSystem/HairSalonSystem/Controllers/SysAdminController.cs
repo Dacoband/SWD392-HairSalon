@@ -23,7 +23,7 @@ namespace HairSalonSystem.API.Controllers
         }
 
 
-        [Authorize(Roles = "SA")]
+        
         [HttpPost(APIEndPointConstant.Account.Register)]
         [ProducesResponseType(typeof(CreateNewAccountResponse), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]

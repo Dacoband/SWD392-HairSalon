@@ -1,21 +1,22 @@
-﻿using HairSalonSystem.BusinessObject;
-using HairSalonSystem.BusinessObject.Entities;
+﻿using HairSalonSystem.BusinessObject.Entities;
+using HairSalonSystem.BusinessObject;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HairSalonSystem.DAOs.Interfaces;
 
 namespace HairSalonSystem.DAOs.Implements
 {
-    public class BranchDao
+    public class BranchDAO : IBranchDAO
     {
         private readonly IMongoCollection<Branch> _branchCollection;
 
-        public BranchDao(HairSalonContext context)
+        public BranchDAO(HairSalonContext context)
         {
-            _branchCollection = context.Branchs ;
+            _branchCollection = context.Branchs;
         }
 
         public async Task AddBranchAsync(Branch branch)
