@@ -5,6 +5,7 @@ using HairSalonSystem.API.PayLoads.Responses.Accounts;
 using HairSalonSystem.API.Util;
 using HairSalonSystem.BusinessObject.Entities;
 using HairSalonSystem.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HairSalonSystem.API.Controllers
@@ -20,6 +21,8 @@ namespace HairSalonSystem.API.Controllers
             _accountService = accountService;
             _authService = authService;
         }
+
+
         
         [HttpPost(APIEndPointConstant.Account.Register)]
         [ProducesResponseType(typeof(CreateNewAccountResponse), StatusCodes.Status200OK)]

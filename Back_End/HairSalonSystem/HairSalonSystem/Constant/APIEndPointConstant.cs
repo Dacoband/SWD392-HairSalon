@@ -20,5 +20,14 @@
             public const string Login = AuthenticationEndpoint + "/login";
             public const string UpdatePassword = AuthenticationEndpoint + "/changepass";
         }
+        public static class Branch
+        {
+            public const string BranchEndpoint = ApiEndpoint + "/branch";
+            public const string GetBranchById = BranchEndpoint + "/{id}";
+            public const string GetAllBranches = BranchEndpoint + "/all";
+            public const string AddBranch = BranchEndpoint + "/add";
+            public const string UpdateBranch = BranchEndpoint + "/update";
+            public const string DeleteBranch = BranchEndpoint + "/delete/{id}";
+        }
     }
 }

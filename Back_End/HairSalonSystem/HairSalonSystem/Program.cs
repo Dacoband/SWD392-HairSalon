@@ -11,6 +11,8 @@ using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using HairSalonSystem.DAOs.Interfaces;
+using HairSalonSystem.DAOs.Implements;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -77,13 +79,16 @@ builder.Services.AddAuthentication(options =>
 
 // Register services and repositories
 builder.Services.AddScoped<IAccountDAO, AccountDAO>(); 
+builder.Services.AddScoped<IBranchDAO, BranchDAO>();
 
 // Register Repositories
 builder.Services.AddScoped<IAccountRepository, AccountRepository>(); 
+builder.Services.AddScoped<IBranchRespository,BranchRespository>();
 
 // Register Services
 builder.Services.AddScoped<IAccountService, AccountService>(); // Register IAccountService
 builder.Services.AddScoped<IAuthService, AuthService>(); // Register IAuthService
+builder.Services.AddScoped<IBranchService, BranchService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
