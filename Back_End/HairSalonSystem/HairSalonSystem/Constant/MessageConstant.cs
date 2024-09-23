@@ -16,6 +16,8 @@
             public const string BranchDeleted = "Chi nhánh đã được xoá";
             public const string BranchNotFound = "Không tìm thấy chi nhánh";
             public const string NotRights = "Bạn không có quyền tạo branch";
+            public const string BranchNotExist = "Branch không tồn tại";
+
 
         }
     }

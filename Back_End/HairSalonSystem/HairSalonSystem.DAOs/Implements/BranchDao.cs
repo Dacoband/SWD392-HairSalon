@@ -26,25 +26,28 @@ namespace HairSalonSystem.DAOs.Implements
         public async Task UpdateBranchAsync(Branch branch)
         {
             var filter = Builders<Branch>.Filter.Eq(b => b.BranchID, branch.BranchID);
+
             var update = Builders<Branch>.Update
+                .Set(b => b.StaffManagerID, branch.StaffManagerID)
                 .Set(b => b.SalonBranches, branch.SalonBranches)
                 .Set(b => b.Address, branch.Address)
                 .Set(b => b.Phone, branch.Phone)
-                .Set(b => b.UpdDate, DateTime.Now);
+                .Set(b => b.UpdDate, branch.UpdDate);
+
             await _branchCollection.UpdateOneAsync(filter, update);
         }
 
         public async Task DeleteBranchAsync(Guid branchId)
         {
             var filter = Builders<Branch>.Filter.Eq(b => b.BranchID, branchId);
-            var update = Builders<Branch>.Update.Set(b => b.DelFlg, true);
+            var update = Builders<Branch>.Update.Set(b => b.DelFlg, false);
             await _branchCollection.UpdateOneAsync(filter, update);
         }
 
         public async Task<Branch> GetBranchByIdAsync(Guid branchId)
         {
             return await _branchCollection
-                .Find(b => b.BranchID == branchId && b.DelFlg == false)
+                .Find(b => b.BranchID == branchId && b.DelFlg == true)
                 .FirstOrDefaultAsync();
         }
 
@@ -58,16 +61,8 @@ namespace HairSalonSystem.DAOs.Implements
         public async Task<List<Branch>> GetBranchesByManagerIdAsync(Guid managerId)
         {
             return await _branchCollection
-                .Find(b => b.StaffManagerID == managerId && b.DelFlg == false)
+                .Find(b => b.StaffManagerID == managerId && b.DelFlg == true)
                 .ToListAsync();
-        }
-
-        public async Task<bool> BranchExistsAsync(Guid branchId)
-        {
-            var branch = await _branchCollection
-                .Find(b => b.BranchID == branchId && b.DelFlg == false)
-                .FirstOrDefaultAsync();
-            return branch != null;
         }
     }
 }

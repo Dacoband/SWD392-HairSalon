@@ -5,6 +5,7 @@ using HairSalonSystem.API.PayLoads.Responses.Branchs;
 using HairSalonSystem.API.Util;
 using HairSalonSystem.BusinessObject.Entities;
 using HairSalonSystem.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HairSalonSystem.API.Controllers
@@ -20,7 +21,7 @@ namespace HairSalonSystem.API.Controllers
         [HttpGet(APIEndPointConstant.Branch.GetBranchById)]
         [ProducesResponseType(typeof(GetBranchResponse), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
-        public async Task<ActionResult<Branch>> GetBranchById(Guid id)
+        public async Task<ActionResult<Branch>> GetBranchById([FromRoute] Guid id)
         {
             var branch = await _branchService.GetBranchById(id);
             if (branch == null)
@@ -41,6 +42,7 @@ namespace HairSalonSystem.API.Controllers
             }
             return Ok(branches);
         }
+        [Authorize]
         [HttpPost(APIEndPointConstant.Branch.AddBranch)]
         [ProducesResponseType(typeof(CreateNewBrachResponse), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
@@ -67,7 +69,7 @@ namespace HairSalonSystem.API.Controllers
                 Phone = branchDto.Phone,
                 InsDate = TimeUtils.GetCurrentSEATime(),
                 UpdDate = TimeUtils.GetCurrentSEATime(),
-                DelFlg = false
+                DelFlg = true
             };
 
             await _branchService.AddBranch(branch);
@@ -78,10 +80,45 @@ namespace HairSalonSystem.API.Controllers
                 SalonBranches = branch.SalonBranches,
                 Address = branch.Address,
                 Phone = branch.Phone,
-
             };
 
             return CreatedAtAction(nameof(AddBranch),reponse);
+        }
+        [HttpPatch(APIEndPointConstant.Branch.UpdateBranch)]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [ProducesErrorResponseType(typeof(ProblemDetails))]
+        public async Task<ActionResult> UpdateBranch([FromRoute] Guid id, [FromBody] UpdateBranchRequest branchDto)
+        {
+            
+            if (id == Guid.Empty)
+            {
+                throw new BadHttpRequestException(MessageConstant.BranchMessage.BranchNotFound);
+            }
+            var existingBranch = await _branchService.GetBranchById(id);
+            if (existingBranch == null)
+            {
+                throw new BadHttpRequestException(MessageConstant.BranchMessage.BranchNotExist);
+            }
+
+            var branch = new Branch
+            {
+                StaffManagerID = branchDto.StaffManagerID != Guid.Empty ? branchDto.StaffManagerID : existingBranch.StaffManagerID,
+                SalonBranches = string.IsNullOrEmpty(branchDto.SalonBranches) ? existingBranch.SalonBranches : branchDto.SalonBranches,
+                Address = string.IsNullOrEmpty(branchDto.Address) ? existingBranch.Address : branchDto.Address,
+                Phone = string.IsNullOrEmpty(branchDto.Phone) ? existingBranch.Phone : branchDto.Phone,
+                UpdDate = TimeUtils.GetCurrentSEATime(),
+            };
+
+            await _branchService.UpdateBranch(branch);
+            return NoContent();
+        }
+        [HttpDelete(APIEndPointConstant.Branch.DeleteBranch)]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [ProducesErrorResponseType(typeof(ProblemDetails))]
+        public async Task<IActionResult> RemoveBranch([FromRoute] Guid branchId)
+        {
+            await _branchService.RemoveBranch(branchId);
+            return Ok();
         }
 
     }
