@@ -23,6 +23,7 @@ namespace HairSalonSystem.BusinessObject
         public IMongoCollection<Account> Accounts => _database.GetCollection<Account>("Accounts");
 
         public IMongoCollection<Member> Members => _database.GetCollection<Member>("Members");
+        public IMongoCollection<Branch> Branchs => _database.GetCollection<Branch>("Branchs");
 
     }
 }

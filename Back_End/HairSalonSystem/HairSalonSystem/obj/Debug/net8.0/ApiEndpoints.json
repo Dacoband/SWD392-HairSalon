@@ -254,5 +254,77 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "HairSalonSystem.API.Controllers.BranchController",
+    "Method": "GetBranchById",
+    "RelativePath": "api/v1/branch/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "HairSalonSystem.API.PayLoads.Responses.Branchs.GetBranchResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "HairSalonSystem.API.Controllers.BranchController",
+    "Method": "AddBranch",
+    "RelativePath": "api/v1/branch/add",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "branchDto",
+        "Type": "HairSalonSystem.API.PayLoads.Requests.Branchs.CreateNewBranchRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "HairSalonSystem.API.PayLoads.Responses.Branchs.CreateNewBrachResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "HairSalonSystem.API.Controllers.BranchController",
+    "Method": "GetAllBranches",
+    "RelativePath": "api/v1/branch/all",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "HairSalonSystem.API.PayLoads.Responses.Branchs.GetBranchResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   }
 ]
