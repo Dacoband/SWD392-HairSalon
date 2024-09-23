@@ -158,8 +158,7 @@
               "RelativeToolTip": "HairSalonSystem\\Util\\EnumUtil.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-23T05:17:53.739Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-23T05:17:53.739Z"
             },
             {
               "$type": "Document",
@@ -171,8 +170,7 @@
               "RelativeToolTip": "HairSalonSystem\\PayLoads\\Requests\\Branchs\\UpdateBranchRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-23T04:53:41.967Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-23T04:53:41.967Z"
             },
             {
               "$type": "Document",
@@ -184,8 +182,7 @@
               "RelativeToolTip": "HairSalonSystem\\Controllers\\BaseController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-23T04:18:02.732Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-23T04:18:02.732Z"
             },
             {
               "$type": "Document",
@@ -195,7 +192,7 @@
               "RelativeDocumentMoniker": "HairSalonSystem\\Controllers\\BranchController.cs",
               "ToolTip": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem\\Controllers\\BranchController.cs",
               "RelativeToolTip": "HairSalonSystem\\Controllers\\BranchController.cs",
-              "ViewState": "AgIAADoAAAAAAAAAAAAswHgAAAAWAAAAAAAAAA==",
+              "ViewState": "AgIAACkAAAAAAAAAAAAowEMAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-22T16:32:15.807Z",
               "EditorCaption": ""
@@ -210,8 +207,7 @@
               "RelativeToolTip": "HairSalonSystem\\Constant\\MessageConstant.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAABHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-22T16:31:19.424Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-22T16:31:19.424Z"
             },
             {
               "$type": "Document",
@@ -223,8 +219,7 @@
               "RelativeToolTip": "HairSalonSystem\\Constant\\APIEndPointConstant.cs",
               "ViewState": "AgIAAA4AAAAAAAAAAADgvxYAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-22T16:30:26.153Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-22T16:30:26.153Z"
             },
             {
               "$type": "Document",
@@ -236,8 +231,7 @@
               "RelativeToolTip": "HairSalonSystem.BusinessObject\\Entities\\Branch.cs",
               "ViewState": "AgIAAAsAAAAAAAAAAAAxwBkAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-22T11:48:27.638Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-22T11:48:27.638Z"
             },
             {
               "$type": "Document",
@@ -249,8 +243,7 @@
               "RelativeToolTip": "HairSalonSystem.Services\\Interfaces\\IBranchService.cs",
               "ViewState": "AgIAAAEAAAAAAAAAAAAjwA8AAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-22T16:28:17.729Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-22T16:28:17.729Z"
             },
             {
               "$type": "Document",
@@ -262,8 +255,7 @@
               "RelativeToolTip": "HairSalonSystem.Services\\Implements\\BranchService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-22T16:28:28.943Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-22T16:28:28.943Z"
             },
             {
               "$type": "Document",
@@ -275,8 +267,7 @@
               "RelativeToolTip": "HairSalonSystem.Repositories\\Interface\\IBranchRespository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-22T16:25:47.094Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-22T16:25:47.094Z"
             },
             {
               "$type": "Document",
@@ -288,8 +279,7 @@
               "RelativeToolTip": "HairSalonSystem.Repositories\\Implement\\BranchRespository.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAAA0AAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-22T16:25:12.859Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-22T16:25:12.859Z"
             },
             {
               "$type": "Document",
@@ -301,8 +291,7 @@
               "RelativeToolTip": "HairSalonSystem.DAOs\\Interfaces\\IBranchDao.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-22T16:10:13.778Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-22T16:10:13.778Z"
             },
             {
               "$type": "Document",
@@ -314,8 +303,7 @@
               "RelativeToolTip": "HairSalonSystem.DAOs\\Implements\\BranchDao.cs",
               "ViewState": "AgIAABkAAAAAAAAAAAAQwD8AAABMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-22T16:10:01.472Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-22T16:10:01.472Z"
             },
             {
               "$type": "Document",
@@ -327,8 +315,7 @@
               "RelativeToolTip": "HairSalonSystem.DAOs\\Interfaces\\IAccountDAO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-22T16:10:34.038Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-22T16:10:34.038Z"
             },
             {
               "$type": "Document",
@@ -340,8 +327,7 @@
               "RelativeToolTip": "HairSalonSystem\\Controllers\\MemberController.cs",
               "ViewState": "AgIAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-23T04:51:19.345Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-23T04:51:19.345Z"
             },
             {
               "$type": "Document",
@@ -353,8 +339,7 @@
               "RelativeToolTip": "HairSalonSystem\\Program.cs",
               "ViewState": "AgIAAD8AAAAAAAAAAAAAAE8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-23T03:55:38.297Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-23T03:55:38.297Z"
             },
             {
               "$type": "Document",
@@ -366,8 +351,7 @@
               "RelativeToolTip": "HairSalonSystem.DAOs\\Implements\\MemberDAO.cs",
               "ViewState": "AgIAAA4AAAAAAAAAAAAAwBgAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-23T05:36:29.562Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-23T05:36:29.562Z"
             },
             {
               "$type": "Document",
@@ -379,8 +363,7 @@
               "RelativeToolTip": "HairSalonSystem\\PayLoads\\Requests\\Members\\CreateNewMemberRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-23T04:49:54.72Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-23T04:49:54.72Z"
             },
             {
               "$type": "Document",
@@ -392,8 +375,7 @@
               "RelativeToolTip": "HairSalonSystem\\PayLoads\\Requests\\Branchs\\CreateNewBranchRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-23T04:00:39.017Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-23T04:00:39.017Z"
             },
             {
               "$type": "Document",
@@ -405,8 +387,7 @@
               "RelativeToolTip": "HairSalonSystem\\PayLoads\\Requests\\LoginRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-23T04:49:49.661Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-23T04:49:49.661Z"
             },
             {
               "$type": "Document",
@@ -418,8 +399,7 @@
               "RelativeToolTip": "HairSalonSystem.Services\\BaseService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-23T04:31:26.835Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-23T04:31:26.835Z"
             },
             {
               "$type": "Document",
