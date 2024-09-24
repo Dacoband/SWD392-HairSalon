@@ -15,5 +15,6 @@ namespace HairSalonSystem.DAOs.Interface
         Task UpdateAccount(Guid id, Account account);
         Task DeleteAccount(Guid id);
         Task<Account> GetAccountByEmail(string email);
+        Task<string> GetEmailByAccountId(Guid accountId);
     }
 }

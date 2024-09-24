@@ -22,7 +22,7 @@ namespace HairSalonSystem.API.Controllers
         }
 
         // Get Member by ID
-        [HttpGet("{id}")]
+        [HttpGet(APIEndPointConstant.Member.GetMemberById)]
         [ProducesResponseType(typeof(Member), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(NotFoundResult))]
         public async Task<ActionResult<Member>> GetMemberById(Guid id)
@@ -36,7 +36,7 @@ namespace HairSalonSystem.API.Controllers
         }
 
         // Get All Members
-        [HttpGet]
+        [HttpGet(APIEndPointConstant.Member.GetAllMembers)]
         [ProducesResponseType(typeof(List<Member>), StatusCodes.Status200OK)]
         public async Task<ActionResult<List<Member>>> GetAllMembers()
         {
@@ -45,13 +45,37 @@ namespace HairSalonSystem.API.Controllers
         }
 
         // Create New Member
-        [HttpPost]
+        [HttpPost(APIEndPointConstant.Member.AddMember)]
         [ProducesResponseType(typeof(CreateNewMemberResponse), StatusCodes.Status201Created)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
-        public async Task<ActionResult> CreateNewMember([FromBody] CreateNewMemberRequest memberRequest)
+        public async Task<ActionResult> CreateNewMember([FromForm] CreateNewMemberRequest memberRequest)
         {
             var roleName = UserUtil.GetRoleName(HttpContext);
-    
+            var isEmailExist = await _accountService.IsEmailExist(memberRequest.Email);
+            if (isEmailExist)
+            {
+                return Problem(MessageConstant.MemberMessage.EmailExist);
+            }
+
+            string avatarImagePath = null;
+            if (memberRequest.AvatarImage != null && memberRequest.AvatarImage.Length > 0)
+            {
+                var uploadsFolder = Path.Combine("wwwroot", "uploads");
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + memberRequest.AvatarImage.FileName;
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await memberRequest.AvatarImage.CopyToAsync(fileStream);
+                }
+                avatarImagePath = "/uploads/" + uniqueFileName;
+            }
+
+
             var account = new Account()
             {
                 AccountId = Guid.NewGuid(),
@@ -71,7 +95,7 @@ namespace HairSalonSystem.API.Controllers
                 DateOfBirth = memberRequest.DateOfBirth,
                 PhoneNumber = memberRequest.PhoneNumber,
                 Address = memberRequest.Address,
-                AvatarImage = memberRequest.AvatarImage,
+                AvatarImage = avatarImagePath,
                 InsDate = TimeUtils.GetCurrentSEATime(),
                 UpdDate = TimeUtils.GetCurrentSEATime(),
                 DelFlg = true
@@ -95,7 +119,7 @@ namespace HairSalonSystem.API.Controllers
 
 
         // Update Existing Member
-        [HttpPut("{id}")]
+        [HttpPut(APIEndPointConstant.Member.UpdateMember)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesErrorResponseType(typeof(BadRequestResult))]
         public async Task<ActionResult> UpdateMember(Guid id, [FromBody] UpdateMemberRequest memberRequest)
@@ -140,7 +164,7 @@ namespace HairSalonSystem.API.Controllers
 
 
         // Delete Member
-        [HttpDelete("{id}")]
+        [HttpDelete(APIEndPointConstant.Member.DeleteMember)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesErrorResponseType(typeof(NotFoundResult))]
         public async Task<ActionResult> RemoveMember(Guid id)

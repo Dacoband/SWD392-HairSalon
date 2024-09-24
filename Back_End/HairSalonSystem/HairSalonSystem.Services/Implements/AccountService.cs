@@ -47,6 +47,19 @@ namespace HairSalonSystem.Services.Implements
             
             await _accountRepository.RemoveAccount(id);
         }
+        public async Task<Account> GetAccountByEmail(string email)
+        {
+            return await _accountRepository.GetAccountByEmail(email);
+        }
+        public async Task<string> GetEmailByAccountId(Guid accountId)
+        {
+            return await _accountRepository.GetEmailByAccountId(accountId);
+        }
+        public async Task<bool> IsEmailExist(string email)
+        {
+            var account = await _accountRepository.GetAccountByEmail(email);
+            return account != null;
+        }
         private bool VerifyPassword(string storedPassword, string providedPassword)
         {
             // So sánh mật khẩu

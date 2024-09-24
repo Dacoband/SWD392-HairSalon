@@ -14,6 +14,8 @@ namespace HairSalonSystem.Services.Interfaces
         Task AddAccount(Account account);
         Task UpdateAccount(Account account);
         Task RemoveAccount(Guid id);
-
+        Task<Account> GetAccountByEmail(string email);
+        Task<string> GetEmailByAccountId(Guid accountId);
+        Task<bool> IsEmailExist(string email);
     }
 }

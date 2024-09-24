@@ -47,5 +47,10 @@ namespace HairSalonSystem.DAOs.Implement
         {
             return await _accounts.Find(a => a.Email == email).FirstOrDefaultAsync();
         }
+        public async Task<string> GetEmailByAccountId(Guid accountId)
+        {
+            var account = await _accounts.Find(a => a.AccountId == accountId).FirstOrDefaultAsync();
+            return account?.Email;
+        }
     }
 }

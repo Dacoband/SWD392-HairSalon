@@ -24,12 +24,13 @@ namespace HairSalonSystem.API.PayLoads.Requests.Members
 
         [Required(ErrorMessage = "Phone number is required")]
         [StringLength(10, MinimumLength = 10, ErrorMessage = "Phone number must be exactly 10 digits")]
-        [RegularExpression(@"^[0-9]{10}$", ErrorMessage = "Phone number must be 10 digits")]
+        [RegularExpression(@"^(03|05|07|08|09)\d{8}$", ErrorMessage = "Phone number must be a valid Vietnamese phone number")]
+
         public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "Address is required")]
         public string Address { get; set; }
 
-        public string AvatarImage { get; set; }
+        public IFormFile AvatarImage { get; set; }
     }
 }

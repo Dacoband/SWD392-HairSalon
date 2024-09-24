@@ -16,7 +16,8 @@ namespace HairSalonSystem.API.PayLoads.Requests.Members
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Phone number is required")]
-        [Phone(ErrorMessage = "Invalid phone number format")]
+        [StringLength(10, MinimumLength = 10, ErrorMessage = "Phone number must be exactly 10 digits")]
+        [RegularExpression(@"^(03|05|07|08|09)\d{8}$", ErrorMessage = "Phone number must be a valid Vietnamese phone number")]
         public string PhoneNumber { get; set; }
     
 

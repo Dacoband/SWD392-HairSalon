@@ -46,6 +46,10 @@ namespace HairSalonSystem.Repositories.Implement
         {
             return await _accountDAO.GetAccountByEmail(email);
         }
+        public async Task<string> GetEmailByAccountId(Guid accountId)
+        {
+            return await _accountDAO.GetEmailByAccountId(accountId);
+        }
 
     }
 }

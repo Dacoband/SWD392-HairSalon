@@ -15,5 +15,6 @@ namespace HairSalonSystem.Repositories.Interface
         Task UpdateAccount(Account account);
         Task RemoveAccount(Guid id);
         Task<Account> GetAccountByEmail(string email);
+        Task<string> GetEmailByAccountId(Guid accountId);
     }
 }
