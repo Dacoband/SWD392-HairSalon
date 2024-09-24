@@ -13,9 +13,9 @@ Hair Salon Booking App Web Application & Mobile
     - Nguyễn Minh Thức - SE170592 - Database Design | BE
     - Thảo Nguyễn - SE172937 - FE | Documentation
   - **Project:** Hair Salon Booking App - Service, E-Commerce - Business to Consumer
-  - **Techs:** RestfulAPI - mySQL - ReactJS - MaterializeCSS - Bootstrap - JavaScript - Paypal - MUI - .NET 8 with C# - Vercel - Azure - Avien 
+  - **Techs:** RestfulAPI - MongoDB - React - TypeScript - Stripe - MUI - .NET 8 with C# - Vercel - Azure - Avien 
   - **Structure:** 
-    - Back-End:  Using MVC Structure, Database-First
+    - Back-End:  Using model Separation of Concerns, Code-First
     - Front-End:  
 - # **Table Of Contents**
   - ### [Specifications](#specifications)
