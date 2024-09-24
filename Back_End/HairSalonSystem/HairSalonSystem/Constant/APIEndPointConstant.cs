@@ -29,5 +29,14 @@
             public const string UpdateBranch = BranchEndpoint + "/update";
             public const string DeleteBranch = BranchEndpoint + "/delete/{id}";
         }
+        public static class Member
+        {
+            public const string MemberEndpoint = ApiEndpoint + "/member";
+            public const string GetMemberById = MemberEndpoint + "/{id}";
+            public const string GetAllMembers = MemberEndpoint + "/all";
+            public const string AddMember = MemberEndpoint + "/add";
+            public const string UpdateMember = MemberEndpoint + "/update";
+            public const string DeleteMember = MemberEndpoint + "/delete/{id}";
+        }
     }
 }
