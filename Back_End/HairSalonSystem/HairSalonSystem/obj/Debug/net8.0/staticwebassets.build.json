@@ -1,11 +1,58 @@
 {
   "Version": 1,
-  "Hash": "O5I7BiQbuKpKrb4Pnn9bocl8I0AV09sWQFZplVYRzSo=",
+  "Hash": "mnZBqcdGEW3B/uD8AGGr0mFp5VoIOPBy4qaIBLweavs=",
   "Source": "HairSalonSystem.API",
   "BasePath": "_content/HairSalonSystem.API",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "HairSalonSystem.API\\wwwroot",
+      "Source": "HairSalonSystem.API",
+      "ContentRoot": "D:\\FPT_Learning\\SWD392\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem\\wwwroot\\",
+      "BasePath": "_content/HairSalonSystem.API",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\FPT_Learning\\SWD392\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem\\wwwroot\\uploads\\424f63e2-628f-4e61-864c-292ede4193fb_alien.png",
+      "SourceId": "HairSalonSystem.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\FPT_Learning\\SWD392\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem\\wwwroot\\",
+      "BasePath": "_content/HairSalonSystem.API",
+      "RelativePath": "uploads/424f63e2-628f-4e61-864c-292ede4193fb_alien.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\424f63e2-628f-4e61-864c-292ede4193fb_alien.png"
+    },
+    {
+      "Identity": "D:\\FPT_Learning\\SWD392\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem\\wwwroot\\uploads\\6ed06aba-97fb-4513-a551-ef4d65b36838_aliendung.png",
+      "SourceId": "HairSalonSystem.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\FPT_Learning\\SWD392\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem\\wwwroot\\",
+      "BasePath": "_content/HairSalonSystem.API",
+      "RelativePath": "uploads/6ed06aba-97fb-4513-a551-ef4d65b36838_aliendung.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\6ed06aba-97fb-4513-a551-ef4d65b36838_aliendung.png"
+    }
+  ]
 }
