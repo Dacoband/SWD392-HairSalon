@@ -42,7 +42,7 @@ namespace HairSalonSystem.API.Controllers
             }
             return Ok(branches);
         }
-        [Authorize]
+      
         [HttpPost(APIEndPointConstant.Branch.AddBranch)]
         [ProducesResponseType(typeof(CreateNewBrachResponse), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
@@ -55,7 +55,7 @@ namespace HairSalonSystem.API.Controllers
             }
             var roleName = UserUtil.GetRoleName(HttpContext);
 
-           if (roleName != "SA")
+           if (roleName != "SA" )
             {
                 return Problem(MessageConstant.BranchMessage.NotRights);
             }
