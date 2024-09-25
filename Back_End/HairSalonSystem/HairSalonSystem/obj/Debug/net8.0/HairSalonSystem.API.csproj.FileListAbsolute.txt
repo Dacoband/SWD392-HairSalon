@@ -60,3 +60,4 @@ D:\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem\obj\Debug\net8.0\re
 D:\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem\obj\Debug\net8.0\HairSalonSystem.API.pdb
 D:\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem\obj\Debug\net8.0\HairSalonSystem.API.genruntimeconfig.cache
 D:\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem\obj\Debug\net8.0\ref\HairSalonSystem.API.dll
+D:\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem\bin\Debug\net8.0\appsettings.json

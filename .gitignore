@@ -12,6 +12,7 @@
 *.cache
 *.bin
 *.log
+*.dll
 
 # Bỏ qua các tệp biên dịch
 bin/
