@@ -5,7 +5,7 @@
 *.user
 *.userosscache
 *.sln.docstates
-*.json
+
 
 # Bỏ qua các tệp backup, cache
 *.backup
