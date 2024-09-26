@@ -65,3 +65,4 @@ D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem
 =======
 D:\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem\bin\Debug\net8.0\appsettings.json
 >>>>>>> Thuc
+D:\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem\bin\Debug\net8.0\HairSalonSystem.API.staticwebassets.runtime.json

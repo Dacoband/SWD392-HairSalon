@@ -1,14 +1,14 @@
 ﻿using Amazon.Runtime;
-using HairSalonSystem.API.Constant;
-using HairSalonSystem.API.PayLoads.Requests.Branchs;
-using HairSalonSystem.API.PayLoads.Responses.Branchs;
-using HairSalonSystem.API.Util;
+using HairSalonSystem.Services.Constant;
+using HairSalonSystem.Services.PayLoads.Requests.Branchs;
+using HairSalonSystem.Services.PayLoads.Responses.Branchs;
+using HairSalonSystem.Services.Util;
 using HairSalonSystem.BusinessObject.Entities;
 using HairSalonSystem.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HairSalonSystem.API.Controllers
+namespace HairSalonSystem.Services.Controllers
 {
     [ApiController]
     public class BranchController : BaseController<BranchController>

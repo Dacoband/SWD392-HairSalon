@@ -83,7 +83,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "HairSalonSystem.API.Controllers.SysAdminController",
+    "ContainingType": "HairSalonSystem.Services.Controllers.SysAdminController",
     "Method": "AddAccountAll",
     "RelativePath": "api/v1/account/sys-admin",
     "HttpMethod": "POST",
@@ -92,13 +92,13 @@
     "Parameters": [
       {
         "Name": "accountDto",
-        "Type": "HairSalonSystem.API.PayLoads.Requests.Accounts.CreateNewAccountRequest",
+        "Type": "HairSalonSystem.Services.PayLoads.Requests.Accounts.CreateNewAccountRequest",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "HairSalonSystem.API.PayLoads.Responses.Accounts.CreateNewAccountResponse",
+        "Type": "HairSalonSystem.Services.PayLoads.Responses.Accounts.CreateNewAccountResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -118,13 +118,13 @@
     "Parameters": [
       {
         "Name": "request",
-        "Type": "HairSalonSystem.API.PayLoads.Requests.LoginRequest",
+        "Type": "HairSalonSystem.Services.PayLoads.Requests.LoginRequest",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "HairSalonSystem.API.PayLoads.LoginResponse",
+        "Type": "HairSalonSystem.Services.PayLoads.LoginResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -135,7 +135,7 @@
     ]
   },
   {
-    "ContainingType": "HairSalonSystem.API.Controllers.BranchController",
+    "ContainingType": "HairSalonSystem.Services.Controllers.BranchController",
     "Method": "GetBranchById",
     "RelativePath": "api/v1/branch/{id}",
     "HttpMethod": "GET",
@@ -150,7 +150,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "HairSalonSystem.API.PayLoads.Responses.Branchs.GetBranchResponse",
+        "Type": "HairSalonSystem.Services.PayLoads.Responses.Branchs.GetBranchResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -161,7 +161,7 @@
     ]
   },
   {
-    "ContainingType": "HairSalonSystem.API.Controllers.BranchController",
+    "ContainingType": "HairSalonSystem.Services.Controllers.BranchController",
     "Method": "AddBranch",
     "RelativePath": "api/v1/branch/add",
     "HttpMethod": "POST",
@@ -170,13 +170,13 @@
     "Parameters": [
       {
         "Name": "branchDto",
-        "Type": "HairSalonSystem.API.PayLoads.Requests.Branchs.CreateNewBranchRequest",
+        "Type": "HairSalonSystem.Services.PayLoads.Requests.Branchs.CreateNewBranchRequest",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "HairSalonSystem.API.PayLoads.Responses.Branchs.CreateNewBrachResponse",
+        "Type": "HairSalonSystem.Services.PayLoads.Responses.Branchs.CreateNewBrachResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -187,7 +187,7 @@
     ]
   },
   {
-    "ContainingType": "HairSalonSystem.API.Controllers.BranchController",
+    "ContainingType": "HairSalonSystem.Services.Controllers.BranchController",
     "Method": "GetAllBranches",
     "RelativePath": "api/v1/branch/all",
     "HttpMethod": "GET",
@@ -196,7 +196,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "HairSalonSystem.API.PayLoads.Responses.Branchs.GetBranchResponse",
+        "Type": "HairSalonSystem.Services.PayLoads.Responses.Branchs.GetBranchResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -207,7 +207,7 @@
     ]
   },
   {
-    "ContainingType": "HairSalonSystem.API.Controllers.BranchController",
+    "ContainingType": "HairSalonSystem.Services.Controllers.BranchController",
     "Method": "RemoveBranch",
     "RelativePath": "api/v1/branch/delete/{id}",
     "HttpMethod": "DELETE",
@@ -238,7 +238,7 @@
     ]
   },
   {
-    "ContainingType": "HairSalonSystem.API.Controllers.BranchController",
+    "ContainingType": "HairSalonSystem.Services.Controllers.BranchController",
     "Method": "UpdateBranch",
     "RelativePath": "api/v1/branch/update",
     "HttpMethod": "PATCH",
@@ -252,7 +252,7 @@
       },
       {
         "Name": "branchDto",
-        "Type": "HairSalonSystem.API.PayLoads.Requests.Branchs.UpdateBranchRequest",
+        "Type": "HairSalonSystem.Services.PayLoads.Requests.Branchs.UpdateBranchRequest",
         "IsRequired": true
       }
     ],
@@ -269,7 +269,7 @@
     ]
   },
   {
-    "ContainingType": "HairSalonSystem.API.Controllers.MemberController",
+    "ContainingType": "HairSalonSystem.Services.Controllers.MemberController",
     "Method": "GetMemberById",
     "RelativePath": "api/v1/member/{id}",
     "HttpMethod": "GET",
@@ -295,7 +295,7 @@
     ]
   },
   {
-    "ContainingType": "HairSalonSystem.API.Controllers.MemberController",
+    "ContainingType": "HairSalonSystem.Services.Controllers.MemberController",
     "Method": "CreateNewMember",
     "RelativePath": "api/v1/member/add",
     "HttpMethod": "POST",
@@ -340,7 +340,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "HairSalonSystem.API.PayLoads.Responses.Members.CreateNewMemberResponse",
+        "Type": "HairSalonSystem.Services.PayLoads.Responses.Members.CreateNewMemberResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -351,7 +351,7 @@
     ]
   },
   {
-    "ContainingType": "HairSalonSystem.API.Controllers.MemberController",
+    "ContainingType": "HairSalonSystem.Services.Controllers.MemberController",
     "Method": "GetAllMembers",
     "RelativePath": "api/v1/member/all",
     "HttpMethod": "GET",
@@ -371,7 +371,7 @@
     ]
   },
   {
-    "ContainingType": "HairSalonSystem.API.Controllers.MemberController",
+    "ContainingType": "HairSalonSystem.Services.Controllers.MemberController",
     "Method": "RemoveMember",
     "RelativePath": "api/v1/member/delete/{id}",
     "HttpMethod": "DELETE",
@@ -393,7 +393,7 @@
     ]
   },
   {
-    "ContainingType": "HairSalonSystem.API.Controllers.MemberController",
+    "ContainingType": "HairSalonSystem.Services.Controllers.MemberController",
     "Method": "UpdateMember",
     "RelativePath": "api/v1/member/update",
     "HttpMethod": "PUT",
@@ -407,7 +407,7 @@
       },
       {
         "Name": "memberRequest",
-        "Type": "HairSalonSystem.API.PayLoads.Requests.Members.UpdateMemberRequest",
+        "Type": "HairSalonSystem.Services.PayLoads.Requests.Members.UpdateMemberRequest",
         "IsRequired": true
       }
     ],

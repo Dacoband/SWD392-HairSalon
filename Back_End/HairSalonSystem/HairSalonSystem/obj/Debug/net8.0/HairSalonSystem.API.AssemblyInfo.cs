@@ -14,11 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HairSalonSystem.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< HEAD
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c4eaeec0bbc2673b7baa100359f095f24ae459be")]
-=======
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cddbd27d2aa58ea37d85f33a8145e4afbdb066d5")]
->>>>>>> Thuc
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0c0b3a61b701c73c3bc2d7062d639ddda2ee78c9")]
 [assembly: System.Reflection.AssemblyProductAttribute("HairSalonSystem.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HairSalonSystem.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
