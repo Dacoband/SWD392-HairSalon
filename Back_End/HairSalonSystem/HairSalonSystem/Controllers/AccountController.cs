@@ -1,11 +1,11 @@
 ﻿using Amazon.Runtime.Internal;
-using HairSalonSystem.API.Constant;
+using HairSalonSystem.Services.Constant;
 using HairSalonSystem.API.DTOs;
-using HairSalonSystem.API.PayLoads;
-using HairSalonSystem.API.PayLoads.Requests;
-using HairSalonSystem.API.PayLoads.Requests.Accounts;
-using HairSalonSystem.API.PayLoads.Responses.Accounts;
-using HairSalonSystem.API.Util;
+using HairSalonSystem.Services.PayLoads;
+using HairSalonSystem.Services.PayLoads.Requests;
+using HairSalonSystem.Services.PayLoads.Requests.Accounts;
+using HairSalonSystem.Services.PayLoads.Responses.Accounts;
+using HairSalonSystem.Services.Util;
 using HairSalonSystem.BusinessObject.Entities;
 using HairSalonSystem.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -81,7 +81,7 @@ namespace HairSalonSystem.API.Controllers
             var account = await _authService.Authenticate(request.Email, PasswordUtil.HashPassword(request.Password));
             if (account == null)
             {
-                return Unauthorized(new PayLoads.ErrorResponse()
+                return Unauthorized(new Services.PayLoads.ErrorResponse()
                 {
                     StatusCode = StatusCodes.Status401Unauthorized,
                     Error = MessageConstant.LoginMessage.InvalidUsernameOrPassword,

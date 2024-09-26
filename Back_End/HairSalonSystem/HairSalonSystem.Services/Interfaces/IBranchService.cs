@@ -1,4 +1,7 @@
 ﻿using HairSalonSystem.BusinessObject.Entities;
+using HairSalonSystem.Services.PayLoads.Requests.Branchs;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +14,7 @@ namespace HairSalonSystem.Services.Interfaces
     {
         Task<Branch> GetBranchById(Guid branchId);
         Task<List<Branch>> GetAllBranches();
-        Task AddBranch(Branch branch);
+        public Task<ActionResult> CreateNewBranch(CreateNewBranchRequest branchDto, HttpContext httpContext)
         Task UpdateBranch(Branch branch);
         Task RemoveBranch(Guid branchId);
         Task<List<Branch>> GetBranchesByManagerId(Guid managerId);

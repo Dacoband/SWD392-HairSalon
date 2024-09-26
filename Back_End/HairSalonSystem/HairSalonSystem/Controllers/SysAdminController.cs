@@ -1,14 +1,14 @@
-﻿using HairSalonSystem.API.Constant;
+﻿using HairSalonSystem.Services.Constant;
 using HairSalonSystem.API.DTOs;
-using HairSalonSystem.API.PayLoads.Requests.Accounts;
-using HairSalonSystem.API.PayLoads.Responses.Accounts;
-using HairSalonSystem.API.Util;
+using HairSalonSystem.Services.PayLoads.Requests.Accounts;
+using HairSalonSystem.Services.PayLoads.Responses.Accounts;
+using HairSalonSystem.Services.Util;
 using HairSalonSystem.BusinessObject.Entities;
 using HairSalonSystem.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HairSalonSystem.API.Controllers
+namespace HairSalonSystem.Services.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

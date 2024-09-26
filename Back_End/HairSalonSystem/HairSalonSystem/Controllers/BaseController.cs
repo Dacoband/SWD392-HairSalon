@@ -1,7 +1,7 @@
-﻿using HairSalonSystem.API.Constant;
+﻿using HairSalonSystem.Services.Constant;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HairSalonSystem.API.Controllers
+namespace HairSalonSystem.Services.Controllers
 {
     [Route(APIEndPointConstant.ApiEndpoint)]
     [ApiController]
