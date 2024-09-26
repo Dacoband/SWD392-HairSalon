@@ -124,45 +124,9 @@ namespace HairSalonSystem.Services.Controllers
         [ProducesErrorResponseType(typeof(BadRequestResult))]
         public async Task<ActionResult> UpdateMember(Guid id, [FromBody] UpdateMemberRequest memberRequest)
         {
-            var RoleName = UserUtil.GetRoleName(HttpContext);
-            Guid accountIdFromToken = UserUtil.GetAccountId(HttpContext);
+            return await _memberService.UpdateMember(id,memberRequest,HttpContext);
 
-            // Kiểm tra RoleName có hợp lệ không
-            if (RoleName != "SA" && RoleName != "SM" && RoleName != "SL" && RoleName != "MB" || string.IsNullOrEmpty(RoleName))
-            {
-                return BadRequest(MessageConstant.MemberMessage.NotRights);
-            }
-
-            var existingAccount = await _accountService.GetAccountById(accountIdFromToken);
-            if (existingAccount == null)
-            {
-                return NotFound(MessageConstant.LoginMessage.NotFoundAccount);
-            }
-
-            var existingMember = await _memberService.GetMemberById(id);
-            if (existingMember == null)
-            {
-                return NotFound(MessageConstant.MemberMessage.MemberNotFound);
-            }
-
-            // Cập nhật các thông tin của member và account
-            existingMember.MemberName = memberRequest.MemberName;
-            existingAccount.Email = memberRequest.Email;
-            existingMember.PhoneNumber = memberRequest.PhoneNumber;
-            existingMember.Address = memberRequest.Address;
-            existingMember.DateOfBirth = memberRequest.DateOfBirth;
-            existingMember.AvatarImage = memberRequest.AvatarImage;
-            existingMember.UpdDate = TimeUtils.GetCurrentSEATime();
-
-            // Gọi service để cập nhật
-            await _memberService.UpdateMember(existingMember);
-            await _accountService.UpdateAccount(existingAccount);
-
-            // Trả về kết quả thành công
-            return NoContent();  // HTTP 204 No Content khi update thành công
         }
-
-
         // Delete Member
         [HttpDelete(APIEndPointConstant.Member.DeleteMember)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

@@ -1,11 +1,14 @@
 ﻿using HairSalonSystem.BusinessObject.Entities;
 using HairSalonSystem.Repositories.Interface;
 using HairSalonSystem.Services.Interfaces;
+using HairSalonSystem.Services.Constant;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace HairSalonSystem.Services.Implements
 {
@@ -18,9 +21,17 @@ namespace HairSalonSystem.Services.Implements
             _accountRepository = accountRepository;
         }
 
-        public async Task<Account> GetAccountById(Guid id)
+        public async Task<ActionResult<Account>> GetAccountById(Guid id)
         {
-            return await _accountRepository.GetAccountById(id);
+            var account = await _accountRepository.GetAccountById(id);
+            if (account == null)
+            {
+                return new ObjectResult(MessageConstant.LoginMessage.NotFoundAccount)
+                {
+                    StatusCode = StatusCodes.Status400BadRequest,
+                };
+            }
+            return new OkObjectResult(account);
         }
 
 

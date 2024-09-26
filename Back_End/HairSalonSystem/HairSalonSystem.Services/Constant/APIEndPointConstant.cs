@@ -11,6 +11,7 @@
         public const string ApiEndpoint = RootEndPoint + ApiVersion;
         public static class Account
         {
+            public const string GetAccountById = ApiEndpoint + "/account/{id}";
             public const string AccountEndpoint = ApiEndpoint + "/account";
             public const string Register = AccountEndpoint + "/sys-admin";
         }

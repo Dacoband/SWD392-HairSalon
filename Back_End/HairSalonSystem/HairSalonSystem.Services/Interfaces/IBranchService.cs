@@ -14,7 +14,7 @@ namespace HairSalonSystem.Services.Interfaces
     {
         Task<Branch> GetBranchById(Guid branchId);
         Task<List<Branch>> GetAllBranches();
-        public Task<ActionResult> CreateNewBranch(CreateNewBranchRequest branchDto, HttpContext httpContext)
+        public Task<ActionResult> CreateNewBranch(CreateNewBranchRequest branchDto, HttpContext httpContext);
         Task UpdateBranch(Branch branch);
         Task RemoveBranch(Guid branchId);
         Task<List<Branch>> GetBranchesByManagerId(Guid managerId);

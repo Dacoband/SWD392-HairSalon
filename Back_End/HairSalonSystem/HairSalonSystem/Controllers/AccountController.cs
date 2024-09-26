@@ -25,15 +25,12 @@ namespace HairSalonSystem.API.Controllers
             _authService = authService;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet(APIEndPointConstant.Account.GetAccountById)]
+        [ProducesResponseType(typeof(Account), StatusCodes.Status200OK)]
+        [ProducesErrorResponseType(typeof(ProblemDetails))]
         public async Task<ActionResult<Account>> GetAccountById(Guid id)
         {
-            var account = await _accountService.GetAccountById(id);
-            if (account == null)
-            {
-                return NotFound();
-            }
-            return Ok(account);
+           return await _accountService.GetAccountById(id);
         }
 
         [HttpGet]

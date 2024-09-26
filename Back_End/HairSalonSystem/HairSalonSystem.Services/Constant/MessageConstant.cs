@@ -32,6 +32,7 @@
             public const string NotRights = "Bạn không có quyền tạo thành viên";
             public const string MemberNotRightsDelete = "Bạn không có quyền xóa thành viên";
             public const string EmailExist = "Email đã tồn tại trong hệ thống";
+            public const string MemberNotRightsUpdate = "Bạn không có quyền cập nhật thành viên";
 
         }
     }

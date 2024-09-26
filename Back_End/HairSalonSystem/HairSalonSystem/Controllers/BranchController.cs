@@ -43,47 +43,47 @@ namespace HairSalonSystem.Services.Controllers
             return Ok(branches);
         }
       
-        [HttpPost(APIEndPointConstant.Branch.AddBranch)]
-        [ProducesResponseType(typeof(CreateNewBrachResponse), StatusCodes.Status200OK)]
-        [ProducesErrorResponseType(typeof(ProblemDetails))]
-        public async Task<ActionResult> AddBranch([FromBody] CreateNewBranchRequest branchDto)
-        {
-            var accountID = UserUtil.GetAccountId(HttpContext);
-            if (accountID == null)
-            {
-                return Problem(MessageConstant.LoginMessage.NotFoundAccount);
-            }
-            var roleName = UserUtil.GetRoleName(HttpContext);
+        //[HttpPost(APIEndPointConstant.Branch.AddBranch)]
+        //[ProducesResponseType(typeof(CreateNewBrachResponse), StatusCodes.Status200OK)]
+        //[ProducesErrorResponseType(typeof(ProblemDetails))]
+        //public async Task<ActionResult> AddBranch([FromBody] CreateNewBranchRequest branchDto)
+        //{
+        //    var accountID = UserUtil.GetAccountId(HttpContext);
+        //    if (accountID == null)
+        //    {
+        //        return Problem(MessageConstant.LoginMessage.NotFoundAccount);
+        //    }
+        //    var roleName = UserUtil.GetRoleName(HttpContext);
 
-           if (roleName != "SA" )
-            {
-                return Problem(MessageConstant.BranchMessage.NotRights);
-            }
+        //   if (roleName != "SA" )
+        //    {
+        //        return Problem(MessageConstant.BranchMessage.NotRights);
+        //    }
 
-            var branch = new Branch
-            {
-                BranchID = Guid.NewGuid(),
-                StaffManagerID = branchDto.StaffManagerID,
-                SalonBranches = branchDto.SalonBranches,
-                Address = branchDto.Address,
-                Phone = branchDto.Phone,
-                InsDate = TimeUtils.GetCurrentSEATime(),
-                UpdDate = TimeUtils.GetCurrentSEATime(),
-                DelFlg = true
-            };
+        //    var branch = new Branch
+        //    {
+        //        BranchID = Guid.NewGuid(),
+        //        StaffManagerID = branchDto.StaffManagerID,
+        //        SalonBranches = branchDto.SalonBranches,
+        //        Address = branchDto.Address,
+        //        Phone = branchDto.Phone,
+        //        InsDate = TimeUtils.GetCurrentSEATime(),
+        //        UpdDate = TimeUtils.GetCurrentSEATime(),
+        //        DelFlg = true
+        //    };
 
-            await _branchService.AddBranch(branch);
-            var reponse = new CreateNewBrachResponse()
-            {
-                BranchID = branch.BranchID,
-                StaffManagerID = branch.StaffManagerID,
-                SalonBranches = branch.SalonBranches,
-                Address = branch.Address,
-                Phone = branch.Phone,
-            };
+        //    await _branchService.AddBranch(branch);
+        //    var reponse = new CreateNewBrachResponse()
+        //    {
+        //        BranchID = branch.BranchID,
+        //        StaffManagerID = branch.StaffManagerID,
+        //        SalonBranches = branch.SalonBranches,
+        //        Address = branch.Address,
+        //        Phone = branch.Phone,
+        //    };
 
-            return CreatedAtAction(nameof(AddBranch),reponse);
-        }
+        //    return CreatedAtAction(nameof(AddBranch),reponse);
+        //}
         [HttpPatch(APIEndPointConstant.Branch.UpdateBranch)]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
