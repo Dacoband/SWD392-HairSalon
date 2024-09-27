@@ -10,6 +10,7 @@ import {
 import Role1 from "../pages/Role1";
 import Role2 from "../pages/Role2";
 import Logout from "../components/Logout";
+import LayoutMain from "../layout/LayoutMain";
 
 import Login from "../pages/Login";
 import PrivateRoute from "./PriveRouter";
@@ -21,20 +22,17 @@ const AppRouter = () => {
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
+        <Route element={<LayoutMain />}>
+          <Route
+            path="/Member"
+            element={<PrivateRoute element={Role1} allowedRoles={["MB"]} />}
+          />
+        </Route>
 
-        {/* Chỉ cho phép role 1 truy cập Role1 */}
         <Route
-          path="/role1"
-          element={<PrivateRoute element={Role1} allowedRoles={[1]} />}
+          path="/SystemAdmin"
+          element={<PrivateRoute element={Role2} allowedRoles={["AD"]} />}
         />
-
-        {/* Chỉ cho phép role 2 truy cập Role2 */}
-        <Route
-          path="/role2"
-          element={<PrivateRoute element={Role2} allowedRoles={[2]} />}
-        />
-
-        {/* Nếu không có quyền, người dùng sẽ bị điều hướng về trang chủ */}
       </Routes>
     </Router>
   );
