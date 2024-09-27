@@ -5,6 +5,7 @@ using HairSalonSystem.Services.Util;
 using HairSalonSystem.BusinessObject.Entities;
 using HairSalonSystem.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 
 namespace HairSalonSystem.Services.Controllers
 {
@@ -15,10 +16,13 @@ namespace HairSalonSystem.Services.Controllers
         private readonly IMemberService _memberService;
         private readonly IAccountService _accountService;
 
-        public MemberController(IMemberService memberService, IAccountService accountService)
+
+        public MemberController(IMemberService memberService, IAccountService accountService) 
         {
             _memberService = memberService;
             _accountService = accountService;
+          
+
         }
 
         // Get Member by ID
@@ -108,10 +112,10 @@ namespace HairSalonSystem.Services.Controllers
                 Email = account.Email,
                 MemberName = member.MemberName,
                 RoleName = account.RoleName,
-                DateOfBirth = member.DateOfBirth,   
+                DateOfBirth = member.DateOfBirth,
                 PhoneNumber = member.PhoneNumber,
                 Address = member.Address,
-                AvatarImage = member.AvatarImage  
+                AvatarImage = member.AvatarImage
             };
 
             return StatusCode(StatusCodes.Status201Created, memberResponse);
@@ -119,13 +123,13 @@ namespace HairSalonSystem.Services.Controllers
 
 
         // Update Existing Member
-        [HttpPut(APIEndPointConstant.Member.UpdateMember)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesErrorResponseType(typeof(BadRequestResult))]
-        public async Task<ActionResult> UpdateMember(Guid id, [FromBody] UpdateMemberRequest memberRequest)
+        [HttpPut("{id}")]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [ProducesErrorResponseType(typeof(ProblemDetails))]
+       
+        public async Task<bool> UpdateMember(Guid id, [FromBody] UpdateMemberRequest memberRequest)
         {
-            return await _memberService.UpdateMember(id,memberRequest,HttpContext);
-
+           return  await _memberService.UpdateMember(id, memberRequest, HttpContext);
         }
         // Delete Member
         [HttpDelete(APIEndPointConstant.Member.DeleteMember)]

@@ -9,10 +9,11 @@ namespace HairSalonSystem.Repositories.Interface
 {
     public interface IAccountRepository
     {
-        Task<Account> GetAccountById(Guid id);
+        Task<Account> GetAccountById(Guid? id);
         Task<List<Account>> GetAllAccounts();
         Task AddAccount(Account account);
         Task UpdateAccount(Account account);
+        Task UpdateEmailAsync(Guid? accountId, string newEmail);
         Task RemoveAccount(Guid id);
         Task<Account> GetAccountByEmail(string email);
         Task<string> GetEmailByAccountId(Guid accountId);

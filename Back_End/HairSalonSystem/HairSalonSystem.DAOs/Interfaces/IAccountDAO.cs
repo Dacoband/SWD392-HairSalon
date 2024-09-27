@@ -10,8 +10,9 @@ namespace HairSalonSystem.DAOs.Interface
     public interface IAccountDAO
     {
         Task CreateAccount(Account account);
-        Task<Account> GetAccountById(Guid id);
+        Task<Account> GetAccountById(Guid? id);
         Task<List<Account>> GetAllAccounts();
+        Task UpdateEmailAsync(Guid? accountId, string newEmail);
         Task UpdateAccount(Guid id, Account account);
         Task DeleteAccount(Guid id);
         Task<Account> GetAccountByEmail(string email);

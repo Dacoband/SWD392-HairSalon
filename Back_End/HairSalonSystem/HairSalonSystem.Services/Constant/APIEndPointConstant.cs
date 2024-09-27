@@ -36,7 +36,7 @@
             public const string GetMemberById = MemberEndpoint + "/{id}";
             public const string GetAllMembers = MemberEndpoint + "/all";
             public const string AddMember = MemberEndpoint + "/add";
-            public const string UpdateMember = MemberEndpoint + "/update";
+            public const string UpdateMember = MemberEndpoint + "/update/{id}";
             public const string DeleteMember = MemberEndpoint + "/delete/{id}";
         }
     }

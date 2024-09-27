@@ -20,9 +20,10 @@ namespace HairSalonSystem.Services.Implements
         private readonly IAccountRepository _accountRepository;
 
 
-        public MemberService(IMemberRepository memberRepository)
+        public MemberService(IMemberRepository memberRepository, IAccountRepository accountRepository)
         {
             _memberRepository = memberRepository;
+            _accountRepository = accountRepository;
         }
 
         public async Task<Member> GetMemberById(Guid id)
@@ -41,39 +42,32 @@ namespace HairSalonSystem.Services.Implements
             await _memberRepository.AddMember(member);
         }
 
-        public async Task<ActionResult> UpdateMember(Guid id, UpdateMemberRequest memberRequest, HttpContext httpContext)
+        public async Task<bool> UpdateMember(Guid id, UpdateMemberRequest memberRequest, HttpContext httpContext)
         {
             var RoleName = UserUtil.GetRoleName(httpContext);
-            Guid accountIdFromToken = UserUtil.GetAccountId(httpContext);
+            Guid? accountIdFromToken = UserUtil.GetAccountId(httpContext);
 
             // Kiểm tra RoleName có hợp lệ không
             if (RoleName != "SA" && RoleName != "SM" && RoleName != "SL" && RoleName != "MB" || string.IsNullOrEmpty(RoleName))
             {
-                return new ObjectResult(MessageConstant.MemberMessage.MemberNotRightsUpdate)
-                {
-                    StatusCode = StatusCodes.Status403Forbidden
-                };
+                throw new BadHttpRequestException(MessageConstant.MemberMessage.MemberNotRightsUpdate);
+                
             }
-
-            var existingAccount = await _accountRepository.GetAccountById(accountIdFromToken);
+            var  existingAccount = await _accountRepository.GetAccountById(accountIdFromToken);
             if (existingAccount == null)
             {
-                return new ObjectResult(MessageConstant.LoginMessage.NotFoundAccount)
-                {
-                    StatusCode = StatusCodes.Status400BadRequest
-                };
+                throw new BadHttpRequestException(MessageConstant.LoginMessage.NotFoundAccount);
+               
             }
 
             var existingMember = await _memberRepository.GetMemberById(id);
             if (existingMember == null)
             {
-                return new ObjectResult(MessageConstant.MemberMessage.MemberNotFound)
-                {
-                    StatusCode = StatusCodes.Status404NotFound
-                };
+                throw new BadHttpRequestException(MessageConstant.MemberMessage.MemberNotFound);
+               
             }
 
-            // Cập nhật các thông tin của member và account
+           
             existingMember.MemberName = memberRequest.MemberName;
             existingAccount.Email = memberRequest.Email;
             existingMember.PhoneNumber = memberRequest.PhoneNumber;
@@ -82,12 +76,11 @@ namespace HairSalonSystem.Services.Implements
             existingMember.AvatarImage = memberRequest.AvatarImage;
             existingMember.UpdDate = TimeUtils.GetCurrentSEATime();
 
-            // Gọi service để cập nhật
+            
             await _memberRepository.UpdateMember(existingMember);
-            await _accountRepository.UpdateAccount(existingAccount);
+            await _accountRepository.UpdateEmailAsync(accountIdFromToken,existingAccount.Email);
 
-            // Trả về kết quả thành công
-            return new ObjectResult(MessageConstant.MemberMessage.MemberUpdated);  // HTTP 204 No Content khi update thành công
+            return true;  
         }
 
         public async Task RemoveMember(Guid id)

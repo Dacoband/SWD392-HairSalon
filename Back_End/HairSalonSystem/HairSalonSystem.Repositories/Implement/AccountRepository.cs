@@ -18,7 +18,7 @@ namespace HairSalonSystem.Repositories.Implement
             _accountDAO = accountDAO;
         }
 
-        public async Task<Account> GetAccountById(Guid id)
+        public async Task<Account> GetAccountById(Guid? id)
         {
             return await _accountDAO.GetAccountById(id);
         }
@@ -33,6 +33,10 @@ namespace HairSalonSystem.Repositories.Implement
             await _accountDAO.CreateAccount(account);
         }
 
+        public async Task UpdateEmailAsync(Guid? accountId, string newEmail)
+        {
+            await _accountDAO.UpdateEmailAsync(accountId, newEmail);
+        }
         public async Task UpdateAccount(Account account)
         {
             await _accountDAO.UpdateAccount(account.AccountId, account);

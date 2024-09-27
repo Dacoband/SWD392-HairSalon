@@ -77,6 +77,7 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+
 // Register services and repositories
 builder.Services.AddScoped<IAccountDAO, AccountDAO>(); 
 builder.Services.AddScoped<IBranchDAO, BranchDAO>();

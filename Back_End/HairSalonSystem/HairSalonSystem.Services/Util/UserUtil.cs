@@ -6,26 +6,27 @@ namespace HairSalonSystem.Services.Util
     public class UserUtil
     {
 
-        public static Guid GetAccountId(HttpContext httpContext)
+        public static Guid? GetAccountId(HttpContext httpContext)
         {
             if (httpContext == null || httpContext.User == null)
             {
-                throw new BadHttpRequestException("Invalid HTTP context or user is null.");
+                return null;
             }
 
             var nameIdentifierClaim = httpContext.User.FindFirst(ClaimTypes.NameIdentifier);
             if (nameIdentifierClaim == null)
             {
-                throw new BadHttpRequestException("Name identifier claim not found.");
+                return null;
             }
 
             if (!Guid.TryParse(nameIdentifierClaim.Value, out Guid accountId))
             {
-                throw new BadHttpRequestException("Invalid account ID format.");
-            }
+                throw new BadHttpRequestException(nameIdentifierClaim.Value);
 
-            return accountId; // Trả về Guid mà không cần dấu hỏi
+            }
+            return accountId;
         }
+
 
 
         public static string GetRoleName(HttpContext httpContext)

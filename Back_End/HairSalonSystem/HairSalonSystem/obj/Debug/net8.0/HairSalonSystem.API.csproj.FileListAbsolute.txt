@@ -129,3 +129,4 @@ D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem
 D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem\obj\Debug\net8.0\HairSalo.513D0F31.Up2Date
 D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem\obj\Debug\net8.0\HairSalonSystem.API.genruntimeconfig.cache
 D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem\obj\Debug\net8.0\ref\HairSalonSystem.API.dll
+D:\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem\bin\Debug\net8.0\System.Security.Permissions.dll

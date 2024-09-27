@@ -24,7 +24,7 @@ namespace HairSalonSystem.DAOs.Implement
             await _accounts.InsertOneAsync(account);
         }
 
-        public async Task<Account> GetAccountById(Guid id)
+        public async Task<Account> GetAccountById(Guid? id)
         {
             return await _accounts.Find(a => a.AccountId == id).FirstOrDefaultAsync();
         }
@@ -32,6 +32,11 @@ namespace HairSalonSystem.DAOs.Implement
         public async Task<List<Account>> GetAllAccounts()
         {
             return await _accounts.Find(_ => true).ToListAsync();
+        }
+        public async Task UpdateEmailAsync(Guid? accountId, string newEmail)
+        {
+            var update = Builders<Account>.Update.Set(a => a.Email, newEmail);
+            await _accounts.UpdateOneAsync(a => a.AccountId == accountId, update);
         }
 
         public async Task UpdateAccount(Guid id, Account account)

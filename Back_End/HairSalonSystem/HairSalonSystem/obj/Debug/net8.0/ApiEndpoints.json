@@ -57,6 +57,37 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "HairSalonSystem.Services.Controllers.MemberController",
+    "Method": "UpdateMember",
+    "RelativePath": "api/Member/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "memberRequest",
+        "Type": "HairSalonSystem.Services.PayLoads.Requests.Members.UpdateMemberRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "HairSalonSystem.API.Controllers.AccountController",
     "Method": "GetAccountById",
     "RelativePath": "api/v1/account/{id}",
@@ -355,33 +386,6 @@
       {
         "Name": "id",
         "Type": "System.Guid",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 204
-      }
-    ]
-  },
-  {
-    "ContainingType": "HairSalonSystem.Services.Controllers.MemberController",
-    "Method": "UpdateMember",
-    "RelativePath": "api/v1/member/update",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Guid",
-        "IsRequired": false
-      },
-      {
-        "Name": "memberRequest",
-        "Type": "HairSalonSystem.Services.PayLoads.Requests.Members.UpdateMemberRequest",
         "IsRequired": true
       }
     ],
