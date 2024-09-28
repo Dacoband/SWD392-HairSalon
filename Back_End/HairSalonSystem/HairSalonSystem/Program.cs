@@ -101,7 +101,7 @@ builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("MongoDbConnection");
 var databaseName = builder.Configuration["MongoDb:DatabaseName"];
-builder.Services.AddSingleton(new HairSalonContext(connectionString, databaseName));
+//builder.Services.AddSingleton(new HairSalonContext(connectionString, databaseName));
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
