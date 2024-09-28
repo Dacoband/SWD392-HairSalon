@@ -23,26 +23,24 @@ namespace HairSalonSystem.Services.Controllers
         [ProducesErrorResponseType(typeof(ProblemDetails))]
         public async Task<ActionResult<Branch>> GetBranchById([FromRoute] Guid id)
         {
-            var branch = await _branchService.GetBranchById(id);
-            if (branch == null)
-            {
-                return Problem(MessageConstant.BranchMessage.BranchNotFound);
-            }
-            return Ok(branch);
+            return await _branchService.GetBranchById(id);
         }
         [HttpGet(APIEndPointConstant.Branch.GetAllBranches)]
-        [ProducesResponseType(typeof(GetBranchResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<Branch>), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
         public async Task<ActionResult<List<Branch>>> GetAllBranches()
         {
-            var branches = await _branchService.GetAllBranches();
-            if (branches == null)
-            {
-                return Problem(MessageConstant.BranchMessage.BranchNotFound);
-            }
-            return Ok(branches);
+            return await _branchService.GetAllBranches();
         }
-      
+        [HttpPost(APIEndPointConstant.Branch.AddBranch)]
+        [ProducesResponseType(typeof(CreateNewBrachResponse), StatusCodes.Status200OK)]
+        [ProducesErrorResponseType(typeof(ProblemDetails))]
+        public async Task<ActionResult> AddBranch([FromBody] CreateNewBranchRequest branchDto)
+        {
+            return await _branchService.CreateNewBranch(branchDto, HttpContext);
+
+        }
+
         //[HttpPost(APIEndPointConstant.Branch.AddBranch)]
         //[ProducesResponseType(typeof(CreateNewBrachResponse), StatusCodes.Status200OK)]
         //[ProducesErrorResponseType(typeof(ProblemDetails))]
@@ -87,38 +85,17 @@ namespace HairSalonSystem.Services.Controllers
         [HttpPatch(APIEndPointConstant.Branch.UpdateBranch)]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
-        public async Task<ActionResult> UpdateBranch([FromRoute] Guid id, [FromBody] UpdateBranchRequest branchDto)
+        public async Task<bool> UpdateBranch([FromRoute] Guid id, [FromBody] UpdateBranchRequest branchDto)
         {
-            
-            if (id == Guid.Empty)
-            {
-                throw new BadHttpRequestException(MessageConstant.BranchMessage.BranchNotFound);
-            }
-            var existingBranch = await _branchService.GetBranchById(id);
-            if (existingBranch == null)
-            {
-                throw new BadHttpRequestException(MessageConstant.BranchMessage.BranchNotExist);
-            }
-
-            var branch = new Branch
-            {
-                StaffManagerID = branchDto.StaffManagerID != Guid.Empty ? branchDto.StaffManagerID : existingBranch.StaffManagerID,
-                SalonBranches = string.IsNullOrEmpty(branchDto.SalonBranches) ? existingBranch.SalonBranches : branchDto.SalonBranches,
-                Address = string.IsNullOrEmpty(branchDto.Address) ? existingBranch.Address : branchDto.Address,
-                Phone = string.IsNullOrEmpty(branchDto.Phone) ? existingBranch.Phone : branchDto.Phone,
-                UpdDate = TimeUtils.GetCurrentSEATime(),
-            };
-
-            await _branchService.UpdateBranch(branch);
-            return NoContent();
+            return await _branchService.UpdateBranch(id, branchDto);
         }
         [HttpDelete(APIEndPointConstant.Branch.DeleteBranch)]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
-        public async Task<IActionResult> RemoveBranch([FromRoute] Guid branchId)
+        public async Task<IActionResult> RemoveBranch([FromRoute] Guid id)
         {
-            await _branchService.RemoveBranch(branchId);
-            return Ok();
+            await _branchService.RemoveBranch(id);
+            return Problem(MessageConstant.BranchMessage.BranchDeleted);
         }
 
     }

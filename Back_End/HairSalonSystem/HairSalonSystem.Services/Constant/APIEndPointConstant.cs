@@ -27,7 +27,7 @@
             public const string GetBranchById = BranchEndpoint + "/{id}";
             public const string GetAllBranches = BranchEndpoint + "/all";
             public const string AddBranch = BranchEndpoint + "/add";
-            public const string UpdateBranch = BranchEndpoint + "/update";
+            public const string UpdateBranch = BranchEndpoint + "/update/{id}";
             public const string DeleteBranch = BranchEndpoint + "/delete/{id}";
         }
         public static class Member

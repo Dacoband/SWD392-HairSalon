@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using HairSalonSystem.Services.PayLoads.Requests.Branchs;
 
+
 namespace HairSalonSystem.Services.Implements
 {
     public class BranchService : IBranchService
@@ -24,14 +25,31 @@ namespace HairSalonSystem.Services.Implements
             _branchRepository = branchRepository;
         }
 
-        public async Task<Branch> GetBranchById(Guid branchId)
+        public async Task<ActionResult<Branch>> GetBranchById(Guid branchId)
         {
-            return await _branchRepository.GetBranchById(branchId);
+            var branch = await _branchRepository.GetBranchById(branchId);
+            if (branch == null)
+            {
+                return new ObjectResult(MessageConstant.BranchMessage.BranchNotFound)
+                {
+                    StatusCode = StatusCodes.Status404NotFound
+
+                };
+            }
+            return new OkObjectResult(branch);
         }
 
-        public async Task<List<Branch>> GetAllBranches()
+        public async Task<ActionResult<List<Branch>>> GetAllBranches()
         {
-            return await _branchRepository.GetAllBranches();
+            var branches = await _branchRepository.GetAllBranches();
+            if (branches == null || !branches.Any())
+            {
+                return new ObjectResult(MessageConstant.BranchMessage.BranchNotFound)
+                {
+                    StatusCode = StatusCodes.Status404NotFound
+                };
+            }
+            return new OkObjectResult(branches);
         }
 
         public async Task<ActionResult> CreateNewBranch(CreateNewBranchRequest branchDto, HttpContext httpContext)
@@ -39,9 +57,9 @@ namespace HairSalonSystem.Services.Implements
             var accountID = UserUtil.GetAccountId(httpContext);
             if (accountID == null)
             {
-                return new ObjectResult(MessageConstant.LoginMessage.NotFoundAccount)
+                return new ObjectResult(MessageConstant.BranchMessage.NotRights)
                 {
-                    StatusCode = StatusCodes.Status400BadRequest
+                    StatusCode = StatusCodes.Status403Forbidden
                 };
             }
 
@@ -65,10 +83,9 @@ namespace HairSalonSystem.Services.Implements
                 UpdDate = TimeUtils.GetCurrentSEATime(),
                 DelFlg = true
             };
-
             await _branchRepository.AddBranch(branch);
 
-            var response =  new CreateNewBrachResponse
+            var response = new CreateNewBrachResponse
             {
                 BranchID = branch.BranchID,
                 StaffManagerID = branch.StaffManagerID,
@@ -76,14 +93,26 @@ namespace HairSalonSystem.Services.Implements
                 Address = branch.Address,
                 Phone = branch.Phone,
             };
-            return new CreatedAtActionResult(nameof(CreateNewBranch), "Branch", null, response);
-
+            return new ObjectResult(response);
         }
 
-        public async Task UpdateBranch(Branch branch)
+        public async Task<bool> UpdateBranch(Guid branchId, UpdateBranchRequest branchDto)
         {
-            await _branchRepository.UpdateBranch(branch);
+            var existingBranch = await _branchRepository.GetBranchById(branchId);
+            if (existingBranch == null)
+            {
+                throw new BadHttpRequestException(MessageConstant.BranchMessage.BranchNotFound);
+            }
+
+            existingBranch.SalonBranches = string.IsNullOrEmpty(branchDto.SalonBranches) ? existingBranch.SalonBranches : branchDto.SalonBranches;
+            existingBranch.Address = string.IsNullOrEmpty(branchDto.Address) ? existingBranch.Address : branchDto.Address;
+            existingBranch.Phone = string.IsNullOrEmpty(branchDto.Phone) ? existingBranch.Phone : branchDto.Phone;
+            existingBranch.UpdDate = TimeUtils.GetCurrentSEATime();
+
+            await _branchRepository.UpdateBranch(existingBranch);
+            return true;
         }
+
 
         public async Task RemoveBranch(Guid branchId)
         {

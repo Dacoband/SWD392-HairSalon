@@ -55,7 +55,7 @@ namespace HairSalonSystem.DAOs.Implements
         public async Task<List<Branch>> GetAllBranchesAsync()
         {
             return await _branchCollection
-                .Find(b => b.DelFlg == false)
+                .Find(b => b.DelFlg == true)
                 .ToListAsync();
         }
 

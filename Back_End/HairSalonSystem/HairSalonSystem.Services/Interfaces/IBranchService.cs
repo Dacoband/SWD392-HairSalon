@@ -12,10 +12,10 @@ namespace HairSalonSystem.Services.Interfaces
 {
     public interface IBranchService
     {
-        Task<Branch> GetBranchById(Guid branchId);
-        Task<List<Branch>> GetAllBranches();
+        Task<ActionResult<Branch>> GetBranchById(Guid branchId);
+        Task<ActionResult<List<Branch>>> GetAllBranches();
         public Task<ActionResult> CreateNewBranch(CreateNewBranchRequest branchDto, HttpContext httpContext);
-        Task UpdateBranch(Branch branch);
+        Task<bool> UpdateBranch(Guid branchId, UpdateBranchRequest branchDto);
         Task RemoveBranch(Guid branchId);
         Task<List<Branch>> GetBranchesByManagerId(Guid managerId);
     }
