@@ -23,7 +23,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "HairSalon API", Version = "v1" });
 
-    // Cấu hình Bearer token cho Swagger
+    // Cấu hình Bearer token 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,
@@ -52,8 +52,6 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 // Load JWT settings
-
-
 
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
 
