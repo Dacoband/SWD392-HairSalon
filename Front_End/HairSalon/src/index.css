@@ -1,0 +1,225 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+.menu {
+  display: flex;
+  gap: 10px;
+  flex: 1;
+  font-size: 17px;
+  justify-content: flex-end;
+}
+
+.mobile-menu-icon {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .menu {
+    display: none;
+  }
+
+  .mobile-menu-icon {
+    display: block;
+  }
+}
+
+.loggin-button {
+  padding-left: 50px;
+}
+
+.hero-image {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.hero-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.box-header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  height: 200px;
+  background-color: rgb(232, 232, 232);
+}
+
+.box-header ol {
+  font-weight: bold;
+  font-size: 25px;
+  margin: 0;
+}
+
+.box-header li {
+  font-weight: normal;
+  font-size: 15px;
+  margin: 10px 0 0 0;
+}
+
+.body-homebox {
+  width: 100%;
+  height: 450px;
+  background-color: rgb(232, 232, 232);
+  margin-top: 50px;
+  display: flex;
+  gap: 89px;
+  flex-wrap: wrap;
+}
+
+.box {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ ;
+}
+
+.image-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.body-image {
+  max-width: 100%;
+  height: auto;
+}
+
+.text-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.text-box p {
+  font-weight: bold;
+  font-size: 40px;
+  margin: 10px 0;
+}
+
+.body-button {
+  padding: 10px;
+  font-size: 25px;
+  cursor: pointer;
+  color: white;
+  background-color: rgb(47, 120, 245);
+}
+
+.body-button:hover {
+  background-color: rgb(0, 72, 167);
+  transition: 0.3s;
+}
+
+@media (max-width: 768px) {
+  .body-homebox {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .box {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.contact-home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 200px;
+  margin-top: 100px;
+  background-color: rgb(232, 232, 232);
+}
+
+.contact-home h1 {
+  font-weight: bold;
+  font-size: 22px;
+}
+
+.contact-home p {
+  font-size: 16px;
+  width: 49%;
+  padding-top: 10px;
+  text-align: center;
+}
+
+.subscribe {
+  width: 100%;
+  display: flex;
+  margin: 200px;
+}
+
+
+/* custom.css */
+.custom-scrollbar {
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent; /* For Firefox */
+}
+
+/* For Webkit browsers (Chrome, Safari, Edge) */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+
+/* custom.css */
+.hide-scrollbar {
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+  overflow: -moz-scrollbars-none; /* For Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* For Webkit browsers (Chrome, Safari, Edge) */
+}
+
+
+.custom-table .ant-table-thead > tr > th {
+  font-weight: bold;
+  background:#b6bdc6;
+}
+
+
+
+
+
