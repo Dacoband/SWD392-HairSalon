@@ -31,7 +31,7 @@ const AppRouter = () => {
 
         <Route
           path="/SystemAdmin"
-          element={<PrivateRoute element={Role2} allowedRoles={["AD"]} />}
+          element={<PrivateRoute element={Role2} allowedRoles={["SA"]} />}
         />
       </Routes>
     </Router>
