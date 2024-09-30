@@ -1,42 +1,47 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HairSalonSystem.BusinessObject.Entities
 {
     public class StaffStylist
     {
-        [BsonId]
-        [BsonRepresentation(MongoDB.Bson.BsonType.String)]
+        [BsonId]  // Chỉ giữ BsonId cho trường này
+        [BsonRepresentation(BsonType.String)]
         public Guid StaffStylistId { get; set; }
-        [BsonId]
-        [BsonRepresentation(MongoDB.Bson.BsonType.String)]
+
+        [BsonElement("branchId")]  // Sử dụng BsonElement cho các trường khác
+        [BsonRepresentation(BsonType.String)]
         public Guid BranchID { get; set; }
-        [BsonId]
-        [BsonRepresentation(MongoDB.Bson.BsonType.String)]
+
+        [BsonElement("accountId")]
+        [BsonRepresentation(BsonType.String)]
         public Guid AccountId { get; set; }
+
         [Required]
         [StringLength(100)]
-        [BsonElement("StaffStylistName")]
+        [BsonElement("staffStylistName")]
         public required string StaffStylistName { get; set; }
+
         [Required]
-        [BsonElement("DateOfBirth")]
+        [BsonElement("dateOfBirth")]
         public DateTime DateOfBirth { get; set; }
+
         [Required]
         [StringLength(10, MinimumLength = 10)]
         [RegularExpression(@"^[0-9]{10}$", ErrorMessage = "Phone number must be 10 digits.")]
         [BsonElement("phoneNumber")]
         public required string PhoneNumber { get; set; }
+
         [Required]
-        [BsonElement("Address")]
+        [BsonElement("address")]
         public required string Address { get; set; }
+
         [Required]
         [BsonElement("avatarImage")]
         public string AvatarImage { get; set; }
+
         [BsonElement("insDate")]
         public DateTime? InsDate { get; set; }
 
@@ -45,8 +50,5 @@ namespace HairSalonSystem.BusinessObject.Entities
 
         [BsonElement("delFlg")]
         public bool? DelFlg { get; set; }
-
-
-
     }
 }
