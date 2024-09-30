@@ -22,7 +22,6 @@
 
 
         }
-
         public static class MemberMessage
         {
             public const string MemberCreated = "Thành viên đã được tạo thành công";
@@ -34,6 +33,16 @@
             public const string EmailExist = "Email đã tồn tại trong hệ thống";
             public const string MemberNotRightsUpdate = "Bạn không có quyền cập nhật thành viên";
 
+        }
+        public static class Message 
+        {
+            public const string Success = "Bạn đã tạo thông báo thành công";
+            public const string NotFound = "Không tìm thấy thông báo";
+            public const string Update = "Cập nhật thông báo thành công";
+            public const string Delete = "Xoá thông báo thành công";
+            public const string NotRights = "Bạn không có quyền tạo thông báo";
+            public const string NotRightsUpdate = "Bạn không có quyền cập nhật thông báo";
+            public const string NotRightsDelete = "Bạn không có quyền xóa thông báo";
         }
     }
 }
