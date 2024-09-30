@@ -13,7 +13,7 @@ namespace HairSalonSystem.BusinessObject.Entities
 {
     public class Account
     {
-        [BsonId] // Marks the primary key in MongoDB
+        [BsonId] 
         [BsonRepresentation(BsonType.String)]
         public Guid AccountId { get; set; }
 
@@ -21,12 +21,12 @@ namespace HairSalonSystem.BusinessObject.Entities
         [BsonElement("roleName")]
         public string RoleName { get; set; }
 
-        [Required] // Email is required
-        [EmailAddress] // Ensure valid email format
+        [Required] 
+        [EmailAddress] 
         [BsonElement("email")]
         public string Email { get; set; }
 
-        [Required] // Password is required
+        [Required] 
         [StringLength(180, MinimumLength = 8)] // Password must be between 8 and 180 characters
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$",
              ErrorMessage = "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.")]
