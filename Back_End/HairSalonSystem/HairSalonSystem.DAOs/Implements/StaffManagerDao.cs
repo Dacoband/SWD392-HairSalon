@@ -28,7 +28,6 @@ namespace HairSalonSystem.DAOs.Implements
 
             var update = Builders<StaffManager>.Update
                 .Set(sm => sm.BranchID, staffManager.BranchID)
-                .Set(sm => sm.AccountID, staffManager.AccountID)
                 .Set(sm => sm.StaffManagerName, staffManager.StaffManagerName)
                 .Set(sm => sm.DateOfBirth, staffManager.DateOfBirth)
                 .Set(sm => sm.PhoneNumber, staffManager.PhoneNumber)
