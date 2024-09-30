@@ -7,11 +7,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="PayLoads\Requests\StaffManagers\UpdateStaffManagerRequest.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="PayLoads\Requests\StaffManagers\UpdateStaffManagerRequest.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\HairSalonSystem.Repositories\HairSalonSystem.Repositories.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="PayLoads\Responses\StaffManagers\" />
   </ItemGroup>
 
 </Project>
