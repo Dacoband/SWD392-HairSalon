@@ -39,5 +39,14 @@
             public const string UpdateMember = MemberEndpoint + "/update/{id}";
             public const string DeleteMember = MemberEndpoint + "/delete/{id}";
         }
+        public static class Notification
+        {
+            public const string NotificationEndpoint = ApiEndpoint + "/notification";
+            public const string GetNotificationById = NotificationEndpoint + "/{id}";
+            public const string GetAllNotifications = NotificationEndpoint + "/all";
+            public const string AddNotification = NotificationEndpoint + "/add";
+            public const string UpdateNotification = NotificationEndpoint + "/update/{id}";
+            public const string DeleteNotification = NotificationEndpoint + "/delete/{id}";
+        }
     }
 }

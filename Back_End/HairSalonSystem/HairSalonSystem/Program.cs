@@ -80,17 +80,20 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddScoped<IAccountDAO, AccountDAO>(); 
 builder.Services.AddScoped<IBranchDAO, BranchDAO>();
 builder.Services.AddScoped<IMemberDAO, MemberDAO>();
+builder.Services.AddScoped<INotificationDAO, NotificationDAO>();
 
 // Register Repositories
 builder.Services.AddScoped<IAccountRepository, AccountRepository>(); 
 builder.Services.AddScoped<IBranchRespository,BranchRespository>();
 builder.Services.AddScoped<IMemberRepository, MemberRepository>();
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 
 // Register Services
 builder.Services.AddScoped<IAccountService, AccountService>(); // Register IAccountService
 builder.Services.AddScoped<IAuthService, AuthService>(); // Register IAuthService
 builder.Services.AddScoped<IBranchService, BranchService>();
 builder.Services.AddScoped<IMemberService, MemberService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -101,7 +104,7 @@ builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("MongoDbConnection");
 var databaseName = builder.Configuration["MongoDb:DatabaseName"];
-//builder.Services.AddSingleton(new HairSalonContext(connectionString, databaseName));
+builder.Services.AddSingleton(new HairSalonContext(connectionString, databaseName));
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
