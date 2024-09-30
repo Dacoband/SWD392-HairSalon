@@ -44,5 +44,15 @@
             public const string NotRightsUpdate = "Bạn không có quyền cập nhật thông báo";
             public const string NotRightsDelete = "Bạn không có quyền xóa thông báo";
         }
+        public static class StaffManagerMessage
+        {
+            public const string StaffManagerNotFound = "Không tìm thấy nhân viên quản lý.";
+            public const string StaffManagerNotRightsUpdate = "Bạn không có quyền cập nhật thông tin nhân viên quản lý.";
+            public const string StaffManagerAlreadyExists = "Nhân viên quản lý đã tồn tại.";
+            public const string StaffManagerAddedSuccessfully = "Thêm nhân viên quản lý thành công.";
+            public const string StaffManagerUpdatedSuccessfully = "Cập nhật thông tin nhân viên quản lý thành công.";
+            public const string StaffManagerRemovedSuccessfully = "Xóa nhân viên quản lý thành công.";
+            public const string StaffManagerInvalidData = "Dữ liệu nhân viên quản lý không hợp lệ.";
+        }
     }
 }

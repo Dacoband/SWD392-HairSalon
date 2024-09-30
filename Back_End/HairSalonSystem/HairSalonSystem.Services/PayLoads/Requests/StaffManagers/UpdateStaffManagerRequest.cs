@@ -24,7 +24,10 @@ namespace HairSalonSystem.Services.PayLoads.Requests.StaffManagers
         [RegularExpression(@"^[0-9]{10}$", ErrorMessage = "Phone number must be 10 digits.")]
         [BsonElement("phoneNumber")]
         public string PhoneNumber { get; set; }
-
+        [Required(ErrorMessage = "Email is required")]
+        [EmailAddress] // Ensure valid email format
+        [BsonElement("email")]
+        public string Email { get; set; }
         [Required]
         [BsonElement("address")]
         public string Address { get; set; }
