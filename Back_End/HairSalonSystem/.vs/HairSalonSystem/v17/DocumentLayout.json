@@ -87,8 +87,7 @@
               "RelativeToolTip": "HairSalonSystem\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-09-30T02:02:03.254Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-30T02:02:03.254Z"
             },
             {
               "$type": "Document",
@@ -100,8 +99,7 @@
               "RelativeToolTip": "HairSalonSystem.Services\\Implements\\NotificationService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T01:59:33.053Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-30T01:59:33.053Z"
             },
             {
               "$type": "Document",
@@ -113,8 +111,7 @@
               "RelativeToolTip": "HairSalonSystem\\Program.cs",
               "ViewState": "AgIAAFgAAAAAAAAAAAASwGsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T01:58:23.356Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-30T01:58:23.356Z"
             },
             {
               "$type": "Document",
@@ -126,8 +123,7 @@
               "RelativeToolTip": "HairSalonSystem.Services\\PayLoads\\Responses\\Notifications\\CreateNewNotificationResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T01:58:00.561Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-30T01:58:00.561Z"
             },
             {
               "$type": "Document",
@@ -139,8 +135,7 @@
               "RelativeToolTip": "HairSalonSystem.Services\\PayLoads\\Responses\\Branchs\\CreateNewBrachResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T01:57:56.999Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-30T01:57:56.999Z"
             },
             {
               "$type": "Document",
@@ -152,8 +147,7 @@
               "RelativeToolTip": "HairSalonSystem.Services\\Interfaces\\INotificationService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T01:55:29.358Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-30T01:55:29.358Z"
             },
             {
               "$type": "Document",
@@ -165,8 +159,7 @@
               "RelativeToolTip": "HairSalonSystem\\Controllers\\MemberController.cs",
               "ViewState": "AgIAADQAAAAAAAAAAADwvycAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T01:48:26.203Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-30T01:48:26.203Z"
             },
             {
               "$type": "Document",
@@ -178,8 +171,7 @@
               "RelativeToolTip": "HairSalonSystem.Services\\PayLoads\\Responses\\Branchs\\GetBranchResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T01:47:59.991Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-30T01:47:59.991Z"
             },
             {
               "$type": "Document",
@@ -191,8 +183,7 @@
               "RelativeToolTip": "HairSalonSystem\\Controllers\\BranchController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAADwvxUAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T01:44:49.795Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-30T01:44:49.795Z"
             },
             {
               "$type": "Document",
@@ -204,8 +195,7 @@
               "RelativeToolTip": "HairSalonSystem\\Controllers\\NotificationController.cs",
               "ViewState": "AgIAABQAAAAAAAAAAAA1wDAAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T01:44:46.909Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-30T01:44:46.909Z"
             }
           ]
         }
