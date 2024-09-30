@@ -48,5 +48,15 @@
             public const string UpdateNotification = NotificationEndpoint + "/update/{id}";
             public const string DeleteNotification = NotificationEndpoint + "/delete/{id}";
         }
+        public static class StaffStylist
+        {
+            public const string StaffStylistEndpoint = ApiEndpoint + "/staff-stylist";
+            public const string GetStaffStylistById = StaffStylistEndpoint + "/{id}";
+            public const string GetAllStaffStylists = StaffStylistEndpoint + "/all";
+            public const string AddStaffStylist = StaffStylistEndpoint + "/add";
+            public const string UpdateStaffStylist = StaffStylistEndpoint + "/update/{id}";
+            public const string DeleteStaffStylist = StaffStylistEndpoint + "/delete/{id}";
+            public const string GetStaffStylistByBranchId = StaffStylistEndpoint + "/branch/{branchId}";
+        }
     }
 }

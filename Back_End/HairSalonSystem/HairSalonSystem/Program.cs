@@ -81,12 +81,14 @@ builder.Services.AddScoped<IAccountDAO, AccountDAO>();
 builder.Services.AddScoped<IBranchDAO, BranchDAO>();
 builder.Services.AddScoped<IMemberDAO, MemberDAO>();
 builder.Services.AddScoped<INotificationDAO, NotificationDAO>();
+builder.Services.AddScoped<IStaffStylistDAO, StaffStylistDAO>();
 
 // Register Repositories
 builder.Services.AddScoped<IAccountRepository, AccountRepository>(); 
 builder.Services.AddScoped<IBranchRespository,BranchRespository>();
 builder.Services.AddScoped<IMemberRepository, MemberRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+builder.Services.AddScoped<IStaffStylistRepository, StaffStylistRepository>();
 
 // Register Services
 builder.Services.AddScoped<IAccountService, AccountService>(); // Register IAccountService
@@ -94,6 +96,7 @@ builder.Services.AddScoped<IAuthService, AuthService>(); // Register IAuthServic
 builder.Services.AddScoped<IBranchService, BranchService>();
 builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<IStaffStylistService, StaffStylistService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
