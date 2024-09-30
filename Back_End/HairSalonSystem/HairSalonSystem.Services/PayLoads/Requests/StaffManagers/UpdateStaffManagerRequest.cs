@@ -1,17 +1,15 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MongoDB.Bson.Serialization.Attributes;
-using System.ComponentModel.DataAnnotations;
 
 namespace HairSalonSystem.Services.PayLoads.Requests.StaffManagers
-
 {
     public class UpdateStaffManagerRequest
     {
-       
         [Required]
         [StringLength(100)]
         [BsonElement("staffManagerName")]

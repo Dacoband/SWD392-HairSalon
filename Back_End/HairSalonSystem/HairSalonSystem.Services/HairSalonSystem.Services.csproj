@@ -7,14 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="PayLoads\Requests\StaffManagers\UpdateStaffManagerRequest.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="PayLoads\Requests\StaffManagers\UpdateStaffManagerRequest.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.0.2" />
   </ItemGroup>
 
