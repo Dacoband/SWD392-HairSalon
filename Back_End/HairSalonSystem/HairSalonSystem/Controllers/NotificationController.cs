@@ -1,15 +1,15 @@
 ﻿using HairSalonSystem.BusinessObject.Entities;
 using HairSalonSystem.Services.Constant;
+using HairSalonSystem.Services.Constant;
+
 using HairSalonSystem.Services.Controllers;
 using HairSalonSystem.Services.Interfaces;
 using HairSalonSystem.Services.PayLoads.Requests.Notifications;
 using HairSalonSystem.Services.PayLoads.Responses.Notifications;
 using Microsoft.AspNetCore.Mvc;
-using static HairSalonSystem.Services.Constant.APIEndPointConstant;
 
 namespace HairSalonSystem.API.Controllers
 {
-    [Route("api/[Controller]")]
     [ApiController]
     public class NotificationController : BaseController<NotificationController>
     {
