@@ -52,7 +52,9 @@ namespace HairSalonSystem.Services.Implements
                 PhoneNumber = request.PhoneNumber,
                 Address = request.Address,
                 AvatarImage = request.AvatarImage,
-                InsDate = TimeUtils.GetCurrentSEATime()
+                InsDate = TimeUtils.GetCurrentSEATime(),
+                UpdDate = TimeUtils.GetCurrentSEATime(),
+                DelFlg = true
             };
 
             await _staffStylistRepository.CreateStaffStylist(staffStylist);
