@@ -25,7 +25,6 @@ namespace HairSalonSystem.DAOs.Implements
         public async Task UpdateStaffManagerAsync(StaffManager staffManager)
         {
             var filter = Builders<StaffManager>.Filter.Eq(sm => sm.StaffManagerID, staffManager.StaffManagerID);
-
             var update = Builders<StaffManager>.Update
                 .Set(sm => sm.BranchID, staffManager.BranchID)
                 .Set(sm => sm.StaffManagerName, staffManager.StaffManagerName)
@@ -34,7 +33,7 @@ namespace HairSalonSystem.DAOs.Implements
                 .Set(sm => sm.Address, staffManager.Address)
                 .Set(sm => sm.AvatarImage, staffManager.AvatarImage)
                 .Set(sm => sm.UpdDate, staffManager.UpdDate);
-
+               ;
             await UpdateAsync(filter, update);
         }
 

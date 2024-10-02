@@ -28,18 +28,20 @@ namespace HairSalonSystem.DAOs.Implements
 
         public async Task DeleteAsync(FilterDefinition<T> filter)
         {
-            var update = Builders<T>.Update.Set("DelFlg", false); // Assuming DelFlg is a common soft delete flag
+            var update = Builders<T>.Update.Set("DelFlg", false);
             await _collection.UpdateOneAsync(filter, update);
         }
 
         public async Task<T> GetByIdAsync(FilterDefinition<T> filter)
         {
-            return await _collection.Find(filter).FirstOrDefaultAsync();
+            var updatedFilter = Builders<T>.Filter.Eq("DelFlg", true) & filter;
+            return await _collection.Find(updatedFilter).FirstOrDefaultAsync();
         }
 
         public async Task<List<T>> GetAllAsync(FilterDefinition<T> filter)
         {
-            return await _collection.Find(filter).ToListAsync();
+            var updatedFilter = Builders<T>.Filter.Eq("DelFlg", true) & filter;
+            return await _collection.Find(updatedFilter).ToListAsync();
         }
     }
 }

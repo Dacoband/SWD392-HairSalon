@@ -10,25 +10,21 @@ namespace HairSalonSystem.Services.PayLoads.Requests.StaffManagers
 {
     public class UpdateStaffManagerRequest
     {
-        [Required]
         [StringLength(100)]
         [BsonElement("staffManagerName")]
         public string StaffManagerName { get; set; }
 
-        [Required]
         [BsonElement("dateOfBirth")]
         public DateTime DateOfBirth { get; set; }
 
-        [Required]
         [StringLength(10, MinimumLength = 10)]
         [RegularExpression(@"^[0-9]{10}$", ErrorMessage = "Phone number must be 10 digits.")]
         [BsonElement("phoneNumber")]
         public string PhoneNumber { get; set; }
-        [Required(ErrorMessage = "Email is required")]
-        [EmailAddress] // Ensure valid email format
+        
+         // Ensure valid email format
         [BsonElement("email")]
         public string Email { get; set; }
-        [Required]
         [BsonElement("address")]
         public string Address { get; set; }
 

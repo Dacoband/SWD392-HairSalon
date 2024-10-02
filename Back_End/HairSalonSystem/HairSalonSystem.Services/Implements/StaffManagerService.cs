@@ -3,15 +3,11 @@ using HairSalonSystem.Repositories.Interface;
 using HairSalonSystem.Services.Constant;
 using HairSalonSystem.Services.Interfaces;
 using HairSalonSystem.Services.PayLoads.Requests.StaffManagers;
+using HairSalonSystem.Services.PayLoads.Responses.StaffManagers;
+
 using HairSalonSystem.Services.Util;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HairSalonSystem.Services.Implements
 {
@@ -19,11 +15,13 @@ namespace HairSalonSystem.Services.Implements
     {
         private readonly IStaffManagerRepository _staffManagerRepository;
         private readonly IAccountRepository _accountRepository;
+        private readonly IBranchRespository _branchRespository;
 
-        public StaffManagerService(IStaffManagerRepository staffManagerRepository, IAccountRepository accountRepository)
+        public StaffManagerService(IStaffManagerRepository staffManagerRepository, IAccountRepository accountRepository,IBranchRespository branchRespository)
         {
             _staffManagerRepository = staffManagerRepository;
             _accountRepository = accountRepository;
+            _branchRespository = branchRespository;
         }
 
         public async Task<StaffManager> GetStaffManagerById(Guid id)
@@ -54,9 +52,21 @@ namespace HairSalonSystem.Services.Implements
                     StatusCode = StatusCodes.Status403Forbidden
                 };
             }
+            var account = new Account()
+            {
+                AccountId = Guid.NewGuid(),
+                Email = staffManager.Email,
+                Password = staffManager.Password,
+                RoleName = Enums.RoleEnums.SM.ToString(),
+                InsDate = TimeUtils.GetCurrentSEATime(),
+                UpdDate = TimeUtils.GetCurrentSEATime(),
+                DelFlg = true
+            };
+             await _accountRepository.AddAccount(account);
 
             var staffmanager = new StaffManager()
             {
+                StaffManagerID = Guid.NewGuid(),
                 AccountID = Guid.NewGuid(),
                 BranchID = staffManager.BranchID,
                 StaffManagerName = staffManager.StaffManagerName,
@@ -64,27 +74,47 @@ namespace HairSalonSystem.Services.Implements
                 PhoneNumber = staffManager.PhoneNumber,
                 Address = staffManager.Address,
                 AvatarImage = staffManager.AvatarImage,
+                InsDate = TimeUtils.GetCurrentSEATime(),
+                UpdDate =TimeUtils.GetCurrentSEATime(),
+                DelFlg = true 
+                };
+            var brach = await _branchRespository.GetBranchById(staffManager.BranchID);
+            if (brach == null)
+            {
+                return new ObjectResult(MessageConstant.BranchMessage.BranchNotFound)
+                {
+                    StatusCode = StatusCodes.Status404NotFound
+                };
+            }
 
-                
-                
 
-                
 
+            await _staffManagerRepository.AddStaffManager(staffmanager);
+
+            var response = new CreateNewStaffManagerResponse()
+            {
+                BranchID = staffManager.BranchID,
+                Email = account.Email,
+                StaffManagerName = staffmanager.StaffManagerName,
+                Address = staffManager.Address,
+                DateOfBirth = staffmanager.DateOfBirth,
+                PhoneNumber = staffmanager.PhoneNumber,
+                AvatarImage = staffmanager.AvatarImage
             };
-            await _staffManagerRepository.AddStaffManager(staffManager);
-            throw new NotImplementedException();
+                      return new ObjectResult(response);
         }
 
-        public async Task<bool> UpdateStaffManager(Guid id, UpdateStaffManagerRequest staffManagerRequest, HttpContext httpContext)
+        public async Task<ActionResult> UpdateStaffManager(Guid id, UpdateStaffManagerRequest staffManagerRequest, HttpContext httpContext)
         {
             var RoleName = UserUtil.GetRoleName(httpContext);
             Guid? accountIdFromToken = UserUtil.GetAccountId(httpContext);
-
-            // Kiểm tra RoleName hợp lệ
-            if (RoleName != "SA" && RoleName != "SM" && RoleName != "SL" && string.IsNullOrEmpty(RoleName))
+           
+            
+            if (RoleName != "SA" && RoleName != "SM" && string.IsNullOrEmpty(RoleName))
             {
                 throw new BadHttpRequestException(MessageConstant.StaffManagerMessage.StaffManagerNotRightsUpdate);
             }
+            var existingStaffManager = await _staffManagerRepository.GetStaffManagerById(id);
 
             var existingAccount = await _accountRepository.GetAccountById(accountIdFromToken);
             if (existingAccount == null)
@@ -92,33 +122,43 @@ namespace HairSalonSystem.Services.Implements
                 throw new BadHttpRequestException(MessageConstant.LoginMessage.NotFoundAccount);
             }
 
-            var existingStaffManager = await _staffManagerRepository.GetStaffManagerById(id);
+            
             if (existingStaffManager == null)
             {
                 throw new BadHttpRequestException(MessageConstant.StaffManagerMessage.StaffManagerNotFound);
             }
 
             // Cập nhật thông tin StaffManager và Account
-            existingStaffManager.StaffManagerName = staffManagerRequest.StaffManagerName;
-            existingAccount.Email = staffManagerRequest.Email;
-            existingStaffManager.PhoneNumber = staffManagerRequest.PhoneNumber;
-            existingStaffManager.Address = staffManagerRequest.Address;
-            existingStaffManager.DateOfBirth = staffManagerRequest.DateOfBirth;
-            existingStaffManager.AvatarImage = staffManagerRequest.AvatarImage;
+            existingStaffManager.StaffManagerName = staffManagerRequest.StaffManagerName ?? existingStaffManager.StaffManagerName;
+            existingAccount.Email = staffManagerRequest.Email ?? existingAccount.Email;
+            existingStaffManager.PhoneNumber = staffManagerRequest.PhoneNumber ?? existingStaffManager.PhoneNumber;
+            existingStaffManager.Address = staffManagerRequest.Address ?? existingStaffManager.Address;
+            existingStaffManager.DateOfBirth = staffManagerRequest.DateOfBirth != DateTime.MinValue ? staffManagerRequest.DateOfBirth : existingStaffManager.DateOfBirth;
+            existingStaffManager.AvatarImage = staffManagerRequest.AvatarImage ?? existingStaffManager.AvatarImage;
             existingStaffManager.UpdDate = TimeUtils.GetCurrentSEATime();
 
-            await _staffManagerRepository.UpdateStaffManager(existingStaffManager);
+             await _staffManagerRepository.UpdateStaffManager(existingStaffManager);
             await _accountRepository.UpdateEmailAsync(accountIdFromToken, existingAccount.Email);
-
-            return true;
+            var response = new UpdateStaffManagerResponse()
+            {
+                BranchID = existingStaffManager.BranchID,
+                Email = existingAccount.Email,
+                StaffManagerName = existingStaffManager.StaffManagerName,
+                DateOfBirth = existingStaffManager.DateOfBirth,
+                PhoneNumber = existingStaffManager.PhoneNumber,
+                Address = existingStaffManager.Address,
+                AvatarImage = existingStaffManager.AvatarImage,
+                
+            };
+            return new ObjectResult(MessageConstant.StaffManagerMessage.StaffManagerUpdatedSuccessfully)
+            {
+                StatusCode = StatusCodes.Status200OK
+            } ;
         }
 
         public async Task RemoveStaffManager(Guid id)
         {
-            // Thêm logic nghiệp vụ nếu cần
             await _staffManagerRepository.RemoveStaffManager(id);
-        }
-
-        
+        } 
     }
 }
