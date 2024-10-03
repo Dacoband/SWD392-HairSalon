@@ -58,5 +58,16 @@
             public const string DeleteStaffStylist = StaffStylistEndpoint + "/delete/{id}";
             public const string GetStaffStylistByBranchId = StaffStylistEndpoint + "/branch/{branchId}";
         }
+        public static class Stylist
+        {
+            public const string StylistEndpoint = ApiEndpoint + "/stylist";
+            public const string GetStylistById = StylistEndpoint + "/{id}";
+            public const string GetAllStylists = StylistEndpoint + "/all";
+            public const string AddStylist = StylistEndpoint + "/add";
+            public const string UpdateStylist = StylistEndpoint + "/update/{id}";
+            public const string DeleteStylist = StylistEndpoint + "/delete/{id}";
+            public const string GetStylistByBranchId = StylistEndpoint + "/branch/{branchId}";
+            public const string GetStylistByStaffStylist = StylistEndpoint + "/staff-stylist/{staffStylistId}";
+        }
     }
 }

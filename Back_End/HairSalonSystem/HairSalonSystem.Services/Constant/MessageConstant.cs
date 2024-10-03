@@ -54,5 +54,15 @@
             public const string StaffStylistNotRightsDelete = "Bạn không có quyền xóa quản lí stylist";
             public const string StaffStylistNotRightsUpdate = "Bạn không có quyền cập nhật quản lí stylist";
         }
+        public static class StylistMessage 
+        {
+            public const string StylistCreated = "Stylist đã được tạo thành công";
+            public const string StylistUpdated = "Cập nhật stylist thành công";
+            public const string StylistDeleted = "Stylist đã được xoá";
+            public const string StylistNotFound = "Không tìm thấy stylist";
+            public const string NotRights = "Bạn không có quyền tạo stylist";
+            public const string StylistNotRightsDelete = "Bạn không có quyền xóa stylist";
+            public const string StylistNotRightsUpdate = "Bạn không có quyền cập nhật stylist";
+        }
     }
 }
