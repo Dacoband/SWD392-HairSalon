@@ -54,5 +54,16 @@
             public const string StaffStylistNotRightsDelete = "Bạn không có quyền xóa quản lí stylist";
             public const string StaffStylistNotRightsUpdate = "Bạn không có quyền cập nhật quản lí stylist";
         }
+
+        public static class ServiceMessage
+        {
+            public const string NotFound = "Dịch vụ không tồn tại";
+            public const string CreateRight = "Bạn không có quyền tạo mới dịch vụ";
+            public const string DeleteRight = "Bạn không có quyền xóa dịch vụ";
+            public const string UpdateRight = "Bạn không có quyền cập nhận dịch vụ";
+            public const string CreateSuccess = "Tạo mới dịch vụ thành công";
+            public const string DeleteSuccess = "Xóa dịch vụ thành công";
+            public const string UpdateSuccess = "Cập nhật dịch vụ thành công";
+        }
     }
 }

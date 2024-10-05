@@ -58,5 +58,16 @@
             public const string DeleteStaffStylist = StaffStylistEndpoint + "/delete/{id}";
             public const string GetStaffStylistByBranchId = StaffStylistEndpoint + "/branch/{branchId}";
         }
+        public static class Service
+        {
+            public const string ServiceEndpoint = ApiEndpoint + "/service";
+            public const string GetServiceById = ServiceEndpoint + "{id}";
+            public const string CreateService = ServiceEndpoint + "/create";
+            public const string GetAllService = ServiceEndpoint + "/get-all";
+            public const string UpdateService = ServiceEndpoint + "/update/{id}";
+            public const string DeleteService = ServiceEndpoint + "/delete/{id}";
+
+
+        }
     }
 }
