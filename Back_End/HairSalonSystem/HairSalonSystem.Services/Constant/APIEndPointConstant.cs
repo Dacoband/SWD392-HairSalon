@@ -78,7 +78,7 @@
                 public const string GetStylistByBranchId = StylistEndpoint + "/branch/{branchId}";
                 public const string GetStylistByStaffStylist = StylistEndpoint + "/staff-stylist/{staffStylistId}";
             }
-        }
+
         public static class Service
         {
             public const string ServiceEndpoint = ApiEndpoint + "/service";
@@ -96,4 +96,4 @@
             public const string CreateAppointment = AppointmentEndpoint + "/create";
         }
     }
-
+}
