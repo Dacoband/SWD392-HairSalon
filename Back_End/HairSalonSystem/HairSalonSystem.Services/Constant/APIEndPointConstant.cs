@@ -67,7 +67,12 @@
             public const string UpdateService = ServiceEndpoint + "/update/{id}";
             public const string DeleteService = ServiceEndpoint + "/delete/{id}";
 
+        }
 
+        public static class Appointment
+        {
+            public const string AppointmentEndpoint = ApiEndpoint + "/appointment";
+            public const string CreateAppointment = AppointmentEndpoint + "/create";
         }
     }
 }
