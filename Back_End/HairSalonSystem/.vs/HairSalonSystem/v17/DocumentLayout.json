@@ -88,7 +88,7 @@
               "RelativeDocumentMoniker": "HairSalonSystem\\Program.cs",
               "ToolTip": "D:\\FPT_Learning\\SWD392\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem\\Program.cs",
               "RelativeToolTip": "HairSalonSystem\\Program.cs",
-              "ViewState": "AgIAAEsAAAAAAAAAAAAAAGAAAAA5AAAAAAAAAA==",
+              "ViewState": "AgIAAIMAAAAAAAAAAAAAAGAAAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-03T18:05:54.073Z",
               "EditorCaption": ""
@@ -103,8 +103,7 @@
               "RelativeToolTip": "HairSalonSystem\\Controllers\\BranchController.cs",
               "ViewState": "AgIAABkAAAAAAAAAAAAswFYAAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T18:03:19.02Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-03T18:03:19.02Z"
             },
             {
               "$type": "Document",
@@ -116,8 +115,7 @@
               "RelativeToolTip": "HairSalonSystem\\Controllers\\StaffStylistController.cs",
               "ViewState": "AgIAACMAAAAAAAAAAAAywDwAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T18:00:49.911Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-03T18:00:49.911Z"
             },
             {
               "$type": "Document",
@@ -129,8 +127,7 @@
               "RelativeToolTip": "HairSalonSystem\\Controllers\\StylistController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T18:00:34.342Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-03T18:00:34.342Z"
             },
             {
               "$type": "Document",
@@ -142,8 +139,7 @@
               "RelativeToolTip": "HairSalonSystem.Services\\Interfaces\\IStaffStylistService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAADwvw0AAAB7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T17:56:52.794Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-03T17:56:52.794Z"
             },
             {
               "$type": "Document",
@@ -155,8 +151,7 @@
               "RelativeToolTip": "HairSalonSystem.Services\\Interfaces\\IStylistService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAADwvxEAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T17:56:47.755Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-03T17:56:47.755Z"
             },
             {
               "$type": "Document",
@@ -168,8 +163,7 @@
               "RelativeToolTip": "HairSalonSystem.Services\\PayLoads\\Requests\\Members\\CreateNewMemberRequest.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAAswAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T17:56:08.476Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-03T17:56:08.476Z"
             },
             {
               "$type": "Document",
@@ -181,8 +175,7 @@
               "RelativeToolTip": "HairSalonSystem.BusinessObject\\Entities\\Stylist.cs",
               "ViewState": "AgIAABsAAAAAAAAAAAA7wAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T17:55:57.732Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-03T17:55:57.732Z"
             },
             {
               "$type": "Document",
@@ -194,8 +187,7 @@
               "RelativeToolTip": "HairSalonSystem.Services\\PayLoads\\Requests\\StaffStylists\\CreateStaffStylistRequest.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAADwvxYAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T17:55:08.845Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-03T17:55:08.845Z"
             },
             {
               "$type": "Document",
@@ -207,8 +199,7 @@
               "RelativeToolTip": "HairSalonSystem.Services\\PayLoads\\Requests\\Stylists\\CreateStylistRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T17:55:06.008Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-03T17:55:06.008Z"
             },
             {
               "$type": "Document",
@@ -220,8 +211,7 @@
               "RelativeToolTip": "HairSalonSystem.Services\\PayLoads\\Responses\\StaffStylists\\CreateStaffStylistResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T17:54:58.258Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-03T17:54:58.258Z"
             },
             {
               "$type": "Document",
@@ -233,8 +223,7 @@
               "RelativeToolTip": "HairSalonSystem.Services\\PayLoads\\Responses\\Stylists\\CreateStylistResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T17:54:56.078Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-03T17:54:56.078Z"
             },
             {
               "$type": "Document",
@@ -246,8 +235,7 @@
               "RelativeToolTip": "HairSalonSystem.Services\\Enums\\RoleEnums.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T17:52:40.71Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-03T17:52:40.71Z"
             },
             {
               "$type": "Document",
@@ -259,8 +247,7 @@
               "RelativeToolTip": "HairSalonSystem.Services\\Implements\\StylistService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAI4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T17:50:59.871Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-03T17:50:59.871Z"
             },
             {
               "$type": "Document",
@@ -272,8 +259,7 @@
               "RelativeToolTip": "HairSalonSystem.Services\\Implements\\StaffStylistService.cs",
               "ViewState": "AgIAAHUAAAAAAAAAAADwvx8AAABbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T17:50:36.417Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-03T17:50:36.417Z"
             }
           ]
         }
