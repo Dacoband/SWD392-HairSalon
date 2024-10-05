@@ -20,6 +20,8 @@
   - **Structure:** 
     - Back-End:  Using model Separation of Concerns, Code-First
     - Front-End:  
+  - **System Architecture** 
+    ![SystemDesgin](Diagrams/SWD392_SystemDesign.png)
 - # **Table Of Contents**
   - ### [Specifications](#specifications)
     - [Process 1](#process-1-Register-An-Account)
