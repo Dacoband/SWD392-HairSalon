@@ -55,6 +55,10 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
 
+//Load VNPay settings
+builder.Services.Configure<VNPaySettings>(builder.Configuration.GetSection("VNPay"));
+
+
 // Add JWT Authentication
 builder.Services.AddAuthentication(options =>
 {
@@ -97,6 +101,7 @@ builder.Services.AddScoped<IStylistRepository, StylistRepository>();
 
 
 // Register Services
+builder.Services.AddScoped<IVNPayService, VNPayService>();
 builder.Services.AddScoped<IAccountService, AccountService>(); 
 builder.Services.AddScoped<IAuthService, AuthService>(); 
 builder.Services.AddScoped<IBranchService, BranchService>();
