@@ -23,6 +23,8 @@ namespace HairSalonSystem.API.Controllers
         }
         [HttpGet(APIEndPointConstant.Notification.GetNotificationById)]
         [ProducesResponseType(typeof(Notifications), StatusCodes.Status200OK)]
+        [ProducesErrorResponseType(typeof(ProblemDetails))]
+
         public async Task<ActionResult<Notifications>> GetNotificationById(Guid id)
         {
             var notification = await _notificationService.GetNotificationById(id);
@@ -34,6 +36,8 @@ namespace HairSalonSystem.API.Controllers
         }
         [HttpGet(APIEndPointConstant.Notification.GetAllNotifications)]
         [ProducesResponseType(typeof(List<Notifications>), StatusCodes.Status200OK)]
+        [ProducesErrorResponseType(typeof(ProblemDetails))]
+
         public async Task<ActionResult<List<Notifications>>> GetAllNotifications()
         {
             var notifications = await _notificationService.GetAllNotifications();

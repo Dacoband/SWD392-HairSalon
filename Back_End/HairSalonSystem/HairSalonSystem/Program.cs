@@ -81,16 +81,20 @@ builder.Services.AddScoped<IAccountDAO, AccountDAO>();
 builder.Services.AddScoped<IBranchDAO, BranchDAO>();
 builder.Services.AddScoped<IMemberDAO, MemberDAO>();
 builder.Services.AddScoped<INotificationDAO, NotificationDAO>();
+builder.Services.AddScoped<IStaffManagerDao, StaffManagerDAO>();
 builder.Services.AddScoped<IStaffStylistDAO, StaffStylistDAO>();
 builder.Services.AddScoped<IStylistDAO, StylistDAO>();
+
 
 // Register Repositories
 builder.Services.AddScoped<IAccountRepository, AccountRepository>(); 
 builder.Services.AddScoped<IBranchRespository,BranchRespository>();
 builder.Services.AddScoped<IMemberRepository, MemberRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+builder.Services.AddScoped<IStaffManagerRepository, StaffManagerRepository>();
 builder.Services.AddScoped<IStaffStylistRepository, StaffStylistRepository>();
 builder.Services.AddScoped<IStylistRepository, StylistRepository>();
+
 
 // Register Services
 builder.Services.AddScoped<IAccountService, AccountService>(); 
@@ -98,6 +102,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IBranchService, BranchService>();
 builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<IStaffManagerService, StaffManagerService>();
 builder.Services.AddScoped<IStaffStylistService, StaffStylistService>();
 builder.Services.AddScoped<IStylistService, StylistService>();
 

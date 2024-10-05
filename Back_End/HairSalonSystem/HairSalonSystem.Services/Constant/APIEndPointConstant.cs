@@ -1,4 +1,4 @@
-﻿namespace HairSalonSystem.Services.Constant 
+﻿namespace HairSalonSystem.Services.Constant
 {
     public class APIEndPointConstant
     {
@@ -48,26 +48,36 @@
             public const string UpdateNotification = NotificationEndpoint + "/update/{id}";
             public const string DeleteNotification = NotificationEndpoint + "/delete/{id}";
         }
-        public static class StaffStylist
+        public static class StaffManager
         {
-            public const string StaffStylistEndpoint = ApiEndpoint + "/staff-stylist";
-            public const string GetStaffStylistById = StaffStylistEndpoint + "/{id}";
-            public const string GetAllStaffStylists = StaffStylistEndpoint + "/all";
-            public const string AddStaffStylist = StaffStylistEndpoint + "/add";
-            public const string UpdateStaffStylist = StaffStylistEndpoint + "/update/{id}";
-            public const string DeleteStaffStylist = StaffStylistEndpoint + "/delete/{id}";
-            public const string GetStaffStylistByBranchId = StaffStylistEndpoint + "/branch/{branchId}";
+            public const string StaffManagerEndpoint = ApiEndpoint + "/staff-manager";
+            public const string GetStaffManagerById = StaffManagerEndpoint + "/{id}";
+            public const string GetAllStaffManagers = StaffManagerEndpoint + "/all";
+            public const string AddStaffManager = StaffManagerEndpoint + "/add";
+            public const string UpdateStaffManager = StaffManagerEndpoint + "/update/{id}";
+            public const string DeleteStaffManager = StaffManagerEndpoint + "/delete/{id}";
         }
-        public static class Stylist
-        {
-            public const string StylistEndpoint = ApiEndpoint + "/stylist";
-            public const string GetStylistById = StylistEndpoint + "/{id}";
-            public const string GetAllStylists = StylistEndpoint + "/all";
-            public const string AddStylist = StylistEndpoint + "/add";
-            public const string UpdateStylist = StylistEndpoint + "/update/{id}";
-            public const string DeleteStylist = StylistEndpoint + "/delete/{id}";
-            public const string GetStylistByBranchId = StylistEndpoint + "/branch/{branchId}";
-            public const string GetStylistByStaffStylist = StylistEndpoint + "/staff-stylist/{staffStylistId}";
+            public static class StaffStylist
+            {
+                public const string StaffStylistEndpoint = ApiEndpoint + "/staff-stylist";
+                public const string GetStaffStylistById = StaffStylistEndpoint + "/{id}";
+                public const string GetAllStaffStylists = StaffStylistEndpoint + "/all";
+                public const string AddStaffStylist = StaffStylistEndpoint + "/add";
+                public const string UpdateStaffStylist = StaffStylistEndpoint + "/update/{id}";
+                public const string DeleteStaffStylist = StaffStylistEndpoint + "/delete/{id}";
+                public const string GetStaffStylistByBranchId = StaffStylistEndpoint + "/branch/{branchId}";
+            }
+            public static class Stylist
+            {
+                public const string StylistEndpoint = ApiEndpoint + "/stylist";
+                public const string GetStylistById = StylistEndpoint + "/{id}";
+                public const string GetAllStylists = StylistEndpoint + "/all";
+                public const string AddStylist = StylistEndpoint + "/add";
+                public const string UpdateStylist = StylistEndpoint + "/update/{id}";
+                public const string DeleteStylist = StylistEndpoint + "/delete/{id}";
+                public const string GetStylistByBranchId = StylistEndpoint + "/branch/{branchId}";
+                public const string GetStylistByStaffStylist = StylistEndpoint + "/staff-stylist/{staffStylistId}";
+            }
         }
     }
-}
+
