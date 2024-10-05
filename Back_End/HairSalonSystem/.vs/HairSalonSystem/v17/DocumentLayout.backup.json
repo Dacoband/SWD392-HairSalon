@@ -143,15 +143,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "IStaffManagerDAO.cs",
-              "DocumentMoniker": "D:\\FPT_Learning\\SWD392\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.DAOs\\Interfaces\\IStaffManagerDAO.cs",
-              "RelativeDocumentMoniker": "HairSalonSystem.DAOs\\Interfaces\\IStaffManagerDAO.cs",
-              "ToolTip": "D:\\FPT_Learning\\SWD392\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.DAOs\\Interfaces\\IStaffManagerDAO.cs",
-              "RelativeToolTip": "HairSalonSystem.DAOs\\Interfaces\\IStaffManagerDAO.cs",
+              "Title": "IStaffManagerDao.cs",
+              "DocumentMoniker": "D:\\FPT_Learning\\SWD392\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.DAOs\\Interfaces\\IStaffManagerDao.cs",
+              "RelativeDocumentMoniker": "HairSalonSystem.DAOs\\Interfaces\\IStaffManagerDao.cs",
+              "ToolTip": "D:\\FPT_Learning\\SWD392\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.DAOs\\Interfaces\\IStaffManagerDao.cs",
+              "RelativeToolTip": "HairSalonSystem.DAOs\\Interfaces\\IStaffManagerDao.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAADwvwkAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-05T09:52:28.412Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-05T09:52:28.412Z"
             },
             {
               "$type": "Document",
@@ -204,11 +203,11 @@
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "StaffManagerDAO.cs",
-              "DocumentMoniker": "D:\\FPT_Learning\\SWD392\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.DAOs\\Implements\\StaffManagerDAO.cs",
-              "RelativeDocumentMoniker": "HairSalonSystem.DAOs\\Implements\\StaffManagerDAO.cs",
-              "ToolTip": "D:\\FPT_Learning\\SWD392\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.DAOs\\Implements\\StaffManagerDAO.cs",
-              "RelativeToolTip": "HairSalonSystem.DAOs\\Implements\\StaffManagerDAO.cs",
+              "Title": "StaffManagerDao.cs",
+              "DocumentMoniker": "D:\\FPT_Learning\\SWD392\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.DAOs\\Implements\\StaffManagerDao.cs",
+              "RelativeDocumentMoniker": "HairSalonSystem.DAOs\\Implements\\StaffManagerDao.cs",
+              "ToolTip": "D:\\FPT_Learning\\SWD392\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.DAOs\\Implements\\StaffManagerDao.cs",
+              "RelativeToolTip": "HairSalonSystem.DAOs\\Implements\\StaffManagerDao.cs",
               "ViewState": "AgIAAAwAAAAAAAAAAAAAAA8AAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-05T09:42:30.312Z"
@@ -247,8 +246,7 @@
               "RelativeToolTip": "HairSalonSystem.Repositories\\Implement\\StaffManagerRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-05T09:37:28.7Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-05T09:37:28.7Z"
             },
             {
               "$type": "Document",
@@ -330,7 +328,7 @@
               "RelativeDocumentMoniker": "HairSalonSystem\\Program.cs",
               "ToolTip": "D:\\FPT_Learning\\SWD392\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem\\Program.cs",
               "RelativeToolTip": "HairSalonSystem\\Program.cs",
-              "ViewState": "AgIAAHIAAAAAAAAAAAAmwFcAAAAsAAAAAAAAAA==",
+              "ViewState": "AgIAAFcAAAAAAAAAAAAmwFcAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-03T18:05:54.073Z",
               "EditorCaption": ""
