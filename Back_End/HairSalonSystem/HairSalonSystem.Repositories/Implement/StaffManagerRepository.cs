@@ -12,9 +12,9 @@ namespace HairSalonSystem.Repositories.Implement
 {
     public class StaffManagerRepository : IStaffManagerRepository
     {
-        private readonly IStaffManagerDao _staffManagerDAO;
+        private readonly IStaffManagerDAO _staffManagerDAO;
 
-        public StaffManagerRepository(IStaffManagerDao staffManagerDAO)
+        public StaffManagerRepository(IStaffManagerDAO staffManagerDAO)
         {
             _staffManagerDAO = staffManagerDAO;
         }
@@ -26,7 +26,7 @@ namespace HairSalonSystem.Repositories.Implement
 
         public async Task<List<StaffManager>> GetAllStaffManagers()
         {
-            return await _staffManagerDAO.GetAllStaffManagersAsync();
+             return await _staffManagerDAO.GetAllStaffManagersAsync();
         }
 
         public async Task AddStaffManager(StaffManager staffManager)

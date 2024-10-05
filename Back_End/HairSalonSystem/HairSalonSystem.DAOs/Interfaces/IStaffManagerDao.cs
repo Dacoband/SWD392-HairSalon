@@ -7,7 +7,7 @@ using HairSalonSystem.BusinessObject.Entities;
 
 namespace HairSalonSystem.DAOs.Interfaces
 {
-    public interface IStaffManagerDao
+    public interface IStaffManagerDAO
     {
         Task AddStaffManagerAsync(StaffManager staffManager);
         Task UpdateStaffManagerAsync(StaffManager staffManager);
