@@ -85,7 +85,7 @@ builder.Services.AddScoped<IAccountDAO, AccountDAO>();
 builder.Services.AddScoped<IBranchDAO, BranchDAO>();
 builder.Services.AddScoped<IMemberDAO, MemberDAO>();
 builder.Services.AddScoped<INotificationDAO, NotificationDAO>();
-builder.Services.AddScoped<IStaffManagerDao, StaffManagerDAO>();
+builder.Services.AddScoped<IStaffManagerDAO, StaffManagerDAO>();
 builder.Services.AddScoped<IStaffStylistDAO, StaffStylistDAO>();
 builder.Services.AddScoped<IStylistDAO, StylistDAO>();
 
