@@ -1,5 +1,5 @@
 // src/AppRouter.jsx
-import React from "react";
+// import React from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -31,7 +31,7 @@ const AppRouter = () => {
 
         <Route
           path="/SystemAdmin"
-          element={<PrivateRoute element={Role2} allowedRoles={["AD"]} />}
+          element={<PrivateRoute element={Role2} allowedRoles={["SA"]} />}
         />
       </Routes>
     </Router>
