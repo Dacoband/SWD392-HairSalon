@@ -34,7 +34,7 @@
             public const string MemberNotRightsUpdate = "Bạn không có quyền cập nhật thành viên";
 
         }
-        public static class Message 
+        public static class Message
         {
             public const string Success = "Bạn đã tạo thông báo thành công";
             public const string NotFound = "Không tìm thấy thông báo";
@@ -44,15 +44,36 @@
             public const string NotRightsUpdate = "Bạn không có quyền cập nhật thông báo";
             public const string NotRightsDelete = "Bạn không có quyền xóa thông báo";
         }
-        public static class StaffStylistMessage
+        public static class StaffManagerMessage
         {
-            public const string StaffStylistCreated = "Quản lí stylist đã được tạo thành công";
-            public const string StaffStylistUpdated = "Cập nhật quản lí stylist thành công";
-            public const string StaffStylistDeleted = "Quản lí stylist đã được xoá";
-            public const string StaffStylistNotFound = "Không tìm thấy quản lí stylist";
-            public const string NotRights = "Bạn không có quyền tạo quản lí stylist";
-            public const string StaffStylistNotRightsDelete = "Bạn không có quyền xóa quản lí stylist";
-            public const string StaffStylistNotRightsUpdate = "Bạn không có quyền cập nhật quản lí stylist";
+            public const string StaffManagerNotFound = "Không tìm thấy nhân viên quản lý.";
+            public const string StaffManagerNotRightsUpdate = "Bạn không có quyền cập nhật thông tin nhân viên quản lý.";
+            public const string StaffManagerAlreadyExists = "Nhân viên quản lý đã tồn tại.";
+            public const string StaffManagerAddedSuccessfully = "Thêm nhân viên quản lý thành công.";
+            public const string StaffManagerUpdatedSuccessfully = "Cập nhật thông tin nhân viên quản lý thành công.";
+            public const string StaffManagerRemovedSuccessfully = "Xóa nhân viên quản lý thành công.";
+            public const string StaffManagerInvalidData = "Dữ liệu nhân viên quản lý không hợp lệ.";
+        }
+            public static class StaffStylistMessage
+            {
+                public const string StaffStylistCreated = "Quản lí stylist đã được tạo thành công";
+                public const string StaffStylistUpdated = "Cập nhật quản lí stylist thành công";
+                public const string StaffStylistDeleted = "Quản lí stylist đã được xoá";
+                public const string StaffStylistNotFound = "Không tìm thấy quản lí stylist";
+                public const string NotRights = "Bạn không có quyền tạo quản lí stylist";
+                public const string StaffStylistNotRightsDelete = "Bạn không có quyền xóa quản lí stylist";
+                public const string StaffStylistNotRightsUpdate = "Bạn không có quyền cập nhật quản lí stylist";
+            }
+            public static class StylistMessage
+            {
+                public const string StylistCreated = "Stylist đã được tạo thành công";
+                public const string StylistUpdated = "Cập nhật stylist thành công";
+                public const string StylistDeleted = "Stylist đã được xoá";
+                public const string StylistNotFound = "Không tìm thấy stylist";
+                public const string NotRights = "Bạn không có quyền tạo stylist";
+                public const string StylistNotRightsDelete = "Bạn không có quyền xóa stylist";
+                public const string StylistNotRightsUpdate = "Bạn không có quyền cập nhật stylist";
+            }
         }
 
         public static class ServiceMessage
@@ -66,4 +87,3 @@
             public const string UpdateSuccess = "Cập nhật dịch vụ thành công";
         }
     }
-}

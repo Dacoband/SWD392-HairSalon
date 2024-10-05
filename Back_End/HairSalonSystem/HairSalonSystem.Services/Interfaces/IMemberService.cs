@@ -12,7 +12,7 @@ namespace HairSalonSystem.Services.Interfaces
 {
     public interface IMemberService
     {
-        Task<Member> GetMemberById(Guid id);
+        Task<Member> GetMemberById(Guid id);    
         Task<List<Member>> GetAllMembers();
         Task AddMember(Member member);
         Task<bool> UpdateMember(Guid id, UpdateMemberRequest memberRequest,HttpContext httpContext);   
