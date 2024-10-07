@@ -86,6 +86,16 @@
             public const string DeleteSuccess = "Xóa dịch vụ thành công";
             public const string UpdateSuccess = "Cập nhật dịch vụ thành công";
         }
+        public static class AppointmentMessage
+        {
+            public const string CreateRight = "Bạn không có quyền tạo mới lịch hẹn";
+            public const string DeleteRight = "Bạn không có quyền xóa lịch hẹn";
+            public const string UpdateRight = "Bạn không có quyền cập nhật lịch hẹn";
+            public const string CreateSuccess = "Tạo mới lịch hẹn thành công";
+            public const string DeleteSuccess = "Xóa lịch hẹn thành công";
+            public const string UpdateSuccess = "Cập nhật lịch hẹn thành công";
+            public const string NotFound = "Không tìm thấy lịch hẹn";
+        }
     }
 
 }
