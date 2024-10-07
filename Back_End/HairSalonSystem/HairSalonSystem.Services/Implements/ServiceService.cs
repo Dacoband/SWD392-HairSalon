@@ -3,6 +3,7 @@ using HairSalonSystem.Repositories.Interface;
 using HairSalonSystem.Services.Constant;
 using HairSalonSystem.Services.Interfaces;
 using HairSalonSystem.Services.PayLoads.Requests.Service;
+using HairSalonSystem.Services.PayLoads.Responses.Service;
 using HairSalonSystem.Services.Util;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -43,7 +44,7 @@ namespace HairSalonSystem.Services.Implements
                 };
             }
 
-            var service = new Service
+            var service = new BusinessObject.Entities.Service
             {
                 ServiceID = Guid.NewGuid(),
                 ServiceName = serviceModel.ServiceName,
@@ -99,7 +100,7 @@ namespace HairSalonSystem.Services.Implements
 
         }
 
-        public async Task<ActionResult<Service>> GetServiceById(Guid serviceId)
+        public async Task<ActionResult<ServiceResponse>> GetServiceById(Guid serviceId)
         {
             var service = await _serviceRepository.GetServiceById(serviceId);
             if (service == null)
@@ -109,10 +110,23 @@ namespace HairSalonSystem.Services.Implements
                     StatusCode = StatusCodes.Status404NotFound
                 };
             }
-            return new OkObjectResult(service);
+            ServiceResponse response = new ServiceResponse()
+            {
+                ServiceID = service.ServiceID,
+                ServiceName = service.ServiceName,
+                Type = service.Type,
+                Price = service.Price,
+                Description = service.Description,
+                Duration = service.Duration,
+                AvatarImage = service.AvatarImage,
+                InsDate = service.InsDate,
+                UpdDate = service.UpdDate,
+                DelFlg = service.DelFlg,
+            };
+            return new OkObjectResult(response);
         }
 
-        public async Task<ActionResult<List<Service>>> GetServiceList(QueryService query)
+        public async Task<ActionResult<List<ServiceResponse>>> GetServiceList(QueryService query)
         {
             var service = await _serviceRepository.GetAllService();
             if(!string.IsNullOrEmpty(query.ServiceName))
@@ -145,7 +159,22 @@ namespace HairSalonSystem.Services.Implements
                     StatusCode = StatusCodes.Status404NotFound
                 };
             }
-            return new OkObjectResult(service);
+            List<ServiceResponse> resList = new List<ServiceResponse>();
+            resList = service.Select(x => new ServiceResponse()
+            {
+                ServiceID = x.ServiceID,
+                ServiceName = x.ServiceName,
+                Type = x.Type,
+                Price = x.Price,
+                Description = x.Description,
+                Duration = x.Duration,
+                AvatarImage = x.AvatarImage,
+                InsDate = x.InsDate,
+                UpdDate = x.UpdDate,
+                DelFlg = x.DelFlg,
+
+            }).ToList();
+            return new OkObjectResult(resList);
 
         }
 

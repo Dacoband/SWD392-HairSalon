@@ -1,5 +1,6 @@
 ﻿using HairSalonSystem.BusinessObject.Entities;
 using HairSalonSystem.Services.PayLoads.Requests.Service;
+using HairSalonSystem.Services.PayLoads.Responses.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,9 +13,9 @@ namespace HairSalonSystem.Services.Interfaces
 {
     public interface IServiceService
     {
-        Task<ActionResult<Service>> GetServiceById(Guid serviceId);
+        Task<ActionResult<ServiceResponse>> GetServiceById(Guid serviceId);
         Task<ActionResult> CreateService(CreateServiceRequest service, HttpContext context);
-        Task<ActionResult<List<Service>>> GetServiceList(QueryService query);
+        Task<ActionResult<List<ServiceResponse>>> GetServiceList(QueryService query);
         Task<ActionResult> UpdateService(Guid serviceId, CreateServiceRequest request, HttpContext context);
         Task<ActionResult> DeleteService(Guid serviceId,HttpContext context);
     }

@@ -54,27 +54,27 @@
             public const string StaffManagerRemovedSuccessfully = "Xóa nhân viên quản lý thành công.";
             public const string StaffManagerInvalidData = "Dữ liệu nhân viên quản lý không hợp lệ.";
         }
-            public static class StaffStylistMessage
-            {
-                public const string StaffStylistCreated = "Quản lí stylist đã được tạo thành công";
-                public const string StaffStylistUpdated = "Cập nhật quản lí stylist thành công";
-                public const string StaffStylistDeleted = "Quản lí stylist đã được xoá";
-                public const string StaffStylistNotFound = "Không tìm thấy quản lí stylist";
-                public const string NotRights = "Bạn không có quyền tạo quản lí stylist";
-                public const string StaffStylistNotRightsDelete = "Bạn không có quyền xóa quản lí stylist";
-                public const string StaffStylistNotRightsUpdate = "Bạn không có quyền cập nhật quản lí stylist";
-            }
-            public static class StylistMessage
-            {
-                public const string StylistCreated = "Stylist đã được tạo thành công";
-                public const string StylistUpdated = "Cập nhật stylist thành công";
-                public const string StylistDeleted = "Stylist đã được xoá";
-                public const string StylistNotFound = "Không tìm thấy stylist";
-                public const string NotRights = "Bạn không có quyền tạo stylist";
-                public const string StylistNotRightsDelete = "Bạn không có quyền xóa stylist";
-                public const string StylistNotRightsUpdate = "Bạn không có quyền cập nhật stylist";
-            }
+        public static class StaffStylistMessage
+        {
+            public const string StaffStylistCreated = "Quản lí stylist đã được tạo thành công";
+            public const string StaffStylistUpdated = "Cập nhật quản lí stylist thành công";
+            public const string StaffStylistDeleted = "Quản lí stylist đã được xoá";
+            public const string StaffStylistNotFound = "Không tìm thấy quản lí stylist";
+            public const string NotRights = "Bạn không có quyền tạo quản lí stylist";
+            public const string StaffStylistNotRightsDelete = "Bạn không có quyền xóa quản lí stylist";
+            public const string StaffStylistNotRightsUpdate = "Bạn không có quyền cập nhật quản lí stylist";
         }
+        public static class StylistMessage
+        {
+            public const string StylistCreated = "Stylist đã được tạo thành công";
+            public const string StylistUpdated = "Cập nhật stylist thành công";
+            public const string StylistDeleted = "Stylist đã được xoá";
+            public const string StylistNotFound = "Không tìm thấy stylist";
+            public const string NotRights = "Bạn không có quyền tạo stylist";
+            public const string StylistNotRightsDelete = "Bạn không có quyền xóa stylist";
+            public const string StylistNotRightsUpdate = "Bạn không có quyền cập nhật stylist";
+        }
+
 
         public static class ServiceMessage
         {
@@ -86,4 +86,20 @@
             public const string DeleteSuccess = "Xóa dịch vụ thành công";
             public const string UpdateSuccess = "Cập nhật dịch vụ thành công";
         }
+
+        public static class AppointmentMessage
+        {
+            public const string CreateRight = "Vui lòng đăng nhập để tạo lịch hẹn";
+            public const string NotAvailable = "Stylist không có lịch trống";
+            public const string CreateSuccess = "Tạo lịch hẹn thành công";
+            public const string Exception = "Lỗi trong lúc tạo lịch hẹn";
+            public const string NotRight = "Vui lòng đăng nhập để xem lịch hẹn";
+            public const string NotFound = "Không tìm thấy lịch hẹn";
+            public const string UpdateRight = "Bạn không có quyền thay đổi lịch hẹn";
+            public const string InvalidStatus = "Trạng thái lịch hẹn không hợp lệ";
+            public const string UpdateSuccess = "Cập nhật trạng thái lịch hẹn thành công";
+            //1:created -> 2: paid -> 3: accepted -> 4: canceled -> 5: completed 
+
+        }
     }
+}
