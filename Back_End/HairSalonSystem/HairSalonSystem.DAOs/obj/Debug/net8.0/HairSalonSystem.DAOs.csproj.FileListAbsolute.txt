@@ -14,6 +14,24 @@ D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem
 D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.DAOs\obj\Debug\net8.0\refint\HairSalonSystem.DAOs.dll
 D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.DAOs\obj\Debug\net8.0\HairSalonSystem.DAOs.pdb
 D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.DAOs\obj\Debug\net8.0\ref\HairSalonSystem.DAOs.dll
+<<<<<<< HEAD
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.DAOs\bin\Debug\net8.0\HairSalonSystem.DAOs.deps.json
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.DAOs\bin\Debug\net8.0\HairSalonSystem.DAOs.dll
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.DAOs\bin\Debug\net8.0\HairSalonSystem.DAOs.pdb
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.DAOs\bin\Debug\net8.0\HairSalonSystem.BusinessObject.dll
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.DAOs\bin\Debug\net8.0\HairSalonSystem.BusinessObject.pdb
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.DAOs\obj\Debug\net8.0\HairSalonSystem.DAOs.csproj.AssemblyReference.cache
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.DAOs\obj\Debug\net8.0\HairSalonSystem.DAOs.GeneratedMSBuildEditorConfig.editorconfig
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.DAOs\obj\Debug\net8.0\HairSalonSystem.DAOs.AssemblyInfoInputs.cache
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.DAOs\obj\Debug\net8.0\HairSalonSystem.DAOs.AssemblyInfo.cs
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.DAOs\obj\Debug\net8.0\HairSalonSystem.DAOs.csproj.CoreCompileInputs.cache
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.DAOs\obj\Debug\net8.0\HairSalonSystem.DAOs.sourcelink.json
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.DAOs\obj\Debug\net8.0\HairSalonSystem.DAOs.csproj.CopyComplete
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.DAOs\obj\Debug\net8.0\HairSalonSystem.DAOs.dll
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.DAOs\obj\Debug\net8.0\refint\HairSalonSystem.DAOs.dll
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.DAOs\obj\Debug\net8.0\HairSalonSystem.DAOs.pdb
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.DAOs\obj\Debug\net8.0\ref\HairSalonSystem.DAOs.dll
+=======
 D:\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.DAOs\bin\Debug\net8.0\HairSalonSystem.DAOs.deps.json
 D:\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.DAOs\bin\Debug\net8.0\HairSalonSystem.DAOs.dll
 D:\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.DAOs\bin\Debug\net8.0\HairSalonSystem.DAOs.pdb
@@ -30,3 +48,4 @@ D:\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.DAOs\obj\Debug\net8
 D:\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.DAOs\obj\Debug\net8.0\refint\HairSalonSystem.DAOs.dll
 D:\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.DAOs\obj\Debug\net8.0\HairSalonSystem.DAOs.pdb
 D:\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.DAOs\obj\Debug\net8.0\ref\HairSalonSystem.DAOs.dll
+>>>>>>> Nhan.Volka

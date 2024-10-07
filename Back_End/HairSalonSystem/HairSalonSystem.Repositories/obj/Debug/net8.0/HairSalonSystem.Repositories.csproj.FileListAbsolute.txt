@@ -16,6 +16,26 @@ D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem
 D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Repositories\obj\Debug\net8.0\refint\HairSalonSystem.Repositories.dll
 D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Repositories\obj\Debug\net8.0\HairSalonSystem.Repositories.pdb
 D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Repositories\obj\Debug\net8.0\ref\HairSalonSystem.Repositories.dll
+<<<<<<< HEAD
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Repositories\bin\Debug\net8.0\HairSalonSystem.Repositories.deps.json
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Repositories\bin\Debug\net8.0\HairSalonSystem.Repositories.dll
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Repositories\bin\Debug\net8.0\HairSalonSystem.Repositories.pdb
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Repositories\bin\Debug\net8.0\HairSalonSystem.BusinessObject.dll
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Repositories\bin\Debug\net8.0\HairSalonSystem.DAOs.dll
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Repositories\bin\Debug\net8.0\HairSalonSystem.DAOs.pdb
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Repositories\bin\Debug\net8.0\HairSalonSystem.BusinessObject.pdb
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Repositories\obj\Debug\net8.0\HairSalonSystem.Repositories.csproj.AssemblyReference.cache
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Repositories\obj\Debug\net8.0\HairSalonSystem.Repositories.GeneratedMSBuildEditorConfig.editorconfig
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Repositories\obj\Debug\net8.0\HairSalonSystem.Repositories.AssemblyInfoInputs.cache
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Repositories\obj\Debug\net8.0\HairSalonSystem.Repositories.AssemblyInfo.cs
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Repositories\obj\Debug\net8.0\HairSalonSystem.Repositories.csproj.CoreCompileInputs.cache
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Repositories\obj\Debug\net8.0\HairSalonSystem.Repositories.sourcelink.json
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Repositories\obj\Debug\net8.0\HairSalonSystem.Repositories.csproj.CopyComplete
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Repositories\obj\Debug\net8.0\HairSalonSystem.Repositories.dll
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Repositories\obj\Debug\net8.0\refint\HairSalonSystem.Repositories.dll
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Repositories\obj\Debug\net8.0\HairSalonSystem.Repositories.pdb
+D:\FPT\Fall24\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Repositories\obj\Debug\net8.0\ref\HairSalonSystem.Repositories.dll
+=======
 D:\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Repositories\bin\Debug\net8.0\HairSalonSystem.Repositories.deps.json
 D:\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Repositories\bin\Debug\net8.0\HairSalonSystem.Repositories.dll
 D:\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Repositories\bin\Debug\net8.0\HairSalonSystem.Repositories.pdb
@@ -34,3 +54,4 @@ D:\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Repositories\obj\De
 D:\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Repositories\obj\Debug\net8.0\refint\HairSalonSystem.Repositories.dll
 D:\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Repositories\obj\Debug\net8.0\HairSalonSystem.Repositories.pdb
 D:\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Repositories\obj\Debug\net8.0\ref\HairSalonSystem.Repositories.dll
+>>>>>>> Nhan.Volka

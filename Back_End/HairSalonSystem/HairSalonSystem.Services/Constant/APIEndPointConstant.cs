@@ -78,6 +78,22 @@
                 public const string GetStylistByBranchId = StylistEndpoint + "/branch/{branchId}";
                 public const string GetStylistByStaffStylist = StylistEndpoint + "/staff-stylist/{staffStylistId}";
             }
+
+        public static class Service
+        {
+            public const string ServiceEndpoint = ApiEndpoint + "/service";
+            public const string GetServiceById = ServiceEndpoint + "{id}";
+            public const string CreateService = ServiceEndpoint + "/create";
+            public const string GetAllService = ServiceEndpoint + "/get-all";
+            public const string UpdateService = ServiceEndpoint + "/update/{id}";
+            public const string DeleteService = ServiceEndpoint + "/delete/{id}";
+
+        }
+
+        public static class Appointment
+        {
+            public const string AppointmentEndpoint = ApiEndpoint + "/appointment";
+            public const string CreateAppointment = AppointmentEndpoint + "/create";
         }
     }
-
+}
