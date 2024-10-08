@@ -57,7 +57,6 @@
             public const string UpdateStaffManager = StaffManagerEndpoint + "/update/{id}";
             public const string DeleteStaffManager = StaffManagerEndpoint + "/delete/{id}";
         }
-<<<<<<< HEAD
             public static class StaffStylist
             {
                 public const string StaffStylistEndpoint = ApiEndpoint + "/staff-stylist";
@@ -79,52 +78,24 @@
                 public const string GetStylistByBranchId = StylistEndpoint + "/branch/{branchId}";
                 public const string GetStylistByStaffStylist = StylistEndpoint + "/staff-stylist/{staffStylistId}";
             }
-=======
-        public static class StaffStylist
-        {
-            public const string StaffStylistEndpoint = ApiEndpoint + "/staff-stylist";
-            public const string GetStaffStylistById = StaffStylistEndpoint + "/{id}";
-            public const string GetAllStaffStylists = StaffStylistEndpoint + "/all";
-            public const string AddStaffStylist = StaffStylistEndpoint + "/add";
-            public const string UpdateStaffStylist = StaffStylistEndpoint + "/update/{id}";
-            public const string DeleteStaffStylist = StaffStylistEndpoint + "/delete/{id}";
-            public const string GetStaffStylistByBranchId = StaffStylistEndpoint + "/branch/{branchId}";
-        }
-        public static class Stylist
-        {
-            public const string StylistEndpoint = ApiEndpoint + "/stylist";
-            public const string GetStylistById = StylistEndpoint + "/{id}";
-            public const string GetAllStylists = StylistEndpoint + "/all";
-            public const string AddStylist = StylistEndpoint + "/add";
-            public const string UpdateStylist = StylistEndpoint + "/update/{id}";
-            public const string DeleteStylist = StylistEndpoint + "/delete/{id}";
-            public const string GetStylistByBranchId = StylistEndpoint + "/branch/{branchId}";
-            public const string GetStylistByStaffStylist = StylistEndpoint + "/staff-stylist/{staffStylistId}";
-        }
->>>>>>> 34f3fd0e2c3d8d7d1fd50599e13354361e9de6c5
+            public static class Service
+            {
+                public const string ServiceEndpoint = ApiEndpoint + "/service";
+                public const string GetServiceById = ServiceEndpoint + "{id}";
+                public const string CreateService = ServiceEndpoint + "/create";
+                public const string GetAllService = ServiceEndpoint + "/get-all";
+                public const string UpdateService = ServiceEndpoint + "/update/{id}";
+                public const string DeleteService = ServiceEndpoint + "/delete/{id}";
 
-        public static class Service
-        {
-            public const string ServiceEndpoint = ApiEndpoint + "/service";
-            public const string GetServiceById = ServiceEndpoint + "{id}";
-            public const string CreateService = ServiceEndpoint + "/create";
-            public const string GetAllService = ServiceEndpoint + "/get-all";
-            public const string UpdateService = ServiceEndpoint + "/update/{id}";
-            public const string DeleteService = ServiceEndpoint + "/delete/{id}";
+            }
 
-        }
-
-        public static class Appointment
-        {
-            public const string AppointmentEndpoint = ApiEndpoint + "/appointment";
-            public const string CreateAppointment = AppointmentEndpoint + "/create";
-            public const string GetAppointmentById = AppointmentEndpoint + "{id}";
-            public const string UpdateAppointment = AppointmentEndpoint + "update/{id}";
-            public const string GetAllAppointment = AppointmentEndpoint + "get-all";
-        }
+            public static class Appointment
+            {
+                public const string AppointmentEndpoint = ApiEndpoint + "/appointment";
+                public const string CreateAppointment = AppointmentEndpoint + "/create";
+                public const string GetAppointmentById = AppointmentEndpoint + "{id}";
+                public const string UpdateAppointment = AppointmentEndpoint + "update/{id}";
+                public const string GetAllAppointment = AppointmentEndpoint + "get-all";
+            }
     }
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> 34f3fd0e2c3d8d7d1fd50599e13354361e9de6c5
