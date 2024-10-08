@@ -4,7 +4,7 @@
     {
         public static class LoginMessage
         {
-            public const string InvalidUsernameOrPassword = "Tê" +
+            public const string InvalidUsernameOrPassword = "Tên" +
                 "" +
                 "n đăng nhập hoặc mật khẩu không chính xác";
             public const string DeactivatedAccount = "Tài khoản đang bị vô hiệu hoá";
@@ -102,9 +102,9 @@
 
         }
     }
-<<<<<<< HEAD
+
 
 }
-=======
-}
->>>>>>> 34f3fd0e2c3d8d7d1fd50599e13354361e9de6c5
+
+
+
