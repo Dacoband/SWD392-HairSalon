@@ -86,6 +86,25 @@
             public const string DeleteSuccess = "Xóa dịch vụ thành công";
             public const string UpdateSuccess = "Cập nhật dịch vụ thành công";
         }
+
+        public static class AppointmentMessage
+        {
+            public const string CreateRight = "Vui lòng đăng nhập để tạo lịch hẹn";
+            public const string NotAvailable = "Stylist không có lịch trống";
+            public const string CreateSuccess = "Tạo lịch hẹn thành công";
+            public const string Exception = "Lỗi trong lúc tạo lịch hẹn";
+            public const string NotRight = "Vui lòng đăng nhập để xem lịch hẹn";
+            public const string NotFound = "Không tìm thấy lịch hẹn";
+            public const string UpdateRight = "Bạn không có quyền thay đổi lịch hẹn";
+            public const string InvalidStatus = "Trạng thái lịch hẹn không hợp lệ";
+            public const string UpdateSuccess = "Cập nhật trạng thái lịch hẹn thành công";
+            //1:created -> 2: paid -> 3: accepted -> 4: canceled -> 5: completed 
+
+        }
     }
+<<<<<<< HEAD
 
 }
+=======
+}
+>>>>>>> 34f3fd0e2c3d8d7d1fd50599e13354361e9de6c5

@@ -34,8 +34,12 @@ namespace HairSalonSystem.BusinessObject.Entities
         [BsonRepresentation(BsonType.DateTime)]
         public DateTime UpDate { get; set; }
         [BsonElement]
-        [BsonRepresentation(BsonType.Boolean)]
-        public DateTime AppoinmentDate { get; set; }
+        [BsonRepresentation(BsonType.DateTime)]
+        public DateTime StartTime { get; set; }
+        [BsonElement]
+        [BsonRepresentation(BsonType.DateTime)]
+        public DateTime EndTime { get; set; }
+
         public virtual ICollection<AppointmentService> AppointmentService { get; set; } = new List<AppointmentService>();
 
     }

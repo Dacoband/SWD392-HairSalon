@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace HairSalonSystem.Services.PayLoads.Requests.Appointment
 {
-    public interface CreateAppointmentRequest
+    public class CreateAppointmentRequest
     {
-        Guid StylistId { get; set; }
-        DateTime AppointmentDate { get; set; }
-        List<Guid> ServiceIds { get; set; }
+        public Guid StylistId { get; set; }
+        public DateTime AppointmentDate { get; set; }
+        public List<Guid> ServiceIds { get; set; }
     }
 }
