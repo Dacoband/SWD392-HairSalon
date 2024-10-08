@@ -57,8 +57,14 @@
             public const string UpdateStaffManager = StaffManagerEndpoint + "/update/{id}";
             public const string DeleteStaffManager = StaffManagerEndpoint + "/delete/{id}";
         }
+<<<<<<< HEAD
             public static class StaffStylist
             {
+=======
+
+        public static class StaffStylist
+        {
+>>>>>>> MAnhh
                 public const string StaffStylistEndpoint = ApiEndpoint + "/staff-stylist";
                 public const string GetStaffStylistById = StaffStylistEndpoint + "/{id}";
                 public const string GetAllStaffStylists = StaffStylistEndpoint + "/all";
@@ -66,9 +72,9 @@
                 public const string UpdateStaffStylist = StaffStylistEndpoint + "/update/{id}";
                 public const string DeleteStaffStylist = StaffStylistEndpoint + "/delete/{id}";
                 public const string GetStaffStylistByBranchId = StaffStylistEndpoint + "/branch/{branchId}";
-            }
-            public static class Stylist
-            {
+        }
+        public static class Stylist
+        {
                 public const string StylistEndpoint = ApiEndpoint + "/stylist";
                 public const string GetStylistById = StylistEndpoint + "/{id}";
                 public const string GetAllStylists = StylistEndpoint + "/all";
@@ -77,7 +83,18 @@
                 public const string DeleteStylist = StylistEndpoint + "/delete/{id}";
                 public const string GetStylistByBranchId = StylistEndpoint + "/branch/{branchId}";
                 public const string GetStylistByStaffStylist = StylistEndpoint + "/staff-stylist/{staffStylistId}";
+        }
+            public static class Service
+            {
+                public const string ServiceEndpoint = ApiEndpoint + "/service";
+                public const string GetServiceById = ServiceEndpoint + "{id}";
+                public const string CreateService = ServiceEndpoint + "/create";
+                public const string GetAllService = ServiceEndpoint + "/get-all";
+                public const string UpdateService = ServiceEndpoint + "/update/{id}";
+                public const string DeleteService = ServiceEndpoint + "/delete/{id}";
+
             }
+<<<<<<< HEAD
             public static class Service
             {
                 public const string ServiceEndpoint = ApiEndpoint + "/service";
@@ -89,6 +106,9 @@
 
             }
 
+=======
+
+>>>>>>> MAnhh
             public static class Appointment
             {
                 public const string AppointmentEndpoint = ApiEndpoint + "/appointment";

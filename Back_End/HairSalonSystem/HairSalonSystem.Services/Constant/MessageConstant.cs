@@ -4,7 +4,7 @@
     {
         public static class LoginMessage
         {
-            public const string InvalidUsernameOrPassword = "Tê" +
+            public const string InvalidUsernameOrPassword = "Tên" +
                 "" +
                 "n đăng nhập hoặc mật khẩu không chính xác";
             public const string DeactivatedAccount = "Tài khoản đang bị vô hiệu hoá";
@@ -97,5 +97,14 @@
             public const string NotFound = "Không tìm thấy lịch hẹn";
         }
     }
+<<<<<<< HEAD
 
 }
+=======
+
+
+}
+
+
+
+>>>>>>> MAnhh

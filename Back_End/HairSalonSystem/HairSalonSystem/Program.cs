@@ -87,18 +87,11 @@ builder.Services.AddScoped<IMemberDAO, MemberDAO>();
 builder.Services.AddScoped<INotificationDAO, NotificationDAO>();
 builder.Services.AddScoped<IStaffManagerDAO, StaffManagerDAO>();
 builder.Services.AddScoped<IStaffStylistDAO, StaffStylistDAO>();
-<<<<<<< HEAD
 builder.Services.AddScoped<IServiceDAO, ServiceDAO>();
-builder.Services.AddScoped<IStylistDAO, StylistDAO>();
-
-=======
-
-builder.Services.AddScoped<IServiceDAO, ServiceDAO>();
-
 builder.Services.AddScoped<IStylistDAO, StylistDAO>();
 builder.Services.AddScoped<IAppointmentDAO, AppointmentDAO>();
 
->>>>>>> 34f3fd0e2c3d8d7d1fd50599e13354361e9de6c5
+
 
 
 // Register Repositories
@@ -108,18 +101,11 @@ builder.Services.AddScoped<IMemberRepository, MemberRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IStaffManagerRepository, StaffManagerRepository>();
 builder.Services.AddScoped<IStaffStylistRepository, StaffStylistRepository>();
-<<<<<<< HEAD
 builder.Services.AddScoped<IServiceRepository,ServiceRepository>();
-builder.Services.AddScoped<IStylistRepository, StylistRepository>();
-
-=======
-
-builder.Services.AddScoped<IServiceRepository,ServiceRepository>();
-
 builder.Services.AddScoped<IStylistRepository, StylistRepository>();
 builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 
->>>>>>> 34f3fd0e2c3d8d7d1fd50599e13354361e9de6c5
+
 
 
 // Register Services
@@ -131,15 +117,7 @@ builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IStaffManagerService, StaffManagerService>();
 builder.Services.AddScoped<IStaffStylistService, StaffStylistService>();
-<<<<<<< HEAD
 builder.Services.AddScoped<IServiceService, ServiceService>();
-builder.Services.AddScoped<IStylistService, StylistService>();
-
-=======
->>>>>>> 34f3fd0e2c3d8d7d1fd50599e13354361e9de6c5
-
-builder.Services.AddScoped<IServiceService, ServiceService>();
-
 builder.Services.AddScoped<IStylistService, StylistService>();
 builder.Services.AddScoped<IAppointmentService, HairSalonSystem.Services.Implements.AppointmentService>();
 builder.Services.AddControllers();
