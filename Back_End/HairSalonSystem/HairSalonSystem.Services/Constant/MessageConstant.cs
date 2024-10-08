@@ -97,14 +97,4 @@
             public const string NotFound = "Không tìm thấy lịch hẹn";
         }
     }
-<<<<<<< HEAD
-
 }
-=======
-
-
-}
-
-
-
->>>>>>> MAnhh
