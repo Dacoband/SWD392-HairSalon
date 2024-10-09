@@ -1,10 +1,7 @@
-<<<<<<< HEAD
-﻿using MongoDB.Bson;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
-=======
 ﻿using System;
->>>>>>> ThucFix
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace HairSalonSystem.BusinessObject.Entities
 {
-<<<<<<< HEAD
-    public class Appointment 
+
+    public class Appointment
     {
         [BsonId]
         [BsonRepresentation(BsonType.String)]
@@ -24,7 +21,7 @@ namespace HairSalonSystem.BusinessObject.Entities
         [BsonElement]
         [BsonRepresentation(BsonType.String)]
         public Guid StylistId { get; set; }
-       
+
         [BsonElement]
         [BsonRepresentation(BsonType.Int32)]
         public int Status { get; set; }
@@ -47,9 +44,5 @@ namespace HairSalonSystem.BusinessObject.Entities
 
         public virtual ICollection<AppointmentService> AppointmentService { get; set; } = new List<AppointmentService>();
 
-=======
-    internal class Appointment
-    {
->>>>>>> ThucFix
     }
 }
