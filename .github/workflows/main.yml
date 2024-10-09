@@ -16,8 +16,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2 
     #build tại vps bằng docker thì sau đó con backend sẽ chạy ở docker trong vps
-    - name: Docker down
-      run: docker-compose down
 
     - name: Run `docker compose`
       run: docker-compose up --build -d
