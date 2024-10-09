@@ -3,6 +3,22 @@
   "WorkspaceRootPath": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{D1BBAEEB-E926-4577-B7B8-3E72FECF6412}|HairSalonSystem\\HairSalonSystem.API.csproj|d:\\swd392-hairsalon\\back_end\\hairsalonsystem\\hairsalonsystem\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1BBAEEB-E926-4577-B7B8-3E72FECF6412}|HairSalonSystem\\HairSalonSystem.API.csproj|solutionrelative:hairsalonsystem\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1BBAEEB-E926-4577-B7B8-3E72FECF6412}|HairSalonSystem\\HairSalonSystem.API.csproj|d:\\swd392-hairsalon\\back_end\\hairsalonsystem\\hairsalonsystem\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D1BBAEEB-E926-4577-B7B8-3E72FECF6412}|HairSalonSystem\\HairSalonSystem.API.csproj|solutionrelative:hairsalonsystem\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2D53F534-A7D6-4EE8-9910-DE64C37C2E3B}|HairSalonSystem.DAOs\\HairSalonSystem.DAOs.csproj|d:\\swd392-hairsalon\\back_end\\hairsalonsystem\\hairsalonsystem.daos\\implements\\staffmanagerdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2D53F534-A7D6-4EE8-9910-DE64C37C2E3B}|HairSalonSystem.DAOs\\HairSalonSystem.DAOs.csproj|solutionrelative:hairsalonsystem.daos\\implements\\staffmanagerdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A244864-4790-4A7C-B5E2-CD535EA506AE}|HairSalonSystem.Repositories\\HairSalonSystem.Repositories.csproj|d:\\swd392-hairsalon\\back_end\\hairsalonsystem\\hairsalonsystem.repositories\\implement\\staffmanagerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A244864-4790-4A7C-B5E2-CD535EA506AE}|HairSalonSystem.Repositories\\HairSalonSystem.Repositories.csproj|solutionrelative:hairsalonsystem.repositories\\implement\\staffmanagerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{2D53F534-A7D6-4EE8-9910-DE64C37C2E3B}|HairSalonSystem.DAOs\\HairSalonSystem.DAOs.csproj|d:\\swd392-hairsalon\\back_end\\hairsalonsystem\\hairsalonsystem.daos\\implements\\basedao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2D53F534-A7D6-4EE8-9910-DE64C37C2E3B}|HairSalonSystem.DAOs\\HairSalonSystem.DAOs.csproj|solutionrelative:hairsalonsystem.daos\\implements\\basedao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -23,20 +39,12 @@
       "RelativeMoniker": "D:0:0:{D1BBAEEB-E926-4577-B7B8-3E72FECF6412}|HairSalonSystem\\HairSalonSystem.API.csproj|solutionrelative:hairsalonsystem\\controllers\\branchcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2D53F534-A7D6-4EE8-9910-DE64C37C2E3B}|HairSalonSystem.DAOs\\HairSalonSystem.DAOs.csproj|d:\\swd392-hairsalon\\back_end\\hairsalonsystem\\hairsalonsystem.daos\\implements\\staffmanagerdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2D53F534-A7D6-4EE8-9910-DE64C37C2E3B}|HairSalonSystem.DAOs\\HairSalonSystem.DAOs.csproj|solutionrelative:hairsalonsystem.daos\\implements\\staffmanagerdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{BA8C575F-7BCA-46DA-B727-1A35533EBEA3}|HairSalonSystem.BusinessObject\\HairSalonSystem.BusinessObject.csproj|d:\\swd392-hairsalon\\back_end\\hairsalonsystem\\hairsalonsystem.businessobject\\hairsalondbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{BA8C575F-7BCA-46DA-B727-1A35533EBEA3}|HairSalonSystem.BusinessObject\\HairSalonSystem.BusinessObject.csproj|solutionrelative:hairsalonsystem.businessobject\\hairsalondbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2D53F534-A7D6-4EE8-9910-DE64C37C2E3B}|HairSalonSystem.DAOs\\HairSalonSystem.DAOs.csproj|d:\\swd392-hairsalon\\back_end\\hairsalonsystem\\hairsalonsystem.daos\\interfaces\\istaffmanagerdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2D53F534-A7D6-4EE8-9910-DE64C37C2E3B}|HairSalonSystem.DAOs\\HairSalonSystem.DAOs.csproj|solutionrelative:hairsalonsystem.daos\\interfaces\\istaffmanagerdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{BA8C575F-7BCA-46DA-B727-1A35533EBEA3}|HairSalonSystem.BusinessObject\\HairSalonSystem.BusinessObject.csproj|d:\\swd392-hairsalon\\back_end\\hairsalonsystem\\hairsalonsystem.businessobject\\entities\\appointment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BA8C575F-7BCA-46DA-B727-1A35533EBEA3}|HairSalonSystem.BusinessObject\\HairSalonSystem.BusinessObject.csproj|solutionrelative:hairsalonsystem.businessobject\\entities\\appointment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2D53F534-A7D6-4EE8-9910-DE64C37C2E3B}|HairSalonSystem.DAOs\\HairSalonSystem.DAOs.csproj|d:\\swd392-hairsalon\\back_end\\hairsalonsystem\\hairsalonsystem.daos\\interfaces\\iaccountdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -49,10 +57,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{2D53F534-A7D6-4EE8-9910-DE64C37C2E3B}|HairSalonSystem.DAOs\\HairSalonSystem.DAOs.csproj|d:\\swd392-hairsalon\\back_end\\hairsalonsystem\\hairsalonsystem.daos\\implements\\staffstylistdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2D53F534-A7D6-4EE8-9910-DE64C37C2E3B}|HairSalonSystem.DAOs\\HairSalonSystem.DAOs.csproj|solutionrelative:hairsalonsystem.daos\\implements\\staffstylistdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9AD75BE5-0BB1-41D1-A80F-1C70A47D28E7}|HairSalonSystem.Services\\HairSalonSystem.Services.csproj|d:\\swd392-hairsalon\\back_end\\hairsalonsystem\\hairsalonsystem.services\\enums\\enumstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9AD75BE5-0BB1-41D1-A80F-1C70A47D28E7}|HairSalonSystem.Services\\HairSalonSystem.Services.csproj|solutionrelative:hairsalonsystem.services\\enums\\enumstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{BA8C575F-7BCA-46DA-B727-1A35533EBEA3}|HairSalonSystem.BusinessObject\\HairSalonSystem.BusinessObject.csproj|d:\\swd392-hairsalon\\back_end\\hairsalonsystem\\hairsalonsystem.businessobject\\entities\\notifications.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -87,10 +91,6 @@
       "RelativeMoniker": "D:0:0:{9AD75BE5-0BB1-41D1-A80F-1C70A47D28E7}|HairSalonSystem.Services\\HairSalonSystem.Services.csproj|solutionrelative:hairsalonsystem.services\\payloads\\requests\\staffmanagers\\updatestaffmanagerrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1BBAEEB-E926-4577-B7B8-3E72FECF6412}|HairSalonSystem\\HairSalonSystem.API.csproj|d:\\swd392-hairsalon\\back_end\\hairsalonsystem\\hairsalonsystem\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1BBAEEB-E926-4577-B7B8-3E72FECF6412}|HairSalonSystem\\HairSalonSystem.API.csproj|solutionrelative:hairsalonsystem\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{9AD75BE5-0BB1-41D1-A80F-1C70A47D28E7}|HairSalonSystem.Services\\HairSalonSystem.Services.csproj|d:\\swd392-hairsalon\\back_end\\hairsalonsystem\\hairsalonsystem.services\\interfaces\\istaffmanagerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9AD75BE5-0BB1-41D1-A80F-1C70A47D28E7}|HairSalonSystem.Services\\HairSalonSystem.Services.csproj|solutionrelative:hairsalonsystem.services\\interfaces\\istaffmanagerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -117,6 +117,14 @@
     {
       "AbsoluteMoniker": "D:0:0:{BA8C575F-7BCA-46DA-B727-1A35533EBEA3}|HairSalonSystem.BusinessObject\\HairSalonSystem.BusinessObject.csproj|d:\\swd392-hairsalon\\back_end\\hairsalonsystem\\hairsalonsystem.businessobject\\entities\\branch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{BA8C575F-7BCA-46DA-B727-1A35533EBEA3}|HairSalonSystem.BusinessObject\\HairSalonSystem.BusinessObject.csproj|solutionrelative:hairsalonsystem.businessobject\\entities\\branch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BA8C575F-7BCA-46DA-B727-1A35533EBEA3}|HairSalonSystem.BusinessObject\\HairSalonSystem.BusinessObject.csproj|d:\\swd392-hairsalon\\back_end\\hairsalonsystem\\hairsalonsystem.businessobject\\entities\\appointment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BA8C575F-7BCA-46DA-B727-1A35533EBEA3}|HairSalonSystem.BusinessObject\\HairSalonSystem.BusinessObject.csproj|solutionrelative:hairsalonsystem.businessobject\\entities\\appointment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9AD75BE5-0BB1-41D1-A80F-1C70A47D28E7}|HairSalonSystem.Services\\HairSalonSystem.Services.csproj|d:\\swd392-hairsalon\\back_end\\hairsalonsystem\\hairsalonsystem.services\\enums\\enumstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9AD75BE5-0BB1-41D1-A80F-1C70A47D28E7}|HairSalonSystem.Services\\HairSalonSystem.Services.csproj|solutionrelative:hairsalonsystem.services\\enums\\enumstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -126,7 +134,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 13,
+          "SelectedChildIndex": 15,
           "Children": [
             {
               "$type": "Bookmark",
@@ -138,7 +146,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 1,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem\\appsettings.json",
+              "RelativeDocumentMoniker": "HairSalonSystem\\appsettings.json",
+              "ToolTip": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem\\appsettings.json",
+              "RelativeToolTip": "HairSalonSystem\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-10-07T08:57:40.9Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "IStaffManagerDao.cs",
               "DocumentMoniker": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.DAOs\\Interfaces\\IStaffManagerDao.cs",
               "RelativeDocumentMoniker": "HairSalonSystem.DAOs\\Interfaces\\IStaffManagerDao.cs",
@@ -150,7 +171,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "IBranchDAO.cs",
               "DocumentMoniker": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.DAOs\\Interfaces\\IBranchDAO.cs",
               "RelativeDocumentMoniker": "HairSalonSystem.DAOs\\Interfaces\\IBranchDAO.cs",
@@ -162,7 +183,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "IAccountDAO.cs",
               "DocumentMoniker": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.DAOs\\Interfaces\\IAccountDAO.cs",
               "RelativeDocumentMoniker": "HairSalonSystem.DAOs\\Interfaces\\IAccountDAO.cs",
@@ -174,7 +195,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "StaffStylistDAO.cs",
               "DocumentMoniker": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.DAOs\\Implements\\StaffStylistDAO.cs",
               "RelativeDocumentMoniker": "HairSalonSystem.DAOs\\Implements\\StaffStylistDAO.cs",
@@ -186,7 +207,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 29,
               "Title": "Appointment.cs",
               "DocumentMoniker": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.BusinessObject\\Entities\\Appointment.cs",
               "RelativeDocumentMoniker": "HairSalonSystem.BusinessObject\\Entities\\Appointment.cs",
@@ -198,19 +219,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "StaffManagerDao.cs",
               "DocumentMoniker": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.DAOs\\Implements\\StaffManagerDao.cs",
               "RelativeDocumentMoniker": "HairSalonSystem.DAOs\\Implements\\StaffManagerDao.cs",
               "ToolTip": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.DAOs\\Implements\\StaffManagerDao.cs",
               "RelativeToolTip": "HairSalonSystem.DAOs\\Implements\\StaffManagerDao.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABAAAAAqAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-01T15:50:35.269Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "HairSalonDbContext.cs",
               "DocumentMoniker": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.BusinessObject\\HairSalonDbContext.cs",
               "RelativeDocumentMoniker": "HairSalonSystem.BusinessObject\\HairSalonDbContext.cs",
@@ -222,7 +243,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "NotificationController.cs",
               "DocumentMoniker": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem\\Controllers\\NotificationController.cs",
               "RelativeDocumentMoniker": "HairSalonSystem\\Controllers\\NotificationController.cs",
@@ -234,7 +255,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
               "Title": "BranchController.cs",
               "DocumentMoniker": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem\\Controllers\\BranchController.cs",
               "RelativeDocumentMoniker": "HairSalonSystem\\Controllers\\BranchController.cs",
@@ -246,7 +267,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
               "Title": "MemberController.cs",
               "DocumentMoniker": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem\\Controllers\\MemberController.cs",
               "RelativeDocumentMoniker": "HairSalonSystem\\Controllers\\MemberController.cs",
@@ -258,7 +279,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "StaffManagerController.cs",
               "DocumentMoniker": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem\\Controllers\\StaffManagerController.cs",
               "RelativeDocumentMoniker": "HairSalonSystem\\Controllers\\StaffManagerController.cs",
@@ -270,20 +291,44 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "BaseDAO.cs",
               "DocumentMoniker": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.DAOs\\Implements\\BaseDAO.cs",
               "RelativeDocumentMoniker": "HairSalonSystem.DAOs\\Implements\\BaseDAO.cs",
               "ToolTip": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.DAOs\\Implements\\BaseDAO.cs",
               "RelativeToolTip": "HairSalonSystem.DAOs\\Implements\\BaseDAO.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAUwBEAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-01T15:51:44.429Z",
+              "WhenOpened": "2024-10-01T15:51:44.429Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem\\Program.cs",
+              "RelativeDocumentMoniker": "HairSalonSystem\\Program.cs",
+              "ToolTip": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem\\Program.cs",
+              "RelativeToolTip": "HairSalonSystem\\Program.cs",
+              "ViewState": "AgIAAGYAAAAAAAAAAAAAAHsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-02T07:33:39.36Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 3,
+              "Title": "StaffManagerRepository.cs",
+              "DocumentMoniker": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.Repositories\\Implement\\StaffManagerRepository.cs",
+              "RelativeDocumentMoniker": "HairSalonSystem.Repositories\\Implement\\StaffManagerRepository.cs",
+              "ToolTip": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.Repositories\\Implement\\StaffManagerRepository.cs",
+              "RelativeToolTip": "HairSalonSystem.Repositories\\Implement\\StaffManagerRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T09:40:39.864Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
               "Title": "EnumStatus.cs",
               "DocumentMoniker": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.Services\\Enums\\EnumStatus.cs",
               "RelativeDocumentMoniker": "HairSalonSystem.Services\\Enums\\EnumStatus.cs",
@@ -295,7 +340,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "StaffStylist.cs",
               "DocumentMoniker": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.BusinessObject\\Entities\\StaffStylist.cs",
               "RelativeDocumentMoniker": "HairSalonSystem.BusinessObject\\Entities\\StaffStylist.cs",
@@ -307,7 +352,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "Member.cs",
               "DocumentMoniker": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.BusinessObject\\Entities\\Member.cs",
               "RelativeDocumentMoniker": "HairSalonSystem.BusinessObject\\Entities\\Member.cs",
@@ -331,7 +376,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "APIEndPointConstant.cs",
               "DocumentMoniker": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.Services\\Constant\\APIEndPointConstant.cs",
               "RelativeDocumentMoniker": "HairSalonSystem.Services\\Constant\\APIEndPointConstant.cs",
@@ -343,7 +388,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "UpdateStaffManagerRequest.cs",
               "DocumentMoniker": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.Services\\PayLoads\\Requests\\StaffManagers\\UpdateStaffManagerRequest.cs",
               "RelativeDocumentMoniker": "HairSalonSystem.Services\\PayLoads\\Requests\\StaffManagers\\UpdateStaffManagerRequest.cs",
@@ -355,7 +400,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "StaffManagerService.cs",
               "DocumentMoniker": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.Services\\Implements\\StaffManagerService.cs",
               "RelativeDocumentMoniker": "HairSalonSystem.Services\\Implements\\StaffManagerService.cs",
@@ -367,7 +412,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "Notifications.cs",
               "DocumentMoniker": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.BusinessObject\\Entities\\Notifications.cs",
               "RelativeDocumentMoniker": "HairSalonSystem.BusinessObject\\Entities\\Notifications.cs",
@@ -379,7 +424,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "StaffManager.cs",
               "DocumentMoniker": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.BusinessObject\\Entities\\StaffManager.cs",
               "RelativeDocumentMoniker": "HairSalonSystem.BusinessObject\\Entities\\StaffManager.cs",
@@ -415,7 +460,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "MemberDAO.cs",
               "DocumentMoniker": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.DAOs\\Implements\\MemberDAO.cs",
               "RelativeDocumentMoniker": "HairSalonSystem.DAOs\\Implements\\MemberDAO.cs",
@@ -448,18 +493,6 @@
               "ViewState": "AgIAAFUAAAAAAAAAAAAlwGIAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-02T07:21:25.948Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem\\Program.cs",
-              "RelativeDocumentMoniker": "HairSalonSystem\\Program.cs",
-              "ToolTip": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem\\Program.cs",
-              "RelativeToolTip": "HairSalonSystem\\Program.cs",
-              "ViewState": "AgIAAEsAAAAAAAAAAAAAAGIAAABIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-02T07:33:39.36Z"
             },
             {
               "$type": "Document",
