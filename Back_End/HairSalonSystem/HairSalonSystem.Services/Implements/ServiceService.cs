@@ -26,23 +26,23 @@ namespace HairSalonSystem.Services.Implements
 
         public async Task<ActionResult> CreateService(CreateServiceRequest serviceModel, HttpContext context)
         {
-            var accountID = UserUtil.GetAccountId(context);
-            if (accountID == null)
-            {
-                return new ObjectResult(MessageConstant.ServiceMessage.CreateRight)
-                {
-                    StatusCode = StatusCodes.Status403Forbidden
-                };
-            }
+            //var accountID = UserUtil.GetAccountId(context);
+            //if (accountID == null)
+            //{
+            //    return new ObjectResult(MessageConstant.ServiceMessage.CreateRight)
+            //    {
+            //        StatusCode = StatusCodes.Status403Forbidden
+            //    };
+            //}
 
-            var roleName = UserUtil.GetRoleName(context);
-            if (roleName != "SA")
-            {
-                return new ObjectResult(MessageConstant.ServiceMessage.CreateRight)
-                {
-                    StatusCode = StatusCodes.Status403Forbidden
-                };
-            }
+            //var roleName = UserUtil.GetRoleName(context);
+            //if (roleName != "SA")
+            //{
+            //    return new ObjectResult(MessageConstant.ServiceMessage.CreateRight)
+            //    {
+            //        StatusCode = StatusCodes.Status403Forbidden
+            //    };
+            //}
 
             var service = new BusinessObject.Entities.Service
             {

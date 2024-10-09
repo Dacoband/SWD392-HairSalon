@@ -14,7 +14,7 @@ namespace HairSalonSystem.Services.PayLoads.Requests.Service
         [StringLength(100,ErrorMessage ="Tên dịch vụ không được quá 100 ký tự")]
         public string ServiceName { get; set; }
         [Range(1,3,ErrorMessage ="Dịch vụ phải thuộc kiểu 1, 2 hoặc 3")]
-        public int Type = 1;
+        public int Type { get; set; }
         [Range(10000, double.MaxValue, ErrorMessage = "Giá dịch vụ phải lớn hơn 10.0000")]
         public float Price { get; set; }
 
@@ -26,6 +26,6 @@ namespace HairSalonSystem.Services.PayLoads.Requests.Service
 
         public DateTime InsDate = DateTime.Now;
 
-        public bool DelFlg = true;
+        public bool DelFlg { get; set; }
     }
 }

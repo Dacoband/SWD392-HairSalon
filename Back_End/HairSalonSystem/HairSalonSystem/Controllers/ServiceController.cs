@@ -20,7 +20,7 @@ namespace HairSalonSystem.API.Controllers
             _serviceService = serviceService;
         }
         [HttpGet(APIEndPointConstant.Service.GetServiceById)]
-        [ProducesResponseType(typeof(Service), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ServiceResponse), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
 
         public async Task<ActionResult<ServiceResponse>> GetServiceById([FromRoute] Guid id)
@@ -37,7 +37,7 @@ namespace HairSalonSystem.API.Controllers
 
         }
         [HttpGet(APIEndPointConstant.Service.GetAllService)]
-        [ProducesResponseType(typeof(Service), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ServiceResponse), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
 
         public async Task<ActionResult<List<ServiceResponse>>> GetAllService([FromQuery] QueryService query)

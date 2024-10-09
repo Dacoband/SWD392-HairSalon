@@ -20,7 +20,7 @@ namespace HairSalonSystem.Services.PayLoads.Responses.Service
         public string ServiceName { get; set; }
 
         [BsonElement("Type")]
-        public int Type = 1;
+        public int Type { get;set; }
 
         [BsonElement("Price")]
         public float Price { get; set; }
@@ -41,6 +41,6 @@ namespace HairSalonSystem.Services.PayLoads.Responses.Service
         public DateTime? UpdDate { get; set; }
 
         [BsonElement("DelFlg")]
-        public bool DelFlg = true;
+        public bool DelFlg {  get; set; }
     }
 }
