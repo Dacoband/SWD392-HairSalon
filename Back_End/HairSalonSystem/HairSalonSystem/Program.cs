@@ -132,11 +132,10 @@ var databaseName = builder.Configuration["MongoDb:DatabaseName"];
 builder.Services.AddSingleton(new HairSalonContext(connectionString, databaseName));
 var app = builder.Build();
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+
 
 app.UseRouting();
 
