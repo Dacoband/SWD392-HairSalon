@@ -17,4 +17,4 @@ jobs:
       uses: actions/checkout@v2 
     #build tại vps bằng docker thì sau đó con backend sẽ chạy ở docker trong vps
     - name: Run `docker compose`
-      run: docker compose up --build -d
+      run: docker compose up --build 
