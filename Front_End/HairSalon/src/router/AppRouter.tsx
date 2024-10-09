@@ -12,7 +12,7 @@ import Role2 from "../pages/Role2";
 import Logout from "../components/Logout";
 import LayoutMain from "../layout/LayoutMain";
 
-import Login from "../pages/Login";
+import Login from "../pages/Login/Login";
 import PrivateRoute from "./PriveRouter";
 
 const AppRouter = () => {
