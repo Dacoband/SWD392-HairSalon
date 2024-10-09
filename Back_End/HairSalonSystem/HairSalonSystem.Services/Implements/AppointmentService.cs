@@ -2,7 +2,6 @@
 using HairSalonSystem.Services.Constant;
 using HairSalonSystem.Services.Interfaces;
 using HairSalonSystem.Services.PayLoads.Requests.Appointment;
-using HairSalonSystem.Services.PayLoads.Responses.Appointment;
 using HairSalonSystem.Services.Util;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
