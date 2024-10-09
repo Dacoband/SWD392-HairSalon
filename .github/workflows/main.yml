@@ -4,7 +4,7 @@ name: HairSalonSystem
 on:
   push:
     branches:
-      - Nhan.Volka
+      - main
 
 #những công việc mà no sẽ khi ddaayr code
 jobs:
