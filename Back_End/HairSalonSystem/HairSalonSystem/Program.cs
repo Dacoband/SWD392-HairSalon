@@ -20,7 +20,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
-        policy => policy.WithOrigins("http://localhost:5175") // Thay bằng URL của frontend
+        policy => policy.WithOrigins() // Thay bằng URL của frontend
                         .AllowAnyHeader()
                         .AllowAnyMethod());
 });
