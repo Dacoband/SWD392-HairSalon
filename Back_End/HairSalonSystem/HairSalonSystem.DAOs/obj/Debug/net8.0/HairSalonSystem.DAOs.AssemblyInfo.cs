@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HairSalonSystem.DAOs")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5c0cf6642e0b543693fffdd259323406141858a0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8544dc07e85ab5ed40ac5fa40ee2cadde911fa0e")]
 [assembly: System.Reflection.AssemblyProductAttribute("HairSalonSystem.DAOs")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HairSalonSystem.DAOs")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
