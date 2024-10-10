@@ -7,6 +7,7 @@ using HairSalonSystem.BusinessObject.Entities;
 using HairSalonSystem.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 
 namespace HairSalonSystem.Services.Controllers
 {
@@ -29,6 +30,15 @@ namespace HairSalonSystem.Services.Controllers
         [ProducesErrorResponseType(typeof(ProblemDetails))]
         public async Task<ActionResult> AddAccountAll([FromBody] CreateNewAccountRequest accountDto)
         {
+            HttpContext httpContext = HttpContext;
+            var roleName = UserUtil.GetRoleName(httpContext);
+            if (roleName != "SA")
+            {
+                return new ObjectResult(MessageConstant.BranchMessage.NotRights)
+                {
+                    StatusCode = StatusCodes.Status403Forbidden
+                };
+            }
             var account = new Account
             {
                 AccountId = Guid.NewGuid(),
