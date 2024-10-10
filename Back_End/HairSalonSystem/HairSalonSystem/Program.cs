@@ -17,11 +17,14 @@ using HairSalonSystem.DAOs.Implements;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//Add CROS
-builder.Services.AddCors(c =>
+builder.Services.AddCors(options =>
 {
-    c.AddPolicy("AllowOrigin", option => option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+    options.AddPolicy("AllowSpecificOrigin",
+        policy => policy.WithOrigins("http://localhost:5175") // Thay bằng URL của frontend
+                        .AllowAnyHeader()
+                        .AllowAnyMethod());
 });
+
 
 // Add services to the container.
 
@@ -137,9 +140,10 @@ var connectionString = builder.Configuration.GetConnectionString("MongoDbConnect
 var databaseName = builder.Configuration["MongoDb:DatabaseName"];
 builder.Services.AddSingleton(new HairSalonContext(connectionString, databaseName));
 var app = builder.Build();
+app.UseCors("AllowSpecificOrigin");
 // Configure the HTTP request pipeline.
 
-    app.UseSwagger();
+app.UseSwagger();
     app.UseSwaggerUI();
 
 
