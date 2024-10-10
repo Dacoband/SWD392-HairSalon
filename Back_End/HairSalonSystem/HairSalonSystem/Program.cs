@@ -17,6 +17,12 @@ using HairSalonSystem.DAOs.Implements;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//Add CROS
+builder.Services.AddCors(c =>
+{
+    c.AddPolicy("AllowOrigin", option => option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+});
+
 // Add services to the container.
 
 builder.Services.AddSwaggerGen(c =>
