@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* Ẩn thanh gạch chân */
+.ant-tabs-ink-bar {
+    /* display: none; */
+    
+        background-color: black !important; /* Đổi màu gạch chân thành đen */
+      
+  }
+/* Thay đổi màu nút khi tab được chọn */
+.ant-tabs-tab-active .ant-btn {
+    background-color: black; /* Thay đổi màu nền thành trắng */
+    color: white; /* Đổi màu chữ thành đen để dễ nhìn */
+    /* border: 1px solid black; Tạo viền đen cho nút */
+  }
+  .ant-btn:hover {
+    background-color: black !important; /* Giữ nguyên màu nền đen khi hover */
+    color: white !important; /* Giữ màu chữ trắng khi hover */
+    border-color: black !important; /* Giữ viền đen khi hover */
+  }   
+  
+ 

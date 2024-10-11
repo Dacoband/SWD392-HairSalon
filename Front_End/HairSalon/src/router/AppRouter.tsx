@@ -14,20 +14,42 @@ import LayoutMain from "../layout/LayoutMain";
 
 import Login from "../pages/Login";
 import PrivateRoute from "./PriveRouter";
-
+import ServicesPage from "../pages/ServicesPage";
+import BookPage from "../pages/customer/BookPage";
 const AppRouter = () => {
   return (
     <Router>
+      {/* GUEST */}
       <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/logout" element={<Logout />} />
+        <Route element={<LayoutMain />}>
+          <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/bookAppoiment" element={<BookPage />} />
+        </Route>
+        {/* MEMBER */}
+
         <Route element={<LayoutMain />}>
           <Route
             path="/Member"
             element={<PrivateRoute element={Role1} allowedRoles={["MB"]} />}
           />
+          <Route
+            path="/services"
+            element={
+              <PrivateRoute element={ServicesPage} allowedRoles={["MB"]} />
+            }
+          />
+          <Route
+            path="/bookAppoiment"
+            element={
+              <PrivateRoute element={ServicesPage} allowedRoles={["MB"]} />
+            }
+          />
         </Route>
+
+        {/* ... */}
 
         <Route
           path="/SystemAdmin"
@@ -39,3 +61,4 @@ const AppRouter = () => {
 };
 
 export default AppRouter;
+// c8945d
