@@ -15,6 +15,7 @@ jobs:
     # tải code về vps
     - name: Checkout code
       uses: actions/checkout@v2 
+
       
     #build tại vps bằng docker thì sau đó con backend sẽ chạy ở docker trong vps
     
