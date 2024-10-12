@@ -24,6 +24,4 @@ jobs:
       
     # build docker
     - name: Run `docker compose`
-      run: |
-      docker compose down
-      docker compose up --build --remove-orphans -d
+      run:  docker compose up --build --remove-orphans -d
