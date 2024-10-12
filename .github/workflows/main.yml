@@ -5,7 +5,8 @@ on:
   push:
     branches:
       - main
-
+    wordflow_dispatch:
+    
 #những công việc mà no sẽ khi ddaayr code
 jobs:
   docker-compose:
