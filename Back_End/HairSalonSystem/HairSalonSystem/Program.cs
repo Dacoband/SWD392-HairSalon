@@ -32,7 +32,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "HairSalon API", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "HairSalon API Test", Version = "v1" });
 
     // Cấu hình Bearer token 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
