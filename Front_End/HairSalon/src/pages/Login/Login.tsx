@@ -47,11 +47,16 @@ const SignInForm = () => {
   const handleGoogleLogin = () => {
     alert('Login with Google functionality not implemented yet.');
   };
+  const handleSignUp = () => {
+    navigate('/SignUp');
+  };
 
   return (
     <form className="sign-in-form" onSubmit={handleLogin}>
       <h1 className="greeting">Hello</h1>
-      <p className="prompt">Sign in to Hair salon or <a href="#" className="sign-up-link">create an account</a></p>
+      <p className="prompt"> Don’t have an account?  <span onClick={handleSignUp} className="sign-up-link">
+            Sign Up
+          </span></p>
       <InputField
         label="Username"
         type="text"
@@ -82,26 +87,6 @@ const SignInForm = () => {
   );
 };
 
-const Footer = () => (
-  <footer className="footer">
-    <div className="social-links">
-      <a href="#">Facebook</a>
-      <a href="#">Twitter</a>
-      <a href="#">Instagram</a>
-      <a href="#">Pinterest</a>
-    </div>
-    <div className="footer-infor">
-    <div className="footer-section">
-      <h2 className="salon-name">HAIR SALON</h2>
-    </div>
-    <div className="footer-section">
-      <p className="salon-description">
-        Welcome to Hair Salon, A Premier Destination For Men's Grooming, Where Style Meets Sophistication. Whether You're Looking For A Classic Cut, Modern Trend, Or A Clean Shave, We Provide A Comfortable And Relaxing Environment To Ensure You Leave Feeling Confident And Refreshed.
-      </p>
-    </div>
-    </div>
-  </footer>
-);
 
 
 const SignInPage = () => {

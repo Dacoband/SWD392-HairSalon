@@ -15,9 +15,9 @@
   
   .sign-in-form {
     width: 100%;
-    max-width: 400px;
+    max-width: 500px;
     background-color:white;
-    padding: 24px;
+    padding: 40px;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     
@@ -117,44 +117,4 @@
     }
   }
   
-  .footer {
-
-    justify-content: space-between;
-    width: 100%;
-    margin-top: 2rem;
-    text-align: center;
-    .social-links {
-        display: flex;
-        justify-content: center;
-        gap: 16px;
-        margin-bottom: 1rem;
-        background-color: rgb(164, 151, 126);
-    
-        a {
-          color: var(--text-color);
-          &:hover {
-            color: var(--accent);   
-          }
-        }
-    }
-    .footer-infor{
-        display: flex;
-        background-color: rgb(0, 0, 0);
-        color: white;
-        
-    }
-    .footer-section {
-      width: 48%;
-      
-      .salon-name {
-        font-size: 2rem;
-        color: var(--primary);
-      }
-  
-      .salon-description {
-        font-size: 0.875rem;
-        color: var(--muted-foreground);
-      }
-    }
-  }
   
