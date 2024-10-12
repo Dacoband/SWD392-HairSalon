@@ -20,4 +20,5 @@ jobs:
     #build tại vps bằng docker thì sau đó con backend sẽ chạy ở docker trong vps
     
     - name: Run `docker compose`
-      run: docker-compose up --build -d
+      run: sudo docker-compose up --build -d
+      shell: bash
