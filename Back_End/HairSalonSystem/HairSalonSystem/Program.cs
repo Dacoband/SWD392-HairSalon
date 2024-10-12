@@ -19,10 +19,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigin",
-        policy => policy.WithOrigins() // Thay bằng URL của frontend
-                        .AllowAnyHeader()
-                        .AllowAnyMethod());
+    options.AddPolicy("AllowSpecificOrigin", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173") // URL của frontend
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
 });
 
 
@@ -140,6 +142,8 @@ var connectionString = builder.Configuration.GetConnectionString("MongoDbConnect
 var databaseName = builder.Configuration["MongoDb:DatabaseName"];
 builder.Services.AddSingleton(new HairSalonContext(connectionString, databaseName));
 var app = builder.Build();
+
+
 app.UseCors("AllowSpecificOrigin");
 // Configure the HTTP request pipeline.
 
