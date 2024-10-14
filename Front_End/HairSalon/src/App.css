@@ -1,3 +1,44 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* Ẩn thanh gạch chân */
+.ant-tabs-ink-bar {
+    /* display: none; */
+    
+        background-color: black !important; /* Đổi màu gạch chân thành đen */
+      
+  }
+/* Thay đổi màu nút khi tab được chọn */
+.ant-tabs-tab-active .ant-btn {
+    background-color: black; /* Thay đổi màu nền thành trắng */
+    color: white; /* Đổi màu chữ thành đen để dễ nhìn */
+    /* border: 1px solid black; Tạo viền đen cho nút */
+  }
+  .ant-btn:hover {
+    background-color: black !important; /* Giữ nguyên màu nền đen khi hover */
+    color: white !important; /* Giữ màu chữ trắng khi hover */
+    border-color: black !important; /* Giữ viền đen khi hover */
+  }   
+  
+  /* Đổi màu của các step */
+.custom-steps .ant-steps-item-title {
+  color: white; /* Màu chữ đen cho các step mặc định */
+}
+
+.custom-steps .ant-steps-item-process .ant-steps-item-title {
+  color:"#937b34"; /* Màu đỏ cho step đang thực hiện */
+}
+
+.custom-steps .ant-steps-item-finish .ant-steps-item-title {
+  color: black; /* Màu chữ đen cho step đã hoàn thành */
+}
+
+.custom-steps .ant-steps-item {
+  background-color: none; /* Màu nền trắng cho tất cả các step */
+}
+
+/* Đổi màu cho đường nối giữa các step */
+.custom-steps .ant-steps-item::before {
+  background-color: white; /* Đường nối giữa các step thành màu trắng */
+}
+ 

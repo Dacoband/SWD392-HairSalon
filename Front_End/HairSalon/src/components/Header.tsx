@@ -1,9 +1,23 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
   return (
-    <div className="bg-gradient-to-br from-blue-700  to-pink-500 p-5">
-      <div className="text-white text-center">Header</div>
+    <div className="flex  p-4 border-b-2 border-gray-300 ">
+      <Link to="/services">
+        <div className="text-base font-bold mr-4">Services</div>
+      </Link>
+      <Link to="/bookAppoiment">
+        <div className="text-base font-bold mr-4">Booking</div>
+      </Link>
+      <div
+        className="text-base font-bold cursor-pointer"
+        onClick={() => navigate("/logout")}
+      >
+        Logout
+      </div>
     </div>
   );
 };
