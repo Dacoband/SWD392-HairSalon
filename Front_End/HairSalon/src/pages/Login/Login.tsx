@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Login.scss';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./Login.scss";
 import { FaUserAlt, FaLock, FaGoogle } from "react-icons/fa";
 
 // Mock users for demo purposes
@@ -24,55 +24,87 @@ const InputField = ({ label, type, value, onChange, icon: Icon }: any) => (
 );
 
 const SignInForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const foundUser = users.find(user => user.name === email && user.pass === password);
+    const foundUser = users.find(
+      (user) => user.name === email && user.pass === password
+    );
 
+    //   if (foundUser) {
+    //     localStorage.setItem("userData", JSON.stringify(foundUser));
+    //     navigate(`/${foundUser.role}`);
+    //   } else {
+    //     alert("Incorrect email or password!");
+    //   }
+    // };
     if (foundUser) {
-      localStorage.setItem('userData', JSON.stringify(foundUser));
-      navigate(`/${foundUser.role}`);
+      // Lưu dữ liệu người dùng vào localStorage
+      localStorage.setItem("userData", JSON.stringify(foundUser));
+
+      if (foundUser.role === "SA") {
+        navigate("/SystemAdmin");
+      } else if (foundUser.role === "SM") {
+        navigate("/StaffManager");
+      } else if (foundUser.role === "SL") {
+        navigate("/StaffStylelist");
+      } else if (foundUser.role === "ST") {
+        navigate("/Stylelist");
+      } else if (foundUser.role === "MB") {
+        navigate("/home");
+      }
     } else {
-      alert('Incorrect email or password!');
+      alert("Sai tên người dùng hoặc mật khẩu!");
     }
   };
-
   const handleForgotPassword = () => {
-    alert('Forgot password functionality not implemented yet.');
+    alert("Forgot password functionality not implemented yet.");
   };
 
   const handleGoogleLogin = () => {
-    alert('Login with Google functionality not implemented yet.');
+    alert("Login with Google functionality not implemented yet.");
   };
   const handleSignUp = () => {
-    navigate('/SignUp');
+    navigate("/SignUp");
   };
 
   return (
     <form className="sign-in-form" onSubmit={handleLogin}>
       <h1 className="greeting">Hello</h1>
-      <p className="prompt"> Don’t have an account?  <span onClick={handleSignUp} className="sign-up-link">
-            Sign Up
-          </span></p>
+      <p className="prompt">
+        {" "}
+        Don’t have an account?{" "}
+        <span onClick={handleSignUp} className="sign-up-link">
+          Sign Up
+        </span>
+      </p>
       <InputField
         label="email"
         type="text"
         value={email}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setEmail(e.target.value)
+        }
         icon={FaUserAlt}
       />
       <InputField
         label="Password"
         type="password"
         value={password}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setPassword(e.target.value)
+        }
         icon={FaLock}
       />
-      <a onClick={handleForgotPassword} className="forgot-password">FORGOT PASSWORD</a>
-      <button type="submit" className="sign-in-button">Sign In</button>
+      <a onClick={handleForgotPassword} className="forgot-password">
+        FORGOT PASSWORD
+      </a>
+      <button type="submit" className="sign-in-button">
+        Sign In
+      </button>
 
       <div className="divider">
         <hr className="divider-line" />
@@ -80,18 +112,20 @@ const SignInForm = () => {
         <hr className="divider-line" />
       </div>
 
-      <button type="button" className="google-login-button" onClick={handleGoogleLogin}>
-      <FaGoogle className="google-icon" /> Log in with Google
+      <button
+        type="button"
+        className="google-login-button"
+        onClick={handleGoogleLogin}
+      >
+        <FaGoogle className="google-icon" /> Log in with Google
       </button>
     </form>
   );
 };
 
-
-
 const SignInPage = () => {
   return (
-    <div className="sign-in-page" >
+    <div className="sign-in-page">
       <SignInForm />
       {/* <Footer /> */}
     </div>
@@ -99,10 +133,6 @@ const SignInPage = () => {
 };
 
 export default SignInPage;
-
-
-
-
 
 // import React, { useState } from "react";
 // import { useNavigate } from "react-router-dom";

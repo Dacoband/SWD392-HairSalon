@@ -12,7 +12,7 @@ import Role2 from "../pages/Role2";
 import Logout from "../components/Logout";
 import LayoutMain from "../layout/LayoutMain";
 
-import Login from "../pages/Login";
+import Login from "../pages/Login/Login";
 import PrivateRoute from "./PriveRouter";
 import ServicesPage from "../pages/ServicesPage";
 import BookPage from "../pages/customer/BookPage";
@@ -28,11 +28,15 @@ const AppRouter = () => {
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/bookAppoiment" element={<BookPage />} />
         </Route>
-        {/* MEMBER */}
+
+        {/* Guest có header-footer */}
+        <Route element={<LayoutMain />}>
+          <Route path="/home" element={<Role1 />} />
+        </Route>
 
         <Route element={<LayoutMain />}>
           <Route
-            path="/Member"
+            path="/home"
             element={<PrivateRoute element={Role1} allowedRoles={["MB"]} />}
           />
           <Route
@@ -61,4 +65,3 @@ const AppRouter = () => {
 };
 
 export default AppRouter;
-// c8945d
