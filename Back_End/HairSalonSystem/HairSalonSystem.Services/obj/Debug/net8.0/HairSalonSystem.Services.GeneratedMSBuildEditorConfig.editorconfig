@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = HairSalonSystem.Services
-build_property.ProjectDir = D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Services\
+build_property.ProjectDir = D:\sem7\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.Services\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
