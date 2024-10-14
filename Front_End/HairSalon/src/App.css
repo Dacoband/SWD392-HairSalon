@@ -20,4 +20,25 @@
     border-color: black !important; /* Giữ viền đen khi hover */
   }   
   
+  /* Đổi màu của các step */
+.custom-steps .ant-steps-item-title {
+  color: white; /* Màu chữ đen cho các step mặc định */
+}
+
+.custom-steps .ant-steps-item-process .ant-steps-item-title {
+  color:"#937b34"; /* Màu đỏ cho step đang thực hiện */
+}
+
+.custom-steps .ant-steps-item-finish .ant-steps-item-title {
+  color: black; /* Màu chữ đen cho step đã hoàn thành */
+}
+
+.custom-steps .ant-steps-item {
+  background-color: none; /* Màu nền trắng cho tất cả các step */
+}
+
+/* Đổi màu cho đường nối giữa các step */
+.custom-steps .ant-steps-item::before {
+  background-color: white; /* Đường nối giữa các step thành màu trắng */
+}
  

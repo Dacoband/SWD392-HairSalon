@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { Button, message, Steps, theme, TimePicker } from "antd";
 import { Select } from "antd";
-import { Tabs } from "antd";
-import { Col, Row } from "antd";
-
+import bg from "../../assets/images/bgsdn.jpg";
 import { Divider } from "antd";
 import "../../App.css";
 export interface Services {
@@ -71,14 +69,14 @@ const services: Services[] = [
     type: 3,
   },
 ];
-const filterServicesByType = (type: number) => {
-  return services.filter((service) => service.type === type);
-};
+// const filterServicesByType = (type: number) => {
+//   return services.filter((service) => service.type === type);
+// };
 const steps = [
   {
     title: "Chọn salon và dịch vụ",
     content: (
-      <div>
+      <div className="flex">
         <div className="w-1/2 ">
           <div className="w-full flex justify-start">
             <text className="text-black font-semibold text-base mr-5">
@@ -100,180 +98,15 @@ const steps = [
               ]}
             />
           </div>
-          <div className="">
-            <text className="text-black font-semibold text-base mr-5 w-full">
+          <div className="w-full flex justify-start">
+            <text className="text-black font-semibold text-base mr-5">
               Chọn dịch vụ :
             </text>
-            <div>
-              <Tabs
-                defaultActiveKey="1"
-                centered
-                items={[
-                  {
-                    label: (
-                      <Button
-                        type="text"
-                        shape="round"
-                        className=" text-black font-semibold text-lg p-3"
-                      >
-                        Cắt Tóc Và Tạo Kiểu
-                      </Button>
-                    ),
-                    key: "1",
-                    children: (
-                      <div>
-                        <div className="font-bold  text-2xl text-center m-8">
-                          ( Haircut and Styling )
-                        </div>
-                        <div>
-                          <div className="w-1/2 mx-auto ">
-                            {filterServicesByType(1).map((service) => (
-                              <Row key={service._id}>
-                                <Col
-                                  className=" text-lg text-start font-medium flex"
-                                  span={8}
-                                >
-                                  <div
-                                    className=" mr-4 my-auto"
-                                    style={{ whiteSpace: "nowrap" }}
-                                  >
-                                    {service.name}
-                                  </div>
-                                  <Divider style={{ borderColor: "#a9acad" }} />
-                                </Col>
-                                <Col span={8}>
-                                  <Divider style={{ borderColor: "#a9acad" }} />
-                                </Col>
-                                <Col
-                                  className="flex text-end text-lg font-medium "
-                                  span={8}
-                                >
-                                  <Divider style={{ borderColor: "#a9acad" }} />
-                                  <div
-                                    className=" ml-4 my-auto"
-                                    style={{ whiteSpace: "nowrap" }}
-                                  >
-                                    {service.price}VNĐ
-                                  </div>
-                                </Col>
-                              </Row>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    ),
-                  },
-                  {
-                    label: (
-                      <Button
-                        type="text"
-                        shape="round"
-                        className=" text-black font-semibold text-lg p-3"
-                      >
-                        Nhuộm Tóc và Uốn Tóc
-                      </Button>
-                    ),
-                    key: "2",
-                    children: (
-                      <div>
-                        <div className="font-bold  text-2xl text-center m-8">
-                          (Hair Coloring And Perming)
-                        </div>
-                        <div>
-                          <div className="w-1/2 mx-auto ">
-                            {filterServicesByType(2).map((service) => (
-                              <Row key={service._id}>
-                                <Col
-                                  className=" text-lg text-start font-medium flex"
-                                  span={8}
-                                >
-                                  <div
-                                    className=" mr-4 my-auto"
-                                    style={{ whiteSpace: "nowrap" }}
-                                  >
-                                    {service.name}
-                                  </div>
-                                  <Divider style={{ borderColor: "#a9acad" }} />
-                                </Col>
-                                <Col span={8}>
-                                  <Divider style={{ borderColor: "#a9acad" }} />
-                                </Col>
-                                <Col
-                                  className="flex text-end text-lg font-medium "
-                                  span={8}
-                                >
-                                  <Divider style={{ borderColor: "#a9acad" }} />
-                                  <div
-                                    className=" ml-4 my-auto"
-                                    style={{ whiteSpace: "nowrap" }}
-                                  >
-                                    {service.price}VNĐ
-                                  </div>
-                                </Col>
-                              </Row>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    ),
-                  },
-                  {
-                    label: (
-                      <Button
-                        type="text"
-                        shape="round"
-                        className=" text-black font-semibold text-lg p-3"
-                      >
-                        Combo Hot
-                      </Button>
-                    ),
-                    key: "3",
-                    children: (
-                      <div>
-                        <div className="font-bold  text-2xl text-center m-8">
-                          ( Combo )
-                        </div>
-                        <div>
-                          <div className="w-1/2 mx-auto ">
-                            {filterServicesByType(3).map((service) => (
-                              <Row key={service._id}>
-                                <Col
-                                  className=" text-lg text-start font-medium flex"
-                                  span={8}
-                                >
-                                  <div
-                                    className=" mr-4 my-auto"
-                                    style={{ whiteSpace: "nowrap" }}
-                                  >
-                                    {service.name}
-                                  </div>
-                                  <Divider style={{ borderColor: "#a9acad" }} />
-                                </Col>
-                                <Col span={8}>
-                                  <Divider style={{ borderColor: "#a9acad" }} />
-                                </Col>
-                                <Col
-                                  className="flex text-end text-lg font-medium "
-                                  span={8}
-                                >
-                                  <Divider style={{ borderColor: "#a9acad" }} />
-                                  <div
-                                    className=" ml-4 my-auto"
-                                    style={{ whiteSpace: "nowrap" }}
-                                  >
-                                    {service.price}VNĐ
-                                  </div>
-                                </Col>
-                              </Row>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    ),
-                  },
-                ]}
-              />
-            </div>
+          </div>
+        </div>
+        <div className="w-1/2 bor">
+          <div className="text-black text-xl font-semibold">
+            Dịch vụ của bạn
           </div>
         </div>
       </div>
@@ -320,8 +153,17 @@ const BookingPAge: React.FC = () => {
 
   return (
     <div>
-      <div className="w-1/2 mx-auto my-10">
-        <Steps current={current} items={items} />
+      <div
+        className="bg-cover bg-center flex items-center justify-center "
+        style={{ backgroundImage: `url(${bg})` }}
+      >
+        <div className="bg-black bg-opacity-75 h-72 my-auto w-full flex items-center justify-center">
+          <Steps
+            className="w-1/2 mx-auto my-10 custom-steps"
+            current={current}
+            items={items}
+          />
+        </div>
       </div>
       <div className="w-11/12 mx-auto">
         <div style={contentStyle}>{steps[current].content}</div>
