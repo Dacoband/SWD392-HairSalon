@@ -69,20 +69,7 @@ const SignUpPage = () => {
             className="input-style"
           />
         </div>
-
-        <div className="form-group">
-          <FaEnvelope className="input-icon" />
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Email"
-            required
-            className="input-style"
-          />
-        </div>
-
+        
         <div className="form-group">
           <FaPhone className="input-icon" />
           <input
@@ -96,14 +83,15 @@ const SignUpPage = () => {
           />
         </div>
 
+
         <div className="form-group">
-          <FaUserAlt className="input-icon" />
+          <FaEnvelope className="input-icon" />
           <input
-            type="text"
-            name="username"
-            value={formData.username}
+            type="email"
+            name="email"
+            value={formData.email}
             onChange={handleChange}
-            placeholder="Username"
+            placeholder="Email"
             required
             className="input-style"
           />

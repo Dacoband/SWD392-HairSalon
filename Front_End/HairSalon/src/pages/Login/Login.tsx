@@ -24,19 +24,19 @@ const InputField = ({ label, type, value, onChange, icon: Icon }: any) => (
 );
 
 const SignInForm = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const foundUser = users.find(user => user.name === username && user.pass === password);
+    const foundUser = users.find(user => user.name === email && user.pass === password);
 
     if (foundUser) {
       localStorage.setItem('userData', JSON.stringify(foundUser));
       navigate(`/${foundUser.role}`);
     } else {
-      alert('Incorrect username or password!');
+      alert('Incorrect email or password!');
     }
   };
 
@@ -58,10 +58,10 @@ const SignInForm = () => {
             Sign Up
           </span></p>
       <InputField
-        label="Username"
+        label="email"
         type="text"
-        value={username}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
+        value={email}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
         icon={FaUserAlt}
       />
       <InputField
@@ -114,16 +114,16 @@ export default SignInPage;
 // ];
 
 // const Login = () => {
-//   const [username, setUsername] = useState("");
+//   const [email, setemail] = useState("");
 //   const [password, setPassword] = useState("");
 //   const navigate = useNavigate();
 
 //   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
 //     e.preventDefault();
 
-//     // Tìm kiếm người dùng dựa trên username và password
+//     // Tìm kiếm người dùng dựa trên email và password
 //     const foundUser = users.find(
-//       (user) => user.name === username && user.pass === password
+//       (user) => user.name === email && user.pass === password
 //     );
 
 //     if (foundUser) {
@@ -153,10 +153,10 @@ export default SignInPage;
 //         <div>
 //           <label>Tên người dùng: </label>
 //           <input
-//             id="username"
+//             id="email"
 //             type="text"
-//             value={username}
-//             onChange={(e) => setUsername(e.target.value)}
+//             value={email}
+//             onChange={(e) => setemail(e.target.value)}
 //             className="mt-1 p-2 border border-gray-300 rounded-md w-80"
 //             required
 //           />
