@@ -12,7 +12,7 @@ import Role2 from "../pages/Role2";
 import Logout from "../components/Logout";
 import LayoutMain from "../layout/LayoutMain";
 
-import Login from "../pages/Login";
+import Login from "../pages/Login/Login";
 import PrivateRoute from "./PriveRouter";
 import HomePage from "../pages/Home/HomePage";
 import Service from "../components/Service/Service";
@@ -20,6 +20,7 @@ import Contact from "../pages/Contact";
 const AppRouter = () => {
   return (
     <Router>
+      {/* GUEST */}
       <Routes>
         <Route path="/" element={<Navigate to="/homePage" />} />
         <Route path="/login" element={<Login />} />
@@ -27,13 +28,15 @@ const AppRouter = () => {
 
         <Route element={<LayoutMain />}>
           <Route
-            path="/Member"
+            path="/home"
             element={<PrivateRoute element={Role1} allowedRoles={["MB"]} />}
           />
           <Route path="/homePage" element={<HomePage />} />
           <Route path="/service" element={<Service />} />
           <Route path="/contact" element={<Contact />} />
         </Route>
+
+        {/* ... */}
 
         <Route
           path="/SystemAdmin"
