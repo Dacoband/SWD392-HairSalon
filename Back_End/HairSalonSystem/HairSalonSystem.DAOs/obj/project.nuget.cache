@@ -1,6 +1,10 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "yi8H6Da0ktI=",
+=======
+  "dgSpecHash": "Q0Kn0saGjq4=",
+>>>>>>> ThucFix
   "success": true,
   "projectFilePath": "D:\\FPT_Learning\\SWD392\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.DAOs\\HairSalonSystem.DAOs.csproj",
   "expectedPackageFiles": [
