@@ -14,19 +14,25 @@ import LayoutMain from "../layout/LayoutMain";
 
 import Login from "../pages/Login";
 import PrivateRoute from "./PriveRouter";
-
+import HomePage from "../pages/Home/HomePage";
+import Service from "../components/Service/Service";
+import Contact from "../pages/Contact";
 const AppRouter = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/" element={<Navigate to="/homePage" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
+
         <Route element={<LayoutMain />}>
           <Route
             path="/Member"
             element={<PrivateRoute element={Role1} allowedRoles={["MB"]} />}
           />
+          <Route path="/homePage" element={<HomePage />} />
+          <Route path="/service" element={<Service />} />
+          <Route path="/contact" element={<Contact />} />
         </Route>
 
         <Route
