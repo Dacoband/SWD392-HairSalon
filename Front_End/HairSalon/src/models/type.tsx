@@ -1,15 +1,14 @@
 export interface Services {
   serviceID: string;
-  servicename: string;
+  serviceName: string;
   price: number;
   description: string;
   duration: number;
   avatarImage: string | null;
   updDate: Date;
-  type: number;
 }
 export interface Branches {
-  _id: string;
+  branchID: string;
   staffManagerID: string;
   salonBranches: string;
   address: string;
