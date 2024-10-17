@@ -98,6 +98,13 @@
             public const string UpdateAppointment = AppointmentEndpoint + "update/{id}";
             public const string GetAllAppointment = AppointmentEndpoint + "get-all";
         }
+
+        public static class CancelAppointment
+        {
+            public const string CancelEndpoint = ApiEndpoint + "/cancel-appointment";
+            public const string CreateCancel = CancelEndpoint + "/create";
+           
+        }
     }
 }
 

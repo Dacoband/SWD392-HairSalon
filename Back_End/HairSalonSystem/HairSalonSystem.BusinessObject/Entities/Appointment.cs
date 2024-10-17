@@ -23,6 +23,8 @@ namespace HairSalonSystem.BusinessObject.Entities
         [BsonElement]
         [BsonRepresentation(BsonType.Int32)]
         public int Status { get; set; }
+        // 1: created -> 2: cancel by cus -> 3: cancel by salon -> 4 : completed 
+
         [BsonElement]
         [BsonRepresentation(BsonType.Decimal128)]
         public float TotalPrice { get; set; }
