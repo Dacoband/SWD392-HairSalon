@@ -14,11 +14,12 @@ export const getServicesByType = async (type: number): Promise<Services[]> => {
 export const getAllServices = async (): Promise<Services[]> => {
   try {
     const response = await axios.get(
-      "https://api.hairsalon.vol-ka.studio/api/v1/service/get-all"
+      "https://api.vol-ka.studio/api/v1/service/get-all"
     );
+    console.log("ALL SERVICEs:", response.data);
     return response.data as Services[];
   } catch (error) {
-    console.error("Error fetching all services:", error);
+    console.error(`Error fetching all services:`, error);
     return [];
   }
 };

@@ -4,12 +4,14 @@
 /* Ẩn thanh gạch chân */
 .ant-tabs-ink-bar {
     /* display: none; */
-    
+   
         background-color: black !important; /* Đổi màu gạch chân thành đen */
       
   }
 /* Thay đổi màu nút khi tab được chọn */
 .ant-tabs-tab-active .ant-btn {
+  padding-top:20px !important;
+  padding-bottom:20px !important;
     background-color: black; /* Thay đổi màu nền thành trắng */
     color: white; /* Đổi màu chữ thành đen để dễ nhìn */
     /* border: 1px solid black; Tạo viền đen cho nút */
@@ -18,6 +20,8 @@
     background-color: black !important; /* Giữ nguyên màu nền đen khi hover */
     color: white !important; /* Giữ màu chữ trắng khi hover */
     border-color: black !important; /* Giữ viền đen khi hover */
+    padding-top:20px !important;
+  padding-bottom:20px !important;
   }   
   
   .custom-dot .ant-steps-icon-dot {
@@ -88,3 +92,9 @@
     padding: 10px !important; /* Tăng khoảng cách giữa chữ và viền */
   }
   
+  .line-clamp {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; 
+    overflow: hidden; 
+  }

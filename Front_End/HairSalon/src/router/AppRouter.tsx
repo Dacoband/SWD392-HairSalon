@@ -25,8 +25,8 @@ const AppRouter = () => {
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
-          <Route path="/services" element={<ServicesPage />} />
-          <Route path="/bookAppoiment" element={<BookPage />} />
+          {/* <Route path="/services" element={<ServicesPage />} /> */}
+          {/* <Route path="/bookAppoiment" element={<BookPage />} /> */}
         </Route>
 
         {/* Guest có header-footer */}
@@ -47,9 +47,7 @@ const AppRouter = () => {
           />
           <Route
             path="/bookAppoiment"
-            element={
-              <PrivateRoute element={ServicesPage} allowedRoles={["MB"]} />
-            }
+            element={<PrivateRoute element={BookPage} allowedRoles={["MB"]} />}
           />
         </Route>
 
