@@ -31,7 +31,7 @@ const customDot: StepsProps["progressDot"] = (dot, { status, index }) => (
   </Popover>
 );
 
-const BookingPage = () => {
+const BookingPage: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [branches, setBranches] = useState<Branches[]>([]);
   const [serviceAll, setServicesAll] = useState<Services[]>([]);
@@ -191,7 +191,9 @@ const BookingPage = () => {
                               </div>
                             </div>
                             <div className="w-1/12 flex items-center justify-end p-2">
-                              {selectedServices.includes(service) ? (
+                              {selectedServices.some(
+                                (s) => s.serviceID === service.serviceID
+                              ) ? (
                                 <FaCheckSquare
                                   className="cursor-pointer text-[#937b34]"
                                   size={32}
@@ -264,7 +266,9 @@ const BookingPage = () => {
                               </div>
                             </div>
                             <div className="w-1/12 flex items-center justify-end p-2">
-                              {selectedServices.includes(service) ? (
+                              {selectedServices.some(
+                                (s) => s.serviceID === service.serviceID
+                              ) ? (
                                 <FaCheckSquare
                                   className="cursor-pointer text-[#937b34]"
                                   size={32}
@@ -337,7 +341,9 @@ const BookingPage = () => {
                               </div>
                             </div>
                             <div className="w-1/12 flex items-center justify-end p-2">
-                              {selectedServices.includes(service) ? (
+                              {selectedServices.some(
+                                (s) => s.serviceID === service.serviceID
+                              ) ? (
                                 <FaCheckSquare
                                   className="cursor-pointer text-[#937b34]"
                                   size={32}
@@ -410,7 +416,9 @@ const BookingPage = () => {
                               </div>
                             </div>
                             <div className="w-1/12 flex items-center justify-end p-2">
-                              {selectedServices.includes(service) ? (
+                              {selectedServices.some(
+                                (s) => s.serviceID === service.serviceID
+                              ) ? (
                                 <FaCheckSquare
                                   className="cursor-pointer text-[#937b34]"
                                   size={32}
