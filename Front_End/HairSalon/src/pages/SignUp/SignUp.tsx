@@ -43,7 +43,9 @@ const SignUpPage = () => {
   return (
     <div className="sign-up-page">
       <form className="sign-up-form" onSubmit={handleSubmit}>
-      <h1 className="greeting">Sign Up</h1>
+      <h1 className="greeting">Đăng Ký</h1>
+
+      <h1 className="greeting-title" >Chào mừng bạn đến với Hair Salon</h1>
         <div className="form-group">
           <FaUserAlt className="input-icon" />
           <input
@@ -51,7 +53,7 @@ const SignUpPage = () => {
             name="firstName"
             value={formData.firstName}
             onChange={handleChange}
-            placeholder="First Name"
+            placeholder="Tên"
             required
             className="input-style"
           />
@@ -64,7 +66,7 @@ const SignUpPage = () => {
             name="lastName"
             value={formData.lastName}
             onChange={handleChange}
-            placeholder="Last Name"
+            placeholder="Họ"
             required
             className="input-style"
           />
@@ -77,7 +79,7 @@ const SignUpPage = () => {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            placeholder="Phone"
+            placeholder="Số điện thoại"
             required
             className="input-style"
           />
@@ -104,7 +106,7 @@ const SignUpPage = () => {
             name="password"
             value={formData.password}
             onChange={handleChange}
-            placeholder="Password"
+            placeholder="Mật khẩu"
             required
             className="input-style"
           />
@@ -117,17 +119,17 @@ const SignUpPage = () => {
             name="confirmPassword"
             value={formData.confirmPassword}
             onChange={handleChange}
-            placeholder="Confirm Password"
+            placeholder="Nhập lại mật khẩu"
             required
             className="input-style"
           />
         </div>
 
-        <button type="submit" className="sign-up-button">Sign Up</button>
+        <button type="submit" className="sign-up-button">Đăng ký</button>
         <p className="switch-page">
-          Already have an account?{' '}
+        Bạn đã có tài khoản?{' '}
           <span onClick={handleLoginRedirect} className="login-link">
-            Login
+          Đăng nhập
           </span>
         </p>
       </form>
