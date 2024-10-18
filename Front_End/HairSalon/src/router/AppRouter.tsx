@@ -33,8 +33,13 @@ const AppRouter = () => {
             path="/homePage"
             element={<PrivateRoute element={HomePage} allowedRoles={["MB"]} />}
           />
+          <Route
+            path="/contact"
+            element={<PrivateRoute element={Contact} allowedRoles={["MB"]} />}
+          />
+
           <Route path="/service" element={<Service />} />
-          <Route path="/contact" element={<Contact />} />
+        {/* <Route path="/contact" element={<Contact />} /> */}
         </Route>
 
         {/* ... */}

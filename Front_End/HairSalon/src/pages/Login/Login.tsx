@@ -40,7 +40,7 @@ if(userData){
       } else if (userData.roleName === 'ST') {
         navigate('/Stylelist');
       } else if (userData.roleName === 'MB') {
-        navigate('/homePage');
+        navigate('/HomePage');
       } else {
         navigate('/unknown-role'); 
       }
@@ -61,15 +61,11 @@ if(userData){
 
   return (
     <form className="sign-in-form" onSubmit={handleLogin}>
-      <h1 className="greeting">Hello</h1>
-      <p className="prompt">
-        {" "}
-        Don’t have an account?{" "}
-        <span onClick={handleSignUp} className="sign-up-link">
-          Sign Up
-        </span>
-      </p>
+      <div className="upper-part" >
+      <h1 className="greeting">Đăng Nhập</h1>
+     
       <InputField
+      className="input-style"
         label="email"
         type="text"
         value={email}
@@ -77,9 +73,9 @@ if(userData){
           setEmail(e.target.value)
         }
         icon={FaUserAlt}
-      />
-      <InputField
-        label="Password"
+      />      <InputField
+      className="input-style"
+        label="Mật khẩu"
         type="password"
         value={password}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -87,16 +83,19 @@ if(userData){
         }
         icon={FaLock}
       />
+
       <a onClick={handleForgotPassword} className="forgot-password">
-        FORGOT PASSWORD
+        Quên mật khẩu
       </a>
+
+      </div>
       <button type="submit" className="sign-in-button">
-        Sign In
+       Đăng nhập
       </button>
 
       <div className="divider">
         <hr className="divider-line" />
-        <span>Or continue</span>
+        <span>hoặc tiếp tục với</span>
         <hr className="divider-line" />
       </div>
 
@@ -105,8 +104,15 @@ if(userData){
         className="google-login-button"
         onClick={handleGoogleLogin}
       >
-        <FaGoogle className="google-icon" /> Log in with Google
+        <FaGoogle className="google-icon" /> Đăng nhập bằng Google
       </button>
+      <p className="prompt">
+        {" "}
+        Chưa có tài khoản? {""}
+        <a onClick={handleSignUp} className="sign-up-link">
+          Đăng ký
+        </a>
+      </p>
     </form>
   );
 };
