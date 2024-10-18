@@ -1,0 +1,38 @@
+.group {
+  position: relative;
+
+  a {
+    font-family: "Lato", sans-serif;
+  }
+
+  .dropdown {
+    background-color: #b59242; // Custom background color
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: none; // Hide dropdown initially
+    z-index: 10; // Ensure dropdown is above other elements
+    
+
+    li {
+      border-bottom: 1px solid #dcdcdc;
+
+      a {
+        display: block;
+        padding: 10px 10px;
+        color: white; // Text color
+        font-weight: bold;
+        text-transform: uppercase;
+        text-decoration: none;
+
+        &:hover {
+          background-color: #aa9144; // Adjust hover background color
+        }
+      }
+    }
+  }
+
+  &:hover .dropdown {
+    display: block; // Show dropdown on hover
+  }
+}
