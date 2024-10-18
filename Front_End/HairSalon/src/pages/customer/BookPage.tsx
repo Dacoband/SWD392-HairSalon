@@ -31,7 +31,7 @@ const customDot: StepsProps["progressDot"] = (dot, { status, index }) => (
   </Popover>
 );
 
-const BookingPage: React.FC = () => {
+const BookingPage = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [branches, setBranches] = useState<Branches[]>([]);
   const [serviceAll, setServicesAll] = useState<Services[]>([]);
