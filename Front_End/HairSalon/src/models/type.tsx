@@ -18,3 +18,23 @@ export interface Branches {
   upDate: Date;
   delFlg: boolean;
 }
+export interface Appointment {
+  appointmentId: string;
+  customerId: string;
+  stylistId: string;
+  status: number;
+  totalPrice: number;
+  insDate: string;
+  upDate: string;
+  startTime: string;
+  endTime: string;
+  appointmentService: {
+    serviceId: string;
+    appointmentId: string;
+    unitPrice: number;
+  }[];
+}
+export interface UserData {
+  email: string;
+  roleName: string;
+}
