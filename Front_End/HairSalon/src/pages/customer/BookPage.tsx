@@ -14,9 +14,11 @@ import { Steps, Button, Popover, Input } from "antd";
 import type { StepsProps } from "antd";
 import { getBranchesAll } from "../../services/Branches/branches";
 import { Branches, Services } from "../../models/type";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 import { FaScissors } from "react-icons/fa6";
 import { FaLocationDot } from "react-icons/fa6";
+import { FaUserClock } from "react-icons/fa6";
 
 import { getServicesByType, getAllServices } from "../../services/serviceSalon";
 const customDot: StepsProps["progressDot"] = (dot, { status, index }) => (
@@ -37,6 +39,7 @@ const BookingPage: React.FC = () => {
   const [serviceAll, setServicesAll] = useState<Services[]>([]);
   const [servicesType1, setServicesType1] = useState<Services[]>([]);
   const [servicesType2, setServicesType2] = useState<Services[]>([]);
+  const [servicesType3, setServicesType3] = useState<Services[]>([]);
   const [selectedServices, setSelectedServices] = useState<Services[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   useEffect(() => {
@@ -54,9 +57,11 @@ const BookingPage: React.FC = () => {
         const serviceAll = await getAllServices();
         const services1 = await getServicesByType(1);
         const services2 = await getServicesByType(2);
+        const services3 = await getServicesByType(3);
         setServicesAll(serviceAll);
         setServicesType1(services1);
         setServicesType2(services2);
+        setServicesType3(services3);
       } catch (error) {
         console.error("Error fetching services:", error);
       }
@@ -65,7 +70,11 @@ const BookingPage: React.FC = () => {
     fetchBranches();
     fetchServices();
   }, []);
-
+  const handleConfirm = () => {
+    if (selectedServices.length > 0) {
+      setCurrentStep(currentStep + 1); // Chuyển sang bước tiếp theo
+    }
+  };
   const handleServiceClick = (service: Services) => {
     const isSelected = selectedServices.some(
       (s) => s.serviceID === service.serviceID
@@ -106,19 +115,22 @@ const BookingPage: React.FC = () => {
   const filteredServicesType2 = servicesType2.filter((service) =>
     service.serviceName.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  const filteredServicesType3 = servicesType3.filter((service) =>
+    service.serviceName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const steps = [
     {
       title: "Chọn cơ sở và dịch vụ",
       content: (
         <div className="w-4/5 mx-auto flex">
-          <div className="w-2/3">
-            <div className="text-3xl text-[#937b34] font-bold pb-1  w-fit pr-2 border-b-4 border-[#937b34]">
+          <div className="flex-1 h-[84vh] overflow-y-auto custom-scrollbar">
+            <div className="text-2xl text-[#937b34] font-bold pb-1 pr-4  w-fit  border-b-4 border-[#937b34]">
               Thông tin lịch hẹn:
             </div>
-            <div className="mt-8">
+            <div className="mt-8 pr-4">
               {/* SERVICE */}
-              <div className="text-2xl mb-5 font-semibold flex items-center">
+              <div className="text-xl mb-5 font-semibold flex items-center">
                 <FaScissors className="mr-2" /> Chọn dịch vụ bạn muốn:
               </div>
               <div>
@@ -131,7 +143,7 @@ const BookingPage: React.FC = () => {
                       style={{ fontSize: "25px", marginRight: "15px" }}
                     />
                   }
-                  className="mb-5 text-lg h-14"
+                  className="mb-5 text-lg h-12"
                 />
               </div>
               <Tabs
@@ -142,7 +154,7 @@ const BookingPage: React.FC = () => {
                       <Button
                         type="text"
                         shape="round"
-                        className=" text-black font-semibold text-lg"
+                        className=" text-black font-semibold text-base"
                       >
                         Tất cả
                       </Button>
@@ -153,31 +165,33 @@ const BookingPage: React.FC = () => {
                         {filteredServicesAll.map((service) => (
                           <div
                             key={service.serviceID}
-                            className="border-2 border-slate-400 px-4 py-3 flex mb-5 rounded-md"
+                            className="border-2 border-slate-400 px-4 py-2 flex mb-5 rounded-md"
                           >
                             <div>
                               <img
                                 src={demo}
                                 alt={service.serviceName}
-                                className="w-48 h-40 rounded-md object-cover object-top mr-4 m-1"
+                                className="w-40 h-36 rounded-md object-cover object-top mr-4 m-1"
                               />
                             </div>
-                            <div className="flex-1 h-40 ml-2">
-                              <div className="text-xl py-2 font-bold">
+                            <div className="flex-1 h-36 ml-2 flex flex-col justify-between">
+                              <div className="text-base py-2 font-bold">
                                 {service.serviceName}
                               </div>
-                              <div className="text-lg line-clamp mb-1 text-gray-700">
-                                <span className="text-gray-800 mr-1 font-bold">
-                                  Mô tả:
-                                </span>
-                                Tóc được uốn và tạo kiểu vuốt ngược về phía sau,
-                                mang đến phong cách gọn gàng, mạnh mẽ mà vẫn
-                                lịch lãm, cuốn hút, tạo kiểu dễ dàng hơn bao giờ
-                                hết. Phần tóc 2 bên được điều chỉnh độ dài, tuỳ
-                                thuộc với từng gương mặt
-                              </div>
-                              <div className="text-base text-slate-700 mb-1">
-                                <span className="text-gray-800 font-bold">
+
+                              {servicesType3.some(
+                                (s) => s.serviceID === service.serviceID
+                              ) && (
+                                <div className="text-sm line-clamp mb-1 text-gray-700">
+                                  <span className="text-gray-700 mr-1 font-bold">
+                                    Mô tả:
+                                  </span>
+                                  {service.description}
+                                </div>
+                              )}
+
+                              <div className="text-sm text-slate-700 mb-1">
+                                <span className="text-gray-700 font-bold">
                                   Thời gian:
                                 </span>
                                 <span className="ml-1">
@@ -185,9 +199,9 @@ const BookingPage: React.FC = () => {
                                 </span>
                               </div>
 
-                              <div className="text-black text-xl font-semibold">
+                              <div className="text-black text-base font-semibold mt-auto">
                                 <span className="font-bold mr-1">Giá:</span>
-                                {formatCurrency(service.price)}VNĐ
+                                {formatCurrency(service.price)} VNĐ
                               </div>
                             </div>
                             <div className="w-1/12 flex items-center justify-end p-2">
@@ -217,52 +231,45 @@ const BookingPage: React.FC = () => {
                       <Button
                         type="text"
                         shape="round"
-                        className=" text-black font-semibold text-lg p-3"
+                        className=" text-black font-semibold  text-base p-3"
                       >
                         Cắt Tóc Và Tạo Kiểu
                       </Button>
                     ),
                     key: "2",
                     children: (
-                      <div>
+                      <div className="mt-10">
                         {filteredServicesType1.map((service) => (
                           <div
                             key={service.serviceID}
-                            className="border-2 border-slate-400 px-4 py-3 flex mb-5 rounded-md "
+                            className="border-2 border-slate-400 px-4 py-2 flex mb-5 rounded-md "
                           >
                             <div>
                               <img
                                 src={demo}
                                 alt={service.serviceName}
-                                className="w-48 h-40 rounded-md object-cover object-top mr-4 m-1"
+                                className="w-40 h-36 rounded-md object-cover object-top mr-4 m-1"
                               />
                             </div>
-                            <div className="flex-1 h-40 ml-2">
-                              <div className="text-xl py-2 font-bold">
-                                {service.serviceName}
-                              </div>
-                              <div className="text-lg line-clamp mb-1  text-gray-700">
-                                <span className="text-gray-800 mr-1 font-bold">
-                                  Mô tả:
-                                </span>
-                                Tóc được uốn và tạo kiểu vuốt ngược về phía sau,
-                                mang đến phong cách gọn gàng, mạnh mẽ mà vẫn
-                                lịch lãm, cuốn hút, tạo kiểu dễ dàng hơn bao giờ
-                                hết. Phần tóc 2 bên được điều chỉnh độ dài, tuỳ
-                                thuộc với từng gương mặt
-                              </div>
-                              <div className="text-base text-slate-700 mb-1">
-                                <span className="text-gray-800 font-bold">
-                                  Thời gian:
-                                </span>
-                                <span className="ml-1">
-                                  {formatDuration(service.duration)}
-                                </span>
+                            <div className="flex-1 h-40 ml-2 flex flex-col justify-between">
+                              <div>
+                                <div className="text-base py-2 font-bold">
+                                  {service.serviceName}
+                                </div>
+
+                                <div className="text-sm text-slate-700 mb-1">
+                                  <span className="text-gray-700 font-bold">
+                                    Thời gian:
+                                  </span>
+                                  <span className="ml-1">
+                                    {formatDuration(service.duration)}
+                                  </span>
+                                </div>
                               </div>
 
-                              <div className="text-black text-xl font-semibold">
+                              <div className="text-black text-base font-semibold mt-auto">
                                 <span className="font-bold mr-1">Giá:</span>
-                                {formatCurrency(service.price)}VNĐ
+                                {formatCurrency(service.price)} VNĐ
                               </div>
                             </div>
                             <div className="w-1/12 flex items-center justify-end p-2">
@@ -299,8 +306,8 @@ const BookingPage: React.FC = () => {
                     ),
                     key: "3",
                     children: (
-                      <div>
-                        {filteredServicesType1.map((service) => (
+                      <div className="mt-10">
+                        {filteredServicesType2.map((service) => (
                           <div
                             key={service.serviceID}
                             className="border-2 border-slate-400 px-4 py-3 flex mb-5 rounded-md"
@@ -312,32 +319,25 @@ const BookingPage: React.FC = () => {
                                 className="w-48 h-40 rounded-md object-cover object-top mr-4 m-1"
                               />
                             </div>
-                            <div className="flex-1 h-40 ml-2">
-                              <div className="text-xl py-2 font-bold">
-                                {service.serviceName}
-                              </div>
-                              <div className="text-lg line-clamp mb-1 text-gray-700">
-                                <span className="text-gray-800 mr-1 font-bold">
-                                  Mô tả:
-                                </span>
-                                Tóc được uốn và tạo kiểu vuốt ngược về phía sau,
-                                mang đến phong cách gọn gàng, mạnh mẽ mà vẫn
-                                lịch lãm, cuốn hút, tạo kiểu dễ dàng hơn bao giờ
-                                hết. Phần tóc 2 bên được điều chỉnh độ dài, tuỳ
-                                thuộc với từng gương mặt
-                              </div>
-                              <div className="text-base text-slate-700 mb-1">
-                                <span className="text-gray-800 font-bold">
-                                  Thời gian:
-                                </span>
-                                <span className="ml-1">
-                                  {formatDuration(service.duration)}
-                                </span>
+                            <div className="flex-1 h-40 ml-2 flex flex-col justify-between">
+                              <div>
+                                <div className="text-xl py-2 font-bold">
+                                  {service.serviceName}
+                                </div>
+
+                                <div className="text-lg text-slate-700 mb-1">
+                                  <span className="text-gray-700 font-bold">
+                                    Thời gian:
+                                  </span>
+                                  <span className="ml-1">
+                                    {formatDuration(service.duration)}
+                                  </span>
+                                </div>
                               </div>
 
-                              <div className="text-black text-xl font-semibold">
+                              <div className="text-black text-xl font-semibold mt-auto">
                                 <span className="font-bold mr-1">Giá:</span>
-                                {formatCurrency(service.price)}VNĐ
+                                {formatCurrency(service.price)} VNĐ
                               </div>
                             </div>
                             <div className="w-1/12 flex items-center justify-end p-2">
@@ -374,8 +374,8 @@ const BookingPage: React.FC = () => {
                     ),
                     key: "4",
                     children: (
-                      <div>
-                        {filteredServicesType2.map((service) => (
+                      <div className="mt-10">
+                        {filteredServicesType3.map((service) => (
                           <div
                             key={service.serviceID}
                             className="border-2 border-slate-400 px-4 py-3 flex mb-5 rounded-md"
@@ -387,22 +387,18 @@ const BookingPage: React.FC = () => {
                                 className="w-48 h-40 rounded-md object-cover object-top mr-4 m-1"
                               />
                             </div>
-                            <div className="flex-1 h-40 ml-2">
+                            <div className="flex-1 h-40 ml-2 flex flex-col justify-between">
                               <div className="text-xl py-2 font-bold">
                                 {service.serviceName}
                               </div>
                               <div className="text-lg line-clamp mb-1 text-gray-700">
-                                <span className="text-gray-800 mr-1 font-bold">
+                                <span className="text-gray-700 mr-1 font-bold">
                                   Mô tả:
                                 </span>
-                                Tóc được uốn và tạo kiểu vuốt ngược về phía sau,
-                                mang đến phong cách gọn gàng, mạnh mẽ mà vẫn
-                                lịch lãm, cuốn hút, tạo kiểu dễ dàng hơn bao giờ
-                                hết. Phần tóc 2 bên được điều chỉnh độ dài, tuỳ
-                                thuộc với từng gương mặt
+                                {service.description}
                               </div>
-                              <div className="text-base text-slate-700 mb-1">
-                                <span className="text-gray-800 font-bold">
+                              <div className="text-lg text-slate-700 mb-1">
+                                <span className="text-gray-700 font-bold">
                                   Thời gian:
                                 </span>
                                 <span className="ml-1">
@@ -441,28 +437,53 @@ const BookingPage: React.FC = () => {
               />
             </div>
           </div>
-          <div className="flex-1 ml-10 border-2 border-slate-500 rounded-md px-4">
-            <div className=" flex justify-center mt-4">
-              <div className="text-2xl text-[#937b34] font-semibold w-fit mb-10  text-center border-b-4 border-[#937b34]">
+          <div className="w-1/3 ml-10 border-2 px-5 border-slate-500 rounded-md h-fit pb-8">
+            <div className="flex justify-center mt-6">
+              <div className="text-3xl text-[#937b34] font-semibold w-fit mb-10 text-center border-b-4 border-[#937b34]">
                 Xác nhận thông tin
               </div>
             </div>
-            <div className="">
-              {selectedServices.map((service) => (
-                <div
-                  key={service.serviceID}
-                  className="mb-2 flex justify-between"
-                >
-                  <span className="text-lg font-bold">
-                    {service.serviceName}:
-                  </span>
-                  <span className="text-lg ml-1">
-                    {formatCurrency(service.price)}
-                  </span>
+            <div>
+              {selectedServices.length === 0 ? (
+                <div className="text-xl text-center text-red-500">
+                  Chưa có dịch vụ nào được chọn
                 </div>
-              ))}
+              ) : (
+                selectedServices.map((service) => (
+                  <div
+                    key={service.serviceID}
+                    className="mb-2 flex justify-between"
+                  >
+                    <span className="text-xl font-bold">
+                      {service.serviceName}:
+                    </span>
+                    <span className="text-xl ml-1 flex">
+                      <span>{formatCurrency(service.price)} | </span>
+                      <span>
+                        <RiDeleteBin6Line
+                          className="cursor-pointer ml-2 text-[#df4343]"
+                          size={32}
+                        />
+                      </span>
+                    </span>
+                  </div>
+                ))
+              )}
             </div>
-            <Button>Xác nhận Đặt dịch vụ</Button>
+            <div className="flex justify-center">
+              <Button
+                type="primary"
+                className={`py-6 rounded-full bg-black font-medium text-lg ${
+                  selectedServices.length === 0
+                    ? "opacity-80 cursor-not-allowed"
+                    : ""
+                }`}
+                disabled={selectedServices.length === 0}
+                onClick={handleConfirm}
+              >
+                Xác nhận đặt dịch vụ
+              </Button>
+            </div>
           </div>
         </div>
       ),
@@ -470,7 +491,7 @@ const BookingPage: React.FC = () => {
     {
       title: "Đặt lịch với Stylish",
       content: (
-        <div>
+        <div className="w-3/4 mx-auto pt-5">
           {/* LOCAL */}
           <div className="mb-10">
             <div className="text-2xl mb-3 font-semibold flex items-center">
@@ -520,6 +541,12 @@ const BookingPage: React.FC = () => {
               />
             </div>
           </div>
+          <div>
+            <div className="text-2xl mb-3 font-semibold flex items-center">
+              <FaUserClock className="mr-2" />
+              Lựa chọn stylish:
+            </div>
+          </div>
         </div>
       ),
     },
@@ -543,8 +570,8 @@ const BookingPage: React.FC = () => {
         className="bg-cover bg-center flex items-center justify-center "
         style={{ backgroundImage: `url(${bg})` }}
       >
-        <div className="bg-black bg-opacity-75 h-72 my-auto w-full flex flex-col items-center justify-center">
-          <div className="text-white font-bold text-3xl p-5 mb-8">
+        <div className="bg-black bg-opacity-75 h-60 my-auto w-full flex flex-col items-center justify-center">
+          <div className="text-white font-bold text-2xl p-5 mb-8">
             HAIR SALON
           </div>
           <div className="w-3/5">
