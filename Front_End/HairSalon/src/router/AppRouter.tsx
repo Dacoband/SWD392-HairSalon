@@ -1,5 +1,5 @@
 // src/AppRouter.jsx
-import React from "react";
+// import React from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -13,42 +13,28 @@ import Logout from "../components/Logout";
 import LayoutMain from "../layout/LayoutMain";
 
 import Login from "../pages/Login/Login";
+import SignUp from "../pages/SignUp/SignUp";
 import PrivateRoute from "./PriveRouter";
-import ServicesPage from "../pages/ServicesPage";
-import BookPage from "../pages/customer/BookPage";
+import HomePage from "../pages/Home/HomePage";
+import Service from "../components/Service/Service";
+import Contact from "../pages/Contact";
 const AppRouter = () => {
   return (
     <Router>
       {/* GUEST */}
       <Routes>
-        <Route element={<LayoutMain />}>
-          <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/logout" element={<Logout />} />
-          {/* <Route path="/services" element={<ServicesPage />} /> */}
-          {/* <Route path="/bookAppoiment" element={<BookPage />} /> */}
-        </Route>
-
-        {/* Guest có header-footer */}
-        <Route element={<LayoutMain />}>
-          <Route path="/home" element={<Role1 />} />
-        </Route>
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/SignUp" element={<SignUp />} />
+        <Route path="/logout" element={<Logout />} />
 
         <Route element={<LayoutMain />}>
           <Route
-            path="/home"
-            element={<PrivateRoute element={Role1} allowedRoles={["MB"]} />}
+            path="/homePage"
+            element={<PrivateRoute element={HomePage} allowedRoles={["MB"]} />}
           />
-          <Route
-            path="/services"
-            element={
-              <PrivateRoute element={ServicesPage} allowedRoles={["MB"]} />
-            }
-          />
-          <Route
-            path="/bookAppoiment"
-            element={<PrivateRoute element={BookPage} allowedRoles={["MB"]} />}
-          />
+          <Route path="/service" element={<Service />} />
+          <Route path="/contact" element={<Contact />} />
         </Route>
 
         {/* ... */}
