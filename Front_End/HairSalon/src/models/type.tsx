@@ -1,6 +1,6 @@
 export interface Services {
   serviceID: string;
-  servicename: string;
+  serviceName: string;
   price: number;
   description: string;
   duration: number;

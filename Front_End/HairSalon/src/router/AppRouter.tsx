@@ -7,7 +7,6 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import Role1 from "../pages/Role1";
 import Role2 from "../pages/Role2";
 import Logout from "../components/Logout";
 import LayoutMain from "../layout/LayoutMain";
@@ -17,6 +16,7 @@ import SignUp from "../pages/SignUp/SignUp";
 import PrivateRoute from "./PriveRouter";
 import HomePage from "../pages/Home/HomePage";
 import Service from "../components/Service/Service";
+import Appointment from "../pages/Appointment/Appointment";
 import Contact from "../pages/Contact";
 const AppRouter = () => {
   return (
@@ -37,7 +37,7 @@ const AppRouter = () => {
             path="/contact"
             element={<PrivateRoute element={Contact} allowedRoles={["MB"]} />}
           />
-
+ <Route path="/appointment" element={<Appointment />} />
           <Route path="/service" element={<Service />} />
         {/* <Route path="/contact" element={<Contact />} /> */}
         </Route>
