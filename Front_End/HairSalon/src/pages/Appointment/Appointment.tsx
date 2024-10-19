@@ -73,9 +73,9 @@ const AppointmentPage = () => {
         <ul className="appointment-list">
           {appointments.map((appointment) => (
             <li key={appointment.appointmentId} className="appointment-item">
-              <div className="appointment-info">
+              {/* <div className="appointment-info">
                 <strong>Appointment ID:</strong> {appointment.appointmentId}
-              </div>
+              </div> */}
               <div className="appointment-info">
                 <strong>Tổng thiệt hại:</strong> {appointment.totalPrice}
               </div>
