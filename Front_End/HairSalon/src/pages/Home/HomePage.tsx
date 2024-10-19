@@ -46,19 +46,21 @@ const HomePage: React.FC = () => {
         <img
           src="src/assets/hero-img.jpg"
           className="w-full h-30 object-cover"
-          alt="Hero"
+          alt=""
         />
         <div
           className="absolute inset-0 flex items-center justify-center"
           style={{ bottom: "40%" }}
         >
-          <h1 className="text-white text-5xl font-bold">Hair Salon</h1>
+          <div className="absolute items-center top-2 px-6 py-3">
+            <img src="src\assets\Remove-bg.ai_1729154529873.png" />
+          </div>
         </div>
-        <div className="absolute inset-0 flex items-center justify-center">
+        {/* <div className="absolute inset-0 flex items-center justify-center">
           <h2 className="text-white text-2xl font-bold">
             Chăm chút từng đường cắt, tạo nên sự khác biệt
           </h2>
-        </div>
+        </div> */}
 
         <button
           className="absolute font-bold bottom-10 left-10 px-6 py-3 bg-[#8e7424] text-white rounded-full hover:bg-[#74601d]"
