@@ -9,6 +9,7 @@ import {
 
 // import Role1 from "../pages/Role1";
 import Role2 from "../pages/Role2";
+import StaffManager from "../pages/StaffManager";
 import Logout from "../components/Logout";
 import LayoutMain from "../layout/LayoutMain";
 import BookingPage from "../pages/customer/BookPage";
@@ -18,7 +19,9 @@ import PrivateRoute from "./PriveRouter";
 import HomePage from "../pages/Home/HomePage";
 import ServicesPage from "../pages/ServicesPage";
 import Service from "../components/Service/Service";
+import Appointment from "../pages/Appointment/Appointment";
 import Contact from "../pages/Contact";
+import Branch from "../pages/Branch";
 const AppRouter = () => {
   return (
     <Router>
@@ -50,12 +53,22 @@ const AppRouter = () => {
               <PrivateRoute element={ServicesPage} allowedRoles={["MB"]} />
             }
           />
+ <Route path="/manage-appointments" element={<Appointment />} />
           <Route path="/service" element={<Service />} />
+        {/* <Route path="/contact" element={<Contact />} /> */}
+          <Route path="/branch" element={<Branch />} />
         </Route>
 
         <Route
           path="/SystemAdmin"
           element={<PrivateRoute element={Role2} allowedRoles={["SA"]} />}
+        />
+        {/* StaffManager route */}
+        <Route
+          path="/StaffManager"
+          element={
+            <PrivateRoute element={StaffManager} allowedRoles={["SM"]} />
+          }
         />
       </Routes>
     </Router>
