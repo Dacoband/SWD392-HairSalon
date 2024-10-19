@@ -80,7 +80,7 @@ const ServicesPage = () => {
     return services.filter((service) => service.type === type);
   };
   return (
-    <div>
+    <div className="pb-0 mb-0 ">
       <div
         className="bg-cover bg-center flex items-center justify-center "
         style={{ backgroundImage: `url(${bg})` }}
@@ -102,7 +102,7 @@ const ServicesPage = () => {
           </div>
         </div>
       </div>
-      <div className="my-5">
+      <div className="my-8 min-h-[420px] ">
         <Tabs
           defaultActiveKey="1"
           centered
@@ -277,7 +277,7 @@ const ServicesPage = () => {
           backgroundColor: "#937b34",
         }}
         className="mt-14 flex px-28
-         py-6 justify-between"
+         py-8 justify-between"
       >
         <div>
           <div className="text-3xl font-semibold text-white mb-2">

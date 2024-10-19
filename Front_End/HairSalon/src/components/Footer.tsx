@@ -9,6 +9,7 @@ import "./Footer.scss";
 
 const Footer: React.FC = () => {
   return (
+<<<<<<< HEAD
     <footer className="footer">
       <div className="footer-content">
         <Row gutter={[16, 16]} justify="space-around">
@@ -43,6 +44,11 @@ const Footer: React.FC = () => {
         <p>© HAIR SALON 2024 | ALL RIGHTS RESERVED</p>
       </div>
     </footer>
+=======
+    <div className="bg-black mt-0 ">
+      <h2 className="text-white">Footer</h2>
+    </div>
+>>>>>>> TAT
   );
 };
 
