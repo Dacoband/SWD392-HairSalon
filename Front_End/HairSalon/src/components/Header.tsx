@@ -70,20 +70,12 @@ const Header = () => {
               onClick={() => navigate("/branch")}
               className="hover:text-gray-500 font-bold cursor-pointer"
             >
-              Chia Nhánh
+              Chi Nhánh
             </a>
             <button
               className="font-bold px-6 py-2 bg-[#8e7424] text-white rounded-full hover:bg-[#74601d]"
               onClick={() => {
-                const userData = JSON.parse(
-                  localStorage.getItem("userData") || "{}"
-                );
-
-                if (userData && userData.role === "MB") {
-                  navigate("/service");
-                } else {
-                  navigate("/login");
-                }
+                navigate("/bookAppoiment");
               }}
             >
               Đặt Lịch Hẹn Ngay!

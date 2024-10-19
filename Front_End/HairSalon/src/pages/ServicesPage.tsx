@@ -9,7 +9,7 @@ import { ClockCircleOutlined } from "@ant-design/icons";
 import { Divider } from "antd";
 import { Link } from "react-router-dom";
 import { SearchOutlined } from "@ant-design/icons";
-import { Branches, Services } from "../models/type";
+import { Services } from "../models/type";
 import { getServicesByType, getAllServices } from "../services/serviceSalon";
 const ServicesPage = () => {
   const [servicesType1, setServicesType1] = useState<Services[]>([]);
@@ -147,7 +147,7 @@ const ServicesPage = () => {
                   </div>
                   <div>
                     <div className="w-1/2 mx-auto ">
-                      {filteredServicesType1.map((service) => (
+                      {filteredServicesType2.map((service) => (
                         <Row key={service.serviceID}>
                           <Col
                             className=" text-lg text-start font-medium flex"
