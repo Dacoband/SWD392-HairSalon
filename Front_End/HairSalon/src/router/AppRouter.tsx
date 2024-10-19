@@ -53,7 +53,7 @@ const AppRouter = () => {
               <PrivateRoute element={ServicesPage} allowedRoles={["MB"]} />
             }
           />
- <Route path="/appointment" element={<Appointment />} />
+ <Route path="/manage-appointments" element={<Appointment />} />
           <Route path="/service" element={<Service />} />
         {/* <Route path="/contact" element={<Contact />} /> */}
           <Route path="/branch" element={<Branch />} />
