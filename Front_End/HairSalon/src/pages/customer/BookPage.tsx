@@ -251,20 +251,18 @@ const BookingPage: React.FC = () => {
                                 className="w-40 h-36 rounded-md object-cover object-top mr-4 m-1"
                               />
                             </div>
-                            <div className="flex-1 h-40 ml-2 flex flex-col justify-between">
-                              <div>
-                                <div className="text-base py-2 font-bold">
-                                  {service.serviceName}
-                                </div>
+                            <div className="flex-1 h-36 ml-2 flex flex-col justify-between">
+                              <div className="text-base py-2 font-bold">
+                                {service.serviceName}
+                              </div>
 
-                                <div className="text-sm text-slate-700 mb-1">
-                                  <span className="text-gray-700 font-bold">
-                                    Thời gian:
-                                  </span>
-                                  <span className="ml-1">
-                                    {formatDuration(service.duration)}
-                                  </span>
-                                </div>
+                              <div className="text-sm text-slate-700 mb-1">
+                                <span className="text-gray-700 font-bold">
+                                  Thời gian:
+                                </span>
+                                <span className="ml-1">
+                                  {formatDuration(service.duration)}
+                                </span>
                               </div>
 
                               <div className="text-black text-base font-semibold mt-auto">
@@ -299,7 +297,7 @@ const BookingPage: React.FC = () => {
                       <Button
                         type="text"
                         shape="round"
-                        className=" text-black font-semibold text-lg p-4"
+                        className=" text-black font-semibold text-base p-4"
                       >
                         Nhuộm Tóc và Uốn Tóc
                       </Button>
@@ -316,26 +314,24 @@ const BookingPage: React.FC = () => {
                               <img
                                 src={demo}
                                 alt={service.serviceName}
-                                className="w-48 h-40 rounded-md object-cover object-top mr-4 m-1"
+                                className="w-40 h-36 rounded-md object-cover object-top mr-4 m-1"
                               />
                             </div>
-                            <div className="flex-1 h-40 ml-2 flex flex-col justify-between">
-                              <div>
-                                <div className="text-xl py-2 font-bold">
-                                  {service.serviceName}
-                                </div>
-
-                                <div className="text-lg text-slate-700 mb-1">
-                                  <span className="text-gray-700 font-bold">
-                                    Thời gian:
-                                  </span>
-                                  <span className="ml-1">
-                                    {formatDuration(service.duration)}
-                                  </span>
-                                </div>
+                            <div className="flex-1 h-36 ml-2 flex flex-col justify-between">
+                              <div className="text-base py-2 font-bold">
+                                {service.serviceName}
                               </div>
 
-                              <div className="text-black text-xl font-semibold mt-auto">
+                              <div className="text-sm text-slate-700 mb-1">
+                                <span className="text-gray-700 font-bold">
+                                  Thời gian:
+                                </span>
+                                <span className="ml-1">
+                                  {formatDuration(service.duration)}
+                                </span>
+                              </div>
+
+                              <div className="text-black text-base font-semibold mt-auto">
                                 <span className="font-bold mr-1">Giá:</span>
                                 {formatCurrency(service.price)} VNĐ
                               </div>
@@ -367,7 +363,7 @@ const BookingPage: React.FC = () => {
                       <Button
                         type="text"
                         shape="round"
-                        className=" text-black font-semibold text-lg p-3"
+                        className=" text-black font-semibold text-base p-3"
                       >
                         Combo Hot
                       </Button>
@@ -384,20 +380,22 @@ const BookingPage: React.FC = () => {
                               <img
                                 src={demo}
                                 alt={service.serviceName}
-                                className="w-48 h-40 rounded-md object-cover object-top mr-4 m-1"
+                                className="w-40 h-36 rounded-md object-cover object-top mr-4 m-1"
                               />
                             </div>
-                            <div className="flex-1 h-40 ml-2 flex flex-col justify-between">
-                              <div className="text-xl py-2 font-bold">
+                            <div className="flex-1 h-36 ml-2 flex flex-col justify-between">
+                              <div className="text-base py-2 font-bold">
                                 {service.serviceName}
                               </div>
-                              <div className="text-lg line-clamp mb-1 text-gray-700">
+
+                              <div className="text-sm line-clamp mb-1 text-gray-700">
                                 <span className="text-gray-700 mr-1 font-bold">
                                   Mô tả:
                                 </span>
                                 {service.description}
                               </div>
-                              <div className="text-lg text-slate-700 mb-1">
+
+                              <div className="text-sm text-slate-700 mb-1">
                                 <span className="text-gray-700 font-bold">
                                   Thời gian:
                                 </span>
@@ -406,9 +404,9 @@ const BookingPage: React.FC = () => {
                                 </span>
                               </div>
 
-                              <div className="text-black text-xl font-semibold">
+                              <div className="text-black text-base font-semibold mt-auto">
                                 <span className="font-bold mr-1">Giá:</span>
-                                {formatCurrency(service.price)}VNĐ
+                                {formatCurrency(service.price)} VNĐ
                               </div>
                             </div>
                             <div className="w-1/12 flex items-center justify-end p-2">
@@ -439,8 +437,8 @@ const BookingPage: React.FC = () => {
           </div>
           <div className="w-1/3 ml-10 border-2 px-5 border-slate-500 rounded-md h-fit pb-8">
             <div className="flex justify-center mt-6">
-              <div className="text-3xl text-[#937b34] font-semibold w-fit mb-10 text-center border-b-4 border-[#937b34]">
-                Xác nhận thông tin
+              <div className="text-2sxl text-[#937b34] font-semibold w-fit mb-10 text-center border-b-4 border-[#937b34]">
+                Xác nhận
               </div>
             </div>
             <div>
