@@ -32,6 +32,9 @@ const AppRouter = () => {
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/logout" element={<Logout />} />
         <Route element={<LayoutMain />}>
+          <Route path="/" element={<Navigate to="/homePage" />} />
+          <Route path="/homePage" element={<HomePage />} />
+          <Route path="/servicePage" element={<ServicesPage />} />
           <Route path="/contact" element={<Contact />} />
         </Route>
 
@@ -46,7 +49,7 @@ const AppRouter = () => {
               <PrivateRoute element={BookingPage} allowedRoles={["MB"]} />
             }
           />
-          <Route path="/service" element={<Service />} />
+          {/* <Route path="/service" element={<Service />} /> */}
           <Route
             path="/servicePage"
             element={

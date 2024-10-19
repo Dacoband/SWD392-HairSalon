@@ -53,7 +53,10 @@ const Header = () => {
               Trang Chủ
             </a>
             <div className="relative group">
-              <a className="Service hover:text-gray-500 font-bold cursor-pointer">
+              <a
+                className="Service hover:text-gray-500 font-bold cursor-pointer"
+                onClick={() => navigate("/servicePage")}
+              >
                 Danh Sách Dịch Vụ
               </a>
               {/* Dropdown for Service List
@@ -75,15 +78,7 @@ const Header = () => {
             <button
               className="font-bold px-6 py-2 bg-[#8e7424] text-white rounded-full hover:bg-[#74601d]"
               onClick={() => {
-                const userData = JSON.parse(
-                  localStorage.getItem("userData") || "{}"
-                );
-
-                if (userData && userData.role === "MB") {
-                  navigate("/service");
-                } else {
-                  navigate("/login");
-                }
+                navigate("/bookAppoiment");
               }}
             >
               Đặt Lịch Hẹn Ngay!

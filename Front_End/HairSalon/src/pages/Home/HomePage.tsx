@@ -4,7 +4,7 @@ import Slider from "react-slick";
 import axios from "axios";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
+import demo from "../../assets/images/demo.jpg";
 interface Service {
   serviceID: number;
   avatarImage: string;
@@ -93,7 +93,7 @@ const HomePage: React.FC = () => {
               >
                 <div className="w-48 h-60 rounded-lg shadow-lg overflow-hidden bg-white transition-shadow hover:shadow-2xl">
                   <img
-                    src={service.avatarImage}
+                    src="https://i.mydramalist.com/WPdAVD_5c.jpg"
                     alt={service.serviceName}
                     className="w-full h-48 object-cover transition-transform duration-300 hover:scale-110"
                   />
@@ -117,7 +117,7 @@ const HomePage: React.FC = () => {
             {/* Combo Item 1 */}
             <div className="flex-1 flex flex-col items-center transition-transform transform hover:scale-105">
               <img
-                src="src/assets/haircut-styling.jpg"
+                src="https://britishm.vn/wp-content/uploads/2019/02/cham-soc-toc-ma-mac-phai-6-sai-lam-nay-bao-sao-toc-nam-gioi-luon-kho-cung-xo-roi.jpg"
                 alt="Cắt Tóc Và Tạo Kiểu"
                 className="w-48 h-48 object-cover rounded-lg shadow-md mb-3"
               />
@@ -128,7 +128,7 @@ const HomePage: React.FC = () => {
             {/* Combo Item 2 */}
             <div className="flex-1 flex flex-col items-center transition-transform transform hover:scale-105">
               <img
-                src="src/assets/dye-curl.jpg"
+                src="https://britishm.vn/wp-content/uploads/2019/02/cham-soc-toc-ma-mac-phai-6-sai-lam-nay-bao-sao-toc-nam-gioi-luon-kho-cung-xo-roi.jpg"
                 alt="Nhuộm Tóc và Uốn Tóc"
                 className="w-48 h-48 object-cover rounded-lg shadow-md mb-3"
               />
@@ -139,7 +139,7 @@ const HomePage: React.FC = () => {
             {/* Combo Item 3 */}
             <div className="flex-1 flex flex-col items-center transition-transform transform hover:scale-105">
               <img
-                src="src/assets/hot-combo.jpg"
+                src="https://britishm.vn/wp-content/uploads/2019/02/cham-soc-toc-ma-mac-phai-6-sai-lam-nay-bao-sao-toc-nam-gioi-luon-kho-cung-xo-roi.jpg"
                 alt="Combo Nóng"
                 className="w-48 h-48 object-cover rounded-lg shadow-md mb-3"
               />
