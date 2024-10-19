@@ -21,34 +21,53 @@ const Header = () => {
           </a>
         </Col>
         <Col span={16}>
-          <ul className="flex space-x-20 text-black text-sm ">
-            <li onClick={() => navigate("/homePage")}>
-              <a className="hover:text-gray-500">Trang Chủ</a>
-            </li>
-            <li className="group relative">
-              <a className="Service hover:text-gray-500">Danh Sách Dịch Vụ</a>
+          <div className="flex justify-evenly items-center pr-10">
+            <a
+              onClick={() => navigate("/homePage")}
+              className="hover:text-gray-500 font-bold cursor-pointer"
+            >
+              Trang Chủ
+            </a>
+            <div className="relative group">
+              <a className="Service hover:text-gray-500 font-bold cursor-pointer">
+                Danh Sách Dịch Vụ
+              </a>
               {/* Dropdown for Service List */}
-              <ul className="dropdown absolute flex justify-center text-center hidden group-hover:block bg-white shadow-lg z-10">
-                <li className="">
-                  <a className="block px-4 py-2 ">Danh Sách Dịch Vụ</a>
+              <ul className="dropdown absolute hidden group-hover:block bg-white shadow-lg z-10">
+                <li>
+                  <a className="block px-4 py-2 font-bold">Danh Sách Dịch Vụ</a>
                 </li>
                 <li>
-                  <a className="block px-4 py-2 ">Chi Tiết Dịch Vụ</a>
+                  <a className="block px-4 py-2 font-bold">Chi Tiết Dịch Vụ</a>
                 </li>
               </ul>
-            </li>
-            <li onClick={() => navigate("/contact")}>
-              <a className="hover:text-gray-500">Liên Hệ</a>
-            </li>
-            <li>
-              <button
-                className=" middle pb-3 px-6 py-3 bg-[#8e7424] text-white rounded rounded-full hover:bg-[#74601d] "
-                onClick={() => navigate("/service")}
-              >
-                Đặt Lịch Hẹn Ngay!
-              </button>
-            </li>
-          </ul>
+            </div>
+            <a
+              onClick={() => navigate("/contact")}
+              className="hover:text-gray-500 font-bold cursor-pointer"
+            >
+              Liên Hệ
+            </a>
+            <button
+              className="font-bold px-6 py-2 bg-[#8e7424] text-white rounded-full hover:bg-[#74601d]"
+              onClick={() => {
+                // Get the user data from localStorage
+                const userData = JSON.parse(
+                  localStorage.getItem("userData") || "{}"
+                );
+    
+                // Check if the user is logged in and has the role "MB"
+                if (userData && userData.role === "MB") {
+                  navigate("/service");
+                } else {
+                  // If not logged in or not an "MB" role, navigate to /login
+                  navigate("/login");
+                }
+              }}
+            >
+              Đặt Lịch Hẹn Ngay!
+            </button>
+          </div>
         </Col>
       </Row>
     </div>

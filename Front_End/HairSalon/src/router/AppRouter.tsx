@@ -9,6 +9,7 @@ import {
 
 import Role1 from "../pages/Role1";
 import Role2 from "../pages/Role2";
+import StaffManager from "../pages/StaffManager";
 import Logout from "../components/Logout";
 import LayoutMain from "../layout/LayoutMain";
 
@@ -28,8 +29,8 @@ const AppRouter = () => {
 
         <Route element={<LayoutMain />}>
           <Route
-            path="/home"
-            element={<PrivateRoute element={Role1} allowedRoles={["MB"]} />}
+            path="/homePage"
+            element={<PrivateRoute element={HomePage} allowedRoles={["MB"]} />}
           />
           <Route path="/homePage" element={<HomePage />} />
           <Route path="/service" element={<Service />} />
@@ -41,6 +42,13 @@ const AppRouter = () => {
         <Route
           path="/SystemAdmin"
           element={<PrivateRoute element={Role2} allowedRoles={["SA"]} />}
+        />
+        {/* StaffManager route */}
+        <Route
+          path="/StaffManager"
+          element={
+            <PrivateRoute element={StaffManager} allowedRoles={["SM"]} />
+          }
         />
       </Routes>
     </Router>

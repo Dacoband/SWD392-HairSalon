@@ -77,7 +77,23 @@ const Contact: React.FC = () => {
               rows={4}
               required
             ></textarea>
-            <button className="bg-[#c89c47] text-white px-6 py-2 rounded-md hover:bg-[#b08e3a]">
+            <button
+              className="bg-[#c89c47] text-white px-6 py-2 rounded-md hover:bg-[#b08e3a]"
+              onClick={() => {
+                // Get the user data from localStorage
+                const userData = JSON.parse(
+                  localStorage.getItem("userData") || "{}"
+                );
+
+                // Check if the user is logged in and has the role "MB"
+                if (userData && userData.role === "MB") {
+                  navigate("/homePage");
+                } else {
+                  // If not logged in or not an "MB" role, navigate to /login
+                  navigate("/login");
+                }
+              }}
+            >
               SEND MESSAGE
             </button>
           </form>

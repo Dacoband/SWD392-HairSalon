@@ -7,6 +7,7 @@ import { FaUserAlt, FaLock, FaGoogle } from "react-icons/fa";
 const users = [
   { name: "user", pass: "123", role: "MB" },
   { name: "admin", pass: "123", role: "SA" },
+  { name: "manager", pass: "123", role: "SM" },
 ];
 
 const InputField = ({ label, type, value, onChange, icon: Icon }: any) => (
@@ -54,7 +55,7 @@ const SignInForm = () => {
       } else if (foundUser.role === "ST") {
         navigate("/Stylelist");
       } else if (foundUser.role === "MB") {
-        navigate("/home");
+        navigate("/homePage");
       }
     } else {
       alert("Sai tên người dùng hoặc mật khẩu!");

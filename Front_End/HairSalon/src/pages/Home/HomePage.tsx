@@ -28,7 +28,7 @@ const HomePage: React.FC = () => {
         />
         {/* Button positioned on top of the image */}
         <button
-          className="absolute bottom-10 left-10 px-6 py-3 bg-[#8e7424] text-white rounded-full hover:bg-[#74601d]"
+          className="absolute font-bold bottom-10 left-10 px-6 py-3 bg-[#8e7424] text-white rounded-full hover:bg-[#74601d]"
           onClick={() => {
             // Get the user data from localStorage
             const userData = JSON.parse(
@@ -87,17 +87,16 @@ const HomePage: React.FC = () => {
           {/* Container for form inputs with horizontal spacing */}
           <div className="flex justify-center gap-4 mb-4">
             <select className="p-2 border border-gray-300 rounded-md">
-              <option>Select your stylist</option>
+              <option>Select Branch</option>
               {/* Add options for stylists */}
             </select>
-            <input
+            {/* <input
               type="date"
               className="p-2 border border-gray-300 rounded-md"
-            />
-            <select className="p-2 border border-gray-300 rounded-md">
+            /> */}
+            {/* <select className="p-2 border border-gray-300 rounded-md">
               <option>Select time</option>
-              {/* Add options for time */}
-            </select>
+            </select> */}
           </div>
 
           {/* Booking button with spacing */}
@@ -127,6 +126,9 @@ const HomePage: React.FC = () => {
             VIEW MORE ABOUT US
           </button>
         </div>
+      </div>
+      <div>
+        <h1 onClick={() => navigate("/logout")}>Logout</h1>
       </div>
     </div>
   );
