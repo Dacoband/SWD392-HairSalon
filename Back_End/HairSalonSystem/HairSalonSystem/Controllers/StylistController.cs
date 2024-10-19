@@ -37,7 +37,7 @@ namespace HairSalonSystem.API.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "SA,SM")]
+        [Authorize(Roles = "SA,SM,MB,ST,SL")]
         [Route(APIEndPointConstant.Stylist.GetAllStylists)]
         public async Task<IActionResult> GetAllStylists()
         {
