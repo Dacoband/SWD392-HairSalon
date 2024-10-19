@@ -1,23 +1,46 @@
 import React from "react";
-import { Input } from "antd";
-import type { GetProps } from "antd";
-import "./Header.scss";
-type SearchProps = GetProps<typeof Input.Search>;
+import { Input, Dropdown, Menu } from "antd";
 import { Col, Row } from "antd";
 import { useNavigate } from "react-router-dom";
-// const { Search } = Input;
-
-// const onSearch: SearchProps["onSearch"] = (value, _e, info) =>
-//   console.log(info?.source, value);
+import { UserOutlined } from "@ant-design/icons";
+import "./Header.scss";
 
 const Header = () => {
   const navigate = useNavigate();
+
+  const menu = (
+    <Menu>
+      <Menu.Item key="profile" onClick={() => navigate("/profile")}>
+        Thông Tin Cá Nhân
+      </Menu.Item>
+      <Menu.Item
+        key="manageAppointments"
+        onClick={() => navigate("/manage-appointments")}
+      >
+        Đơn Đặt Lịch Hẹn
+      </Menu.Item>
+      <Menu.Item
+        key="logout"
+        onClick={() => {
+          localStorage.removeItem("userData");
+          navigate("/login");
+        }}
+      >
+        Đăng Xuất
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
     <div className="bg-white shadow-md p-1">
       <Row align="middle">
         <Col span={8}>
           <a className="flex items-center">
-            <img src="src\assets\logo-removebg-preview.png" className="h-20 " />
+            <img
+              src="src/assets/logo-removebg-preview.png"
+              className="h-20"
+              alt="Logo"
+            />
           </a>
         </Col>
         <Col span={16}>
@@ -32,7 +55,7 @@ const Header = () => {
               <a className="Service hover:text-gray-500 font-bold cursor-pointer">
                 Danh Sách Dịch Vụ
               </a>
-              {/* Dropdown for Service List */}
+              {/* Dropdown for Service List
               <ul className="dropdown absolute hidden group-hover:block bg-white shadow-lg z-10">
                 <li>
                   <a className="block px-4 py-2 font-bold">Danh Sách Dịch Vụ</a>
@@ -40,33 +63,42 @@ const Header = () => {
                 <li>
                   <a className="block px-4 py-2 font-bold">Chi Tiết Dịch Vụ</a>
                 </li>
-              </ul>
+              </ul> */}
             </div>
             <a
-              onClick={() => navigate("/contact")}
+              onClick={() => navigate("/branch")}
               className="hover:text-gray-500 font-bold cursor-pointer"
             >
-              Liên Hệ
+              Chia Nhánh
             </a>
             <button
               className="font-bold px-6 py-2 bg-[#8e7424] text-white rounded-full hover:bg-[#74601d]"
               onClick={() => {
-                // Get the user data from localStorage
                 const userData = JSON.parse(
                   localStorage.getItem("userData") || "{}"
                 );
-    
-                // Check if the user is logged in and has the role "MB"
+
                 if (userData && userData.role === "MB") {
                   navigate("/service");
                 } else {
-                  // If not logged in or not an "MB" role, navigate to /login
                   navigate("/login");
                 }
               }}
             >
               Đặt Lịch Hẹn Ngay!
             </button>
+            <Dropdown
+              overlay={menu}
+              trigger={["click"]}
+              placement="bottomRight"
+            >
+              <a
+                className="flex items-center cursor-pointer ml-4"
+                onClick={(e) => e.preventDefault()}
+              >
+                <UserOutlined style={{ fontSize: "24px" }} />
+              </a>
+            </Dropdown>
           </div>
         </Col>
       </Row>

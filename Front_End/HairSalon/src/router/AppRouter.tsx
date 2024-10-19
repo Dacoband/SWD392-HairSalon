@@ -17,7 +17,7 @@ import Login from "../pages/Login/Login";
 import PrivateRoute from "./PriveRouter";
 import HomePage from "../pages/Home/HomePage";
 import Service from "../components/Service/Service";
-import Contact from "../pages/Contact";
+import Branch from "../pages/Branch";
 const AppRouter = () => {
   return (
     <Router>
@@ -34,7 +34,7 @@ const AppRouter = () => {
           />
           <Route path="/homePage" element={<HomePage />} />
           <Route path="/service" element={<Service />} />
-          <Route path="/contact" element={<Contact />} />
+          <Route path="/branch" element={<Branch />} />
         </Route>
 
         {/* ... */}
