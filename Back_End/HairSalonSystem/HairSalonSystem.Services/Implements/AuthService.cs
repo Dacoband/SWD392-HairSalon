@@ -27,20 +27,18 @@ namespace HairSalonSystem.Services.Implements
 
         public async Task<Account> Authenticate(string email, string password)
         {
-            // Retrieve the account by email
             var account = await _accountRepository.GetAccountByEmail(email);
             if (account == null || !VerifyPassword(account.Password, password))
             {
-                return null; // Authentication failed
+                return null; 
             }
 
-            return account; // Return the authenticated account
+            return account; 
         }
 
         private bool VerifyPassword(string storedPassword, string providedPassword)
         {
-            // So sánh mật khẩu
-            return storedPassword == providedPassword; // Chỉ là so sánh đơn giản
+            return storedPassword == providedPassword; 
         }
 
         public async Task<string> GenerateJwtToken(Account account)

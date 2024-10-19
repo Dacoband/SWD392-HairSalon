@@ -38,7 +38,6 @@ namespace HairSalonSystem.Services.Implements
 
         public async Task AddMember(Member member)
         {
-            // Additional business logic can be added here if needed
             await _memberRepository.AddMember(member);
         }
 
@@ -47,7 +46,6 @@ namespace HairSalonSystem.Services.Implements
             var RoleName = UserUtil.GetRoleName(httpContext);
             Guid? accountIdFromToken = UserUtil.GetAccountId(httpContext);
 
-            // Kiểm tra RoleName có hợp lệ không
             if (RoleName != "SA" && RoleName != "SM" && RoleName != "SL" && RoleName != "MB" || string.IsNullOrEmpty(RoleName))
             {
                 throw new BadHttpRequestException(MessageConstant.MemberMessage.MemberNotRightsUpdate);
