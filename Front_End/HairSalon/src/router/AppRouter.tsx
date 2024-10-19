@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 
 import Role2 from "../pages/Role2";
+import StaffManager from "../pages/StaffManager";
 import Logout from "../components/Logout";
 import LayoutMain from "../layout/LayoutMain";
 
@@ -18,6 +19,7 @@ import HomePage from "../pages/Home/HomePage";
 import Service from "../components/Service/Service";
 import Appointment from "../pages/Appointment/Appointment";
 import Contact from "../pages/Contact";
+import Branch from "../pages/Branch";
 const AppRouter = () => {
   return (
     <Router>
@@ -40,6 +42,7 @@ const AppRouter = () => {
  <Route path="/appointment" element={<Appointment />} />
           <Route path="/service" element={<Service />} />
         {/* <Route path="/contact" element={<Contact />} /> */}
+          <Route path="/branch" element={<Branch />} />
         </Route>
 
         {/* ... */}
@@ -47,6 +50,13 @@ const AppRouter = () => {
         <Route
           path="/SystemAdmin"
           element={<PrivateRoute element={Role2} allowedRoles={["SA"]} />}
+        />
+        {/* StaffManager route */}
+        <Route
+          path="/StaffManager"
+          element={
+            <PrivateRoute element={StaffManager} allowedRoles={["SM"]} />
+          }
         />
       </Routes>
     </Router>
