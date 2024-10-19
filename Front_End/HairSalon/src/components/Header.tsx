@@ -53,7 +53,10 @@ const Header = () => {
               Trang Chủ
             </a>
             <div className="relative group">
-              <a className="Service hover:text-gray-500 font-bold cursor-pointer">
+              <a
+                className="Service hover:text-gray-500 font-bold cursor-pointer"
+                onClick={() => navigate("/servicePage")}
+              >
                 Danh Sách Dịch Vụ
               </a>
               {/* Dropdown for Service List
