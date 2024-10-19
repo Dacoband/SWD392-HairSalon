@@ -23,6 +23,7 @@ const Header = () => {
         key="logout"
         onClick={() => {
           localStorage.removeItem("userData");
+          localStorage.removeItem("token");
           navigate("/login");
         }}
       >
