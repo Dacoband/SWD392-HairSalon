@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./Login.scss";
 import { FaUserAlt, FaLock, FaGoogle } from "react-icons/fa";
 import { login } from "../../services/authSalon";
-
+import logo from "../../assets/logo-removebg-preview.png";
 
 const InputField = ({ label, type, value, onChange, icon: Icon }: any) => (
   <div className="form-group modern-input">
@@ -27,7 +27,8 @@ const SignInForm = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setError(null); 
+    try {
     const { userData } = await login(email, password);
 
 if(userData){
@@ -44,10 +45,19 @@ if(userData){
       } else {
         navigate('/unknown-role'); 
       }
-    } else {
-      alert("Sai tên người dùng hoặc mật khẩu!");
+    }   else {
+      setError("Sai tên người dùng hoặc mật khẩu!");
     }
-  };
+   } catch (err: any) {
+      if (err.response && err.response.status === 401) {
+        setError(err.response.data.error); 
+      } else {
+        setError("Có lỗi xảy ra. Vui lòng thử lại sau."); 
+      }
+    };
+
+  }
+
   const handleForgotPassword = () => {
     alert("Forgot password functionality not implemented yet.");
   };
@@ -58,10 +68,21 @@ if(userData){
   const handleSignUp = () => {
     navigate("/SignUp");
   };
+  const handleBackToHome = () => {
+    navigate("/"); 
+  };
+  
+
 
   return (
     <form className="sign-in-form" onSubmit={handleLogin}>
       <div className="upper-part" >
+      <img 
+          src={logo} 
+          alt="Logo" 
+          className="back-to-home-logo" 
+          onClick={handleBackToHome} 
+        />
       <h1 className="greeting">Đăng Nhập</h1>
      
       <InputField
@@ -83,7 +104,7 @@ if(userData){
         }
         icon={FaLock}
       />
-
+      {error && <div className="error-message">{error}</div>}
       <a onClick={handleForgotPassword} className="forgot-password">
         Quên mật khẩu
       </a>

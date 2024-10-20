@@ -11,7 +11,16 @@
     padding: 24px;
 
 
-   
+    .back-to-home-logo {
+      cursor: pointer;
+      width: 100px; 
+      height: auto;
+    }
+    .error-message {
+      color: red;
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
   }
   
   .sign-in-form {

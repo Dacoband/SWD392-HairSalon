@@ -27,7 +27,7 @@ const AppRouter = () => {
     <Router>
       {/* GUEST */}
       <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/" element={<Navigate to="/homePage" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/logout" element={<Logout />} />
@@ -36,10 +36,11 @@ const AppRouter = () => {
         </Route>
 
         <Route element={<LayoutMain />}>
-          <Route
+        <Route path="/homePage" element={<HomePage />} />
+          {/* <Route
             path="/homePage"
             element={<PrivateRoute element={HomePage} allowedRoles={["MB"]} />}
-          />
+          /> */}
           <Route
             path="/bookAppoiment"
             element={
