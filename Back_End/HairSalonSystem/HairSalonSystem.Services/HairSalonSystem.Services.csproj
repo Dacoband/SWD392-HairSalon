@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Folder Include="PayLoads\Responses\Appointment\" />
+    <Folder Include="PayLoads\Responses\Cancellation\" />
   </ItemGroup>
 
 </Project>

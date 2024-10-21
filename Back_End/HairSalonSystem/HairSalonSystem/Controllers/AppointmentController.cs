@@ -25,7 +25,7 @@ namespace HairSalonSystem.API.Controllers
         [ProducesErrorResponseType(typeof(ProblemDetails))]
         [Authorize(Roles = "MB")]
 
-        public async Task<ActionResult<Appointment>> CreateService([FromBody] CreateAppointmentRequest request)
+        public async Task<ActionResult<Appointment>> CreateAppointment([FromBody] CreateAppointmentRequest request)
         {
             return await _appointmentService.CreateAppointment(request,HttpContext);
 

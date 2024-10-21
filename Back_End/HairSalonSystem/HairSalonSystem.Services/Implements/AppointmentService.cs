@@ -101,8 +101,15 @@ namespace HairSalonSystem.Services.Implements
             appointment.StartTime = request.AppointmentDate;
             appointment.EndTime = request.AppointmentDate.AddHours(duration);
             //Validate Date
+            if(request.AppointmentDate.Hour.CompareTo(8) < 0 || request.AppointmentDate.Hour.CompareTo(20) > 0)
+            {
+                return new ObjectResult(MessageConstant.AppointmentMessage.NotOpen)
+                {
+                    StatusCode = StatusCodes.Status400BadRequest
+                };
+            }
             var stylistAppointment = appointments.Where(x => x.StylistId == request.StylistId).ToList();
-            var checkAppointment = stylistAppointment.Where(c => appointment.StartTime < c.EndTime && appointment.EndTime > c.StartTime && c.Status == 3).FirstOrDefault();
+            var checkAppointment = stylistAppointment.Where(c => appointment.StartTime <= c.EndTime && appointment.EndTime >= c.StartTime && c.Status == 1).FirstOrDefault();
             if(checkAppointment != null)
             {
                 return new ObjectResult(MessageConstant.AppointmentMessage.NotAvailable)
@@ -127,11 +134,6 @@ namespace HairSalonSystem.Services.Implements
                 };
             }
            
-
-
-
-
-
         }
 
         public async Task<ActionResult<BusinessObject.Entities.Appointment>> GetAppointmentById(Guid id, HttpContext context)
