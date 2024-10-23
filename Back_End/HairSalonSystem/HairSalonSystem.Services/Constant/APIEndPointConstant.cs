@@ -90,17 +90,6 @@
 
             }
 
-<<<<<<< HEAD
-            public static class Appointment
-            {
-                public const string AppointmentEndpoint = ApiEndpoint + "/appointment";
-                public const string CreateAppointment = AppointmentEndpoint + "/create";
-                public const string GetAppointmentById = AppointmentEndpoint + "{id}";
-                public const string UpdateAppointment = AppointmentEndpoint + "update/{id}";
-                public const string GetAllAppointment = AppointmentEndpoint + "get-all";
-            }
-=======
-        }
 
         public static class Appointment
         {
@@ -120,6 +109,5 @@
             public const string GetByAppointment = CancelEndpoint + "/get-by-appointment/{id}";
 
         }
->>>>>>> 00da22e84498313380ef37cac493d65f45c1aedd
     }
 }
