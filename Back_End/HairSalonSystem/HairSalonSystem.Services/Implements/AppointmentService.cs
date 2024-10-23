@@ -109,7 +109,7 @@ namespace HairSalonSystem.Services.Implements
                 };
             }
             var stylistAppointment = appointments.Where(x => x.StylistId == request.StylistId).ToList();
-            var checkAppointment = stylistAppointment.Where(c => appointment.StartTime <= c.EndTime && appointment.EndTime >= c.StartTime && c.Status == 1).FirstOrDefault();
+            var checkAppointment = stylistAppointment.Where(c => appointment.StartTime <= c.EndTime && appointment.EndTime >= c.StartTime && c.Status == 2).FirstOrDefault();
             if(checkAppointment != null)
             {
                 return new ObjectResult(MessageConstant.AppointmentMessage.NotAvailable)

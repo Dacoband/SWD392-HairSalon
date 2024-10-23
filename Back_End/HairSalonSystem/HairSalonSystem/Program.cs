@@ -13,9 +13,11 @@ using System.Text;
 using Microsoft.OpenApi.Models;
 using HairSalonSystem.DAOs.Interfaces;
 using HairSalonSystem.DAOs.Implements;
-
-
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
+using HairSalonSystem.Services.PayLoads.Requests.Firebase;
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Add services to the container.
 
@@ -50,7 +52,26 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+// Load Firebase settings from configuration
+var firebaseSettings = builder.Configuration.GetSection("Firebase").Get<FirebaseSetting>();
 
+if (firebaseSettings == null)
+{
+    throw new Exception("Firebase settings not found in configuration.");
+}
+
+builder.Configuration.GetSection("Firebase").Get<FirebaseSetting>();
+
+// Combine the base path with the relative path
+var credentialPath = Path.Combine(builder.Environment.ContentRootPath, firebaseSettings.CredentialPath);
+
+// Initialize FirebaseApp and register it as a singleton service
+var firebaseApp = FirebaseApp.Create(new AppOptions
+{
+    Credential = GoogleCredential.FromFile(credentialPath)
+});
+
+builder.Services.AddSingleton(firebaseApp);
 // Load JWT settings
 
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
@@ -113,6 +134,8 @@ builder.Services.AddScoped<IAppointmentCancellationRepository,AppointmentCancell
 
 
 // Register Services
+builder.Services.AddScoped<IFirebaseService, FirebaseService>();
+
 builder.Services.AddScoped<IVNPayService, VNPayService>();
 builder.Services.AddScoped<IAccountService, AccountService>(); 
 builder.Services.AddScoped<IAuthService, AuthService>(); 

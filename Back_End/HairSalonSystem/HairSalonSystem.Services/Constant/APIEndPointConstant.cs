@@ -103,7 +103,10 @@
         {
             public const string CancelEndpoint = ApiEndpoint + "/cancel-appointment";
             public const string CreateCancel = CancelEndpoint + "/create";
-           
+            public const string GetAllCancel = CancelEndpoint + "/get-all";
+            public const string GetById = CancelEndpoint + "/get-by-id/{id}";
+            public const string GetByAppointment = CancelEndpoint + "/get-by-appointment/{id}";
+
         }
     }
 }

@@ -3,6 +3,7 @@ using HairSalonSystem.Repositories.Interface;
 using HairSalonSystem.Services.Constant;
 using HairSalonSystem.Services.Interfaces;
 using HairSalonSystem.Services.PayLoads.Requests.Cancellation;
+using HairSalonSystem.Services.PayLoads.Responses.Cancellation;
 using HairSalonSystem.Services.Util;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -60,6 +61,13 @@ namespace HairSalonSystem.Services.Implements
                     StatusCode = StatusCodes.Status403Forbidden
                 };
             }
+            if(existAppointment.Status == 5)
+            {
+                return new ObjectResult(MessageConstant.CancelAppointmentMessage.CreateRight)
+                {
+                    StatusCode = StatusCodes.Status403Forbidden
+                };
+            }
 
             AppointmentCancellation model = new AppointmentCancellation()
             {
@@ -74,13 +82,13 @@ namespace HairSalonSystem.Services.Implements
             var status = existAppointment.Status;
             if(roleName == "MB")
             {
-                status = 2;
+                status = 3;
 
             }
             else
             {
                 //chưa tặng voucher cho cus nếu salon hủy apopointment
-                status = 3;
+                status = 4;
             }
             try
             {
@@ -103,19 +111,168 @@ namespace HairSalonSystem.Services.Implements
             }
         }
 
-        public Task<ActionResult<List<AppointmentCancellation>>> GetAll(HttpContext context)
+        public async Task<ActionResult<List<CancellationResponse>>> GetAll(HttpContext context, Pagination query)
         {
-            throw new NotImplementedException();
+            var accountID = UserUtil.GetAccountId(context);
+            if (accountID == null)
+            {
+                return new ObjectResult(MessageConstant.CancelAppointmentMessage.GetRight)
+                {
+                    StatusCode = StatusCodes.Status403Forbidden
+                };
+            }
+
+            var roleName = UserUtil.GetRoleName(context);
+            if (roleName != "SA" && roleName != "SM")
+            {
+                return new ObjectResult(MessageConstant.CancelAppointmentMessage.GetRight)
+                {
+                    StatusCode = StatusCodes.Status403Forbidden
+                };
+            }
+            var  cancelationList  = await _cancellationRepo.GetAll();
+            var cancelResponse = new List<CancellationResponse>();
+            if (cancelationList == null ||  cancelationList.Count == 0)
+            {
+                return new ObjectResult(MessageConstant.AppointmentMessage.NotFound)
+                {
+                    StatusCode = StatusCodes.Status404NotFound
+                };
+            }
+
+            foreach (AppointmentCancellation cancellation in cancelationList)
+            {
+                var appointment = await _appointmentRepo.GetAppointmentById(cancellation.AppointmentId);
+                CancellationResponse res = new CancellationResponse()
+                {
+                    CancellationId = cancellation.CancellationId,
+                    Reason = cancellation.Reason,
+                    InsDate = cancellation.InsDate,
+                    UpdDate = cancellation.UpdDate,
+                    DelFlg = cancellation.DelFlg,
+                    appointment = appointment
+                };
+                cancelResponse.Add(res);
+            }
+
+            if (query.pageIndex.HasValue && query.pageSize.HasValue)
+            {
+                int validPageIndex = query.pageIndex.Value > 0 ? query.pageIndex.Value - 1 : 0;
+                int validPageSize = query.pageSize.Value > 0 ? query.pageSize.Value : 10;
+
+                cancelResponse = cancelResponse.Skip(validPageIndex * validPageSize).Take(validPageSize).ToList();
+            }
+            return new OkObjectResult(cancelResponse);
         }
 
-        public Task<ActionResult<AppointmentCancellation>> GetByAppointment(Guid appointmentId, HttpContext context)
+        public async Task<ActionResult<CancellationResponse>> GetByAppointment(Guid appointmentId, HttpContext context)
         {
-            throw new NotImplementedException();
+            var accountID = UserUtil.GetAccountId(context);
+            var roleName = UserUtil.GetRoleName(context);
+            var appointment = await _appointmentRepo.GetAppointmentById(appointmentId);
+
+            //if (accountID == null)
+            //{
+            //    return new ObjectResult(MessageConstant.CancelAppointmentMessage.GetRight)
+            //    {
+            //        StatusCode = StatusCodes.Status403Forbidden
+            //    };
+            //}
+          
+           
+            //if(appointment == null)
+            //{
+            //    return new ObjectResult(MessageConstant.AppointmentMessage.NotFound)
+            //    {
+            //        StatusCode = StatusCodes.Status404NotFound
+            //    };
+            //}
+
+            //if (roleName != "SA" && roleName != "SM" && appointment.CustomerId != accountID && appointment.StylistId != accountID )
+            //{
+            //    return new ObjectResult(MessageConstant.CancelAppointmentMessage.GetRight)
+            //    {
+            //        StatusCode = StatusCodes.Status403Forbidden
+            //    };
+            //}
+
+            var cancellation = await _cancellationRepo.GetByAppointmentId(appointmentId);
+
+            if(cancellation == null)
+            {
+                return new ObjectResult(MessageConstant.AppointmentMessage.NotFound)
+                {
+                    StatusCode = StatusCodes.Status404NotFound
+                };
+            }
+        
+            var res = new CancellationResponse()
+            {
+                CancellationId = cancellation.CancellationId,
+                Reason = cancellation.Reason,
+                InsDate = cancellation.InsDate,
+                UpdDate = cancellation.UpdDate,
+                DelFlg = cancellation.DelFlg,
+                appointment = appointment,
+            };
+
+            return new OkObjectResult(res);
+
+
         }
 
-        public Task<ActionResult<AppointmentCancellation>> GetById(Guid cancellatonId, HttpContext context)
+        public async Task<ActionResult<CancellationResponse>> GetById(Guid cancellatonId, HttpContext context)
         {
-            throw new NotImplementedException();
+            var accountID = UserUtil.GetAccountId(context);
+            var roleName = UserUtil.GetRoleName(context);
+            var cancellation = await  _cancellationRepo.GetByCancellationId(cancellatonId);
+            var appointment = await _appointmentRepo.GetAppointmentById(cancellation.AppointmentId);
+
+            //if (accountID == null)
+            //{
+            //    return new ObjectResult(MessageConstant.CancelAppointmentMessage.GetRight)
+            //    {
+            //        StatusCode = StatusCodes.Status403Forbidden
+            //    };
+            //}
+
+
+            //if (appointment == null)
+            //{
+            //    return new ObjectResult(MessageConstant.AppointmentMessage.NotFound)
+            //    {
+            //        StatusCode = StatusCodes.Status404NotFound
+            //    };
+            //}
+
+            //if (roleName != "SA" && roleName != "SM" && appointment.CustomerId != accountID && appointment.StylistId != accountID)
+            //{
+            //    return new ObjectResult(MessageConstant.CancelAppointmentMessage.GetRight)
+            //    {
+            //        StatusCode = StatusCodes.Status403Forbidden
+            //    };
+            //}
+
+
+            if (cancellation == null)
+            {
+                return new ObjectResult(MessageConstant.AppointmentMessage.NotFound)
+                {
+                    StatusCode = StatusCodes.Status404NotFound
+                };
+            }
+
+            var res = new CancellationResponse()
+            {
+                CancellationId = cancellation.CancellationId,
+                Reason = cancellation.Reason,
+                InsDate = cancellation.InsDate,
+                UpdDate = cancellation.UpdDate,
+                DelFlg = cancellation.DelFlg,
+                appointment = appointment,
+            };
+
+            return new OkObjectResult(res);
         }
     }
 }

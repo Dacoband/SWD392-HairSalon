@@ -19,9 +19,11 @@ namespace HairSalonSystem.Services.Implements
     public class ServiceService : IServiceService
     {
         private readonly IServiceRepository _serviceRepository;
-        public ServiceService(IServiceRepository serviceRepository)
+        private readonly IFirebaseService _firebaseService;
+        public ServiceService(IServiceRepository serviceRepository, IFirebaseService firebaseService)
         {
             _serviceRepository = serviceRepository;
+            _firebaseService = firebaseService;
         }
 
         public async Task<ActionResult> CreateService(CreateServiceRequest serviceModel, HttpContext context)
@@ -43,7 +45,7 @@ namespace HairSalonSystem.Services.Implements
                     StatusCode = StatusCodes.Status403Forbidden
                 };
             }
-
+            var url = await _firebaseService.UploadFile(serviceModel.AvatarImage);
             var service = new BusinessObject.Entities.Service
             {
                 ServiceID = Guid.NewGuid(),
@@ -52,7 +54,7 @@ namespace HairSalonSystem.Services.Implements
                 Price = serviceModel.Price,
                 Description = serviceModel.Description,
                 Duration = serviceModel.Duration,
-                AvatarImage = serviceModel.AvatarImage,
+                AvatarImage = url,
                 InsDate = TimeUtils.GetCurrentSEATime(),
                 UpdDate = TimeUtils.GetCurrentSEATime(),
                 DelFlg = serviceModel.DelFlg,
@@ -205,12 +207,14 @@ namespace HairSalonSystem.Services.Implements
                     StatusCode = StatusCodes.Status404NotFound
                 };
             }
+
+            var url = await _firebaseService.UploadFile(serviceModel.AvatarImage);
             oldService.ServiceName = serviceModel.ServiceName;
             oldService.Type = serviceModel.Type;
             oldService.Price = serviceModel.Price;
             oldService.Description = serviceModel.Description;
             oldService.Duration = serviceModel.Duration;
-            oldService.AvatarImage = serviceModel.AvatarImage;
+            oldService.AvatarImage = url;
             oldService.UpdDate = TimeUtils.GetCurrentSEATime();
             oldService.DelFlg = serviceModel.DelFlg;
             await _serviceRepository.UpdateService(oldService);

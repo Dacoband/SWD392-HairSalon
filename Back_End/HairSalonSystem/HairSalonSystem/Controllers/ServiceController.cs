@@ -31,7 +31,7 @@ namespace HairSalonSystem.API.Controllers
         [HttpPost(APIEndPointConstant.Service.CreateService)]
         [ProducesResponseType(typeof(Service), StatusCodes.Status201Created)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
-        public async Task<ActionResult> CreateService([FromBody] CreateServiceRequest serviceModel)
+        public async Task<ActionResult> CreateService([FromForm] CreateServiceRequest serviceModel)
         {
             return await _serviceService.CreateService(serviceModel, HttpContext);
 

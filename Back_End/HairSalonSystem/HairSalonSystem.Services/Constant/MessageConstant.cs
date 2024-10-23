@@ -110,6 +110,7 @@
             public const string NotFound = "Không tìm thấy lịch sử hủy hẹn";
             public const string Exception = "Lỗi trong lúc hủy cuộc hẹn";
             public const string CreateSuccess = "Hủy lịch hẹn thành công";
+            public const string GetRight = "Bạn không có quyền truy cập lịch đã hủy";
 
         }
     }
