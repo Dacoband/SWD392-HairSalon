@@ -26,6 +26,7 @@ import ManagerAppoimentStylish from "../pages/Stylish/ManagerAppoinmentStylish";
 import ManagerMoney from "../pages/Stylish/ManagerMoney";
 import ManagerAppoimentStaff from "../pages/StaffStylish/ManagerAppoimentStaff";
 import ManagerStylish from "../pages/StaffStylish/ManagerStylish";
+import profileCustomer from "../pages/customer/profileCustomer";
 const AppRouter = () => {
   return (
     <Router>
@@ -66,6 +67,12 @@ const AppRouter = () => {
             path="/manage-appointments"
             element={
               <PrivateRoute element={Appointment} allowedRoles={["MB"]} />
+            }
+          />
+          <Route
+            path="/profile-customer"
+            element={
+              <PrivateRoute element={profileCustomer} allowedRoles={["MB"]} />
             }
           />
         </Route>
