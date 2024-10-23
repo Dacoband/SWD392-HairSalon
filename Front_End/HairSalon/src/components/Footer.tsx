@@ -13,7 +13,7 @@ const Footer: React.FC = () => {
       <div className="footer-content">
         <Row gutter={[16, 16]} justify="space-around">
           <Col xs={24} md={8}>
-            <h3 className="footer-title">SALON ADDRESS</h3>
+            <h3 className="footer-title">Địa Chỉ SALON</h3>
             <p>
               <EnvironmentOutlined /> FPT University
             </p>
@@ -28,7 +28,7 @@ const Footer: React.FC = () => {
             </p>
           </Col>
           <Col xs={24} md={8}>
-            <h3 className="footer-title">SOCIAL FEED</h3>
+            <h3 className="footer-title">Các Trang Liên Kết Hair Salon</h3>
             <ul className="footer-links">
               <li>Facebook</li>
               <li>Twitter</li>
