@@ -7,6 +7,7 @@ import "./Header.scss";
 
 const Header = () => {
   const navigate = useNavigate();
+  const isLoggedIn = localStorage.getItem("token"); // Check if user is logged in
 
   const menu = (
     <Menu>
@@ -36,10 +37,13 @@ const Header = () => {
     <div className="bg-white shadow-md p-1">
       <Row align="middle">
         <Col span={8}>
-          <a className="flex items-center">
+          <a
+            className="flex items-center"
+            onClick={() => navigate("/homePage")}
+          >
             <img
-              src="src/assets/logo-removebg-preview.png"
-              className="h-20"
+              src="src/assets/logo_mini-removebg-preview.png"
+              className="h-20 ml-10"
               alt="Logo"
             />
           </a>
@@ -48,30 +52,19 @@ const Header = () => {
           <div className="flex justify-evenly items-center pr-10">
             <a
               onClick={() => navigate("/homePage")}
-              className="hover:text-gray-500 font-bold cursor-pointer"
+              className="hover:text-[#8e7424] font-bold cursor-pointer"
             >
               Trang Chủ
             </a>
-            <div className="relative group">
-              <a
-                className="Service hover:text-gray-500 font-bold cursor-pointer"
-                onClick={() => navigate("/servicePage")}
-              >
-                Danh Sách Dịch Vụ
-              </a>
-              {/* Dropdown for Service List
-              <ul className="dropdown absolute hidden group-hover:block bg-white shadow-lg z-10">
-                <li>
-                  <a className="block px-4 py-2 font-bold">Danh Sách Dịch Vụ</a>
-                </li>
-                <li>
-                  <a className="block px-4 py-2 font-bold">Chi Tiết Dịch Vụ</a>
-                </li>
-              </ul> */}
-            </div>
+            <a
+              className="Service hover:text-[#8e7424] font-bold cursor-pointer"
+              onClick={() => navigate("/servicePage")}
+            >
+              Danh Sách Dịch Vụ
+            </a>
             <a
               onClick={() => navigate("/branch")}
-              className="hover:text-gray-500 font-bold cursor-pointer"
+              className="hover:text-[#8e7424] font-bold cursor-pointer"
             >
               Chi Nhánh
             </a>
@@ -83,18 +76,20 @@ const Header = () => {
             >
               Đặt Lịch Hẹn Ngay!
             </button>
-            <Dropdown
-              overlay={menu}
-              trigger={["click"]}
-              placement="bottomRight"
-            >
-              <a
-                className="flex items-center cursor-pointer ml-4"
-                onClick={(e) => e.preventDefault()}
+            {isLoggedIn && ( // Show the dropdown only if the user is logged in
+              <Dropdown
+                overlay={menu}
+                trigger={["click"]}
+                placement="bottomRight"
               >
-                <UserOutlined style={{ fontSize: "24px" }} />
-              </a>
-            </Dropdown>
+                <a
+                  className="flex hover:text-[#8e7424] items-center cursor-pointer ml-4"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  <UserOutlined style={{ fontSize: "24px" }} />
+                </a>
+              </Dropdown>
+            )}
           </div>
         </Col>
       </Row>
