@@ -27,7 +27,7 @@ const AppRouter = () => {
     <Router>
       {/* GUEST */}
       <Routes>
-        {/* <Route path="/" element={<Navigate to="/homePage" />} /> */}
+        <Route path="/" element={<Navigate to="/homePage" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/logout" element={<Logout />} />
