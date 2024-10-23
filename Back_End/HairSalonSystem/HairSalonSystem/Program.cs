@@ -108,12 +108,11 @@ builder.Services.AddScoped<IMemberDAO, MemberDAO>();
 builder.Services.AddScoped<INotificationDAO, NotificationDAO>();
 builder.Services.AddScoped<IStaffManagerDAO, StaffManagerDAO>();
 builder.Services.AddScoped<IStaffStylistDAO, StaffStylistDAO>();
-
 builder.Services.AddScoped<IServiceDAO, ServiceDAO>();
-
 builder.Services.AddScoped<IStylistDAO, StylistDAO>();
 builder.Services.AddScoped<IAppointmentDAO, AppointmentDAO>();
 builder.Services.AddScoped<IAppointmentCancellationDAO, AppointmentCancellationDAO>();
+
 
 
 
@@ -124,12 +123,11 @@ builder.Services.AddScoped<IMemberRepository, MemberRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IStaffManagerRepository, StaffManagerRepository>();
 builder.Services.AddScoped<IStaffStylistRepository, StaffStylistRepository>();
-
 builder.Services.AddScoped<IServiceRepository,ServiceRepository>();
-
 builder.Services.AddScoped<IStylistRepository, StylistRepository>();
 builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 builder.Services.AddScoped<IAppointmentCancellationRepository,AppointmentCancellationRepository>();
+
 
 
 
@@ -144,9 +142,7 @@ builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IStaffManagerService, StaffManagerService>();
 builder.Services.AddScoped<IStaffStylistService, StaffStylistService>();
-
 builder.Services.AddScoped<IServiceService, ServiceService>();
-
 builder.Services.AddScoped<IStylistService, StylistService>();
 builder.Services.AddScoped<IAppointmentService, HairSalonSystem.Services.Implements.AppointmentService>();
 builder.Services.AddScoped<IAppointmentCacellationService,AppointmentCancellationService>();

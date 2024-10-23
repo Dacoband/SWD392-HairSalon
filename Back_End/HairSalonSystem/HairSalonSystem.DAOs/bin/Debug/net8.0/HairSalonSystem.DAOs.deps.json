@@ -1099,7 +1099,10 @@
           "MongoDB.Driver.Core": "2.29.0"
         },
         "runtime": {
-          "HairSalonSystem.BusinessObject.dll": {}
+          "HairSalonSystem.BusinessObject.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }
