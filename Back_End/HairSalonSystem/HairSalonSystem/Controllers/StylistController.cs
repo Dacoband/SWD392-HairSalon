@@ -28,7 +28,6 @@ namespace HairSalonSystem.API.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "SA,SM,SL,ST")]
         [Route(APIEndPointConstant.Stylist.GetStylistById)]
         public async Task<IActionResult> GetStylistById(Guid id)
         {
@@ -37,7 +36,6 @@ namespace HairSalonSystem.API.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "SA,SM,MB,ST,SL")]
         [Route(APIEndPointConstant.Stylist.GetAllStylists)]
         public async Task<IActionResult> GetAllStylists()
         {
