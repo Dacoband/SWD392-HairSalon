@@ -3,6 +3,8 @@
 import demo from "../../assets/images/demo.jpg";
 import bg from "../../assets/images/bgsdn.jpg";
 import { FaUsers } from "react-icons/fa";
+import { RiMapPinUserFill } from "react-icons/ri";
+import { MdAccessTimeFilled } from "react-icons/md";
 
 import { SearchOutlined } from "@ant-design/icons";
 import "../../App.css";
@@ -22,6 +24,7 @@ import { FaScissors } from "react-icons/fa6";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaUserClock } from "react-icons/fa6";
 import { FaStar } from "react-icons/fa";
+import { MdDateRange } from "react-icons/md";
 
 import { getServicesByType, getAllServices } from "../../services/serviceSalon";
 const customDot: StepsProps["progressDot"] = (dot, { status, index }) => (
@@ -178,6 +181,7 @@ const BookingPage: React.FC = () => {
   const [servicesType3, setServicesType3] = useState<Services[]>([]);
   const [selectedServices, setSelectedServices] = useState<Services[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [selectedStylist, setSelectedStylist] = useState<string | null>(null); // Trạng thái cho stylist đã chọn
 
   const [stylists, setStylists] = useState<Stylish[]>([]); // Thêm trạng thái cho stylist
   const [selectedBranch, setSelectedBranch] = useState<string | null>(null); // Trạng thái cho cơ sở đã chọn
@@ -226,7 +230,9 @@ const BookingPage: React.FC = () => {
       setCurrentStep(currentStep + 1);
     }
   };
-
+  const handleConfirmBack = () => {
+    setCurrentStep((prev) => Math.max(prev - 1, 0));
+  };
   const handleServiceClick = (service: Services) => {
     const isSelected = selectedServices.some(
       (s) => s.serviceID === service.serviceID
@@ -706,7 +712,7 @@ const BookingPage: React.FC = () => {
     {
       title: "Đặt lịch với Stylish",
       content: (
-        <div className="w-3/4 mx-auto pt-5">
+        <div className="w-3/4 mx-auto pt-5 pb-12">
           {/* LOCAL */}
           <div className="mb-6">
             <div className="text-lg mb-3 font-semibold flex items-center">
@@ -775,14 +781,21 @@ const BookingPage: React.FC = () => {
                     {stylists.map((stylist) => (
                       <div
                         key={stylist.staffStylistId}
-                        className="w-40 h-56 shadow-lg border-2 rounded-lg flex flex-col mr-5 mb-5"
+                        className={`w-40 h-56  rounded-lg flex flex-col mr-5 mb-5 cursor-pointer ${
+                          selectedStylist === stylist.staffStylistId
+                            ? "border-[#937b34] border-4 "
+                            : "border-slate-400 border-2"
+                        }`} // Thay đổi màu sắc khi stylist được chọn
+                        onClick={() =>
+                          setSelectedStylist(stylist.staffStylistId)
+                        } // Thêm sự kiện click để chọn stylist
                       >
                         <img
                           src={stylist.avatarImage}
                           alt={stylist.stylistName}
                           className="h-40 w-40 object-cover rounded-t-lg"
                         />
-                        <span className="text-center my-2 font-medium">
+                        <span className="text-center mt-2 mb-1 font-medium">
                           {stylist.stylistName}
                         </span>
                         <span className="flex justify-center items-center">
@@ -793,7 +806,11 @@ const BookingPage: React.FC = () => {
                     ))}
                   </>
                 ) : (
-                  <div className="w-full text-center my-5">
+                  <div className="w-full text-center my-5 h-56 ">
+                    <div className="w-full flex justify-center text-gray-400 mb-2">
+                      <RiMapPinUserFill size={100} />
+                    </div>
+
                     <span className="text-lg font-bold text-gray-400">
                       Vui lòng chọn một salon
                     </span>
@@ -802,7 +819,36 @@ const BookingPage: React.FC = () => {
               </div>
             </div>
           </div>
-          <div>Thoiwf gian</div>
+          <div className="text-lg mb-3 font-semibold flex items-center">
+            <MdAccessTimeFilled className="mr-2" />
+            Thời gian đặt lịch
+          </div>
+          <div className="w-full flex justify-center">
+            <Button
+              type="primary"
+              className={`py-5 rounded-full bg-black font-medium text-base  mt-8  mr-10 ${
+                selectedServices.length === 0
+                  ? "opacity-80 cursor-not-allowed"
+                  : ""
+              }`}
+              disabled={selectedServices.length === 0}
+              onClick={handleConfirm}
+            >
+              Xác nhận thanh toán
+            </Button>
+            <Button
+              type="primary"
+              className={`py-5 rounded-full bg-black font-medium text-base  mt-8 ${
+                selectedServices.length === 0
+                  ? "opacity-80 cursor-not-allowed"
+                  : ""
+              }`}
+              disabled={selectedServices.length === 0}
+              onClick={handleConfirmBack}
+            >
+              Quay lại
+            </Button>
+          </div>
         </div>
       ),
     },
@@ -845,7 +891,7 @@ const BookingPage: React.FC = () => {
       <div className="pt-10 bg-[#FFFFFF] ">
         <div className="steps-content">{steps[currentStep].content}</div>
         <div className="steps-action">
-          <Button
+          {/* <Button
             type="primary"
             onClick={next}
             disabled={currentStep === steps.length - 1}
@@ -858,7 +904,7 @@ const BookingPage: React.FC = () => {
             disabled={currentStep === 0}
           >
             Quay lại
-          </Button>
+          </Button> */}
         </div>
       </div>
     </div>
