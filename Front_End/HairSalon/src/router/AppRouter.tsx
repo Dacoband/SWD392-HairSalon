@@ -27,11 +27,14 @@ const AppRouter = () => {
     <Router>
       {/* GUEST */}
       <Routes>
-        <Route path="/" element={<Navigate to="/homePage" />} />
+        {/* <Route path="/" element={<Navigate to="/homePage" />} /> */}
         <Route path="/login" element={<Login />} />
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/logout" element={<Logout />} />
         <Route element={<LayoutMain />}>
+          <Route path="/" element={<Navigate to="/homePage" />} />
+          <Route path="/homePage" element={<HomePage />} />
+          <Route path="/servicePage" element={<ServicesPage />} />
           <Route path="/contact" element={<Contact />} />
         </Route>
 
@@ -47,16 +50,16 @@ const AppRouter = () => {
               <PrivateRoute element={BookingPage} allowedRoles={["MB"]} />
             }
           />
-          <Route path="/service" element={<Service />} />
+          {/* <Route path="/service" element={<Service />} /> */}
           <Route
             path="/servicePage"
             element={
               <PrivateRoute element={ServicesPage} allowedRoles={["MB"]} />
             }
           />
- <Route path="/manage-appointments" element={<Appointment />} />
+          <Route path="/manage-appointments" element={<Appointment />} />
           <Route path="/service" element={<Service />} />
-        {/* <Route path="/contact" element={<Contact />} /> */}
+          {/* <Route path="/contact" element={<Contact />} /> */}
           <Route path="/branch" element={<Branch />} />
         </Route>
 

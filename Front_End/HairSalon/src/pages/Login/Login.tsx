@@ -20,8 +20,8 @@ const InputField = ({ label, type, value, onChange, icon: Icon }: any) => (
 );
 
 const SignInForm = () => {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
@@ -31,19 +31,19 @@ const SignInForm = () => {
     try {
     const { userData } = await login(email, password);
 
-if(userData){
-      if (userData.roleName === 'SA') {
-        navigate('/SystemAdmin');
-      } else if (userData.roleName === 'SM') {
-        navigate('/StaffManager');
-      } else if (userData.roleName === 'SL') {
-        navigate('/StaffStylelist');
-      } else if (userData.roleName === 'ST') {
-        navigate('/Stylelist');
-      } else if (userData.roleName === 'MB') {
-        navigate('/HomePage');
+    if (userData) {
+      if (userData.roleName === "SA") {
+        navigate("/SystemAdmin");
+      } else if (userData.roleName === "SM") {
+        navigate("/StaffManager");
+      } else if (userData.roleName === "SL") {
+        navigate("/StaffStylelist");
+      } else if (userData.roleName === "ST") {
+        navigate("/Stylelist");
+      } else if (userData.roleName === "MB") {
+        navigate("/HomePage");
       } else {
-        navigate('/unknown-role'); 
+        navigate("/unknown-role");
       }
     }   else {
       setError("Sai tên người dùng hoặc mật khẩu!");
@@ -76,42 +76,40 @@ if(userData){
 
   return (
     <form className="sign-in-form" onSubmit={handleLogin}>
-      <div className="upper-part" >
+      <div className="upper-part">
       <img 
           src={logo} 
           alt="Logo" 
           className="back-to-home-logo" 
           onClick={handleBackToHome} 
         />
-      <h1 className="greeting">Đăng Nhập</h1>
-     
-      <InputField
-      className="input-style"
-        label="email"
-        type="text"
-        value={email}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          setEmail(e.target.value)
-        }
-        icon={FaUserAlt}
-      />      <InputField
-      className="input-style"
-        label="Mật khẩu"
-        type="password"
-        value={password}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          setPassword(e.target.value)
-        }
-        icon={FaLock}
-      />
-      {error && <div className="error-message">{error}</div>}
-      <a onClick={handleForgotPassword} className="forgot-password">
-        Quên mật khẩu
-      </a>
-
+        <div className="greeting">Đăng Nhập</div>
+        <InputField
+          className="input-style"
+          label="email"
+          type="text"
+          value={email}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setEmail(e.target.value)
+          }
+          icon={FaUserAlt}
+        />{" "}
+        <InputField
+          className="input-style"
+          label="Mật khẩu"
+          type="password"
+          value={password}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setPassword(e.target.value)
+          }
+          icon={FaLock}
+        />
+        <a onClick={handleForgotPassword} className="forgot-password">
+          Quên mật khẩu
+        </a>
       </div>
       <button type="submit" className="sign-in-button">
-       Đăng nhập
+        Đăng nhập
       </button>
 
       <div className="divider">
@@ -128,8 +126,7 @@ if(userData){
         <FaGoogle className="google-icon" /> Đăng nhập bằng Google
       </button>
       <p className="prompt">
-        {" "}
-        Chưa có tài khoản? {""}
+        Chưa có tài khoản?
         <a onClick={handleSignUp} className="sign-up-link">
           Đăng ký
         </a>

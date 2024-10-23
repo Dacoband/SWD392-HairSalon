@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import bg from "../assets/images/bgsdn.jpg";
 import { Tabs } from "antd";
 import "../App.css";
@@ -8,77 +8,45 @@ import { Col, Row } from "antd";
 import { ClockCircleOutlined } from "@ant-design/icons";
 import { Divider } from "antd";
 import { Link } from "react-router-dom";
-export interface Services {
-  _id: string;
-  name: string;
-  price: number;
-  description: string | null;
-  duration: number;
-  image: string | null;
-  type: number;
-}
-const services: Services[] = [
-  {
-    _id: "1",
-    name: "Cắt Tóc",
-    price: 50000,
-    description: "Cắt tóc đơn giản",
-    duration: 20,
-    image: "",
-    type: 1,
-  },
-  {
-    _id: "2",
-    name: "Uốn Tóc",
-    price: 50000,
-    description: "Tạo kiểu, vuót keo.",
-    duration: 30,
-    image: "",
-    type: 1,
-  },
-  {
-    _id: "3",
-    name: "Nhuộm tóc màu(không tẩy)",
-    price: 400000,
-    description: "Nhuộm tóc, các màu không cần tẩy",
-    duration: 120,
-    image: "",
-    type: 2,
-  },
-  {
-    _id: "4",
-    name: "Gội Đầu Massages",
-    price: 40000,
-    description: "Gội đầu thẳng mượt.",
-    duration: 90,
-    image: "",
-    type: 1,
-  },
-  {
-    _id: "5",
-    name: "Chăm sóc Tóc + Cắt Tóc",
-    price: 120000,
-    description: "Dịch vụ chăm sóc tóc chuyên sâu.",
-    duration: 60,
-    image: "",
-    type: 3,
-  },
-  {
-    _id: "6",
-    name: "Chăm sóc Tóc + Cắt Tóc",
-    price: 120000,
-    description: "Dịch vụ chăm sóc tóc chuyên sâu.",
-    duration: 60,
-    image: "",
-    type: 3,
-  },
-];
-
+import { SearchOutlined } from "@ant-design/icons";
+import { Services } from "../models/type";
+import { getServicesByType, getAllServices } from "../services/serviceSalon";
 const ServicesPage = () => {
-  // Hàm để lọc các dịch vụ theo type
-  const filterServicesByType = (type: number) => {
-    return services.filter((service) => service.type === type);
-  };
+  const [servicesType1, setServicesType1] = useState<Services[]>([]);
+  const [servicesType2, setServicesType2] = useState<Services[]>([]);
+  const [servicesType3, setServicesType3] = useState<Services[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  // // Hàm để lọc các dịch vụ theo type
+  // const filterServicesByType = (type: number) => {
+  //   return services.filter((service) => service.type === type);
+  // };
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const services1 = await getServicesByType(1);
+        const services2 = await getServicesByType(2);
+        const services3 = await getServicesByType(3);
+
+        setServicesType1(services1);
+        setServicesType2(services2);
+        setServicesType3(services3);
+      } catch (error) {
+        console.error("Error fetching services:", error);
+      }
+    };
+
+    fetchServices();
+  }, []);
+  const filteredServicesType1 = servicesType1.filter((service) =>
+    service.serviceName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const filteredServicesType2 = servicesType2.filter((service) =>
+    service.serviceName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  const filteredServicesType3 = servicesType3.filter((service) =>
+    service.serviceName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
   return (
     <div className="pb-0 mb-0 ">
       <div
@@ -125,8 +93,8 @@ const ServicesPage = () => {
                   </div>
                   <div>
                     <div className="w-1/2 mx-auto ">
-                      {filterServicesByType(1).map((service) => (
-                        <Row key={service._id}>
+                      {filteredServicesType1.map((service) => (
+                        <Row key={service.serviceID}>
                           <Col
                             className=" text-lg text-start font-medium flex"
                             span={8}
@@ -135,7 +103,7 @@ const ServicesPage = () => {
                               className=" mr-4 my-auto"
                               style={{ whiteSpace: "nowrap" }}
                             >
-                              {service.name}
+                              {service.serviceName}
                             </div>
                             <Divider style={{ borderColor: "#a9acad" }} />
                           </Col>
@@ -179,8 +147,8 @@ const ServicesPage = () => {
                   </div>
                   <div>
                     <div className="w-1/2 mx-auto ">
-                      {filterServicesByType(2).map((service) => (
-                        <Row key={service._id}>
+                      {filteredServicesType2.map((service) => (
+                        <Row key={service.serviceID}>
                           <Col
                             className=" text-lg text-start font-medium flex"
                             span={8}
@@ -189,7 +157,7 @@ const ServicesPage = () => {
                               className=" mr-4 my-auto"
                               style={{ whiteSpace: "nowrap" }}
                             >
-                              {service.name}
+                              {service.serviceName}
                             </div>
                             <Divider style={{ borderColor: "#a9acad" }} />
                           </Col>
@@ -233,8 +201,8 @@ const ServicesPage = () => {
                   </div>
                   <div>
                     <div className="w-1/2 mx-auto ">
-                      {filterServicesByType(3).map((service) => (
-                        <Row key={service._id}>
+                      {filteredServicesType3.map((service) => (
+                        <Row key={service.serviceID}>
                           <Col
                             className=" text-lg text-start font-medium flex"
                             span={8}
@@ -243,7 +211,7 @@ const ServicesPage = () => {
                               className=" mr-4 my-auto"
                               style={{ whiteSpace: "nowrap" }}
                             >
-                              {service.name}
+                              {service.serviceName}
                             </div>
                             <Divider style={{ borderColor: "#a9acad" }} />
                           </Col>
