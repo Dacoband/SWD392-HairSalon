@@ -18,10 +18,14 @@ import SignUp from "../pages/SignUp/SignUp";
 import PrivateRoute from "./PriveRouter";
 import HomePage from "../pages/Home/HomePage";
 import ServicesPage from "../pages/ServicesPage";
-import Service from "../components/Service/Service";
-import Appointment from "../pages/Appointment/Appointment";
+import ProfileAll from "../pages/ProfileAll";
+import Appointment from "../pages/customer/Appointment/Appointment";
 import Contact from "../pages/Contact";
 import Branch from "../pages/Branch";
+import ManagerAppoimentStylish from "../pages/Stylish/ManagerAppoinmentStylish";
+import ManagerMoney from "../pages/Stylish/ManagerMoney";
+import ManagerAppoimentStaff from "../pages/StaffStylish/ManagerAppoimentStaff";
+import ManagerStylish from "../pages/StaffStylish/ManagerStylish";
 const AppRouter = () => {
   return (
     <Router>
@@ -31,13 +35,15 @@ const AppRouter = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/logout" element={<Logout />} />
+        {/* GUEST có layout */}
         <Route element={<LayoutMain />}>
           <Route path="/" element={<Navigate to="/homePage" />} />
           <Route path="/homePage" element={<HomePage />} />
           <Route path="/servicePage" element={<ServicesPage />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/branch" element={<Branch />} />
         </Route>
-
+        {/* CUSTOMER */}
         <Route element={<LayoutMain />}>
           <Route
             path="/homePage"
@@ -49,19 +55,21 @@ const AppRouter = () => {
               <PrivateRoute element={BookingPage} allowedRoles={["MB"]} />
             }
           />
-          {/* <Route path="/service" element={<Service />} /> */}
+
           <Route
             path="/servicePage"
             element={
               <PrivateRoute element={ServicesPage} allowedRoles={["MB"]} />
             }
           />
-          <Route path="/manage-appointments" element={<Appointment />} />
-          <Route path="/service" element={<Service />} />
-          {/* <Route path="/contact" element={<Contact />} /> */}
-          <Route path="/branch" element={<Branch />} />
+          <Route
+            path="/manage-appointments"
+            element={
+              <PrivateRoute element={Appointment} allowedRoles={["MB"]} />
+            }
+          />
         </Route>
-
+        {/* ADMIN */}
         <Route
           path="/SystemAdmin"
           element={<PrivateRoute element={Role2} allowedRoles={["SA"]} />}
@@ -73,6 +81,56 @@ const AppRouter = () => {
             <PrivateRoute element={StaffManager} allowedRoles={["SM"]} />
           }
         />
+        {/* STYLISH */}
+        <Route element={<LayoutMain />}>
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute element={ProfileAll} allowedRoles={["ST"]} />
+            }
+          />
+          <Route
+            path="/Appoiment-Stylish"
+            element={
+              <PrivateRoute
+                element={ManagerAppoimentStylish}
+                allowedRoles={["ST"]}
+              />
+            }
+          />
+
+          <Route
+            path="/manager-money"
+            element={
+              <PrivateRoute element={ManagerMoney} allowedRoles={["ST"]} />
+            }
+          />
+          <Route path="/manage-appointments" element={<Appointment />} />
+        </Route>
+        {/* StaffStylish */}
+        <Route element={<LayoutMain />}>
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute element={ProfileAll} allowedRoles={["SL"]} />
+            }
+          />
+          <Route
+            path="/Appoiment-Staff"
+            element={
+              <PrivateRoute
+                element={ManagerAppoimentStaff}
+                allowedRoles={["SL"]}
+              />
+            }
+          />
+          <Route
+            path="/Manager-stylish"
+            element={
+              <PrivateRoute element={ManagerStylish} allowedRoles={["SL"]} />
+            }
+          />
+        </Route>
       </Routes>
     </Router>
   );
