@@ -69,5 +69,20 @@ namespace HairSalonSystem.API.Controllers
             var result = await _stylistService.GetStylistByStaffStylistAsync(staffStylistId);
             return Ok(result);
         }
+        [HttpGet]
+        [Route(APIEndPointConstant.Stylist.GetStylistByBranchId)]
+        public async Task<IActionResult> GetStylistByBranchId(Guid branchId)
+        {
+            var result = await _stylistService.GetStylistByBranchIdAsync(branchId);
+            return Ok(result);
+        }
+        [HttpGet]
+        [Route(APIEndPointConstant.Stylist.GetRandomStylistByBranchId)]
+        public async Task<IActionResult> GetRandomStylistByBranchId(Guid branchId)
+        {
+            var result = await _stylistService.GetRandomStylistByBranchIdAsync(branchId);
+            return Ok(result);
+        }
+
     }
 }

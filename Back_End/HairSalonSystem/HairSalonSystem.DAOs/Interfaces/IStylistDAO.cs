@@ -15,6 +15,7 @@ namespace HairSalonSystem.DAOs.Interfaces
         Task UpdateStylist(Guid id, Stylist Stylist);
         Task DeleteStylist(Guid id);
         Task<Stylist> GetStylistByBranchId(Guid branchId);
+        Task<Stylist> GetRandomStylistByBranchId(Guid branchId);
         Task<List<Stylist>> GetStylistByStaffStylist(Guid staffStylistId);
     }
 }
