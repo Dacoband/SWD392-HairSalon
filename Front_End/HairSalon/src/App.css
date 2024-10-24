@@ -90,7 +90,7 @@
   }
   .custom-select .ant-select-selection-item {
     font-size: 24px !important; /* Tăng kích thước chữ sau khi chọn */
-    padding: 10px !important; /* Tăng khoảng cách giữa chữ và viền */
+    padding: 8px !important; /* Tăng khoảng cách giữa chữ và viền */
   }
   
   .line-clamp {

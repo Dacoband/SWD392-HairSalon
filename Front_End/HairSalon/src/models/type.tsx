@@ -51,3 +51,16 @@ export interface UserData {
   email: string;
   roleName: string;
 }
+
+export interface Stylish {
+  email: string;
+  password: string;
+  branchId: string;
+  staffStylistId: string;
+  stylistName: string;
+  level: number;
+  phoneNumber: string;
+  address: string;
+  avatarImage: string;
+  insDate: Date;
+}
