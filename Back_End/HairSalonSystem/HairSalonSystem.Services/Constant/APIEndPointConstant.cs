@@ -77,7 +77,8 @@
                 public const string UpdateStylist = StylistEndpoint + "/update/{id}";
                 public const string DeleteStylist = StylistEndpoint + "/delete/{id}";
                 public const string GetStylistByBranchId = StylistEndpoint + "/branch/{branchId}";
-                public const string GetStylistByStaffStylist = StylistEndpoint + "/staff-stylist/{staffStylistId}";
+                public const string GetRandomStylistByBranchId = StylistEndpoint + "/random-branch/{branchId}";
+            public const string GetStylistByStaffStylist = StylistEndpoint + "/staff-stylist/{staffStylistId}";
         } 
             public static class Service
             {

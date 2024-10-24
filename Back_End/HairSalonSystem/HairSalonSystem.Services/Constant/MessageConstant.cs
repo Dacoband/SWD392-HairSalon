@@ -73,6 +73,7 @@
             public const string NotRights = "Bạn không có quyền tạo stylist";
             public const string StylistNotRightsDelete = "Bạn không có quyền xóa stylist";
             public const string StylistNotRightsUpdate = "Bạn không có quyền cập nhật stylist";
+            public const string StylistNotRightsGet = "Bạn không có quyền xem stylist";
         }
 
 
