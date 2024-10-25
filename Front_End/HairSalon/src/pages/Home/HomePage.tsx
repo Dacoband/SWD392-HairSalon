@@ -46,19 +46,21 @@ const HomePage: React.FC = () => {
         <img
           src="src/assets/hero-img.jpg"
           className="w-full h-30 object-cover"
-          alt="Hero"
+          alt=""
         />
         <div
           className="absolute inset-0 flex items-center justify-center"
           style={{ bottom: "40%" }}
         >
-          <h1 className="text-white text-5xl font-bold">Hair Salon</h1>
+          <div className="absolute items-center top-2 px-6 py-3">
+            <img src="src\assets\Remove-bg.ai_1729154529873.png" />
+          </div>
         </div>
-        <div className="absolute inset-0 flex items-center justify-center">
+        {/* <div className="absolute inset-0 flex items-center justify-center">
           <h2 className="text-white text-2xl font-bold">
             Chăm chút từng đường cắt, tạo nên sự khác biệt
           </h2>
-        </div>
+        </div> */}
 
         <button
           className="absolute font-bold bottom-10 left-10 px-6 py-3 bg-[#8e7424] text-white rounded-full hover:bg-[#74601d]"
@@ -81,7 +83,7 @@ const HomePage: React.FC = () => {
       <div className="bg-gradient-to-br py-3 from-white to-[#8e7424] p-5">
         <div className="text-center items-center mx-5">
           <h2 className="text-3xl font-bold mb-6 text-[#c89c47]">
-            <strong>Gói Dịch Vụ</strong>
+            <strong>Dịch Vụ</strong>
           </h2>
           <Slider {...settings}>
             {services.map((service) => (
@@ -108,14 +110,14 @@ const HomePage: React.FC = () => {
 
         <div className="flex flex-col items-center mt-10 bg-gray-100 p-4 rounded-lg shadow-md">
           <p className="mb-5 text-center text-3xl font-bold">
-            <strong>Combo</strong>
+            <strong>Gói Dịch Vụ</strong>
           </p>
 
           <div className="flex flex-col md:flex-row justify-between w-full gap-6 mb-4">
             {/* Combo Item 1 */}
             <div className="flex-1 flex flex-col items-center transition-transform transform hover:scale-105">
               <img
-                src="https://britishm.vn/wp-content/uploads/2019/02/cham-soc-toc-ma-mac-phai-6-sai-lam-nay-bao-sao-toc-nam-gioi-luon-kho-cung-xo-roi.jpg"
+                src="src\assets\cat toc va tao kieu.jpg"
                 alt="Cắt Tóc Và Tạo Kiểu"
                 className="w-48 h-48 object-cover rounded-lg shadow-md mb-3"
               />
@@ -126,7 +128,7 @@ const HomePage: React.FC = () => {
             {/* Combo Item 2 */}
             <div className="flex-1 flex flex-col items-center transition-transform transform hover:scale-105">
               <img
-                src="https://britishm.vn/wp-content/uploads/2019/02/cham-soc-toc-ma-mac-phai-6-sai-lam-nay-bao-sao-toc-nam-gioi-luon-kho-cung-xo-roi.jpg"
+                src="src\assets\nhuom toc va uon toc.jpg"
                 alt="Nhuộm Tóc và Uốn Tóc"
                 className="w-48 h-48 object-cover rounded-lg shadow-md mb-3"
               />
@@ -137,7 +139,7 @@ const HomePage: React.FC = () => {
             {/* Combo Item 3 */}
             <div className="flex-1 flex flex-col items-center transition-transform transform hover:scale-105">
               <img
-                src="https://britishm.vn/wp-content/uploads/2019/02/cham-soc-toc-ma-mac-phai-6-sai-lam-nay-bao-sao-toc-nam-gioi-luon-kho-cung-xo-roi.jpg"
+                src="src\assets\combo hot.jpg"
                 alt="Combo Nóng"
                 className="w-48 h-48 object-cover rounded-lg shadow-md mb-3"
               />
@@ -149,23 +151,53 @@ const HomePage: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row items-center justify-between p-6 bg-gray-50">
-        <div className="w-full md:w-1/2">
+      <div className="flex flex-col md:flex-row items-center justify-between p-8 bg-gray-50">
+        <div className="w-full md:w-1/2 md:pr-8">
           <img
             src="src/assets/about-img.jpg"
             alt="Salon Experience"
-            className="w-full h-auto rounded-lg shadow-lg"
+            className="w-full h-[550px] rounded-lg shadow-lg"
           />
         </div>
 
-        <div className="w-full md:w-1/2 md:pl-6 mt-4 md:mt-0">
-          <h2 className="text-3xl font-bold mb-2">HAIR SALON WEBSITE</h2>
-          <h3 className="text-xl text-gray-600 mb-4">BEST EXPERIENCE EVER</h3>
-          <p className="mb-4">Hair Salon</p>
-          <p className="mb-4">Hair Salon</p>
-          <p className="mb-4">Hair Salon</p>
-          <button className="bg-[#8e7424] text-white px-6 py-2 rounded-md hover:bg-[#74601d]">
-            VIEW MORE ABOUT US
+        <div className="w-full md:w-1/2 mt-8 md:mt-0 bg-white p-8 rounded-lg shadow-lg">
+          <h2 className="text-4xl font-extrabold text-gray-800 mb-6">
+            HAIR SALON
+          </h2>
+          <h3 className="text-2xl text-gray-600 mb-8">
+            Sự hài lòng của quý khách là ưu tiên hàng đầu của{" "}
+            <strong className="text-[#8e7424]">Hair Salon</strong>
+          </h3>
+
+          <ul className="space-y-4 text-lg leading-relaxed">
+            <li className="flex items-center">
+              <span className="text-[#8e7424] mr-3 text-xl">✔</span>
+              Đúng dịch vụ - Không kèo kéo khách hay phí ẩn
+            </li>
+            <li className="flex items-center">
+              <span className="text-[#8e7424] mr-3 text-xl">✔</span>
+              Ưu tiên trải nghiệm khách hàng
+            </li>
+            <li className="flex items-center">
+              <span className="text-[#8e7424] mr-3 text-xl">✔</span>
+              Luôn đưa ra các giải pháp phù hợp và chỉ bắt đầu khi khách hàng
+              đồng ý
+            </li>
+            <li className="flex items-center">
+              <span className="text-[#8e7424] mr-3 text-xl">✔</span>
+              Thấu hiểu nhu cầu, hỗ trợ nhiệt tình
+            </li>
+            <li className="flex items-center">
+              <span className="text-[#8e7424] mr-3 text-xl">✔</span>
+              Lắng nghe cẩn thận và đảm bảo dịch vụ tận tâm, nhiệt tình
+            </li>
+          </ul>
+
+          <button
+            onClick={() => navigate("/branch")}
+            className="mt-10 bg-[#8e7424] text-white font-semibold px-10 py-3 rounded-full hover:bg-[#74601d] transition duration-300"
+          >
+            Tìm Hiểu Thêm Về Chúng Tôi
           </button>
         </div>
       </div>

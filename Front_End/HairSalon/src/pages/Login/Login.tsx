@@ -22,7 +22,7 @@ const InputField = ({ label, type, value, onChange, icon: Icon }: any) => (
 const SignInForm = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [error, setError] = useState<string | null>(null);
+  // const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -37,9 +37,9 @@ const SignInForm = () => {
       } else if (userData.roleName === "SM") {
         navigate("/StaffManager");
       } else if (userData.roleName === "SL") {
-        navigate("/StaffStylelist");
+        navigate("/Appoiment-Staff");
       } else if (userData.roleName === "ST") {
-        navigate("/Stylelist");
+        navigate("/Appoiment-Stylish");
       } else if (userData.roleName === "MB") {
         navigate("/HomePage");
       } else {
@@ -93,7 +93,7 @@ const SignInForm = () => {
             setEmail(e.target.value)
           }
           icon={FaUserAlt}
-        />{" "}
+        />
         <InputField
           className="input-style"
           label="Mật khẩu"
