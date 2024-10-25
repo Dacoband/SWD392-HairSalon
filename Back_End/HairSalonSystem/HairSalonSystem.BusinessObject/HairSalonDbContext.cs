@@ -30,7 +30,7 @@ namespace HairSalonSystem.BusinessObject
         public IMongoCollection<Service> Service => _database.GetCollection<Service>("Service");
         public IMongoCollection<Appointment> Appointment => _database.GetCollection<Appointment>("Appointment");
         public IMongoCollection<AppointmentService> AppointmentService => _database.GetCollection<AppointmentService>("AppointmentService");
-
+        public IMongoCollection<Feedback> Feedbacks => _database.GetCollection<Feedback>("Feedbacks");
         public IMongoCollection<Stylist> Stylists => _database.GetCollection<Stylist>("Stylists");
 
     }

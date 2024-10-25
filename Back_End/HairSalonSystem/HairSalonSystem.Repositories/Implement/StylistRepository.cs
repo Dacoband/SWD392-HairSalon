@@ -49,5 +49,11 @@ namespace HairSalonSystem.Repositories.Implement
         {
             return await _stylistDAO.GetStylistByStaffStylist(staffStylistId);
         }
+        public async Task UpdateStylistAverageRatingAsync(Guid stylistId, double rating)
+        {
+            var stylist = await _stylistDAO.GetStylistById(stylistId);
+            stylist.AverageRating = rating;
+            await _stylistDAO.UpdateStylist(stylistId, stylist);
+        }
     }
 }

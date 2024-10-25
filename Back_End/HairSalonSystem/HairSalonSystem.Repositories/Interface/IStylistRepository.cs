@@ -17,5 +17,6 @@ namespace HairSalonSystem.Repositories.Interface
         Task<List<Stylist>> GetStylistByBranchId(Guid branchId);
         Task<Stylist> GetRandomStylistByBranchId(Guid branchId);
         Task<List<Stylist>> GetStylistByStaffStylist(Guid staffStylistId);
+        Task UpdateStylistAverageRatingAsync(Guid stylistId, double rating);
     }
 }
