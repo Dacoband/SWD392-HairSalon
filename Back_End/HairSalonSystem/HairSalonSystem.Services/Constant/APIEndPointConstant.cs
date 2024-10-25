@@ -98,5 +98,16 @@
                 public const string UpdateAppointment = AppointmentEndpoint + "update/{id}";
                 public const string GetAllAppointment = AppointmentEndpoint + "get-all";
             }
+        public static class Feedback
+        {
+            public const string FeedbackEndpoint = ApiEndpoint + "/feedback";
+            public const string GetFeedbackById = FeedbackEndpoint + "/{id}";
+            public const string GetFeedbackByMemberId = FeedbackEndpoint + "/member/{memberId}";
+            public const string GetFeedbackByStylistId = FeedbackEndpoint + "/stylist/{stylistId}";
+            public const string GetAllFeedbacks = FeedbackEndpoint + "/all";
+            public const string AddFeedback = FeedbackEndpoint + "/add";
+            //public const string UpdateFeedback = FeedbackEndpoint + "/update/{id}";
+            public const string DeleteFeedback = FeedbackEndpoint + "/delete/{id}";
+        }
     }
 }

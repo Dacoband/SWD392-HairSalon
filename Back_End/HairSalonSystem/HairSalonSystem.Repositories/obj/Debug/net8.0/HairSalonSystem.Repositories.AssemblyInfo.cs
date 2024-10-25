@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HairSalonSystem.Repositories")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+04fabd62f8f685753a4313549bdc167be4b9bc8d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a33a4d2721d1aff0601db2546441ccea55183419")]
 [assembly: System.Reflection.AssemblyProductAttribute("HairSalonSystem.Repositories")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HairSalonSystem.Repositories")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
