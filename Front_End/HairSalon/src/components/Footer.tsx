@@ -13,7 +13,7 @@ const Footer: React.FC = () => {
       <div className="footer-content">
         <Row gutter={[16, 16]} justify="space-around">
           <Col xs={24} md={8}>
-            <h3 className="footer-title">Địa Chỉ SALON</h3>
+            <h3 className="footer-title">Địa Chỉ HAIR SALON</h3>
             <p>
               <EnvironmentOutlined /> FPT University
             </p>
