@@ -17,8 +17,4 @@
     <ProjectReference Include="..\HairSalonSystem.Repositories\HairSalonSystem.Repositories.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="PayLoads\Responses\Appointment\" />
-  </ItemGroup>
-
 </Project>
