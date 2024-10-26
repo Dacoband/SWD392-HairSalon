@@ -52,6 +52,7 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+
 // Load Firebase settings from configuration
 var firebaseSettings = builder.Configuration.GetSection("Firebase").Get<FirebaseSetting>();
 
@@ -111,6 +112,8 @@ builder.Services.AddScoped<IStaffStylistDAO, StaffStylistDAO>();
 builder.Services.AddScoped<IServiceDAO, ServiceDAO>();
 builder.Services.AddScoped<IStylistDAO, StylistDAO>();
 builder.Services.AddScoped<IAppointmentDAO, AppointmentDAO>();
+builder.Services.AddScoped<IAppointmentServiceDAO, AppointmentServiceDAO>();
+
 builder.Services.AddScoped<IAppointmentCancellationDAO, AppointmentCancellationDAO>();
 
 
@@ -126,7 +129,9 @@ builder.Services.AddScoped<IStaffStylistRepository, StaffStylistRepository>();
 builder.Services.AddScoped<IServiceRepository,ServiceRepository>();
 builder.Services.AddScoped<IStylistRepository, StylistRepository>();
 builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+builder.Services.AddScoped<IAppointmentServiceRepository, AppointmentServiceRepository>();
 builder.Services.AddScoped<IAppointmentCancellationRepository,AppointmentCancellationRepository>();
+
 
 
 
@@ -152,10 +157,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-
 var connectionString = builder.Configuration.GetConnectionString("MongoDbConnection");
 var databaseName = builder.Configuration["MongoDb:DatabaseName"];
+// Add MongoDB client
+builder.Services.AddSingleton<IMongoClient>(new MongoClient(connectionString));
 builder.Services.AddSingleton(new HairSalonContext(connectionString, databaseName));
+
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

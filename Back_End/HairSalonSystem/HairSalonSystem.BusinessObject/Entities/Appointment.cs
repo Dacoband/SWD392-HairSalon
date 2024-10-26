@@ -42,7 +42,7 @@ namespace HairSalonSystem.BusinessObject.Entities
         [BsonRepresentation(BsonType.DateTime)]
         public DateTime EndTime { get; set; }
 
-        public virtual ICollection<AppointmentService> AppointmentService { get; set; } = new List<AppointmentService>();
+        //public virtual ICollection<AppointmentService> AppointmentService { get; set; } = new List<AppointmentService>();
 
     }
 }

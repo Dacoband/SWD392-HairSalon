@@ -15,6 +15,6 @@ namespace HairSalonSystem.Services.PayLoads.Responses.Cancellation
         public DateTime InsDate { get; set; }
         public DateTime UpdDate { get; set; }
         public bool DelFlg { get; set; }
-        public Appointment appointment { get; set; }
+        public BusinessObject.Entities.Appointment appointment { get; set; }
     }
 }

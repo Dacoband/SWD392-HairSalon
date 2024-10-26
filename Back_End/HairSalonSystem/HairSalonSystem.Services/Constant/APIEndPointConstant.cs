@@ -98,6 +98,7 @@
             public const string GetAppointmentById = AppointmentEndpoint + "{id}";
             public const string UpdateAppointment = AppointmentEndpoint + "update/{id}";
             public const string GetAllAppointment = AppointmentEndpoint + "get-all";
+            public const string GetSuitableSlot = AppointmentEndpoint + "get-slot";
         }
 
         public static class CancelAppointment

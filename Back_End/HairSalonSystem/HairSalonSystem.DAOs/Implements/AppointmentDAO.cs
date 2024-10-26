@@ -13,14 +13,22 @@ namespace HairSalonSystem.DAOs.Implements
     public class AppointmentDAO : IAppointmentDAO
     {
         private readonly IMongoCollection<Appointment> _appointmentCollection;
+        private readonly IMongoCollection<AppointmentService> _appointmentServiceCollection;
 
         public AppointmentDAO(HairSalonContext context)
         {
             _appointmentCollection = context.Appointment;
         }
-        public async Task CreateAppointment(Appointment appointment)
+        public async Task CreateAppointment(Appointment appointment, IClientSessionHandle session = null)
         {
-            await _appointmentCollection.InsertOneAsync(appointment);
+            if (session == null)
+            {
+                await _appointmentCollection.InsertOneAsync(appointment);
+            }
+            else
+            {
+                await _appointmentCollection.InsertOneAsync(session, appointment);
+            }
         }
 
         public async Task<List<Appointment>> GetAllAppointment()

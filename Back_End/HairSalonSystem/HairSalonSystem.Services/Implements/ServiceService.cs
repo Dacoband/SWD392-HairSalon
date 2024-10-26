@@ -183,22 +183,22 @@ namespace HairSalonSystem.Services.Implements
         public async Task<ActionResult> UpdateService(Guid serviceId, CreateServiceRequest serviceModel, HttpContext context)
         {
             var accountID = UserUtil.GetAccountId(context);
-            if (accountID == null)
-            {
-                return new ObjectResult(MessageConstant.ServiceMessage.UpdateRight)
-                {
-                    StatusCode = StatusCodes.Status403Forbidden
-                };
-            }
+            //if (accountID == null)
+            //{
+            //    return new ObjectResult(MessageConstant.ServiceMessage.UpdateRight)
+            //    {
+            //        StatusCode = StatusCodes.Status403Forbidden
+            //    };
+            //}
 
-            var roleName = UserUtil.GetRoleName(context);
-            if (roleName != "SA")
-            {
-                return new ObjectResult(MessageConstant.ServiceMessage.UpdateRight)
-                {
-                    StatusCode = StatusCodes.Status403Forbidden
-                };
-            }
+            //var roleName = UserUtil.GetRoleName(context);
+            //if (roleName != "SA")
+            //{
+            //    return new ObjectResult(MessageConstant.ServiceMessage.UpdateRight)
+            //    {
+            //        StatusCode = StatusCodes.Status403Forbidden
+            //    };
+            //}
             var oldService = await _serviceRepository.GetServiceById(serviceId);
             if (oldService == null)
             {

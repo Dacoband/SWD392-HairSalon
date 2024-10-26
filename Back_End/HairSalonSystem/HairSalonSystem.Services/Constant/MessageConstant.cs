@@ -99,6 +99,7 @@
             public const string InvalidStatus = "Trạng thái lịch hẹn không hợp lệ";
             public const string UpdateSuccess = "Cập nhật trạng thái lịch hẹn thành công";
             public const string NotOpen = "Bạn chỉ có thể đặt lịch trong khoảng 8:00 - 20:00";
+            public const string InvalidTime = "Bạn phải đặt lịch hẹn trước ít nhất 1 tiếng";
 
             // 1: created -> 2: cancel by cus -> 3: cancel by salon -> 4 : completed 
 

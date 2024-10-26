@@ -43,6 +43,5 @@ namespace HairSalonSystem.BusinessObject.Entities
 
         [BsonElement("DelFlg")]
         public bool DelFlg { get;set; }
-        public virtual ICollection<AppointmentService> AppointmentService { get; set; } = new List<AppointmentService>();
     }
 }
