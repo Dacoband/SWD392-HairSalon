@@ -7,12 +7,7 @@ build_property.InvariantGlobalization =
 build_property.PlatformNeutralAssembly = 
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
-<<<<<<< HEAD:Back_End/HairSalonSystem/HairSalonSystem.DAO/obj/Debug/net8.0/HairSalonSystem.DAO.GeneratedMSBuildEditorConfig.editorconfig
-build_property.RootNamespace = HairSalonSystem.DAO
-build_property.ProjectDir = D:\sem7\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.DAO\
-=======
 build_property.RootNamespace = HairSalonSystem.DAOs
-build_property.ProjectDir = D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.DAOs\
->>>>>>> main:Back_End/HairSalonSystem/HairSalonSystem.DAOs/obj/Debug/net8.0/HairSalonSystem.DAOs.GeneratedMSBuildEditorConfig.editorconfig
+build_property.ProjectDir = D:\sem7\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.DAOs\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
