@@ -48,8 +48,8 @@ namespace HairSalonSystem.Services.Implements
                 StylistId = stylist.StylistId,
                 Rating = request.Rating,
                 Comment = request.Comment,
-                InsDate = TimeUtils.GetCurrentSEATime(),
-                UpdDate = TimeUtils.GetCurrentSEATime(),
+                InsDate = DateTime.Now,
+                UpdDate = DateTime.Now,
                 DelFlg = true
             };
             await _feedbackRepository.AddFeedbackAsync(feedback);
