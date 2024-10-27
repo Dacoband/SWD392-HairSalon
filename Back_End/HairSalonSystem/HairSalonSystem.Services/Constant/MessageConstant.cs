@@ -114,5 +114,15 @@
             public const string GetRight = "Bạn không có quyền truy cập lịch đã hủy";
 
         }
+        public static class FeedbackMessage
+        {
+            public const string CreateRight = "Vui lòng đăng nhập để tạo phản hồi";
+            public const string CreateSuccess = "Tạo phản hồi thành công";
+            public const string Exception = "Lỗi trong lúc tạo phản hồi";
+            public const string NotRight = "Vui lòng đăng nhập để xem phản hồi";
+            public const string NotFound = "Không tìm thấy phản hồi";
+            public const string DeleteRight = "Bạn không có quyền xóa phản hồi";
+            public const string DeleteSuccess = "Xoá phản hồi thành công";
+        }
     }
 }

@@ -122,9 +122,13 @@ builder.Services.AddScoped<IStaffStylistDAO, StaffStylistDAO>();
 builder.Services.AddScoped<IServiceDAO, ServiceDAO>();
 builder.Services.AddScoped<IStylistDAO, StylistDAO>();
 builder.Services.AddScoped<IAppointmentDAO, AppointmentDAO>();
+<<<<<<< HEAD
 builder.Services.AddScoped<IAppointmentServiceDAO, AppointmentServiceDAO>();
 
 builder.Services.AddScoped<IAppointmentCancellationDAO, AppointmentCancellationDAO>();
+=======
+builder.Services.AddScoped<IFeedbackDAO, FeedbackDAO>();
+>>>>>>> Nhan/SIT
 
 
 
@@ -139,9 +143,13 @@ builder.Services.AddScoped<IStaffStylistRepository, StaffStylistRepository>();
 builder.Services.AddScoped<IServiceRepository,ServiceRepository>();
 builder.Services.AddScoped<IStylistRepository, StylistRepository>();
 builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+<<<<<<< HEAD
 builder.Services.AddScoped<IAppointmentServiceRepository, AppointmentServiceRepository>();
 builder.Services.AddScoped<IAppointmentCancellationRepository,AppointmentCancellationRepository>();
 
+=======
+builder.Services.AddScoped<IFeedbackRepository, FeedbackRepository>();
+>>>>>>> Nhan/SIT
 
 
 
@@ -160,7 +168,12 @@ builder.Services.AddScoped<IStaffStylistService, StaffStylistService>();
 builder.Services.AddScoped<IServiceService, ServiceService>();
 builder.Services.AddScoped<IStylistService, StylistService>();
 builder.Services.AddScoped<IAppointmentService, HairSalonSystem.Services.Implements.AppointmentService>();
+<<<<<<< HEAD
 builder.Services.AddScoped<IAppointmentCacellationService,AppointmentCancellationService>();
+=======
+builder.Services.AddScoped<IFeedbackService, FeedbackService>();
+
+>>>>>>> Nhan/SIT
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
