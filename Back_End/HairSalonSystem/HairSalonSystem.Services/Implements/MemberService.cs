@@ -72,7 +72,7 @@ namespace HairSalonSystem.Services.Implements
             existingMember.Address = memberRequest.Address;
             existingMember.DateOfBirth = memberRequest.DateOfBirth;
             existingMember.AvatarImage = memberRequest.AvatarImage;
-            existingMember.UpdDate = TimeUtils.GetCurrentSEATime();
+            existingMember.UpdDate = DateTime.Now;
 
             
             await _memberRepository.UpdateMember(existingMember);
