@@ -56,7 +56,7 @@ namespace HairSalonSystem.Services.Implements
             {
                 AccountId = Guid.NewGuid(),
                 Email = staffManager.Email,
-                Password = staffManager.Password,
+                Password = PasswordUtil.HashPassword(staffManager.Password),
                 RoleName = Enums.RoleEnums.SM.ToString(),
                 InsDate = TimeUtils.GetCurrentSEATime(),
                 UpdDate = TimeUtils.GetCurrentSEATime(),
@@ -67,7 +67,7 @@ namespace HairSalonSystem.Services.Implements
             var staffmanager = new StaffManager()
             {
                 StaffManagerID = Guid.NewGuid(),
-                AccountID = Guid.NewGuid(),
+                AccountID = account.AccountId,
                 BranchID = staffManager.BranchID,
                 StaffManagerName = staffManager.StaffManagerName,
                 DateOfBirth = DateTime.Now,

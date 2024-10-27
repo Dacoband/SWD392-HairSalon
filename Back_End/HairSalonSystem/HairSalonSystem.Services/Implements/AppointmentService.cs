@@ -15,9 +15,9 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using static HairSalonSystem.Services.Constant.APIEndPointConstant;
 
 namespace HairSalonSystem.Services.Implements
 {
@@ -411,7 +411,7 @@ namespace HairSalonSystem.Services.Implements
                     StatusCode = StatusCodes.Status403Forbidden
                 };
             }
-            if(appointment == null)
+            if (appointment == null)
             {
 
                 return new ObjectResult(MessageConstant.AppointmentMessage.NotFound)
@@ -419,7 +419,7 @@ namespace HairSalonSystem.Services.Implements
                     StatusCode = StatusCodes.Status404NotFound
                 };
             }
-            if(status != 1 && status != 2 && status != 3 && status !=4 && status != 5)
+            if (status != 1 && status != 2 && status != 3 && status != 4 && status != 5)
             {
                 return new ObjectResult(MessageConstant.AppointmentMessage.InvalidStatus)
                 {

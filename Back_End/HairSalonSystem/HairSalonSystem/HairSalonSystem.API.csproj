@@ -22,4 +22,8 @@
     <ProjectReference Include="..\HairSalonSystem.Services\HairSalonSystem.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\uploads\" />
+  </ItemGroup>
+
 </Project>

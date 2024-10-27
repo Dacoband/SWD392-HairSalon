@@ -18,12 +18,22 @@ using Google.Apis.Auth.OAuth2;
 using HairSalonSystem.Services.PayLoads.Requests.Firebase;
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin", policy =>
+    {
+        policy.WithOrigins("*") 
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 
 // Add services to the container.
 
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "HairSalon API", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "HairSalon API Test", Version = "v1" });
 
     // Cấu hình Bearer token 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -164,12 +174,14 @@ builder.Services.AddSingleton<IMongoClient>(new MongoClient(connectionString));
 builder.Services.AddSingleton(new HairSalonContext(connectionString, databaseName));
 
 var app = builder.Build();
+
+
+app.UseCors("AllowSpecificOrigin");
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
+
+app.UseSwagger();
     app.UseSwaggerUI();
-}
+
 
 app.UseRouting();
 

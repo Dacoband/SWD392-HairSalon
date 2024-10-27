@@ -37,7 +37,7 @@ namespace HairSalonSystem.Services.Implements
                 AccountId = Guid.NewGuid(),
                 Email = request.Email,
                 Password = PasswordUtil.HashPassword(request.Password),
-                RoleName = Enums.RoleEnums.ST.ToString(), 
+                RoleName = Enums.RoleEnums.ST.ToString(),
                 InsDate = TimeUtils.GetCurrentSEATime(),
                 UpdDate = TimeUtils.GetCurrentSEATime(),
                 DelFlg = true
@@ -144,6 +144,8 @@ namespace HairSalonSystem.Services.Implements
         public async Task<List<StylistResponse>> GetStylistByBranchIdAsync(Guid branchId)
         {
             var stylists = await _stylistRepository.GetStylistByBranchId(branchId);
+            if (stylists == null || !stylists.Any())
+                throw new KeyNotFoundException(MessageConstant.StylistMessage.StylistNotFound);
             var responseList = new List<StylistResponse>();
 
             foreach (var stylist in stylists)
@@ -182,6 +184,22 @@ namespace HairSalonSystem.Services.Implements
             }
 
             return stylistResponses;
+        }
+        public async Task<StylistResponse> GetRandomStylistByBranchIdAsync(Guid branchId)
+        {
+            var stylist = await _stylistRepository.GetRandomStylistByBranchId(branchId);
+            if (stylist == null)
+                throw new KeyNotFoundException(MessageConstant.StylistMessage.StylistNotFound);
+
+            return new StylistResponse
+            {
+                StylistId = stylist.StylistId,
+                StylistName = stylist.StylistName,
+                BranchId = stylist.BranchID,
+                PhoneNumber = stylist.PhoneNumber,
+                Address = stylist.Address,
+                AvatarImage = stylist.AvatarImage,
+            };
         }
     }
 }

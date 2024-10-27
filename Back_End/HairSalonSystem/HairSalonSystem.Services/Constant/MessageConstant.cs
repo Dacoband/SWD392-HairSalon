@@ -73,6 +73,7 @@
             public const string NotRights = "Bạn không có quyền tạo stylist";
             public const string StylistNotRightsDelete = "Bạn không có quyền xóa stylist";
             public const string StylistNotRightsUpdate = "Bạn không có quyền cập nhật stylist";
+            public const string StylistNotRightsGet = "Bạn không có quyền xem stylist";
         }
 
 
@@ -86,7 +87,6 @@
             public const string DeleteSuccess = "Xóa dịch vụ thành công";
             public const string UpdateSuccess = "Cập nhật dịch vụ thành công";
         }
-
         public static class AppointmentMessage
         {
             public const string CreateRight = "Vui lòng đăng nhập để tạo lịch hẹn";
@@ -115,9 +115,4 @@
 
         }
     }
-
-
 }
-
-
-

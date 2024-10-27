@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\HairSalonSystem.API.props" />
+</Project>

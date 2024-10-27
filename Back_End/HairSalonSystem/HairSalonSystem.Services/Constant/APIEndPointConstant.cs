@@ -57,9 +57,9 @@
             public const string UpdateStaffManager = StaffManagerEndpoint + "/update/{id}";
             public const string DeleteStaffManager = StaffManagerEndpoint + "/delete/{id}";
         }
+            public static class StaffStylist
+            {
 
-        public static class StaffStylist
-        {
                 public const string StaffStylistEndpoint = ApiEndpoint + "/staff-stylist";
                 public const string GetStaffStylistById = StaffStylistEndpoint + "/{id}";
                 public const string GetAllStaffStylists = StaffStylistEndpoint + "/all";
@@ -67,7 +67,7 @@
                 public const string UpdateStaffStylist = StaffStylistEndpoint + "/update/{id}";
                 public const string DeleteStaffStylist = StaffStylistEndpoint + "/delete/{id}";
                 public const string GetStaffStylistByBranchId = StaffStylistEndpoint + "/branch/{branchId}";
-        }
+            }
         public static class Stylist
         {
                 public const string StylistEndpoint = ApiEndpoint + "/stylist";
@@ -77,8 +77,9 @@
                 public const string UpdateStylist = StylistEndpoint + "/update/{id}";
                 public const string DeleteStylist = StylistEndpoint + "/delete/{id}";
                 public const string GetStylistByBranchId = StylistEndpoint + "/branch/{branchId}";
-                public const string GetStylistByStaffStylist = StylistEndpoint + "/staff-stylist/{staffStylistId}";
-        }
+                public const string GetRandomStylistByBranchId = StylistEndpoint + "/random-branch/{branchId}";
+            public const string GetStylistByStaffStylist = StylistEndpoint + "/staff-stylist/{staffStylistId}";
+        } 
             public static class Service
             {
                 public const string ServiceEndpoint = ApiEndpoint + "/service";
