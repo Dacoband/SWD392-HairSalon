@@ -10,9 +10,6 @@
     <PackageReference Include="Firebase.Auth" Version="1.0.0" />
     <PackageReference Include="FirebaseAdmin" Version="3.0.1" />
     <PackageReference Include="FirebaseStorage.net" Version="1.0.3" />
-    <Compile Remove="PayLoads\Responses\Appointment\**" />
-    <EmbeddedResource Remove="PayLoads\Responses\Appointment\**" />
-    <None Remove="PayLoads\Responses\Appointment\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +18,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HairSalonSystem.Repositories\HairSalonSystem.Repositories.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="PayLoads\Responses\Appointment\AppointmentResponse.cs" />
   </ItemGroup>
 
 </Project>
