@@ -86,8 +86,8 @@ namespace HairSalonSystem.Services.Controllers
                 Email = memberRequest.Email,
                 Password = PasswordUtil.HashPassword(memberRequest.Password),
                 RoleName = Enums.RoleEnums.MB.GetDescriptionFromEnum(),
-                InsDate = TimeUtils.GetCurrentSEATime(),
-                UpdDate = TimeUtils.GetCurrentSEATime(),
+                InsDate = DateTime.Now,
+                UpdDate = DateTime.Now,
                 DelFlg = true
             };
             await _accountService.AddAccount(account);
@@ -100,8 +100,8 @@ namespace HairSalonSystem.Services.Controllers
                 PhoneNumber = memberRequest.PhoneNumber,
                 Address = memberRequest.Address,
                 AvatarImage = avatarImagePath,
-                InsDate = TimeUtils.GetCurrentSEATime(),
-                UpdDate = TimeUtils.GetCurrentSEATime(),
+                InsDate = DateTime.Now,
+                UpdDate = DateTime.Now,
                 DelFlg = true
             };
 
