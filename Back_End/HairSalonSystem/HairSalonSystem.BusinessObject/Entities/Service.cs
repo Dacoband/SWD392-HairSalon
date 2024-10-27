@@ -20,7 +20,8 @@ namespace HairSalonSystem.BusinessObject.Entities
         public string ServiceName { get; set; }
 
         [BsonElement("Type")]
-        public int Type = 1;
+        public int Type { get; set; } 
+        //1: cat toc va tao kieu - 2: nhuom toc va uon toc - 3: combo hot
 
         [BsonElement("Price")]
         public float Price { get; set; }
@@ -41,7 +42,6 @@ namespace HairSalonSystem.BusinessObject.Entities
         public DateTime? UpdDate { get; set; }
 
         [BsonElement("DelFlg")]
-        public bool DelFlg = true;
-        public virtual ICollection<AppointmentService> AppointmentService { get; set; } = new List<AppointmentService>();
+        public bool DelFlg { get;set; }
     }
 }

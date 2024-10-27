@@ -55,6 +55,5 @@ namespace HairSalonSystem.BusinessObject.Entities
 
         [BsonElement("DelFlg")]
         public bool DelFlg { get; set; }
-
     }
 }
