@@ -57,42 +57,39 @@
             public const string UpdateStaffManager = StaffManagerEndpoint + "/update/{id}";
             public const string DeleteStaffManager = StaffManagerEndpoint + "/delete/{id}";
         }
-            public static class StaffStylist
-            {
+        public static class StaffStylist
+        {
 
-                public const string StaffStylistEndpoint = ApiEndpoint + "/staff-stylist";
-                public const string GetStaffStylistById = StaffStylistEndpoint + "/{id}";
-                public const string GetAllStaffStylists = StaffStylistEndpoint + "/all";
-                public const string AddStaffStylist = StaffStylistEndpoint + "/add";
-                public const string UpdateStaffStylist = StaffStylistEndpoint + "/update/{id}";
-                public const string DeleteStaffStylist = StaffStylistEndpoint + "/delete/{id}";
-                public const string GetStaffStylistByBranchId = StaffStylistEndpoint + "/branch/{branchId}";
-            }
+            public const string StaffStylistEndpoint = ApiEndpoint + "/staff-stylist";
+            public const string GetStaffStylistById = StaffStylistEndpoint + "/{id}";
+            public const string GetAllStaffStylists = StaffStylistEndpoint + "/all";
+            public const string AddStaffStylist = StaffStylistEndpoint + "/add";
+            public const string UpdateStaffStylist = StaffStylistEndpoint + "/update/{id}";
+            public const string DeleteStaffStylist = StaffStylistEndpoint + "/delete/{id}";
+            public const string GetStaffStylistByBranchId = StaffStylistEndpoint + "/branch/{branchId}";
+        }
         public static class Stylist
         {
-                public const string StylistEndpoint = ApiEndpoint + "/stylist";
-                public const string GetStylistById = StylistEndpoint + "/{id}";
-                public const string GetAllStylists = StylistEndpoint + "/all";
-                public const string AddStylist = StylistEndpoint + "/add";
-                public const string UpdateStylist = StylistEndpoint + "/update/{id}";
-                public const string DeleteStylist = StylistEndpoint + "/delete/{id}";
-                public const string GetStylistByBranchId = StylistEndpoint + "/branch/{branchId}";
-                public const string GetRandomStylistByBranchId = StylistEndpoint + "/random-branch/{branchId}";
+            public const string StylistEndpoint = ApiEndpoint + "/stylist";
+            public const string GetStylistById = StylistEndpoint + "/{id}";
+            public const string GetAllStylists = StylistEndpoint + "/all";
+            public const string AddStylist = StylistEndpoint + "/add";
+            public const string UpdateStylist = StylistEndpoint + "/update/{id}";
+            public const string DeleteStylist = StylistEndpoint + "/delete/{id}";
+            public const string GetStylistByBranchId = StylistEndpoint + "/branch/{branchId}";
+            public const string GetRandomStylistByBranchId = StylistEndpoint + "/random-branch/{branchId}";
             public const string GetStylistByStaffStylist = StylistEndpoint + "/staff-stylist/{staffStylistId}";
-        } 
-            public static class Service
-            {
-                public const string ServiceEndpoint = ApiEndpoint + "/service";
-                public const string GetServiceById = ServiceEndpoint + "{id}";
-                public const string CreateService = ServiceEndpoint + "/create";
-                public const string GetAllService = ServiceEndpoint + "/get-all";
-                public const string UpdateService = ServiceEndpoint + "/update/{id}";
-                public const string DeleteService = ServiceEndpoint + "/delete/{id}";
+        }
+        public static class Service
+        {
+            public const string ServiceEndpoint = ApiEndpoint + "/service";
+            public const string GetServiceById = ServiceEndpoint + "{id}";
+            public const string CreateService = ServiceEndpoint + "/create";
+            public const string GetAllService = ServiceEndpoint + "/get-all";
+            public const string UpdateService = ServiceEndpoint + "/update/{id}";
+            public const string DeleteService = ServiceEndpoint + "/delete/{id}";
 
-            }
-<<<<<<< HEAD
-
-
+        }
         public static class Appointment
         {
             public const string AppointmentEndpoint = ApiEndpoint + "/appointment";
@@ -111,7 +108,6 @@
             public const string GetById = CancelEndpoint + "/get-by-id/{id}";
             public const string GetByAppointment = CancelEndpoint + "/get-by-appointment/{id}";
 
-=======
             public static class Appointment
             {
                 public const string AppointmentEndpoint = ApiEndpoint + "/appointment";
@@ -120,17 +116,18 @@
                 public const string UpdateAppointment = AppointmentEndpoint + "update/{id}";
                 public const string GetAllAppointment = AppointmentEndpoint + "get-all";
             }
-        public static class Feedback
-        {
-            public const string FeedbackEndpoint = ApiEndpoint + "/feedback";
-            public const string GetFeedbackById = FeedbackEndpoint + "/{id}";
-            public const string GetFeedbackByMemberId = FeedbackEndpoint + "/member/{memberId}";
-            public const string GetFeedbackByStylistId = FeedbackEndpoint + "/stylist/{stylistId}";
-            public const string GetAllFeedbacks = FeedbackEndpoint + "/all";
-            public const string AddFeedback = FeedbackEndpoint + "/add";
-            //public const string UpdateFeedback = FeedbackEndpoint + "/update/{id}";
-            public const string DeleteFeedback = FeedbackEndpoint + "/delete/{id}";
->>>>>>> Nhan/SIT
+            public static class Feedback
+            {
+                public const string FeedbackEndpoint = ApiEndpoint + "/feedback";
+                public const string GetFeedbackById = FeedbackEndpoint + "/{id}";
+                public const string GetFeedbackByMemberId = FeedbackEndpoint + "/member/{memberId}";
+                public const string GetFeedbackByStylistId = FeedbackEndpoint + "/stylist/{stylistId}";
+                public const string GetAllFeedbacks = FeedbackEndpoint + "/all";
+                public const string AddFeedback = FeedbackEndpoint + "/add";
+                //public const string UpdateFeedback = FeedbackEndpoint + "/update/{id}";
+                public const string DeleteFeedback = FeedbackEndpoint + "/delete/{id}";
+
+            }
         }
     }
 }
