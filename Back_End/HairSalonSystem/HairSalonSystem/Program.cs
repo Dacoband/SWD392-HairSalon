@@ -13,8 +13,9 @@ using System.Text;
 using Microsoft.OpenApi.Models;
 using HairSalonSystem.DAOs.Interfaces;
 using HairSalonSystem.DAOs.Implements;
-
-
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
+using HairSalonSystem.Services.PayLoads.Requests.Firebase;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
@@ -62,6 +63,26 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// Load Firebase settings from configuration
+var firebaseSettings = builder.Configuration.GetSection("Firebase").Get<FirebaseSetting>();
+
+if (firebaseSettings == null)
+{
+    throw new Exception("Firebase settings not found in configuration.");
+}
+
+builder.Configuration.GetSection("Firebase").Get<FirebaseSetting>();
+
+// Combine the base path with the relative path
+var credentialPath = Path.Combine(builder.Environment.ContentRootPath, firebaseSettings.CredentialPath);
+
+// Initialize FirebaseApp and register it as a singleton service
+var firebaseApp = FirebaseApp.Create(new AppOptions
+{
+    Credential = GoogleCredential.FromFile(credentialPath)
+});
+
+builder.Services.AddSingleton(firebaseApp);
 // Load JWT settings
 
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
@@ -101,6 +122,9 @@ builder.Services.AddScoped<IStaffStylistDAO, StaffStylistDAO>();
 builder.Services.AddScoped<IServiceDAO, ServiceDAO>();
 builder.Services.AddScoped<IStylistDAO, StylistDAO>();
 builder.Services.AddScoped<IAppointmentDAO, AppointmentDAO>();
+builder.Services.AddScoped<IAppointmentServiceDAO, AppointmentServiceDAO>();
+
+builder.Services.AddScoped<IAppointmentCancellationDAO, AppointmentCancellationDAO>();
 
 
 
@@ -115,11 +139,16 @@ builder.Services.AddScoped<IStaffStylistRepository, StaffStylistRepository>();
 builder.Services.AddScoped<IServiceRepository,ServiceRepository>();
 builder.Services.AddScoped<IStylistRepository, StylistRepository>();
 builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+builder.Services.AddScoped<IAppointmentServiceRepository, AppointmentServiceRepository>();
+builder.Services.AddScoped<IAppointmentCancellationRepository,AppointmentCancellationRepository>();
+
 
 
 
 
 // Register Services
+builder.Services.AddScoped<IFirebaseService, FirebaseService>();
+
 builder.Services.AddScoped<IVNPayService, VNPayService>();
 builder.Services.AddScoped<IAccountService, AccountService>(); 
 builder.Services.AddScoped<IAuthService, AuthService>(); 
@@ -131,16 +160,19 @@ builder.Services.AddScoped<IStaffStylistService, StaffStylistService>();
 builder.Services.AddScoped<IServiceService, ServiceService>();
 builder.Services.AddScoped<IStylistService, StylistService>();
 builder.Services.AddScoped<IAppointmentService, HairSalonSystem.Services.Implements.AppointmentService>();
+builder.Services.AddScoped<IAppointmentCacellationService,AppointmentCancellationService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-
 var connectionString = builder.Configuration.GetConnectionString("MongoDbConnection");
 var databaseName = builder.Configuration["MongoDb:DatabaseName"];
+// Add MongoDB client
+builder.Services.AddSingleton<IMongoClient>(new MongoClient(connectionString));
 builder.Services.AddSingleton(new HairSalonContext(connectionString, databaseName));
+
 var app = builder.Build();
 
 

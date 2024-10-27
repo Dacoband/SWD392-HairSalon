@@ -90,13 +90,26 @@
                 public const string DeleteService = ServiceEndpoint + "/delete/{id}";
 
             }
-            public static class Appointment
-            {
-                public const string AppointmentEndpoint = ApiEndpoint + "/appointment";
-                public const string CreateAppointment = AppointmentEndpoint + "/create";
-                public const string GetAppointmentById = AppointmentEndpoint + "{id}";
-                public const string UpdateAppointment = AppointmentEndpoint + "update/{id}";
-                public const string GetAllAppointment = AppointmentEndpoint + "get-all";
-            }
+
+
+        public static class Appointment
+        {
+            public const string AppointmentEndpoint = ApiEndpoint + "/appointment";
+            public const string CreateAppointment = AppointmentEndpoint + "/create";
+            public const string GetAppointmentById = AppointmentEndpoint + "{id}";
+            public const string UpdateAppointment = AppointmentEndpoint + "update/{id}";
+            public const string GetAllAppointment = AppointmentEndpoint + "get-all";
+            public const string GetSuitableSlot = AppointmentEndpoint + "get-slot";
+        }
+
+        public static class CancelAppointment
+        {
+            public const string CancelEndpoint = ApiEndpoint + "/cancel-appointment";
+            public const string CreateCancel = CancelEndpoint + "/create";
+            public const string GetAllCancel = CancelEndpoint + "/get-all";
+            public const string GetById = CancelEndpoint + "/get-by-id/{id}";
+            public const string GetByAppointment = CancelEndpoint + "/get-by-appointment/{id}";
+
+        }
     }
 }
