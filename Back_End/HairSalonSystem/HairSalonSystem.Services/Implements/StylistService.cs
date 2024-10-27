@@ -39,8 +39,8 @@ namespace HairSalonSystem.Services.Implements
                 Email = request.Email,
                 Password = PasswordUtil.HashPassword(request.Password),
                 RoleName = Enums.RoleEnums.ST.ToString(),
-                InsDate = TimeUtils.GetCurrentSEATime(),
-                UpdDate = TimeUtils.GetCurrentSEATime(),
+                InsDate = DateTime.Now,
+                UpdDate = DateTime.Now,
                 DelFlg = true
             };
             await _accountRepository.AddAccount(account);
@@ -56,8 +56,8 @@ namespace HairSalonSystem.Services.Implements
                 PhoneNumber = request.PhoneNumber,
                 Address = request.Address,
                 AvatarImage = request.AvatarImage,
-                InsDate = TimeUtils.GetCurrentSEATime(),
-                UpdDate = TimeUtils.GetCurrentSEATime(),
+                InsDate = DateTime.Now,
+                UpdDate = DateTime.Now,
                 DelFlg = true
             };
 
@@ -121,7 +121,7 @@ namespace HairSalonSystem.Services.Implements
             stylist.PhoneNumber = request.PhoneNumber;
             stylist.Address = request.Address;
             stylist.AvatarImage = request.AvatarImage;
-            stylist.UpdDate = TimeUtils.GetCurrentSEATime();
+            stylist.UpdDate = DateTime.Now;
 
             await _stylistRepository.UpdateStylist(id, stylist);
 
