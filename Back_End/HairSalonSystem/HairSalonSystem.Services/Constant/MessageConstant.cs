@@ -98,7 +98,20 @@
             public const string UpdateRight = "Bạn không có quyền thay đổi lịch hẹn";
             public const string InvalidStatus = "Trạng thái lịch hẹn không hợp lệ";
             public const string UpdateSuccess = "Cập nhật trạng thái lịch hẹn thành công";
-            //1:created -> 2: paid -> 3: accepted -> 4: canceled -> 5: completed 
+            public const string NotOpen = "Bạn chỉ có thể đặt lịch trong khoảng 8:00 - 20:00";
+            public const string InvalidTime = "Bạn phải đặt lịch hẹn trước ít nhất 1 tiếng";
+
+            // 1: created -> 2: cancel by cus -> 3: cancel by salon -> 4 : completed 
+
+        }
+
+        public static class CancelAppointmentMessage
+        {
+            public const string CreateRight = "Bạn không có quyền hủy cuộc hẹn này";
+            public const string NotFound = "Không tìm thấy lịch sử hủy hẹn";
+            public const string Exception = "Lỗi trong lúc hủy cuộc hẹn";
+            public const string CreateSuccess = "Hủy lịch hẹn thành công";
+            public const string GetRight = "Bạn không có quyền truy cập lịch đã hủy";
 
         }
         public static class FeedbackMessage
