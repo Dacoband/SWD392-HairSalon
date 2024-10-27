@@ -20,8 +20,4 @@
     <ProjectReference Include="..\HairSalonSystem.Repositories\HairSalonSystem.Repositories.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Include="PayLoads\Responses\Appointment\AppointmentResponse.cs" />
-  </ItemGroup>
-
 </Project>
