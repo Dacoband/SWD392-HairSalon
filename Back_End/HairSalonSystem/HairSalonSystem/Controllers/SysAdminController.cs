@@ -35,8 +35,8 @@ namespace HairSalonSystem.Services.Controllers
                 Email = accountDto.Email,
                 Password = PasswordUtil.HashPassword(accountDto.Password),
                 RoleName = Enums.RoleEnums.SA.GetDescriptionFromEnum(),
-                InsDate = TimeUtils.GetCurrentSEATime(),
-                UpdDate = TimeUtils.GetCurrentSEATime(),
+                InsDate = DateTime.Now,
+                UpdDate = DateTime.Now,
                 DelFlg = true
 
             };
