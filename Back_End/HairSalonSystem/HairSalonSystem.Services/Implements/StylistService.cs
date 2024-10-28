@@ -20,12 +20,8 @@ namespace HairSalonSystem.Services.Implements
     {
         private readonly IStylistRepository _stylistRepository;
         private readonly IAccountRepository _accountRepository;
-
-<<<<<<< HEAD
-        public StylistService(IStylistRepository stylistRepository,IAccountRepository accountRepository)
-=======
         public StylistService(IStylistRepository stylistRepository, IAccountRepository accountRepository)
->>>>>>> origin/Nhan/SIT
+
         {
             _stylistRepository = stylistRepository;
             _accountRepository = accountRepository;

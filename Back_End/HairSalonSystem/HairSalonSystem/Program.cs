@@ -160,14 +160,10 @@ builder.Services.AddScoped<IStaffManagerService, StaffManagerService>();
 builder.Services.AddScoped<IStaffStylistService, StaffStylistService>();
 builder.Services.AddScoped<IServiceService, ServiceService>();
 builder.Services.AddScoped<IStylistService, StylistService>();
-<<<<<<< HEAD
 builder.Services.AddHttpClient<PaymentController>();
-
-=======
 builder.Services.AddScoped<IAppointmentService, HairSalonSystem.Services.Implements.AppointmentService>();
 builder.Services.AddScoped<IAppointmentCacellationService,AppointmentCancellationService>();
 builder.Services.AddScoped<IFeedbackService, FeedbackService>();
->>>>>>> origin/Nhan/SIT
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

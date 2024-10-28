@@ -32,12 +32,7 @@ namespace HairSalonSystem.BusinessObject
         public IMongoCollection<AppointmentService> AppointmentService => _database.GetCollection<AppointmentService>("AppointmentService");
         public IMongoCollection<Feedback> Feedbacks => _database.GetCollection<Feedback>("Feedbacks");
         public IMongoCollection<Stylist> Stylists => _database.GetCollection<Stylist>("Stylists");
-<<<<<<< HEAD
         public IMongoCollection<SalaryStylist> SalaryStylist => _database.GetCollection<SalaryStylist>("SalaryStylists");
-
-=======
         public IMongoCollection<AppointmentCancellation> ApppointmentCancellation => _database.GetCollection<AppointmentCancellation>("AppointmentCancellation");
->>>>>>> origin/Nhan/SIT
-
     }
 }
