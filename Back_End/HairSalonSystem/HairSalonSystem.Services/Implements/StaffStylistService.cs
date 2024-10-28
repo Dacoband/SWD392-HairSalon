@@ -115,7 +115,7 @@ namespace HairSalonSystem.Services.Implements
             staffStylist.PhoneNumber = request.PhoneNumber;
             staffStylist.Address = request.Address;
             staffStylist.AvatarImage = request.AvatarImage;
-            staffStylist.UpdDate = DateTime.Now;
+            staffStylist.UpdDate = DateTime.Now ;
 
             await _staffStylistRepository.UpdateStaffStylist(id, staffStylist);
         }
