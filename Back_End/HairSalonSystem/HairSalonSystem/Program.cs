@@ -105,6 +105,7 @@ builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IStaffManagerService, StaffManagerService>();
 builder.Services.AddScoped<IStaffStylistService, StaffStylistService>();
 builder.Services.AddScoped<IStylistService, StylistService>();
+builder.Services.AddHttpClient<PaymentController>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

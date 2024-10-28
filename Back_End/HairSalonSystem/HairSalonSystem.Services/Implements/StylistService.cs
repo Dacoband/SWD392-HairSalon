@@ -21,9 +21,10 @@ namespace HairSalonSystem.Services.Implements
         private readonly IStylistRepository _stylistRepository;
         private readonly IAccountRepository _accountRepository;
 
-        public StylistService(IStylistRepository stylistRepository)
+        public StylistService(IStylistRepository stylistRepository,IAccountRepository accountRepository)
         {
             _stylistRepository = stylistRepository;
+            _accountRepository = accountRepository;
         }
 
         public async Task<CreateStylistResponse> CreateStylistAsync(CreateStylistRequest request, HttpContext httpContext)
