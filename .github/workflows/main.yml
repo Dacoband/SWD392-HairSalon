@@ -1,0 +1,30 @@
+name: HairSalonSystem
+
+#sẽ trigger cái job này khi đẩy code lên nhánh nào: => đẩy code lên main thì tự trigger
+on:
+  push:
+    branches:
+      - main
+    wordflow_dispatch:
+    
+#những công việc mà no sẽ khi ddaayr code
+jobs:
+  docker-compose:
+    runs-on: self-hosted
+    environment: docker
+    steps:
+    # tải code về vps
+    - name: Checkout code
+      uses: actions/checkout@v2 
+
+      
+    #build tại vps bằng docker thì sau đó con backend sẽ chạy ở docker trong vps
+    - name: Docker down
+      run: docker compose down
+      
+    # build docker
+    - name: Run `docker compose`
+      run:  docker compose up --build --remove-orphans -d
+
+    - name: Remove unused
+      run: docker system prune -a -f

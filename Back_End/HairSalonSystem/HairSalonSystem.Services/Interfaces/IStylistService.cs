@@ -17,6 +17,7 @@ namespace HairSalonSystem.Services.Interfaces
         Task<UpdateStylistResponse> UpdateStylistAsync(Guid id, UpdateStylistRequest request);
         Task DeleteStylistAsync(Guid id, HttpContext httpContext);
         Task<List<StylistResponse>> GetStylistByBranchIdAsync(Guid branchId);
+        Task<StylistResponse> GetRandomStylistByBranchIdAsync(Guid branchId);
         Task<List<StylistResponse>> GetStylistByStaffStylistAsync(Guid staffStylistId);
     }
 }

@@ -9,11 +9,13 @@
 # https://github.com/docker/awesome-compose
 services:
   server:
+    container_name: server 
     build:
       context: .
       target: final
     ports:
       - 8080:8080
+    restart: always
 
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to

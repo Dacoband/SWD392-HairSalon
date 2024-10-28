@@ -40,7 +40,7 @@ namespace HairSalonSystem.BusinessObject.Entities
         public string Address { get; set; }
 
         [BsonElement("avatarImage")]
-        public string AvatarImage { get; set; }
+        public string? AvatarImage { get; set; }
 
         [BsonElement("insDate")]
         public DateTime? InsDate { get; set; }

@@ -1,5 +1,5 @@
 - # SWD392-HairSalon
-Hair Salon Booking App Web Application & Mobile
+  -  Hair Salon Booking App Web Application & Mobile
   - ### Logo
     ![Hair Salon Logo](images/icon_demo.png)
 - # **Project Synopsis :**
@@ -13,22 +13,31 @@ Hair Salon Booking App Web Application & Mobile
     - Nguyễn Minh Thức - SE170592 - Database Design | BE
     - Thảo Nguyễn - SE172937 - FE | Documentation
   - **Project:** Hair Salon Booking App - Service, E-Commerce - Business to Consumer
-  - **Techs:** RestfulAPI - mySQL - ReactJS - MaterializeCSS - Bootstrap - JavaScript - Paypal - MUI - .NET 8 with C# - Vercel - Azure - Avien 
+  - **Techs:** 
+    - Back-End : RestfulAPI - .NET 8  core - ASP.NET  -  SignalR RealTime - JWT Authentication 
+    - Front-End : React - TypeScript 
+    - Orthers : MongoDB - CI/CD - Docker - Figma - VNPay - Hosting 
   - **Structure:** 
-    - Back-End:  Using MVC Structure, Database-First
+    - Back-End:  Using model Separation of Concerns, Code-First
     - Front-End:  
+  - **System Architecture** 
+    ![SystemDesgin](Diagrams/SWD392_SystemDesign.png)
 - # **Table Of Contents**
   - ### [Specifications](#specifications)
     - [Process 1](#process-1-Register-An-Account)
     - [Process 2](#process-2-check-login-information)
-    - [Process 3](#process-3-product-management)
-    - [Process 4](#process-4-get-product-details)
+    - [Process 3](#process-3-Service-management)
+    - [Process 4](#process-4-get-Service-details)
     - [Process 5](#process-5-cart-management)
     - [Process 6](#process-6-payment-management)
   - ### Technologies
-  - ### Use Case Diagram
-    - ### **Diagram:**
-      ![Diagram](UsecaseDiagram/ArtixD.png)
+  - ### Diagram
+    - ### **UseCase Diagram:**
+      ![UseCase Diagram](Diagrams/SWD392_Usecase%20Diagram_V1%20-%20UseCase.png)
+    - ### **Activity Diagram:**
+    - ### **Class Diagram:**
+      ![Activity Diagram](Diagrams/SWD392_Usecase%20Diagram_V1%20-%20Class%20.png)
+
   - ### Design Figma - Draw GUIs
     - ### **Login & Sign Up :**
       - Login Page :

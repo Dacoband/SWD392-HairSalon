@@ -11,7 +11,7 @@ using HairSalonSystem.DAOs.Interfaces;
 
 namespace HairSalonSystem.DAOs.Implements
 {
-    public class StaffManagerDAO : BaseDAO<StaffManager>, IStaffManagerDao
+    public class StaffManagerDAO : BaseDAO<StaffManager>, IStaffManagerDAO
     {
         public StaffManagerDAO(HairSalonContext context)
             : base(context.StaffManagers) // Truyền collection StaffManagers vào BaseDAO
