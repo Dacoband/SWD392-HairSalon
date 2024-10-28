@@ -58,8 +58,8 @@ namespace HairSalonSystem.Services.Implements
                 Email = staffManager.Email,
                 Password = PasswordUtil.HashPassword(staffManager.Password),
                 RoleName = Enums.RoleEnums.SM.ToString(),
-                InsDate = TimeUtils.GetCurrentSEATime(),
-                UpdDate = TimeUtils.GetCurrentSEATime(),
+                InsDate = DateTime.Now,
+                UpdDate = DateTime.Now,
                 DelFlg = true
             };
              await _accountRepository.AddAccount(account);
@@ -74,8 +74,8 @@ namespace HairSalonSystem.Services.Implements
                 PhoneNumber = staffManager.PhoneNumber,
                 Address = staffManager.Address,
                 AvatarImage = staffManager.AvatarImage,
-                InsDate = TimeUtils.GetCurrentSEATime(),
-                UpdDate =TimeUtils.GetCurrentSEATime(),
+                InsDate = DateTime.Now,
+                UpdDate =DateTime.Now,
                 DelFlg = true 
                 };
             var brach = await _branchRespository.GetBranchById(staffManager.BranchID);
@@ -135,7 +135,7 @@ namespace HairSalonSystem.Services.Implements
             existingStaffManager.Address = staffManagerRequest.Address ?? existingStaffManager.Address;
             existingStaffManager.DateOfBirth = staffManagerRequest.DateOfBirth != DateTime.MinValue ? staffManagerRequest.DateOfBirth : existingStaffManager.DateOfBirth;
             existingStaffManager.AvatarImage = staffManagerRequest.AvatarImage ?? existingStaffManager.AvatarImage;
-            existingStaffManager.UpdDate = TimeUtils.GetCurrentSEATime();
+            existingStaffManager.UpdDate = DateTime.Now;
 
              await _staffManagerRepository.UpdateStaffManager(existingStaffManager);
             await _accountRepository.UpdateEmailAsync(accountIdFromToken, existingAccount.Email);
