@@ -34,6 +34,11 @@ namespace HairSalonSystem.DAOs.Implements
             return await _staffStylists.Find(_ => true).ToListAsync();
         }
 
+        public async Task<StaffStylist> GetStaffStylistByAccountId(Guid id)
+        {
+            return await _staffStylists.Find(n => n.AccountId == id).FirstOrDefaultAsync();
+        }
+
         public async Task<StaffStylist> GetStaffStylistByBranchId(Guid branchId)
         {
             return await _staffStylists.Find(n => n.BranchID == branchId).FirstOrDefaultAsync();

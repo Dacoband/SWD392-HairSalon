@@ -11,6 +11,7 @@ namespace HairSalonSystem.Repositories.Interface
     {
         Task CreateStaffStylist(StaffStylist staffStylist);
         Task<StaffStylist> GetStaffStylistById(Guid id);
+        Task<StaffStylist> GetStaffStylistByAccountId(Guid id);
         Task<List<StaffStylist>> GetAllStaffStylists();
         Task UpdateStaffStylist(Guid id, StaffStylist staffStylist);
         Task DeleteStaffStylist(Guid id);

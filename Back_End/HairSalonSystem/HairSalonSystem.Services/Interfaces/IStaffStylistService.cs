@@ -13,6 +13,7 @@ namespace HairSalonSystem.Services.Interfaces
     {
         Task<CreateStaffStylistResponse> CreateStaffStylistAsync(CreateStaffStylistRequest request, HttpContext httpContext);
         Task<StaffStylistResponse> GetStaffStylistByIdAsync(Guid id);
+        Task<StaffStylistResponse> GetStaffStylistByAccountIdAsync(Guid id);
         Task<List<StaffStylistResponse>> GetAllStaffStylistsAsync();
         Task UpdateStaffStylistAsync(Guid id, UpdateStaffStylistRequest request);
         Task DeleteStaffStylistAsync(Guid id);
