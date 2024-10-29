@@ -58,26 +58,7 @@ namespace HairSalonSystem.Services.Controllers
             if (isEmailExist)
             {
                 return Problem(MessageConstant.MemberMessage.EmailExist);
-            }
-
-            string avatarImagePath = null;
-            if (memberRequest.AvatarImage != null && memberRequest.AvatarImage.Length > 0)
-            {
-                var uploadsFolder = Path.Combine("wwwroot", "uploads");
-                if (!Directory.Exists(uploadsFolder))
-                {
-                    Directory.CreateDirectory(uploadsFolder);
-                }
-
-                var uniqueFileName = Guid.NewGuid().ToString() + "_" + memberRequest.AvatarImage.FileName;
-                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await memberRequest.AvatarImage.CopyToAsync(fileStream);
-                }
-                avatarImagePath = "/uploads/" + uniqueFileName;
-              
-            }
+            }           
             var url = await _firebaseService.UploadFile(memberRequest.AvatarImage);
 
             var account = new Account()
