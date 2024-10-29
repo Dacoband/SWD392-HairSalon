@@ -6,6 +6,9 @@ import {
   FaCalendarCheck,
 } from "react-icons/fa";
 import ManagerService from "../StaffManager/ManagerService"; // Import the ManagerService component
+import ManagerStylish from "./ManagerStylish";
+import ManagerAppoimentStaff from "./ManagerAppoimentStaff";
+import ManagerSchedule from "./ManagerSchedule";
 
 const CategogySL: React.FC = () => {
   const [activeComponent, setActiveComponent] = useState<string>("");
@@ -26,31 +29,24 @@ const CategogySL: React.FC = () => {
           <ul>
             <li
               className="flex items-center p-2 hover:bg-[#b78c39] cursor-pointer"
-              onClick={() => handleComponentChange("manageStaff")}
+              onClick={() => handleComponentChange("manageStylish")}
             >
               <FaUserFriends className="mr-3" />
               <span>Manage Stylish</span>
             </li>
             <li
               className="flex items-center p-2 hover:bg-[#b78c39] cursor-pointer"
-              onClick={() => handleComponentChange("manageBranches")}
+              onClick={() => handleComponentChange("manageAppoinment")}
             >
               <FaBuilding className="mr-3" />
-              <span>Manage Branches</span>
+              <span>Manage Appoinment </span>
             </li>
             <li
               className="flex items-center p-2 hover:bg-[#b78c39] cursor-pointer"
-              onClick={() => handleComponentChange("manageServices")}
+              onClick={() => handleComponentChange("manageSchedule")}
             >
               <FaCut className="mr-3" />
-              <span>Manage Services</span>
-            </li>
-            <li
-              className="flex items-center p-2 hover:bg-[#b78c39] cursor-pointer"
-              onClick={() => handleComponentChange("viewAppointments")}
-            >
-              <FaCalendarCheck className="mr-3" />
-              <span>View Appointments</span>
+              <span>Manage Schedule</span>
             </li>
           </ul>
         </nav>
@@ -60,18 +56,20 @@ const CategogySL: React.FC = () => {
         {/* Make main content area full height */}
         {showWelcome && (
           <h2 className="text-3xl font-bold mb-3">
-            Welcome to the Staff Stylish Management
+            Welcome to the Staff Stylish
           </h2>
         )}
         <div className="flex-grow h-full overflow-hidden">
           {" "}
           {/* Make the content area full height and prevent scrolling */}
-
-          {activeComponent === "manageStaff" && <div>Manage Staff Content</div>}
-          {activeComponent === "manageServices" && <ManagerService />}
-          {activeComponent === "viewAppointments" && (
-            <div>View Appointments Content</div>
+          {activeComponent === "manageStylish" && (
+            <div>
+    
+              <ManagerStylish />
+            </div>
           )}
+          {activeComponent === "manageAppoinment" && <ManagerAppoimentStaff />}
+          {activeComponent === "manageSchedule" && <ManagerSchedule />}
         </div>
       </main>
     </div>
