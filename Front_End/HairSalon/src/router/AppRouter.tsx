@@ -9,7 +9,6 @@ import {
 
 // import Role1 from "../pages/Role1";
 import Role2 from "../pages/Role2";
-import StaffManager from "../pages/StaffManager";
 import Logout from "../components/Logout";
 import LayoutMain from "../layout/LayoutMain";
 import BookingPage from "../pages/customer/BookPage";
@@ -27,6 +26,8 @@ import ManagerMoney from "../pages/Stylish/ManagerMoney";
 import ManagerAppoimentStaff from "../pages/StaffStylish/ManagerAppoimentStaff";
 import ManagerStylish from "../pages/StaffStylish/ManagerStylish";
 import profileCustomer from "../pages/customer/profileCustomer";
+import CategogySM from "../pages/StaffManager/CategogySM";
+import LayoutSM from "../layout/LayoutSM";
 const AppRouter = () => {
   return (
     <Router>
@@ -82,12 +83,11 @@ const AppRouter = () => {
           element={<PrivateRoute element={Role2} allowedRoles={["SA"]} />}
         />
         {/* StaffManager route */}
-        <Route
-          path="/StaffManager"
-          element={
-            <PrivateRoute element={StaffManager} allowedRoles={["SM"]} />
-          }
-        />
+        {/* GUEST có layout */}
+        <Route element={<LayoutSM />}>
+          <Route path="/StaffManager" element={<CategogySM/>} />
+        </Route>
+
         {/* STYLISH */}
         <Route element={<LayoutMain />}>
           <Route

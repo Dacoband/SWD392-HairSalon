@@ -7,7 +7,8 @@ import "./Header.scss";
 
 const Header = () => {
   const navigate = useNavigate();
-  const isLoggedIn = localStorage.getItem("token"); // Check if user is logged in
+  const isLoggedIn = localStorage.getItem("token"); // Check if token exists in localStorage
+
   const menu = (
     <Menu>
       <Menu.Item key="profile" onClick={() => navigate("/profile")}>
@@ -57,7 +58,7 @@ const Header = () => {
                 Trang Chủ
               </a>
               <a
-                className=" hover:text-[#8e7424] font-bold cursor-pointer pr-20"
+                className="hover:text-[#8e7424] font-bold cursor-pointer pr-20"
                 onClick={() => navigate("/servicePage")}
               >
                 Danh Sách Dịch Vụ
@@ -78,7 +79,8 @@ const Header = () => {
             >
               Đặt Lịch Hẹn Ngay!
             </button>
-            {isLoggedIn ? ( // Show the dropdown if the user is logged in
+
+            {isLoggedIn ? (
               <Dropdown
                 overlay={menu}
                 trigger={["click"]}
@@ -92,10 +94,9 @@ const Header = () => {
                 </a>
               </Dropdown>
             ) : (
-              // Show login link if the user is not logged in
               <a
                 onClick={() => navigate("/login")}
-                className=" font-bold px-6 py-2 bg-[#000] hover:text-[#ffff] text-white rounded-full hover:bg-[#74601d] "
+                className="font-bold px-6 py-2 bg-[#000] hover:text-[#ffff] text-white rounded-full hover:bg-[#74601d]"
               >
                 Login
               </a>
