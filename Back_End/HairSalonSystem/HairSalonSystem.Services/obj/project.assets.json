@@ -643,6 +643,22 @@
           }
         }
       },
+      "payOS/1.0.8": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/net6.0/payos-lib-backend-dotnet.dll": {
+            "related": ".runtimeconfig.json"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/payos-lib-backend-dotnet.dll": {
+            "related": ".runtimeconfig.json"
+          }
+        }
+      },
       "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
         "type": "package",
         "runtimeTargets": {
@@ -2024,7 +2040,8 @@
           "MongoDB.Bson": "2.29.0",
           "MongoDB.Driver": "2.29.0",
           "MongoDB.Driver.Core": "2.29.0",
-          "Newtonsoft.Json": "13.0.3"
+          "Newtonsoft.Json": "13.0.3",
+          "payOS": "1.0.8"
         },
         "compile": {
           "bin/placeholder/HairSalonSystem.BusinessObject.dll": {}
@@ -2984,6 +3001,20 @@
         "newtonsoft.json.13.0.3.nupkg.sha512",
         "newtonsoft.json.nuspec",
         "packageIcon.png"
+      ]
+    },
+    "payOS/1.0.8": {
+      "sha512": "vi2N7QFqrdrl0bhX9smE0f3j4PIBYvE7Y+/VWXfMLEfP1kyUWK27xS4Czmp4GBWtNpCNCQKriFuns3msHxLjNQ==",
+      "type": "package",
+      "path": "payos/1.0.8",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net6.0/payos-lib-backend-dotnet.dll",
+        "lib/net6.0/payos-lib-backend-dotnet.runtimeconfig.json",
+        "payos.1.0.8.nupkg.sha512",
+        "payos.nuspec"
       ]
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {

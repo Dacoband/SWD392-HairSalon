@@ -143,6 +143,7 @@ builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 builder.Services.AddScoped<IAppointmentServiceRepository, AppointmentServiceRepository>();
 builder.Services.AddScoped<IAppointmentCancellationRepository,AppointmentCancellationRepository>();
 builder.Services.AddScoped<IFeedbackRepository, FeedbackRepository>();
+builder.Services.AddScoped<PaymentRepository>();
 
 
 
@@ -162,6 +163,7 @@ builder.Services.AddScoped<IServiceService, ServiceService>();
 builder.Services.AddScoped<IStylistService, StylistService>();
 builder.Services.AddHttpClient<PaymentController>();
 builder.Services.AddScoped<IAppointmentService, HairSalonSystem.Services.Implements.AppointmentService>();
+builder.Services.AddScoped<PaymentService>();
 builder.Services.AddScoped<IAppointmentCacellationService,AppointmentCancellationService>();
 builder.Services.AddScoped<IFeedbackService, FeedbackService>();
 builder.Services.AddControllers();

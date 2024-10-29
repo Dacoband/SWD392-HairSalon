@@ -15,5 +15,6 @@ namespace HairSalonSystem.Repositories.Interface
         Task UpdateAppointment(Appointment appointment);
         Task<List<Appointment>> GetAllAppointment();
         Task<Appointment> GetAppointmentById(Guid appointmentId);
+
     }
 }
