@@ -16,17 +16,14 @@ namespace HairSalonSystem.Services.Controllers
     {
         private readonly IMemberService _memberService;
         private readonly IAccountService _accountService;
+        private readonly IFirebaseService _firebaseService;
 
-
-        public MemberController(IMemberService memberService, IAccountService accountService) 
+        public MemberController(IMemberService memberService, IAccountService accountService, IFirebaseService firebaseService) 
         {
             _memberService = memberService;
             _accountService = accountService;
-          
-
+            _firebaseService = firebaseService;
         }
-
-        
 
         [HttpGet(APIEndPointConstant.Member.GetMemberById)]
         [ProducesResponseType(typeof(Member), StatusCodes.Status200OK)]
@@ -79,8 +76,9 @@ namespace HairSalonSystem.Services.Controllers
                     await memberRequest.AvatarImage.CopyToAsync(fileStream);
                 }
                 avatarImagePath = "/uploads/" + uniqueFileName;
+              
             }
-
+            var url = await _firebaseService.UploadFile(memberRequest.AvatarImage);
 
             var account = new Account()
             {
@@ -101,7 +99,7 @@ namespace HairSalonSystem.Services.Controllers
                 DateOfBirth = memberRequest.DateOfBirth,
                 PhoneNumber = memberRequest.PhoneNumber,
                 Address = memberRequest.Address,
-                AvatarImage = avatarImagePath,
+                AvatarImage = url,
                 InsDate = DateTime.Now,
                 UpdDate = DateTime.Now,
                 DelFlg = true

@@ -20,11 +20,13 @@ namespace HairSalonSystem.Services.Implements
     {
         private readonly IStylistRepository _stylistRepository;
         private readonly IAccountRepository _accountRepository;
-        public StylistService(IStylistRepository stylistRepository, IAccountRepository accountRepository)
+        private readonly IFirebaseService _firebaseService;
+        public StylistService(IStylistRepository stylistRepository, IAccountRepository accountRepository, IFirebaseService firebaseService)
 
         {
             _stylistRepository = stylistRepository;
             _accountRepository = accountRepository;
+            _firebaseService = firebaseService;
         }
 
         public async Task<CreateStylistResponse> CreateStylistAsync(CreateStylistRequest request, HttpContext httpContext)
@@ -32,7 +34,7 @@ namespace HairSalonSystem.Services.Implements
             var roleName = UserUtil.GetRoleName(httpContext);
             if (roleName != Enums.RoleEnums.SL.ToString() && roleName != Enums.RoleEnums.SA.ToString())
                 return new CreateStylistResponse { Message = MessageConstant.StylistMessage.NotRights };
-
+            var url = await _firebaseService.UploadFile(request.AvatarImage);
             var account = new Account
             {
                 AccountId = Guid.NewGuid(),
@@ -55,7 +57,7 @@ namespace HairSalonSystem.Services.Implements
                 StylistName = request.StylistName,
                 PhoneNumber = request.PhoneNumber,
                 Address = request.Address,
-                AvatarImage = request.AvatarImage,
+                AvatarImage = url,
                 InsDate = DateTime.Now,
                 UpdDate = DateTime.Now,
                 DelFlg = true
@@ -115,12 +117,12 @@ namespace HairSalonSystem.Services.Implements
             var stylist = await _stylistRepository.GetStylistById(id);
             if (stylist == null)
                 throw new KeyNotFoundException(MessageConstant.StylistMessage.StylistNotFound);
-
+            var url = await _firebaseService.UploadFile(request.AvatarImage);
             stylist.StaffStylistId = request.StaffStylistId;
             stylist.StylistName = request.StylistName;
             stylist.PhoneNumber = request.PhoneNumber;
             stylist.Address = request.Address;
-            stylist.AvatarImage = request.AvatarImage;
+            stylist.AvatarImage = url;
             stylist.UpdDate = DateTime.Now;
 
             await _stylistRepository.UpdateStylist(id, stylist);
