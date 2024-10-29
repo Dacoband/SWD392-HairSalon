@@ -6,6 +6,7 @@ using HairSalonSystem.BusinessObject.Entities;
 using HairSalonSystem.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HairSalonSystem.Services.Controllers
 {
@@ -134,6 +135,7 @@ namespace HairSalonSystem.Services.Controllers
         }
         // Delete Member
         [HttpDelete(APIEndPointConstant.Member.DeleteMember)]
+        [Authorize(Roles = "SA")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesErrorResponseType(typeof(NotFoundResult))]
         public async Task<ActionResult> RemoveMember(Guid id)
@@ -145,8 +147,7 @@ namespace HairSalonSystem.Services.Controllers
             }
 
             await _memberService.RemoveMember(id);
-
-            return NoContent();
+            return Content( MessageConstant.MemberMessage.MemberDeleted);
         }
     }
 }
