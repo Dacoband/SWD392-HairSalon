@@ -24,3 +24,16 @@ D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem
 D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.BusinessObject\obj\Debug\net8.0\refint\HairSalonSystem.BusinessObject.dll
 D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.BusinessObject\obj\Debug\net8.0\HairSalonSystem.BusinessObject.pdb
 D:\FPT_Learning\SWD392\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.BusinessObject\obj\Debug\net8.0\ref\HairSalonSystem.BusinessObject.dll
+D:\sem7\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.BusinessObject\bin\Debug\net8.0\HairSalonSystem.BusinessObject.deps.json
+D:\sem7\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.BusinessObject\bin\Debug\net8.0\HairSalonSystem.BusinessObject.dll
+D:\sem7\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.BusinessObject\bin\Debug\net8.0\HairSalonSystem.BusinessObject.pdb
+D:\sem7\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.BusinessObject\obj\Debug\net8.0\HairSalonSystem.BusinessObject.csproj.AssemblyReference.cache
+D:\sem7\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.BusinessObject\obj\Debug\net8.0\HairSalonSystem.BusinessObject.GeneratedMSBuildEditorConfig.editorconfig
+D:\sem7\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.BusinessObject\obj\Debug\net8.0\HairSalonSystem.BusinessObject.AssemblyInfoInputs.cache
+D:\sem7\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.BusinessObject\obj\Debug\net8.0\HairSalonSystem.BusinessObject.AssemblyInfo.cs
+D:\sem7\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.BusinessObject\obj\Debug\net8.0\HairSalonSystem.BusinessObject.csproj.CoreCompileInputs.cache
+D:\sem7\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.BusinessObject\obj\Debug\net8.0\HairSalonSystem.BusinessObject.sourcelink.json
+D:\sem7\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.BusinessObject\obj\Debug\net8.0\HairSalonSystem.BusinessObject.dll
+D:\sem7\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.BusinessObject\obj\Debug\net8.0\refint\HairSalonSystem.BusinessObject.dll
+D:\sem7\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.BusinessObject\obj\Debug\net8.0\HairSalonSystem.BusinessObject.pdb
+D:\sem7\SWD\SWD392-HairSalon\Back_End\HairSalonSystem\HairSalonSystem.BusinessObject\obj\Debug\net8.0\ref\HairSalonSystem.BusinessObject.dll

@@ -64,3 +64,13 @@ export interface Stylish {
   avatarImage: string;
   insDate: Date;
 }
+
+export interface SignUpData {
+  Email: string;
+  Password: string;
+  MemberName: string;
+  DateOfBirth: string;
+  PhoneNumber: string;
+  Address: string;
+  // avatarImage?: File; 
+}

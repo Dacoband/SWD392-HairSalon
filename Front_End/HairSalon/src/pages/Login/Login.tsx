@@ -22,7 +22,7 @@ const InputField = ({ label, type, value, onChange, icon: Icon }: any) => (
 const SignInForm = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  // const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -52,7 +52,7 @@ const SignInForm = () => {
       if (err.response && err.response.status === 401) {
         setError(err.response.data.error); 
       } else {
-        setError("Có lỗi xảy ra. Vui lòng thử lại sau."); 
+        setError("Sai tên người dùng hoặc mật khẩu!"); 
       }
     };
 
@@ -104,6 +104,7 @@ const SignInForm = () => {
           }
           icon={FaLock}
         />
+        {error && <div className="error-message">{error}</div>}
         <a onClick={handleForgotPassword} className="forgot-password">
           Quên mật khẩu
         </a>
