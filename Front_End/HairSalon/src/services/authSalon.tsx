@@ -2,7 +2,8 @@ import axios from "axios";
 
 export const login = async (email: string, password: string) => {
     try {
-      const response = await axios.post('https://api.vol-ka.studio/api/v1/auth/login', {
+       const response = await axios.post('https://api.vol-ka.studio/api/v1/auth/login', {
+
         email,
         password
       });
@@ -24,3 +25,4 @@ export const login = async (email: string, password: string) => {
     throw new Error("Login failed");
   }
   };
+  

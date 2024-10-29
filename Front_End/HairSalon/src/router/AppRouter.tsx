@@ -49,10 +49,11 @@ const AppRouter = () => {
         </Route>
         {/* CUSTOMER */}
         <Route element={<LayoutMain />}>
-          <Route
+        <Route path="/homePage" element={<HomePage />} />
+          {/* <Route
             path="/homePage"
             element={<PrivateRoute element={HomePage} allowedRoles={["MB"]} />}
-          />
+          /> */}
           <Route
             path="/bookAppoiment"
             element={

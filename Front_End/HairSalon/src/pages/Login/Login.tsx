@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./Login.scss";
 import { FaUserAlt, FaLock, FaGoogle } from "react-icons/fa";
 import { login } from "../../services/authSalon";
+import logo from "../../assets/logo-removebg-preview.png";
 
 const InputField = ({ label, type, value, onChange, icon: Icon }: any) => (
   <div className="form-group modern-input">
@@ -21,12 +22,13 @@ const InputField = ({ label, type, value, onChange, icon: Icon }: any) => (
 const SignInForm = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  // const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setError(null); 
+    try {
     const { userData } = await login(email, password);
 
     if (userData) {
@@ -43,10 +45,19 @@ const SignInForm = () => {
       } else {
         navigate("/unknown-role");
       }
-    } else {
-      alert("Sai tên người dùng hoặc mật khẩu!");
+    }   else {
+      setError("Sai tên người dùng hoặc mật khẩu!");
     }
-  };
+   } catch (err: any) {
+      if (err.response && err.response.status === 401) {
+        setError(err.response.data.error); 
+      } else {
+        setError("Sai tên người dùng hoặc mật khẩu!"); 
+      }
+    };
+
+  }
+
   const handleForgotPassword = () => {
     alert("Forgot password functionality not implemented yet.");
   };
@@ -57,10 +68,21 @@ const SignInForm = () => {
   const handleSignUp = () => {
     navigate("/SignUp");
   };
+  const handleBackToHome = () => {
+    navigate("/"); 
+  };
+  
+
 
   return (
     <form className="sign-in-form" onSubmit={handleLogin}>
       <div className="upper-part">
+      <img 
+          src={logo} 
+          alt="Logo" 
+          className="back-to-home-logo" 
+          onClick={handleBackToHome} 
+        />
         <div className="greeting">Đăng Nhập</div>
         <InputField
           className="input-style"
@@ -82,6 +104,7 @@ const SignInForm = () => {
           }
           icon={FaLock}
         />
+        {error && <div className="error-message">{error}</div>}
         <a onClick={handleForgotPassword} className="forgot-password">
           Quên mật khẩu
         </a>

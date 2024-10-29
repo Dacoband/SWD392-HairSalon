@@ -461,10 +461,7 @@
           "MongoDB.Driver.Core": "2.29.0"
         },
         "runtime": {
-          "HairSalonSystem.BusinessObject.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "HairSalonSystem.BusinessObject.dll": {}
         }
       },
       "HairSalonSystem.DAOs/1.0.0": {
@@ -472,10 +469,7 @@
           "HairSalonSystem.BusinessObject": "1.0.0"
         },
         "runtime": {
-          "HairSalonSystem.DAOs.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "HairSalonSystem.DAOs.dll": {}
         }
       },
       "HairSalonSystem.Repositories/1.0.0": {
@@ -483,10 +477,7 @@
           "HairSalonSystem.DAOs": "1.0.0"
         },
         "runtime": {
-          "HairSalonSystem.Repositories.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "HairSalonSystem.Repositories.dll": {}
         }
       },
       "HairSalonSystem.Services/1.0.0": {
@@ -495,10 +486,7 @@
           "Microsoft.IdentityModel.Tokens": "8.0.2"
         },
         "runtime": {
-          "HairSalonSystem.Services.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "HairSalonSystem.Services.dll": {}
         }
       }
     }
