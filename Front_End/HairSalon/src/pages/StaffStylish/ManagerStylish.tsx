@@ -1,6 +1,6 @@
 import React from "react";
 
-const ManagerStylish = () => {
+const ManagerStylish: React.FC = () => {
   return <h2> Profile All</h2>;
 };
 

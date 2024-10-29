@@ -28,6 +28,8 @@ import ManagerStylish from "../pages/StaffStylish/ManagerStylish";
 import profileCustomer from "../pages/customer/profileCustomer";
 import CategogySM from "../pages/StaffManager/CategogySM";
 import LayoutSM from "../layout/LayoutSM";
+import LayoutSL from "../layout/LayoutSL";
+import CategogySL from "../pages/StaffStylish/CategogySL";
 const AppRouter = () => {
   return (
     <Router>
@@ -83,7 +85,7 @@ const AppRouter = () => {
           element={<PrivateRoute element={Role2} allowedRoles={["SA"]} />}
         />
         {/* StaffManager route */}
-        {/* GUEST có layout */}
+        {/* StaffManager có layout */}
         <Route element={<LayoutSM />}>
           <Route path="/StaffManager" element={<CategogySM/>} />
         </Route>
@@ -115,7 +117,7 @@ const AppRouter = () => {
           <Route path="/manage-appointments" element={<Appointment />} />
         </Route>
         {/* StaffStylish */}
-        <Route element={<LayoutMain />}>
+        {/* <Route element={<LayoutSL />}>
           <Route
             path="/profile"
             element={
@@ -137,6 +139,9 @@ const AppRouter = () => {
               <PrivateRoute element={ManagerStylish} allowedRoles={["SL"]} />
             }
           />
+        </Route> */}
+         <Route element={<LayoutSL />}>
+         <Route path="/Staff-stylish" element={<CategogySL/>} />
         </Route>
       </Routes>
     </Router>
