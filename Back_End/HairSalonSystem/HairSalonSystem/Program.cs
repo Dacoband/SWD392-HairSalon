@@ -16,6 +16,7 @@ using HairSalonSystem.DAOs.Implements;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using HairSalonSystem.Services.PayLoads.Requests.Firebase;
+using static HairSalonSystem.Services.Constant.APIEndPointConstant;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
@@ -127,7 +128,7 @@ builder.Services.AddScoped<IAppointmentCancellationDAO, AppointmentCancellationD
 builder.Services.AddScoped<IFeedbackDAO, FeedbackDAO>();
 
 
-
+builder.Services.AddScoped<ISalaryDAO, SalaryDAO>();
 
 
 // Register Repositories
@@ -144,6 +145,7 @@ builder.Services.AddScoped<IAppointmentServiceRepository, AppointmentServiceRepo
 builder.Services.AddScoped<IAppointmentCancellationRepository,AppointmentCancellationRepository>();
 builder.Services.AddScoped<IFeedbackRepository, FeedbackRepository>();
 builder.Services.AddScoped<PaymentRepository>();
+builder.Services.AddScoped<ISalaryRepository, SalaryRepository>();
 
 
 
@@ -166,6 +168,10 @@ builder.Services.AddScoped<IAppointmentService, HairSalonSystem.Services.Impleme
 builder.Services.AddScoped<PaymentService>();
 builder.Services.AddScoped<IAppointmentCacellationService,AppointmentCancellationService>();
 builder.Services.AddScoped<IFeedbackService, FeedbackService>();
+builder.Services.AddHostedService<MonthlySalaryService>();
+
+builder.Services.AddScoped<ISalaryService,SalaryService>();
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
