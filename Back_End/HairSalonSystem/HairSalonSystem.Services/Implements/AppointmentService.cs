@@ -368,14 +368,14 @@ namespace HairSalonSystem.Services.Implements
             for (int i = 0; i < availableTimeSlots.Count; i++)
             {
                 var slot = availableTimeSlots[i];
-                DateTime endServiceTime = slot.AddMinutes(duration);
+                DateTime endServiceTime = slot.AddMinutes(duration); 
 
                 if (endServiceTime <= endOfDay)
                 {
                     if (i < availableTimeSlots.Count - 1)
                     {
-                        DateTime nextSlot = availableTimeSlots[i + 1];
-                        if (endServiceTime <= nextSlot) 
+                        DateTime nextSlot = availableTimeSlots.Find(x => x.Hour == endServiceTime.Hour);
+                        if (nextSlot != default) 
                         {
                             suitableTimeSlots.Add(slot);
                         }

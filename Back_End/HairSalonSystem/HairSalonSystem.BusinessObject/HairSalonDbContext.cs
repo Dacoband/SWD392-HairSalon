@@ -33,6 +33,7 @@ namespace HairSalonSystem.BusinessObject
 
         public IMongoCollection<Stylist> Stylists => _database.GetCollection<Stylist>("Stylists");
         public IMongoCollection<AppointmentCancellation> ApppointmentCancellation => _database.GetCollection<AppointmentCancellation>("AppointmentCancellation");
+        public IMongoCollection<Salary> Salary => _database.GetCollection<Salary>("Salary");
 
     }
 }

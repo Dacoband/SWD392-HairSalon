@@ -59,7 +59,7 @@ namespace HairSalonSystem.BusinessObject.Entities
         public bool DelFlg { get; set; }
 
         [BsonElement("averageRating")]
-        public int AverageRating { get; set; }
+        public double AverageRating { get; set; }
 
     }
 }

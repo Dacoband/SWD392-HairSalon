@@ -100,9 +100,6 @@
             public const string UpdateSuccess = "Cập nhật trạng thái lịch hẹn thành công";
             public const string NotOpen = "Bạn chỉ có thể đặt lịch trong khoảng 8:00 - 20:00";
             public const string InvalidTime = "Bạn phải đặt lịch hẹn trước ít nhất 1 tiếng";
-
-            // 1: created -> 2: cancel by cus -> 3: cancel by salon -> 4 : completed 
-
         }
 
         public static class CancelAppointmentMessage
@@ -112,6 +109,15 @@
             public const string Exception = "Lỗi trong lúc hủy cuộc hẹn";
             public const string CreateSuccess = "Hủy lịch hẹn thành công";
             public const string GetRight = "Bạn không có quyền truy cập lịch đã hủy";
+
+        }
+
+        public static class SalaryMessage
+        {
+            public const string CreateRight = "Bạn không có quyền thay đổi mức lương";
+            public const string NotFound = "Không tìm thấy mức lương";
+            public const string NotRight = "Bạn không có quyền truy cập các mức lương";
+
 
         }
     }
