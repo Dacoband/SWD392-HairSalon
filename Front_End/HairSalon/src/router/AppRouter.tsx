@@ -17,7 +17,7 @@ import SignUp from "../pages/SignUp/SignUp";
 import PrivateRoute from "./PriveRouter";
 import HomePage from "../pages/Home/HomePage";
 import ServicesPage from "../pages/ServicesPage";
-import ProfileAll from "../pages/ProfileAll";
+import ProfileAll from "../pages/ProfileAll/ProfileAll";
 import Appointment from "../pages/customer/Appointment/Appointment";
 import Contact from "../pages/Contact";
 import Branch from "../pages/Branch";

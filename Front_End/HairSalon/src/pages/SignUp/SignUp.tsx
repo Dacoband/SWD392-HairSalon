@@ -1,74 +1,52 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { UserInfoData } from '../../models/type';
+import axios from "axios";
 import { FaUserAlt, FaLock, FaEnvelope, FaPhone, FaCalendarAlt, FaHome } from 'react-icons/fa';
 import './SignUp.scss';
 import logo from "../../assets/logo-removebg-preview.png";
 
 
 const SignUpPage: React.FC = () => {
-  const [Email, setEmail] = useState("");
-  const [Password, setPassword] = useState("");
-  const [MemberName, setMemberName] = useState("");
-  const [DateOfBirth, setDateOfBirth] = useState("");
-  const [PhoneNumber, setPhoneNumber] = useState("");
-  const [Address, setAddress] = useState("");
+  const [formData, setFormData] = useState<UserInfoData>({
+    Email: '',
+    Password: '',
+    MemberName: '',
+    DateOfBirth: '',
+    PhoneNumber: '',
+    Address: '',
+  });
   const [confirmPassword, setConfirmPassword] = useState('');
   const [apiErrors, setApiErrors] = useState<Record<string, string[]>>({});
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-
-    switch (name) {
-      case 'MemberName':
-        setMemberName(value);
-        break;
-      case 'Email':
-        setEmail(value);
-        break;
-      case 'PhoneNumber':
-        setPhoneNumber(value);
-        break;
-      case 'Password':
-        setPassword(value);
-        break;
-      case 'confirmPassword':
-        setConfirmPassword(value);
-        break;
-      case 'DateOfBirth':
-        setDateOfBirth(value);
-        break;
-      case 'Address':
-        setAddress(value);
-        break;
-      default:
-        break;
-    }
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
   };
+
   const handleBackToHome = () => {
     navigate("/"); 
   };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setApiErrors({});
 
-    if (Password !== confirmPassword) {
+    if (formData.Password !== confirmPassword) {
       setApiErrors({ confirmPassword: ['Passwords do not match'] });
       return;
     }
 
-    const formData = new FormData();
-    formData.append('Email', Email);
-    formData.append('Password', Password);
-    formData.append('MemberName', MemberName);
-    formData.append('PhoneNumber', PhoneNumber);
-    formData.append('DateOfBirth', DateOfBirth);
-    formData.append('Address', Address);
+    const submissionData = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      submissionData.append(key, value as string);
+    });
 
     try {
-      const response = await axios.post('https://api.vol-ka.studio/api/v1/member/add', formData, {
+      const response = await axios.post('https://api.vol-ka.studio/api/v1/member/add', submissionData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -96,7 +74,6 @@ const SignUpPage: React.FC = () => {
       }
     }
   };
-
   return (
     <div className="sign-up-page">
       <form className="sign-up-form" onSubmit={handleSubmit}>
@@ -115,7 +92,7 @@ const SignUpPage: React.FC = () => {
           <input
             type="text"
             name="MemberName"
-            value={MemberName}
+            value={formData.MemberName}
             onChange={handleChange}
             placeholder="Tên đầy đủ"
             required
@@ -129,7 +106,7 @@ const SignUpPage: React.FC = () => {
           <input
             type="email"
             name="Email"
-            value={Email}
+            value={formData.Email}
             onChange={handleChange}
             placeholder="Email"
             required
@@ -143,7 +120,7 @@ const SignUpPage: React.FC = () => {
           <input
             type="text"
             name="PhoneNumber"
-            value={PhoneNumber}
+            value={formData.PhoneNumber}
             onChange={handleChange}
             placeholder="Số điện thoại"
             required
@@ -157,7 +134,7 @@ const SignUpPage: React.FC = () => {
           <input
             type="password"
             name="Password"
-            value={Password}
+            value={formData.Password}
             onChange={handleChange}
             placeholder="Mật khẩu"
             required
@@ -172,7 +149,7 @@ const SignUpPage: React.FC = () => {
             type="password"
             name="confirmPassword"
             value={confirmPassword}
-            onChange={handleChange}
+            onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="Nhập lại mật khẩu"
             required
             className="input-style"
@@ -185,7 +162,7 @@ const SignUpPage: React.FC = () => {
           <input
             type="date"
             name="DateOfBirth"
-            value={DateOfBirth}
+            value={formData.DateOfBirth}
             onChange={handleChange}
             required
             className="input-style"
@@ -198,7 +175,7 @@ const SignUpPage: React.FC = () => {
           <input
             type="text"
             name="Address"
-            value={Address}
+            value={formData.Address}
             onChange={handleChange}
             placeholder="Địa chỉ"
             required

@@ -9,14 +9,14 @@ export const login = async (email: string, password: string) => {
       });
      // Check if response contains token, email, and roleName
      if (response.data && response.data.token && response.data.email && response.data.roleName) {
-      const { token, email: userEmail, roleName } = response.data;
+      const { token, email: userEmail, roleName ,accountId} = response.data;
       
       // Store token and userData in localStorage
       localStorage.setItem('token', token);
-      const userData = { email: userEmail, roleName };
-      localStorage.setItem('userData', JSON.stringify(userData));
+      const userDatas = { email: userEmail, roleName ,accountId};
+      localStorage.setItem('userData', JSON.stringify(userDatas));
   
-      return { token, userData };
+      return { token, userDatas };
     } else {
       throw new Error('Invalid login response');
     }
@@ -25,4 +25,17 @@ export const login = async (email: string, password: string) => {
     throw new Error("Login failed");
   }
   };
+
+  export const signUpUser = async (submissionData: FormData) => {
+    try {
+      const response = await axios.post(`https://api.vol-ka.studio/api/v1/member/add`, submissionData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
   
+      return { success: response.status === 201, data: response.data };
+    } catch (error: any) {
+      return { success: false, error: error.response?.data || error.message };
+    }
+  };

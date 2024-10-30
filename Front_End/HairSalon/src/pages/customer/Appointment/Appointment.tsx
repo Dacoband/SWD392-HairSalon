@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Modal, Input, notification } from "antd";
 import { getAppointmentsByCustomer, cancelAppointment } from "../../../services/appointmentSalon";
 import { Appointment, Services } from "../../../models/type";
-import { getServicesByServiceId } from "../../../services/serviceSalon"; // Update import statement
+import { getServicesByServiceId } from "../../../services/serviceSalon"; 
 
 import "./Appointment.scss";
 
@@ -86,8 +86,8 @@ const AppointmentPage = () => {
         description: "The appointment has been canceled successfully.",
       });
 
-      // Refresh appointments after cancellation
-      const customerId = "409e0432-1795-4b1d-b206-e8e85eceacda"; // Use the same customerId
+      
+      const customerId = "409e0432-1795-4b1d-b206-e8e85eceacda"; 
       const response = await getAppointmentsByCustomer(customerId);
       setAppointments(response);
       
