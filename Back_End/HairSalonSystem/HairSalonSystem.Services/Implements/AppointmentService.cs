@@ -69,8 +69,8 @@ namespace HairSalonSystem.Services.Implements
                 TotalPrice = 0,
                 CustomerId = (Guid)accountID,
                 Status = 1,
-                InsDate = TimeUtils.GetCurrentSEATime(),
-                UpDate = TimeUtils.GetCurrentSEATime()
+                InsDate = DateTime.Now,
+                UpDate = DateTime.Now
             };
 
             int duration = 0;
@@ -429,7 +429,7 @@ namespace HairSalonSystem.Services.Implements
             try
             {
                 appointment.Status = status;
-                appointment.UpDate = TimeUtils.GetCurrentSEATime();
+                appointment.UpDate = DateTime.Now;
                 await _appointmentRepository.UpdateAppointment(appointment);
                 return new ObjectResult(MessageConstant.AppointmentMessage.UpdateSuccess)
                 {

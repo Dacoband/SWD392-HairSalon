@@ -124,8 +124,9 @@ builder.Services.AddScoped<IServiceDAO, ServiceDAO>();
 builder.Services.AddScoped<IStylistDAO, StylistDAO>();
 builder.Services.AddScoped<IAppointmentDAO, AppointmentDAO>();
 builder.Services.AddScoped<IAppointmentServiceDAO, AppointmentServiceDAO>();
-
 builder.Services.AddScoped<IAppointmentCancellationDAO, AppointmentCancellationDAO>();
+builder.Services.AddScoped<IFeedbackDAO, FeedbackDAO>();
+
 
 builder.Services.AddScoped<ISalaryDAO, SalaryDAO>();
 
@@ -142,6 +143,8 @@ builder.Services.AddScoped<IStylistRepository, StylistRepository>();
 builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 builder.Services.AddScoped<IAppointmentServiceRepository, AppointmentServiceRepository>();
 builder.Services.AddScoped<IAppointmentCancellationRepository,AppointmentCancellationRepository>();
+builder.Services.AddScoped<IFeedbackRepository, FeedbackRepository>();
+builder.Services.AddScoped<PaymentRepository>();
 builder.Services.AddScoped<ISalaryRepository, SalaryRepository>();
 
 
@@ -160,8 +163,11 @@ builder.Services.AddScoped<IStaffManagerService, StaffManagerService>();
 builder.Services.AddScoped<IStaffStylistService, StaffStylistService>();
 builder.Services.AddScoped<IServiceService, ServiceService>();
 builder.Services.AddScoped<IStylistService, StylistService>();
+builder.Services.AddHttpClient<PaymentController>();
 builder.Services.AddScoped<IAppointmentService, HairSalonSystem.Services.Implements.AppointmentService>();
+builder.Services.AddScoped<PaymentService>();
 builder.Services.AddScoped<IAppointmentCacellationService,AppointmentCancellationService>();
+builder.Services.AddScoped<IFeedbackService, FeedbackService>();
 builder.Services.AddHostedService<MonthlySalaryService>();
 
 builder.Services.AddScoped<ISalaryService,SalaryService>();

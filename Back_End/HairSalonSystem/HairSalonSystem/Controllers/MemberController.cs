@@ -6,6 +6,7 @@ using HairSalonSystem.BusinessObject.Entities;
 using HairSalonSystem.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HairSalonSystem.Services.Controllers
 {
@@ -25,7 +26,8 @@ namespace HairSalonSystem.Services.Controllers
 
         }
 
-        // Get Member by ID
+        
+
         [HttpGet(APIEndPointConstant.Member.GetMemberById)]
         [ProducesResponseType(typeof(Member), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(NotFoundResult))]
@@ -39,7 +41,7 @@ namespace HairSalonSystem.Services.Controllers
             return Ok(member);
         }
 
-        // Get All Members
+       
         [HttpGet(APIEndPointConstant.Member.GetAllMembers)]
         [ProducesResponseType(typeof(List<Member>), StatusCodes.Status200OK)]
         public async Task<ActionResult<List<Member>>> GetAllMembers()
@@ -48,7 +50,7 @@ namespace HairSalonSystem.Services.Controllers
             return Ok(members);
         }
 
-        // Create New Member
+        
         [HttpPost(APIEndPointConstant.Member.AddMember)]
         [ProducesResponseType(typeof(CreateNewMemberResponse), StatusCodes.Status201Created)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
@@ -86,8 +88,8 @@ namespace HairSalonSystem.Services.Controllers
                 Email = memberRequest.Email,
                 Password = PasswordUtil.HashPassword(memberRequest.Password),
                 RoleName = Enums.RoleEnums.MB.GetDescriptionFromEnum(),
-                InsDate = TimeUtils.GetCurrentSEATime(),
-                UpdDate = TimeUtils.GetCurrentSEATime(),
+                InsDate = DateTime.Now,
+                UpdDate = DateTime.Now,
                 DelFlg = true
             };
             await _accountService.AddAccount(account);
@@ -100,8 +102,8 @@ namespace HairSalonSystem.Services.Controllers
                 PhoneNumber = memberRequest.PhoneNumber,
                 Address = memberRequest.Address,
                 AvatarImage = avatarImagePath,
-                InsDate = TimeUtils.GetCurrentSEATime(),
-                UpdDate = TimeUtils.GetCurrentSEATime(),
+                InsDate = DateTime.Now,
+                UpdDate = DateTime.Now,
                 DelFlg = true
             };
 
@@ -133,6 +135,7 @@ namespace HairSalonSystem.Services.Controllers
         }
         // Delete Member
         [HttpDelete(APIEndPointConstant.Member.DeleteMember)]
+        [Authorize(Roles = "SA")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesErrorResponseType(typeof(NotFoundResult))]
         public async Task<ActionResult> RemoveMember(Guid id)
@@ -144,8 +147,7 @@ namespace HairSalonSystem.Services.Controllers
             }
 
             await _memberService.RemoveMember(id);
-
-            return NoContent();
+            return Content( MessageConstant.MemberMessage.MemberDeleted);
         }
     }
 }

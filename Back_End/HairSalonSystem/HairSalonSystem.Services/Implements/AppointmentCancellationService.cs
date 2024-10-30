@@ -74,8 +74,8 @@ namespace HairSalonSystem.Services.Implements
                 CancellationId = new Guid(),
                 AppointmentId = req.AppointmetId,
                 Reason = req.Reason,
-                InsDate = TimeUtils.GetCurrentSEATime(),
-                UpdDate = TimeUtils.GetCurrentSEATime(),
+                InsDate = DateTime.Now,
+                UpdDate = DateTime.Now,
                 DelFlg = true
 
             };

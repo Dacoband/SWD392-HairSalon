@@ -31,8 +31,9 @@ namespace HairSalonSystem.BusinessObject.Entities
         [StringLength(100)]
         [BsonElement("stylistName")]
         public string StylistName { get; set; }
-        [BsonElement("level")]
-        public int Level { get; set; }
+
+        [BsonElement("averageRating")]
+        public double AverageRating { get; set; }
 
         [Required]
         [StringLength(10, MinimumLength = 10)]
@@ -45,9 +46,6 @@ namespace HairSalonSystem.BusinessObject.Entities
 
         [BsonElement("AvatarImage")]
         public string AvatarImage { get; set; }
-
-        [BsonElement("Master")]
-        public string Master { get; set; }
 
         [BsonElement("InsDate")]
         public DateTime InsDate { get; set; }

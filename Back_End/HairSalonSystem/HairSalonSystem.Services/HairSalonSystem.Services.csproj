@@ -10,6 +10,9 @@
     <PackageReference Include="Firebase.Auth" Version="1.0.0" />
     <PackageReference Include="FirebaseAdmin" Version="3.0.1" />
     <PackageReference Include="FirebaseStorage.net" Version="1.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.0.2" />
   </ItemGroup>
 

@@ -55,8 +55,8 @@ namespace HairSalonSystem.Services.Implements
                 Description = serviceModel.Description,
                 Duration = serviceModel.Duration,
                 AvatarImage = url,
-                InsDate = TimeUtils.GetCurrentSEATime(),
-                UpdDate = TimeUtils.GetCurrentSEATime(),
+                InsDate = DateTime.Now,
+                UpdDate = DateTime.Now,
                 DelFlg = serviceModel.DelFlg,
 
             };
@@ -215,7 +215,7 @@ namespace HairSalonSystem.Services.Implements
             oldService.Description = serviceModel.Description;
             oldService.Duration = serviceModel.Duration;
             oldService.AvatarImage = url;
-            oldService.UpdDate = TimeUtils.GetCurrentSEATime();
+            oldService.UpdDate = DateTime.Now;
             oldService.DelFlg = serviceModel.DelFlg;
             await _serviceRepository.UpdateService(oldService);
             return new ObjectResult(MessageConstant.ServiceMessage.UpdateSuccess);
