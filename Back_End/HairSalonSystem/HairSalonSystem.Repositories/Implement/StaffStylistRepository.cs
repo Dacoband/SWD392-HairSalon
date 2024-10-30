@@ -33,9 +33,9 @@ namespace HairSalonSystem.Repositories.Implement
             return await _staffStylistDAO.GetAllStaffStylist();
         }
 
-        public async Task<StaffStylist> GetStaffStylistByAccountId(Guid id)
+        public async Task<StaffStylist> GetStaffStylistByAccountId(Guid accountId)
         {
-            return await _staffStylistDAO.GetStaffStylistByAccountId(id);
+            return await _staffStylistDAO.GetStaffStylistByAccountId(accountId);
         }
 
         public async Task<List<StaffStylist>> GetStaffStylistByBranchId(Guid branchId)

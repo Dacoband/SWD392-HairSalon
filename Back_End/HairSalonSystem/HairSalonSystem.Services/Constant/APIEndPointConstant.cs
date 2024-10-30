@@ -62,7 +62,7 @@
 
                 public const string StaffStylistEndpoint = ApiEndpoint + "/staff-stylist";
                 public const string GetStaffStylistById = StaffStylistEndpoint + "/{id}";
-            public const string GetStaffStylistByAccountId = StaffStylistEndpoint + "/{Accountid}";
+            public const string GetStaffStylistByAccountId = StaffStylistEndpoint + "/account/{accountId}";
             public const string GetAllStaffStylists = StaffStylistEndpoint + "/all";
                 public const string AddStaffStylist = StaffStylistEndpoint + "/add";
                 public const string UpdateStaffStylist = StaffStylistEndpoint + "/update/{id}";

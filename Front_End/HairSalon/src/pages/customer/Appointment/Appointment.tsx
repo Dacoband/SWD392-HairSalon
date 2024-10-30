@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { getAppointmentsByCustomer } from "../../../services/appointmentSalon";
+import { Button, Modal, Input, notification } from "antd";
+import { getAppointmentsByCustomer, cancelAppointment } from "../../../services/appointmentSalon";
 import { Appointment, Services } from "../../../models/type";
-import axios from "axios";
+import { getServicesByServiceId } from "../../../services/serviceSalon"; // Update import statement
+
 import "./Appointment.scss";
 
 const AppointmentPage = () => {
@@ -9,17 +11,24 @@ const AppointmentPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [services, setServices] = useState<Record<string, Services | null>>({});
+  const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+  const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
+  const [cancelReason, setCancelReason] = useState("");
+  const [api, contextHolder] = notification.useNotification();
 
   const statusMap: { [key: number]: string } = {
-    1: "Đang chờ xử lý",
-    2: "Chấp nhận",
+    1: "Book lịch thành công",
+    2: "Đã thanh toán",
     3: "Bị hủy",
+    4: "Đã hoàn thành",
   };
 
   useEffect(() => {
     const fetchAppointments = async () => {
+      setLoading(true);
       try {
-        const customerId = "30ea5b87-6e4a-43c9-bec4-54dfd821d8ba";
+        const customerId = "4042dcad-d98f-480e-9a50-0a1670338b17";
         const response = await getAppointmentsByCustomer(customerId);
         setAppointments(response);
       } catch (err) {
@@ -33,33 +42,72 @@ const AppointmentPage = () => {
   }, []);
 
   useEffect(() => {
-    const fetchServiceDetails = async (serviceId: string) => {
-      try {
-        const serviceResponse = await axios.get(
-          `https://api.vol-ka.studio/api/v1/service${serviceId}`
-        );
-        const serviceData = serviceResponse.data;
-        setServices((prevServices) => ({
-          ...prevServices,
-          [serviceId]: serviceData,
-        }));
-      } catch (error) {
-        console.error("Failed to fetch service details:", error);
-        setServices((prevServices) => ({
-          ...prevServices,
-          [serviceId]: null,
-        }));
+    const fetchAllServiceDetails = async () => {
+      for (const appointment of appointments) {
+        if (appointment.sevicesList) {
+          for (const service of appointment.sevicesList) {
+            if (service.serviceId && !services[service.serviceId]) {
+              const serviceData = await getServicesByServiceId(service.serviceId);
+              setServices((prevServices) => ({
+                ...prevServices,
+                [service.serviceId]: serviceData,
+              }));
+            }
+          }
+        }
       }
     };
 
-    appointments.forEach((appointment) => {
-      appointment.appointmentService.forEach((service) => {
-        if (service.serviceId && !services[service.serviceId]) {
-          fetchServiceDetails(service.serviceId);
-        }
+    fetchAllServiceDetails();
+  }, [appointments]);
+
+  const showServiceModal = (appointment: Appointment) => {
+    setSelectedAppointment(appointment);
+    setIsServiceModalOpen(true);
+  };
+
+  const showCancelModal = (appointment: Appointment) => {
+    setSelectedAppointment(appointment);
+    setIsCancelModalOpen(true);
+  };
+
+  const handleServiceModalOk = () => {
+    setIsServiceModalOpen(false);
+    setSelectedAppointment(null);
+  };
+
+  const handleCancelModalOk = async () => {
+    if (!selectedAppointment) return;
+
+    try {
+      await cancelAppointment(selectedAppointment.appointmentId, cancelReason);
+      api.success({
+        message: "Cancellation Success",
+        description: "The appointment has been canceled successfully.",
       });
-    });
-  }, [appointments, services]);
+
+      // Refresh appointments after cancellation
+      const customerId = "409e0432-1795-4b1d-b206-e8e85eceacda"; // Use the same customerId
+      const response = await getAppointmentsByCustomer(customerId);
+      setAppointments(response);
+      
+    } catch (error) {
+      api.error({
+        message: "Cancellation Error",
+        description: "There was an error canceling the appointment.",
+      });
+    } finally {
+      setIsCancelModalOpen(false);
+      setSelectedAppointment(null);
+      setCancelReason("");
+    }
+  };
+
+  const handleCancelModalCancel = () => {
+    setIsCancelModalOpen(false);
+    setSelectedAppointment(null);
+    setCancelReason("");
+  };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
@@ -67,43 +115,35 @@ const AppointmentPage = () => {
   return (
     <div className="container">
       <h1 className="heading">Lịch hẹn của bạn</h1>
+      {contextHolder}
       {appointments.length > 0 ? (
         <ul className="appointment-list">
           {appointments.map((appointment) => (
             <li key={appointment.appointmentId} className="appointment-item">
-              {/* <div className="appointment-info">
-                <strong>Appointment ID:</strong> {appointment.appointmentId}
-              </div> */}
               <div className="appointment-info">
-                <strong>Tổng thiệt hại:</strong> {appointment.totalPrice}
+                <strong>Tổng thiệt hại:</strong> {appointment.totalPrice} VND
               </div>
               <div className="appointment-info">
                 <strong>Trạng Thái:</strong>{" "}
                 {statusMap[appointment.status] || "Unknown"}
               </div>
-              <div className="service-info">
-                {appointment.appointmentService.map((service) => (
-                  <div key={service.serviceId} className="service-info">
-                    {services[service.serviceId] ? (
-                      <>
-                        <p>
-                          <strong>Dịch vụ:</strong>{" "}
-                          {services[service.serviceId]?.serviceName}
-                        </p>
-                        <p>
-                          <strong>Giá dịch vụ:</strong>{" "}
-                          {services[service.serviceId]?.price} VND
-                        </p>
-                        <p>
-                          <strong>Thời gian làm:</strong>{" "}
-                          {services[service.serviceId]?.duration} Phút
-                        </p>
-                      </>
-                    ) : (
-                      <p>Loading service information...</p>
-                    )}
-                  </div>
-                ))}
+              <div className="appointment-info">
+                <strong>Start Time:</strong>{" "}
+                {new Date(appointment.startTime).toLocaleString()}
+              </div>
+              <div className="appointment-info">
+                <strong>End Time:</strong>{" "}
+                {new Date(appointment.endTime).toLocaleString()}
+              </div>
+              <div className="appointment-actions">
+                <Button type="primary" onClick={() => showServiceModal(appointment)}>
+                  View Services
+                </Button>
+                {appointment.status === 1 && (
+                  <Button type="default" danger onClick={() => showCancelModal(appointment)}>
+                    Cancel Appointment
+                  </Button>
+                )}
               </div>
             </li>
           ))}
@@ -111,41 +151,51 @@ const AppointmentPage = () => {
       ) : (
         <p>No appointments found.</p>
       )}
+
+      {/* Service Modal */}
+      <Modal
+        title="Services Details"
+        open={isServiceModalOpen}
+        onOk={handleServiceModalOk}
+        onCancel={() => setIsServiceModalOpen(false)}
+      >
+        {selectedAppointment?.sevicesList.map((service) => (
+          <div key={service.serviceId} className="service-info">
+            {services[service.serviceId] ? (
+              <>
+                <p>
+                  <strong>Dịch vụ:</strong> {services[service.serviceId]?.serviceName}
+                </p>
+                <p>
+                  <strong>Giá dịch vụ:</strong> {services[service.serviceId]?.price} VND
+                </p>
+                <p>
+                  <strong>Thời gian làm:</strong> {services[service.serviceId]?.duration} Phút
+                </p>
+              </>
+            ) : (
+              <p>Loading service information...</p>
+            )}
+          </div>
+        ))}
+      </Modal>
+
+      {/* Cancel Modal */}
+      <Modal
+        title="Cancel Appointment"
+        open={isCancelModalOpen}
+        onOk={handleCancelModalOk}
+        onCancel={handleCancelModalCancel}
+      >
+        <p>Please enter the reason for cancellation:</p>
+        <Input
+          value={cancelReason}
+          onChange={(e) => setCancelReason(e.target.value)}
+          placeholder="Enter reason here"
+        />
+      </Modal>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    padding: "20px",
-    maxWidth: "800px",
-    margin: "0 auto",
-  },
-  heading: {
-    fontSize: "2rem",
-    marginBottom: "20px",
-    textAlign: "center",
-  },
-  appointmentList: {
-    listStyleType: "none",
-    padding: 0,
-  },
-  appointmentItem: {
-    backgroundColor: "#f9f9f9",
-    padding: "15px",
-    marginBottom: "15px",
-    borderRadius: "8px",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-  },
-  appointmentInfo: {
-    marginBottom: "10px",
-  },
-  serviceInfo: {
-    marginTop: "10px",
-    padding: "10px",
-    backgroundColor: "#e0f7fa",
-    borderRadius: "6px",
-  },
 };
 
 export default AppointmentPage;

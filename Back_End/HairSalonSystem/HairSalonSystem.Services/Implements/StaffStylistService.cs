@@ -83,9 +83,9 @@ namespace HairSalonSystem.Services.Implements
                 AvatarImage = staffStylist.AvatarImage
             };
         }
-        public async Task<StaffStylistResponse> GetStaffStylistByAccountIdAsync(Guid id)
+        public async Task<StaffStylistResponse> GetStaffStylistByAccountIdAsync(Guid accountId)
         {
-            var staffStylist = await _staffStylistRepository.GetStaffStylistByAccountId(id);
+            var staffStylist = await _staffStylistRepository.GetStaffStylistByAccountId(accountId);
             if (staffStylist == null)
                 throw new KeyNotFoundException(MessageConstant.StaffStylistMessage.StaffStylistNotFound);
 

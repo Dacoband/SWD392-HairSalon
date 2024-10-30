@@ -41,7 +41,7 @@ export interface Appointment {
   upDate: string;
   startTime: string;
   endTime: string;
-  appointmentService: {
+  sevicesList: {
     serviceId: string;
     appointmentId: string;
     unitPrice: number;

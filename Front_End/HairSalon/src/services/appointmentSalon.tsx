@@ -17,3 +17,23 @@ export const getAppointmentsByCustomer = async (customerId: string): Promise<App
       throw new Error('Failed to fetch appointments');
     }
   };
+  export const cancelAppointment = async (appointmentId: string, reason: string) => {
+    try {
+      const response = await axios.post(
+        `https://api.vol-ka.studio/api/v1/cancel-appointment/create`,
+        {
+          appointmentId,
+          reason,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error canceling appointment:", error);
+      throw new Error("Failed to cancel appointment");
+    }
+  };
