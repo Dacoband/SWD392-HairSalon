@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  FaUserFriends,
-  FaBuilding,
-  FaCut,
-  FaCalendarCheck,
-} from "react-icons/fa";
-import ManagerService from "../StaffManager/ManagerService"; // Import the ManagerService component
+import { FaUserFriends, FaBuilding, FaCut } from "react-icons/fa";
 import ManagerStylish from "./ManagerStylish";
 import ManagerAppoimentStaff from "./ManagerAppoimentStaff";
 import ManagerSchedule from "./ManagerSchedule";
@@ -20,10 +14,8 @@ const CategogySL: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100 overflow-hidden">
-      {" "}
-      {/* Prevent scrolling on the outer container */}
-      <aside className="w-48 bg-[#c89c47] text-white shadow-lg">
+    <div className="flex h-screen bg-gray-100">
+      <aside className="w-48 bg-[#c89c47] text-white shadow-lg fixed h-screen">
         <div className="p-5 text-2xl font-bold">Hair Salon Management</div>
         <nav className="mt-10">
           <ul>
@@ -39,7 +31,7 @@ const CategogySL: React.FC = () => {
               onClick={() => handleComponentChange("manageAppoinment")}
             >
               <FaBuilding className="mr-3" />
-              <span>Manage Appoinment </span>
+              <span>Manage Appointment</span>
             </li>
             <li
               className="flex items-center p-2 hover:bg-[#b78c39] cursor-pointer"
@@ -51,20 +43,15 @@ const CategogySL: React.FC = () => {
           </ul>
         </nav>
       </aside>
-      <main className="flex-grow p-10 flex flex-col h-full">
-        {" "}
-        {/* Make main content area full height */}
+      <main className="flex-grow p-10 flex flex-col ml-48">
         {showWelcome && (
           <h2 className="text-3xl font-bold mb-3">
             Welcome to the Staff Stylish
           </h2>
         )}
         <div className="flex-grow h-full overflow-hidden">
-          {" "}
-          {/* Make the content area full height and prevent scrolling */}
           {activeComponent === "manageStylish" && (
             <div>
-    
               <ManagerStylish />
             </div>
           )}

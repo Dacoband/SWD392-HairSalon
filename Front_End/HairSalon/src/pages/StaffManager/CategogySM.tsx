@@ -18,10 +18,8 @@ const CategogySM: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100 overflow-hidden">
-      {" "}
-      {/* Prevent scrolling on the outer container */}
-      <aside className="w-48 bg-[#c89c47] text-white shadow-lg">
+    <div className="flex h-screen bg-gray-100">
+      <aside className="w-48 bg-[#c89c47] text-white shadow-lg fixed h-screen">
         <div className="p-5 text-2xl font-bold">Hair Salon Management</div>
         <nav className="mt-10">
           <ul>
@@ -56,17 +54,13 @@ const CategogySM: React.FC = () => {
           </ul>
         </nav>
       </aside>
-      <main className="flex-grow p-10 flex flex-col h-full">
-        {" "}
-        {/* Make main content area full height */}
+      <main className="flex-grow p-10 flex flex-col ml-48">
         {showWelcome && (
           <h2 className="text-3xl font-bold mb-3">
             Welcome to the Staff Management
           </h2>
         )}
         <div className="flex-grow h-full overflow-hidden">
-          {" "}
-          {/* Make the content area full height and prevent scrolling */}
           {activeComponent === "manageBranches" && <ManagerBranch />}
           {activeComponent === "manageStaff" && <div>Manage Staff Content</div>}
           {activeComponent === "manageServices" && <ManagerService />}

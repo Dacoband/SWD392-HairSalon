@@ -37,7 +37,7 @@ const SignInForm = () => {
       } else if (userData.roleName === "SM") {
         navigate("/StaffManager");
       } else if (userData.roleName === "SL") {
-        navigate("/Appoiment-Staff");
+        navigate("/StaffStylish");
       } else if (userData.roleName === "ST") {
         navigate("/Appoiment-Stylish");
       } else if (userData.roleName === "MB") {
