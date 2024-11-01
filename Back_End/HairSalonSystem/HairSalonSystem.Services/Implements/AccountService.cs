@@ -21,17 +21,14 @@ namespace HairSalonSystem.Services.Implements
             _accountRepository = accountRepository;
         }
 
-        public async Task<ActionResult<Account>> GetAccountById(Guid id)
+        public async Task<Account> GetAccountById(Guid id)
         {
             var account = await _accountRepository.GetAccountById(id);
             if (account == null)
             {
-                return new ObjectResult(MessageConstant.LoginMessage.NotFoundAccount)
-                {
-                    StatusCode = StatusCodes.Status400BadRequest,
-                };
+                throw new Exception(MessageConstant.AccountMessage.AccountNotFound);
             }
-            return new OkObjectResult(account);
+            return account;
         }
 
 

@@ -43,28 +43,22 @@ namespace HairSalonSystem.API.Controllers
         
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateAccount([FromRoute] Guid id, [FromForm] Account accountDto)
+        public async Task<bool> UpdateAccount([FromRoute] Guid id, [FromBody] CreateUpdateAccountRequest request)
         {
-            if (id != accountDto.AccountId)
-            {
-                return BadRequest();
-            }
+            var account = await _accountService.GetAccountById(id);
+ 
+            account.Email = string.IsNullOrEmpty(request.Email) ? account.Email : request.Email;
+            account.Password = string.IsNullOrEmpty(request.Password) ? account.Password : PasswordUtil.HashPassword(request.Password);
 
-            var account = new Account
-            {
-                Email = accountDto.Email,
-                Password = PasswordUtil.HashPassword(accountDto.Password),
-                RoleName = accountDto.RoleName
-            };
             await _accountService.UpdateAccount(account);
-            return NoContent();
+            return true;
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> RemoveAccount(Guid id)
         {
             await _accountService.RemoveAccount(id);
-            return NoContent();
+            return Content(MessageConstant.AccountMessage.AccountDeleted);
         }
 
 
