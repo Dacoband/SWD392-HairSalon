@@ -13,3 +13,15 @@ export const getStylishByBranchID = async (
     throw error;
   }
 };
+export const getStylishRandom = async (
+  branchId: string
+): Promise<Stylish[]> => {
+  const url = `https://api.vol-ka.studio/api/v1/stylist/random-branch/${branchId}`;
+  try {
+    const response = await axios.get<Stylish[]>(url);
+    return response.data;
+  } catch (error) {
+    console.error("Lỗi khi lấy dữ liệu:", error);
+    throw error;
+  }
+};

@@ -27,6 +27,8 @@ import ManagerMoney from "../pages/Stylish/ManagerMoney";
 import ManagerAppoimentStaff from "../pages/StaffStylish/ManagerAppoimentStaff";
 import ManagerStylish from "../pages/StaffStylish/ManagerStylish";
 import profileCustomer from "../pages/customer/profileCustomer";
+import BookSucssess from "../pages/customer/BookSucssess";
+import ManagerService from "../pages/admin/ManagerService";
 const AppRouter = () => {
   return (
     <Router>
@@ -54,6 +56,12 @@ const AppRouter = () => {
             path="/bookAppoiment"
             element={
               <PrivateRoute element={BookingPage} allowedRoles={["MB"]} />
+            }
+          />
+          <Route
+            path="/bookSucssess"
+            element={
+              <PrivateRoute element={BookSucssess} allowedRoles={["MB"]} />
             }
           />
 
@@ -135,6 +143,15 @@ const AppRouter = () => {
             path="/Manager-stylish"
             element={
               <PrivateRoute element={ManagerStylish} allowedRoles={["SL"]} />
+            }
+          />
+        </Route>
+        {/* ADMIN */}
+        <Route element={<LayoutMain />}>
+          <Route
+            path="/manageService"
+            element={
+              <PrivateRoute element={ManagerService} allowedRoles={["AD"]} />
             }
           />
         </Route>

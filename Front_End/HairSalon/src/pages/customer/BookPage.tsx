@@ -17,7 +17,7 @@ import { Steps, Button, Popover, Input } from "antd";
 import type { StepsProps } from "antd";
 import { getBranchesAll } from "../../services/Branches/branches";
 import { Branches, Services, Stylish } from "../../models/type";
-import { getStylishByBranchID } from "../../services/Stylish";
+import { getStylishByBranchID, getStylishRandom } from "../../services/Stylish";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaFrownOpen } from "react-icons/fa";
 
@@ -25,7 +25,6 @@ import { FaScissors } from "react-icons/fa6";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaUserClock } from "react-icons/fa6";
 import { FaStar } from "react-icons/fa";
-import { MdDateRange } from "react-icons/md";
 
 import { getServicesByType, getAllServices } from "../../services/serviceSalon";
 const customDot: StepsProps["progressDot"] = (dot, { status, index }) => (
@@ -726,13 +725,13 @@ const BookingPage: React.FC = () => {
     },
   ];
 
-  const next = () => {
-    setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
-  };
+  // const next = () => {
+  //   setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
+  // };
 
-  const prev = () => {
-    setCurrentStep((prev) => Math.max(prev - 1, 0));
-  };
+  // const prev = () => {
+  //   setCurrentStep((prev) => Math.max(prev - 1, 0));
+  // };
 
   return (
     <div>
