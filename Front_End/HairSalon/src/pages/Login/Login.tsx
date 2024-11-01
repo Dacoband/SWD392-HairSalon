@@ -29,22 +29,31 @@ const SignInForm = () => {
     e.preventDefault();
     setError(null); 
     try {
-    const { userData } = await login(email, password);
-
-    if (userData) {
-      if (userData.roleName === "SA") {
-        navigate("/SystemAdmin");
-      } else if (userData.roleName === "SM") {
-        navigate("/StaffManager");
-      } else if (userData.roleName === "SL") {
-        navigate("/StaffStylish");
-      } else if (userData.roleName === "ST") {
-        navigate("/Appoiment-Stylish");
-      } else if (userData.roleName === "MB") {
-        navigate("/HomePage");
-      } else {
-        navigate("/unknown-role");
-      }
+      const response = await login(email, password);
+      const userDatas = response?.userDatas; // Access 'userDatas' instead of 'userData'
+  
+      if (userDatas) {
+        // Navigate based on 'roleName' inside 'userDatas'
+        switch (userDatas.roleName) {
+          case "SA":
+            navigate("/SystemAdmin");
+            break;
+          case "SM":
+            navigate("/StaffManager");
+            break;
+          case "SL":
+            navigate("/Appoiment-Staff");
+            break;
+          case "ST":
+            navigate("/Appoiment-Stylish");
+            break;
+          case "MB":
+            navigate("/HomePage");
+            break;
+          default:
+            navigate("/unknown-role");
+            break;
+          }
     }   else {
       setError("Sai tên người dùng hoặc mật khẩu!");
     }
