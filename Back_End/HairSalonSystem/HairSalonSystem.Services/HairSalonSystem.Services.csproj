@@ -6,4 +6,18 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="PayLoads\Responses\Appointment\**" />
+    <EmbeddedResource Remove="PayLoads\Responses\Appointment\**" />
+    <None Remove="PayLoads\Responses\Appointment\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HairSalonSystem.Repositories\HairSalonSystem.Repositories.csproj" />
+  </ItemGroup>
+
 </Project>

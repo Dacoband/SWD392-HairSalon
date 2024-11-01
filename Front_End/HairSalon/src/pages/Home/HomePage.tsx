@@ -81,7 +81,7 @@ const HomePage: React.FC = () => {
       </div>
 
       <div className="bg-gradient-to-br py-3 from-white to-[#8e7424] p-5">
-        <div className="text-center items-center mx-5">
+        <div className="text-center items-center mx-5 ml-20 mr-20">
           <h2 className="text-3xl font-bold mb-6 text-[#c89c47]">
             <strong>Dịch Vụ</strong>
           </h2>
@@ -94,7 +94,6 @@ const HomePage: React.FC = () => {
                 <div className="w-48 h-60 rounded-lg shadow-lg overflow-hidden bg-white transition-shadow hover:shadow-2xl">
                   <img
                     src="https://i.mydramalist.com/WPdAVD_5c.jpg"
-                    alt={service.serviceName}
                     className="w-full h-48 object-cover transition-transform duration-300 hover:scale-110"
                   />
                   <div className="bg-[#c89c47] mt-0 px-4 py-2 text-center">
@@ -108,12 +107,12 @@ const HomePage: React.FC = () => {
           </Slider>
         </div>
 
-        <div className="flex flex-col items-center mt-10 bg-gray-100 p-4 rounded-lg shadow-md">
+        <div className="flex flex-col items-center mt-10 bg-gray-100 p-4 rounded-lg shadow-md mr-20 ml-20">
           <p className="mb-5 text-center text-3xl font-bold">
             <strong>Gói Dịch Vụ</strong>
           </p>
 
-          <div className="flex flex-col md:flex-row justify-between w-full gap-6 mb-4">
+          <div className="flex flex-col md:flex-row justify-between w-full gap-2 mb-2 ">
             {/* Combo Item 1 */}
             <div className="flex-1 flex flex-col items-center transition-transform transform hover:scale-105">
               <img
@@ -121,7 +120,7 @@ const HomePage: React.FC = () => {
                 alt="Cắt Tóc Và Tạo Kiểu"
                 className="w-48 h-48 object-cover rounded-lg shadow-md mb-3"
               />
-              <button className="w-full bg-[#c89c47] text-white px-6 py-3 rounded-md hover:bg-[#b68b38] transition-colors">
+              <button className="w-80 h-15 bg-[#c89c47] text-white px-3 py-3 rounded-md hover:bg-[#b68b38] transition-colors">
                 Cắt Tóc Và Tạo Kiểu
               </button>
             </div>
@@ -132,7 +131,7 @@ const HomePage: React.FC = () => {
                 alt="Nhuộm Tóc và Uốn Tóc"
                 className="w-48 h-48 object-cover rounded-lg shadow-md mb-3"
               />
-              <button className="w-full bg-[#c89c47] text-white px-6 py-3 rounded-md hover:bg-[#b68b38] transition-colors">
+              <button className="w-80 h-15 bg-[#c89c47] text-white px-6 py-3 rounded-md hover:bg-[#b68b38] transition-colors">
                 Nhuộm Tóc và Uốn Tóc
               </button>
             </div>
@@ -143,7 +142,7 @@ const HomePage: React.FC = () => {
                 alt="Combo Nóng"
                 className="w-48 h-48 object-cover rounded-lg shadow-md mb-3"
               />
-              <button className="w-full bg-[#c89c47] text-white px-6 py-3 rounded-md hover:bg-[#b68b38] transition-colors">
+              <button className="w-80 h-15 bg-[#c89c47] text-white px-6 py-3 rounded-md hover:bg-[#b68b38] transition-colors">
                 Combo Hot
               </button>
             </div>
@@ -151,7 +150,7 @@ const HomePage: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row items-center justify-between p-8 bg-gray-50">
+      <div className="flex flex-col md:flex-row items-center justify-between p-8 bg-gray-50 ml-20 mr-20">
         <div className="w-full md:w-1/2 md:pr-8">
           <img
             src="src/assets/about-img.jpg"

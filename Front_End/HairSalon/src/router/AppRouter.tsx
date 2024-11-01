@@ -9,7 +9,6 @@ import {
 
 // import Role1 from "../pages/Role1";
 import Role2 from "../pages/Role2";
-import StaffManager from "../pages/StaffManager";
 import Logout from "../components/Logout";
 import LayoutMain from "../layout/LayoutMain";
 import BookingPage from "../pages/customer/BookPage";
@@ -18,17 +17,22 @@ import SignUp from "../pages/SignUp/SignUp";
 import PrivateRoute from "./PriveRouter";
 import HomePage from "../pages/Home/HomePage";
 import ServicesPage from "../pages/ServicesPage";
-import ProfileAll from "../pages/ProfileAll";
+import ProfileAll from "../pages/ProfileAll/ProfileAll";
 import Appointment from "../pages/customer/Appointment/Appointment";
 import Contact from "../pages/Contact";
 import Branch from "../pages/Branch";
 import ManagerAppoimentStylish from "../pages/Stylish/ManagerAppoinmentStylish";
 import ManagerMoney from "../pages/Stylish/ManagerMoney";
-import ManagerAppoimentStaff from "../pages/StaffStylish/ManagerAppoimentStaff";
-import ManagerStylish from "../pages/StaffStylish/ManagerStylish";
 import profileCustomer from "../pages/customer/profileCustomer";
+
 import BookSucssess from "../pages/customer/BookSucssess";
 import ManagerService from "../pages/admin/ManagerService";
+
+import CategogySM from "../pages/StaffManager/CategogySM";
+import LayoutSM from "../layout/LayoutSM";
+import LayoutSL from "../layout/LayoutSL";
+import CategogySL from "../pages/StaffStylish/CategogySL";
+
 const AppRouter = () => {
   return (
     <Router>
@@ -48,10 +52,11 @@ const AppRouter = () => {
         </Route>
         {/* CUSTOMER */}
         <Route element={<LayoutMain />}>
-          <Route
+          <Route path="/homePage" element={<HomePage />} />
+          {/* <Route
             path="/homePage"
             element={<PrivateRoute element={HomePage} allowedRoles={["MB"]} />}
-          />
+          /> */}
           <Route
             path="/bookAppoiment"
             element={
@@ -78,9 +83,9 @@ const AppRouter = () => {
             }
           />
           <Route
-            path="/profile-customer"
+            path="/profile"
             element={
-              <PrivateRoute element={profileCustomer} allowedRoles={["MB"]} />
+              <PrivateRoute element={ProfileAll} allowedRoles={["MB"]} />
             }
           />
         </Route>
@@ -90,12 +95,16 @@ const AppRouter = () => {
           element={<PrivateRoute element={Role2} allowedRoles={["SA"]} />}
         />
         {/* StaffManager route */}
-        <Route
-          path="/StaffManager"
-          element={
-            <PrivateRoute element={StaffManager} allowedRoles={["SM"]} />
-          }
-        />
+        {/* StaffManager có layout */}
+        <Route element={<LayoutSM />}>
+          <Route
+            path="/StaffManager"
+            element={
+              <PrivateRoute element={CategogySM} allowedRoles={["SM"]} />
+            }
+          />
+        </Route>
+
         {/* STYLISH */}
         <Route element={<LayoutMain />}>
           <Route
@@ -123,26 +132,11 @@ const AppRouter = () => {
           <Route path="/manage-appointments" element={<Appointment />} />
         </Route>
         {/* StaffStylish */}
-        <Route element={<LayoutMain />}>
+        <Route element={<LayoutSL />}>
           <Route
-            path="/profile"
+            path="/StaffStylish"
             element={
-              <PrivateRoute element={ProfileAll} allowedRoles={["SL"]} />
-            }
-          />
-          <Route
-            path="/Appoiment-Staff"
-            element={
-              <PrivateRoute
-                element={ManagerAppoimentStaff}
-                allowedRoles={["SL"]}
-              />
-            }
-          />
-          <Route
-            path="/Manager-stylish"
-            element={
-              <PrivateRoute element={ManagerStylish} allowedRoles={["SL"]} />
+              <PrivateRoute element={CategogySL} allowedRoles={["SL"]} />
             }
           />
         </Route>

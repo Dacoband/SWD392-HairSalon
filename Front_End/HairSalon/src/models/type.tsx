@@ -41,7 +41,7 @@ export interface Appointment {
   upDate: string;
   startTime: string;
   endTime: string;
-  appointmentService: {
+  sevicesList: {
     serviceId: string;
     appointmentId: string;
     unitPrice: number;
@@ -62,4 +62,14 @@ export interface Stylish {
   avatarImage: string;
   insDate: Date;
   updDate: Date;
+}
+
+export interface UserInfoData {
+  Email: string;
+  Password: string;
+  MemberName: string;
+  DateOfBirth: string;
+  PhoneNumber: string;
+  Address: string;
+ avatarImage?: string; 
 }
