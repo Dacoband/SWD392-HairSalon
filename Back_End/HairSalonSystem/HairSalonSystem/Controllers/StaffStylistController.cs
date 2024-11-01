@@ -28,7 +28,6 @@ namespace HairSalonSystem.API.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "SA,SM,SL,ST")] 
         [Route(APIEndPointConstant.StaffStylist.GetStaffStylistById)]
         public async Task<IActionResult> GetStaffStylistById(Guid id)
         {
@@ -37,7 +36,6 @@ namespace HairSalonSystem.API.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "SA,SM")] 
         [Route(APIEndPointConstant.StaffStylist.GetAllStaffStylists)]
         public async Task<IActionResult> GetAllStaffStylists()
         {
@@ -64,7 +62,6 @@ namespace HairSalonSystem.API.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "SA,SM")] 
         [Route(APIEndPointConstant.StaffStylist.GetStaffStylistByBranchId)]
         public async Task<IActionResult> GetStaffStylistsByBranchId(Guid branchId)
         {
