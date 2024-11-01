@@ -34,6 +34,8 @@ namespace HairSalonSystem.BusinessObject.Entities
 
         [BsonElement("averageRating")]
         public double AverageRating { get; set; }
+        [BsonElement("baseSalary")]
+        public double BaseSalary { get; set; }
 
         [Required]
         [StringLength(10, MinimumLength = 10)]

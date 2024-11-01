@@ -35,8 +35,13 @@ namespace HairSalonSystem.Services.PayLoads.Requests.Stylists
         [RegularExpression(@"^[0-9]{10}$", ErrorMessage = "Phone number must be exactly 10 digits.")]
         public required string PhoneNumber { get; set; }
 
+<<<<<<< HEAD
         public string? Address { get; set; }
         public IFormFile? AvatarImage { get; set; }
+=======
+        public string Address { get; set; }
+        public IFormFile AvatarImage { get; set; }
+>>>>>>> Nhan/SIT
         public DateTime InsDate { get; set; } = DateTime.UtcNow;
     }
 }

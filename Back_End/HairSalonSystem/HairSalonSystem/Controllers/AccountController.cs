@@ -75,7 +75,7 @@ namespace HairSalonSystem.API.Controllers
        
         public async Task<ActionResult<string>> Login([FromBody] LoginRequest request)
         {
-            var account = await _authService.Authenticate(request.Email, PasswordUtil.HashPassword(request.Password));
+            var (account, actorId) = await _authService.Authenticate(request.Email, PasswordUtil.HashPassword(request.Password));
             if (account == null)
             {
                 return Unauthorized(new Services.PayLoads.ErrorResponse()
@@ -86,11 +86,12 @@ namespace HairSalonSystem.API.Controllers
                 });
             }
 
-            var token = await _authService.GenerateJwtToken(account);
+            var token = await _authService.GenerateJwtToken(account, actorId);
             var loginResponse = new LoginResponse
             {
                 Token = token,
                 AccountId = account.AccountId,
+                actorId = actorId ?? Guid.Empty,
                 Email = account.Email,
                 RoleName = account.RoleName
             };

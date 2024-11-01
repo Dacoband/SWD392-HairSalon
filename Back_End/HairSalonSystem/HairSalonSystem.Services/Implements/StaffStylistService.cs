@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace HairSalonSystem.Services.Implements
 {
     public class StaffStylistService : IStaffStylistService
@@ -20,7 +21,10 @@ namespace HairSalonSystem.Services.Implements
         private readonly IStaffStylistRepository _staffStylistRepository;
         private readonly IAccountRepository _accountRepository;
         private readonly IFirebaseService _firebaseService;
+<<<<<<< HEAD
 
+=======
+>>>>>>> Nhan/SIT
         public StaffStylistService(IStaffStylistRepository staffStylistRepository, IAccountRepository accountRepository, IFirebaseService firebaseService)
         {
             _staffStylistRepository = staffStylistRepository;
@@ -45,6 +49,7 @@ namespace HairSalonSystem.Services.Implements
                 DelFlg = true
             };
             await _accountRepository.AddAccount(account);
+            var url = await _firebaseService.UploadFile(request.AvatarImage);
             var staffStylist = new StaffStylist
             {
                 StaffStylistId = Guid.NewGuid(),
@@ -81,6 +86,7 @@ namespace HairSalonSystem.Services.Implements
                 StaffStylistName = staffStylist.StaffStylistName,
                 DateOfBirth = staffStylist.DateOfBirth,
                 PhoneNumber = staffStylist.PhoneNumber,
+                BranchId = staffStylist.BranchID,
                 Address = staffStylist.Address,
                 AvatarImage = staffStylist.AvatarImage
             };
@@ -98,6 +104,7 @@ namespace HairSalonSystem.Services.Implements
                     StaffStylistId = stylist.StaffStylistId,
                     StaffStylistName = stylist.StaffStylistName,
                     DateOfBirth = stylist.DateOfBirth,
+                    BranchId = stylist.BranchID,
                     PhoneNumber = stylist.PhoneNumber,
                     Address = stylist.Address,
                     AvatarImage = stylist.AvatarImage

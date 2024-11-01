@@ -46,7 +46,7 @@ namespace HairSalonSystem.Services.Implements
                 DelFlg = true
             };
             await _accountRepository.AddAccount(account);
-
+            var url = await _firebaseService.UploadFile(request.AvatarImage);
             var stylist = new Stylist
             {
                 StylistId = Guid.NewGuid(),
@@ -58,6 +58,10 @@ namespace HairSalonSystem.Services.Implements
                 PhoneNumber = request.PhoneNumber,
                 Address = request.Address,
                 AvatarImage = url,
+<<<<<<< HEAD
+=======
+                BaseSalary = 5000000,
+>>>>>>> Nhan/SIT
                 InsDate = DateTime.Now,
                 UpdDate = DateTime.Now,
                 DelFlg = true
