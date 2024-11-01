@@ -18,19 +18,32 @@ const AppointmentPage = () => {
   const [api, contextHolder] = notification.useNotification();
 
   const statusMap: { [key: number]: string } = {
-    1: "Book lịch thành công",
+    1: "Đã đặt lịch thành công",
     2: "Đã thanh toán",
-    3: "Bị hủy",
+    3: "Đã hủy",
     4: "Đã hoàn thành",
   };
 
+  // Fetch appointments when component mounts
   useEffect(() => {
     const fetchAppointments = async () => {
       setLoading(true);
       try {
-        const customerId = "4042dcad-d98f-480e-9a50-0a1670338b17";
-        const response = await getAppointmentsByCustomer(customerId);
-        setAppointments(response);
+        const userDataString = localStorage.getItem("userData");
+        const userData = userDataString ? JSON.parse(userDataString) : null;
+
+        if (userData && userData.actorId) {
+          const customerId = userData.actorId; 
+          const response = await getAppointmentsByCustomer(customerId);
+          // setAppointments(response);
+          if (Array.isArray(response)) {
+            setAppointments(response);
+          } else {
+            setError("Invalid response format for appointments.");
+          }
+        } else {
+          setError("User ID not found in localStorage.");
+        }
       } catch (err) {
         setError("Failed to fetch appointments.");
       } finally {
@@ -41,24 +54,26 @@ const AppointmentPage = () => {
     fetchAppointments();
   }, []);
 
+  // Fetch services details for appointments
   useEffect(() => {
     const fetchAllServiceDetails = async () => {
+      const newServices: Record<string, Services | null> = {};
       for (const appointment of appointments) {
         if (appointment.sevicesList) {
           for (const service of appointment.sevicesList) {
-            if (service.serviceId && !services[service.serviceId]) {
+            if (service.serviceId && !newServices[service.serviceId]) {
               const serviceData = await getServicesByServiceId(service.serviceId);
-              setServices((prevServices) => ({
-                ...prevServices,
-                [service.serviceId]: serviceData,
-              }));
+              newServices[service.serviceId] = serviceData;
             }
           }
         }
       }
+      setServices(newServices);
     };
 
-    fetchAllServiceDetails();
+    if (appointments.length > 0) {
+      fetchAllServiceDetails();
+    }
   }, [appointments]);
 
   const showServiceModal = (appointment: Appointment) => {
@@ -82,19 +97,27 @@ const AppointmentPage = () => {
     try {
       await cancelAppointment(selectedAppointment.appointmentId, cancelReason);
       api.success({
-        message: "Cancellation Success",
-        description: "The appointment has been canceled successfully.",
+        message: "Hủy thành công",
+        description: "Lịch hẹn đã được hủy thành công.",
       });
 
-      
-      const customerId = "409e0432-1795-4b1d-b206-e8e85eceacda"; 
-      const response = await getAppointmentsByCustomer(customerId);
-      setAppointments(response);
+      const userDataString = localStorage.getItem("userData");
+      const userData = userDataString ? JSON.parse(userDataString) : null;
+
+      if (userData && userData.actorId) {
+        const customerId = userData.actorId;
+        const response = await getAppointmentsByCustomer(customerId);
+        if (Array.isArray(response)) {
+          setAppointments(response);
+        } else {
+          setError("Invalid response format for appointments.");
+        }
+      }
       
     } catch (error) {
       api.error({
-        message: "Cancellation Error",
-        description: "There was an error canceling the appointment.",
+        message: "Lỗi hủy",
+        description: "Đã có lỗi xảy ra khi hủy lịch hẹn.",
       });
     } finally {
       setIsCancelModalOpen(false);
@@ -137,11 +160,11 @@ const AppointmentPage = () => {
               </div>
               <div className="appointment-actions">
                 <Button type="primary" onClick={() => showServiceModal(appointment)}>
-                  View Services
+                  Xem dịch vụ
                 </Button>
                 {appointment.status === 1 && (
                   <Button type="default" danger onClick={() => showCancelModal(appointment)}>
-                    Cancel Appointment
+                    Hủy lịch
                   </Button>
                 )}
               </div>
@@ -149,12 +172,12 @@ const AppointmentPage = () => {
           ))}
         </ul>
       ) : (
-        <p>No appointments found.</p>
+        <p>Không có lịch hẹn nào.</p>
       )}
 
       {/* Service Modal */}
       <Modal
-        title="Services Details"
+        title="Chi tiết dịch vụ"
         open={isServiceModalOpen}
         onOk={handleServiceModalOk}
         onCancel={() => setIsServiceModalOpen(false)}
@@ -174,7 +197,7 @@ const AppointmentPage = () => {
                 </p>
               </>
             ) : (
-              <p>Loading service information...</p>
+              <p>Đang tải thông tin dịch vụ...</p>
             )}
           </div>
         ))}
@@ -182,16 +205,16 @@ const AppointmentPage = () => {
 
       {/* Cancel Modal */}
       <Modal
-        title="Cancel Appointment"
+        title="Hủy lịch hẹn"
         open={isCancelModalOpen}
         onOk={handleCancelModalOk}
         onCancel={handleCancelModalCancel}
       >
-        <p>Please enter the reason for cancellation:</p>
+        <p>Vui lòng nhập lý do hủy:</p>
         <Input
           value={cancelReason}
           onChange={(e) => setCancelReason(e.target.value)}
-          placeholder="Enter reason here"
+          placeholder="Nhập lý do tại đây"
         />
       </Modal>
     </div>

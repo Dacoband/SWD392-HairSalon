@@ -13,6 +13,6 @@ export const fetchUserData = async (userId: string): Promise<UserInfoData> => {
     DateOfBirth: data.dateOfBirth,
     PhoneNumber: data.phoneNumber, 
     Address: data.address,         
-    avatarImage: undefined,        
+    avatarImage: data.avatarImage,        
   };
 };
