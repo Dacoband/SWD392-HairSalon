@@ -74,9 +74,9 @@ const AppRouter = () => {
             }
           />
           <Route
-            path="/profile-customer"
+            path="/profile"
             element={
-              <PrivateRoute element={profileCustomer} allowedRoles={["MB"]} />
+              <PrivateRoute element={ProfileAll} allowedRoles={["MB"]} />
             }
           />
         </Route>

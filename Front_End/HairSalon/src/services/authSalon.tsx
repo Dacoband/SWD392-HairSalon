@@ -2,18 +2,22 @@ import axios from "axios";
 
 export const login = async (email: string, password: string) => {
     try {
-       const response = await axios.post('https://api.vol-ka.studio/api/v1/auth/login', {
+      const formData = new FormData();
+      formData.append("email", email);
+      formData.append("password", password);
+       const response = await axios.post('https://api.vol-ka.studio/api/v1/auth/login',formData , {
 
-        email,
-        password
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
       });
      // Check if response contains token, email, and roleName
      if (response.data && response.data.token && response.data.email && response.data.roleName) {
-      const { token, email: userEmail, roleName ,accountId} = response.data;
+      const { token, email: userEmail, roleName ,accountId, actorId} = response.data;
       
       // Store token and userData in localStorage
       localStorage.setItem('token', token);
-      const userDatas = { email: userEmail, roleName ,accountId};
+      const userDatas = { email: userEmail, roleName ,accountId, actorId};
       localStorage.setItem('userData', JSON.stringify(userDatas));
   
       return { token, userDatas };

@@ -170,7 +170,7 @@ const SignUpPage: React.FC = () => {
           {apiErrors.DateOfBirth && <span className="error-message">{apiErrors.DateOfBirth[0]}</span>}
         </div>
 
-        <div className="form-group">
+        {/* <div className="form-group">
           <FaHome className="input-icon" />
           <input
             type="text"
@@ -182,7 +182,7 @@ const SignUpPage: React.FC = () => {
             className="input-style"
           />
           {apiErrors.Address && <span className="error-message">{apiErrors.Address[0]}</span>}
-        </div>
+        </div> */}
 
         <button type="submit" className="sign-up-button">Đăng ký</button>
         <p className="switch-page">
