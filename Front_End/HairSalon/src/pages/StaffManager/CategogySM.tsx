@@ -5,8 +5,10 @@ import {
   FaCut,
   FaCalendarCheck,
 } from "react-icons/fa";
-import ManagerBranch from "./ManagerBranch";
-import ManagerService from "../StaffManager/ManagerService"; // Import the ManagerService component
+import Dashboard from "./Dashboard";
+import ManagerStaff from "./ManagerStaff";
+import ManagerStylish from "./ManagerStylish";
+import ManagerAppointments from "./ManagerAppointments";
 
 const CategogySM: React.FC = () => {
   const [activeComponent, setActiveComponent] = useState<string>("");
@@ -25,28 +27,28 @@ const CategogySM: React.FC = () => {
           <ul>
             <li
               className="flex items-center p-2 hover:bg-[#b78c39] cursor-pointer"
-              onClick={() => handleComponentChange("manageStaff")}
-            >
-              <FaUserFriends className="mr-3" />
-              <span>Manage Staff</span>
-            </li>
-            <li
-              className="flex items-center p-2 hover:bg-[#b78c39] cursor-pointer"
-              onClick={() => handleComponentChange("manageBranches")}
+              onClick={() => handleComponentChange("dashboard")}
             >
               <FaBuilding className="mr-3" />
-              <span>Manage Branches</span>
+              <span>Dashboard</span>
             </li>
             <li
               className="flex items-center p-2 hover:bg-[#b78c39] cursor-pointer"
-              onClick={() => handleComponentChange("manageServices")}
+              onClick={() => handleComponentChange("managerStaffStylish")}
             >
               <FaCut className="mr-3" />
-              <span>Manage Services</span>
+              <span>Manager Staff</span>
             </li>
             <li
               className="flex items-center p-2 hover:bg-[#b78c39] cursor-pointer"
-              onClick={() => handleComponentChange("viewAppointments")}
+              onClick={() => handleComponentChange("managerStylish")}
+            >
+              <FaCut className="mr-3" />
+              <span>Manager Stylish</span>
+            </li>
+            <li
+              className="flex items-center p-2 hover:bg-[#b78c39] cursor-pointer"
+              onClick={() => handleComponentChange("appointments")}
             >
               <FaCalendarCheck className="mr-3" />
               <span>View Appointments</span>
@@ -61,12 +63,10 @@ const CategogySM: React.FC = () => {
           </h2>
         )}
         <div className="flex-grow h-full overflow-hidden">
-          {activeComponent === "manageBranches" && <ManagerBranch />}
-          {activeComponent === "manageStaff" && <div>Manage Staff Content</div>}
-          {activeComponent === "manageServices" && <ManagerService />}
-          {activeComponent === "viewAppointments" && (
-            <div>View Appointments Content</div>
-          )}
+          {activeComponent === "dashboard" && <Dashboard />}
+          {activeComponent === "managerStaffStylish" && <ManagerStaff />}
+          {activeComponent === "managerStylish" && <ManagerStylish />}
+          {activeComponent === "appointments" && <ManagerAppointments />}
         </div>
       </main>
     </div>

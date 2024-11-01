@@ -42,7 +42,7 @@ const SignInForm = () => {
             navigate("/StaffManager");
             break;
           case "SL":
-            navigate("/Appoiment-Staff");
+            navigate("/StaffStylish");
             break;
           case "ST":
             navigate("/Appoiment-Stylish");
