@@ -43,7 +43,7 @@ namespace HairSalonSystem.API.Controllers
         
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateAccount(Guid id, [FromBody] Account accountDto)
+        public async Task<ActionResult> UpdateAccount([FromRoute] Guid id, [FromForm] Account accountDto)
         {
             if (id != accountDto.AccountId)
             {
@@ -52,7 +52,6 @@ namespace HairSalonSystem.API.Controllers
 
             var account = new Account
             {
-                AccountId = id,
                 Email = accountDto.Email,
                 Password = PasswordUtil.HashPassword(accountDto.Password),
                 RoleName = accountDto.RoleName
@@ -73,7 +72,7 @@ namespace HairSalonSystem.API.Controllers
         [ProducesResponseType(typeof(LoginResponse), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(UnauthorizedObjectResult))]
        
-        public async Task<ActionResult<string>> Login([FromBody] LoginRequest request)
+        public async Task<ActionResult<string>> Login([FromForm] LoginRequest request)
         {
             var (account, actorId) = await _authService.Authenticate(request.Email, PasswordUtil.HashPassword(request.Password));
             if (account == null)

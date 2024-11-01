@@ -108,7 +108,7 @@ namespace HairSalonSystem.Services.Controllers
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
        
-        public async Task<bool> UpdateMember(Guid id, [FromBody] UpdateMemberRequest memberRequest)
+        public async Task<bool> UpdateMember([FromRoute] Guid id, [FromForm] UpdateMemberRequest memberRequest)
         {
            return  await _memberService.UpdateMember(id, memberRequest, HttpContext);
         }
