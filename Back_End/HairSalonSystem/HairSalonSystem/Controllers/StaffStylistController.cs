@@ -19,7 +19,6 @@ namespace HairSalonSystem.API.Controllers
 
         
         [HttpPost]
-        [Authorize(Roles = "SA,SM")] 
         [Route(APIEndPointConstant.StaffStylist.AddStaffStylist)]
         public async Task<IActionResult> CreateStaffStylist([FromForm] CreateStaffStylistRequest request)
         {
@@ -44,7 +43,7 @@ namespace HairSalonSystem.API.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "SA,SM,SL")] 
+        [Authorize(Roles = "SA,SM")] 
         [Route(APIEndPointConstant.StaffStylist.UpdateStaffStylist)]
         public async Task<IActionResult> UpdateStaffStylist([FromRoute] Guid id, [FromForm] UpdateStaffStylistRequest request)
         {
