@@ -3,8 +3,8 @@ import { Appointment} from "../models/type";
 
 export const getAppointmentsByCustomer = async (customerId: string): Promise<Appointment[]> => {
     try {
-      // const response = await axios.get(`https://api.vol-ka.studio/api/v1/appointmentget-all?CustomerId=${customerId}`  ,
-      const response = await axios.get(`https://localhost:7072/api/v1/appointmentget-all?CustomerId=${customerId}`  ,
+       const response = await axios.get(`https://api.vol-ka.studio/api/v1/appointmentget-all?CustomerId=${customerId}`  ,
+      // const response = await axios.get(`https://localhost:7072/api/v1/appointmentget-all?CustomerId=${customerId}`  ,
 
         {
         headers: {
@@ -15,5 +15,25 @@ export const getAppointmentsByCustomer = async (customerId: string): Promise<App
     } catch (error) {
       console.error('Error fetching appointments:', error);
       throw new Error('Failed to fetch appointments');
+    }
+  };
+  export const cancelAppointment = async (appointmentId: string, reason: string) => {
+    try {
+      const response = await axios.post(
+        `https://api.vol-ka.studio/api/v1/cancel-appointment/create`,
+        {
+          appointmentId,
+          reason,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error canceling appointment:", error);
+      throw new Error("Failed to cancel appointment");
     }
   };

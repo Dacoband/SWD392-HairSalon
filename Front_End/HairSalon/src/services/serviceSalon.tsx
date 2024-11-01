@@ -24,5 +24,17 @@ export const getAllServices = async (): Promise<Services[]> => {
   }
 };
 
+export const getServicesByServiceId = async (serviceId: string): Promise<Services | null> => {
+  try {
+    const serviceResponse = await axios.get(
+      `https://api.vol-ka.studio/api/v1/service${serviceId}`
+    );
+    return serviceResponse.data; // Return the service data directly
+  } catch (error) {
+    console.error("Failed to fetch service details:", error);
+    return null; // Return null in case of error
+  }
+};
+
 
 
