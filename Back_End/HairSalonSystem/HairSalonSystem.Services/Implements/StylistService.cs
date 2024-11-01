@@ -20,11 +20,13 @@ namespace HairSalonSystem.Services.Implements
     {
         private readonly IStylistRepository _stylistRepository;
         private readonly IAccountRepository _accountRepository;
-        public StylistService(IStylistRepository stylistRepository, IAccountRepository accountRepository)
+        private readonly IFirebaseService _firebaseService;
+        public StylistService(IStylistRepository stylistRepository, IAccountRepository accountRepository, IFirebaseService firebaseService)
 
         {
             _stylistRepository = stylistRepository;
             _accountRepository = accountRepository;
+            _firebaseService = firebaseService;
         }
 
         public async Task<CreateStylistResponse> CreateStylistAsync(CreateStylistRequest request, HttpContext httpContext)
@@ -44,7 +46,7 @@ namespace HairSalonSystem.Services.Implements
                 DelFlg = true
             };
             await _accountRepository.AddAccount(account);
-
+            var url = await _firebaseService.UploadFile(request.AvatarImage);
             var stylist = new Stylist
             {
                 StylistId = Guid.NewGuid(),
@@ -55,7 +57,8 @@ namespace HairSalonSystem.Services.Implements
                 StylistName = request.StylistName,
                 PhoneNumber = request.PhoneNumber,
                 Address = request.Address,
-                AvatarImage = request.AvatarImage,
+                AvatarImage = url,
+                BaseSalary = 5000000,
                 InsDate = DateTime.Now,
                 UpdDate = DateTime.Now,
                 DelFlg = true

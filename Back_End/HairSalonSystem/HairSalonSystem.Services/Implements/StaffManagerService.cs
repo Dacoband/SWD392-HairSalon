@@ -16,12 +16,14 @@ namespace HairSalonSystem.Services.Implements
         private readonly IStaffManagerRepository _staffManagerRepository;
         private readonly IAccountRepository _accountRepository;
         private readonly IBranchRespository _branchRespository;
+        private readonly IFirebaseService _firebaseService;
 
-        public StaffManagerService(IStaffManagerRepository staffManagerRepository, IAccountRepository accountRepository,IBranchRespository branchRespository)
+        public StaffManagerService(IStaffManagerRepository staffManagerRepository, IAccountRepository accountRepository,IBranchRespository branchRespository, IFirebaseService firebaseService)
         {
             _staffManagerRepository = staffManagerRepository;
             _accountRepository = accountRepository;
             _branchRespository = branchRespository;
+            _firebaseService = firebaseService;
         }
 
         public async Task<StaffManager> GetStaffManagerById(Guid id)
@@ -63,7 +65,7 @@ namespace HairSalonSystem.Services.Implements
                 DelFlg = true
             };
              await _accountRepository.AddAccount(account);
-
+            var url = await _firebaseService.UploadFile(staffManager.AvatarImage);
             var staffmanager = new StaffManager()
             {
                 StaffManagerID = Guid.NewGuid(),
@@ -73,7 +75,7 @@ namespace HairSalonSystem.Services.Implements
                 DateOfBirth = DateTime.Now,
                 PhoneNumber = staffManager.PhoneNumber,
                 Address = staffManager.Address,
-                AvatarImage = staffManager.AvatarImage,
+                AvatarImage = url,
                 InsDate = DateTime.Now,
                 UpdDate =DateTime.Now,
                 DelFlg = true 

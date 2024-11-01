@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace HairSalonSystem.Services.PayLoads.Requests.Stylists
 
         [Required]
         [StringLength(100, ErrorMessage = "Stylist name must be at most 100 characters long.")]
-        public string StylistName { get; set; }
+        public required string StylistName { get; set; }
 
         public double AverageRating { get; set; } = 0;
 
@@ -35,7 +36,7 @@ namespace HairSalonSystem.Services.PayLoads.Requests.Stylists
         public string PhoneNumber { get; set; }
 
         public string Address { get; set; }
-        public string AvatarImage { get; set; }
+        public IFormFile AvatarImage { get; set; }
         public DateTime InsDate { get; set; } = DateTime.UtcNow;
     }
 }

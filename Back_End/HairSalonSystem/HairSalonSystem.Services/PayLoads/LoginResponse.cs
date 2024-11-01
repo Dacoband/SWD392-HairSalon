@@ -4,6 +4,7 @@
     {
         public string Token { get; set; }
         public Guid AccountId { get; set; }
+        public Guid actorId { get; set; }
         public string Email { get; set; }
         public string RoleName { get; set; }
     }

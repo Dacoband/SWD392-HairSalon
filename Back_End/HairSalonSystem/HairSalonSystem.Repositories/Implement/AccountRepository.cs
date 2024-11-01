@@ -1,6 +1,9 @@
-﻿using HairSalonSystem.BusinessObject.Entities;
+﻿using HairSalonSystem.BusinessObject;
+using HairSalonSystem.BusinessObject.Entities;
 using HairSalonSystem.DAOs.Interface;
+using HairSalonSystem.DAOs.Interfaces;
 using HairSalonSystem.Repositories.Interface;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +15,18 @@ namespace HairSalonSystem.Repositories.Implement
     public class AccountRepository : IAccountRepository
     {
         private readonly IAccountDAO _accountDAO;
+        private readonly IMongoCollection<Stylist> _Stylists;
+        private readonly IMongoCollection<StaffStylist> _staffStylists;
+        private readonly IMongoCollection<StaffManager> _staffManagers;
+        private readonly IMongoCollection<Member> _members;
 
-        public AccountRepository(IAccountDAO accountDAO)
+        public AccountRepository(IAccountDAO accountDAO, HairSalonContext context)
         {
             _accountDAO = accountDAO;
+            _Stylists = context.Stylists;
+            _staffStylists = context.StaffStylists;
+            _staffManagers = context.StaffManagers;
+            _members = context.Members;
         }
 
         public async Task<Account> GetAccountById(Guid? id)
@@ -55,5 +66,28 @@ namespace HairSalonSystem.Repositories.Implement
             return await _accountDAO.GetEmailByAccountId(accountId);
         }
 
+        public async Task<Guid> GetStylistId(Guid accountId)
+        {
+            var stylist = await _Stylists.Find(n => n.AccountId == accountId).FirstOrDefaultAsync();
+            return stylist.StylistId;
+        }
+
+        public async Task<Guid> GetStaffStylistId(Guid accountId)
+        {
+            var staffStylist = await _staffStylists.Find(n => n.AccountId == accountId).FirstOrDefaultAsync();
+            return staffStylist.StaffStylistId;
+        }
+
+        public async Task<Guid> GetStaffManagerId(Guid accountId)
+        {
+            var staffManager = await _staffManagers.Find(n => n.AccountID == accountId).FirstOrDefaultAsync();
+            return staffManager.StaffManagerID;
+        }
+
+        public async Task<Guid> GetMemberId(Guid accountId)
+        {
+            var member = await _members.Find(n => n.AccountId == accountId).FirstOrDefaultAsync();
+            return member.MemberId;
+        }
     }
 }

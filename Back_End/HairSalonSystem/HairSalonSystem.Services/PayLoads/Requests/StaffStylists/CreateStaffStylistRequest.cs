@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -37,6 +38,6 @@ namespace HairSalonSystem.Services.PayLoads.Requests.StaffStylists
         public string Address { get; set; }
 
         [Required(ErrorMessage = "AvatarImage is required.")]
-        public string AvatarImage { get; set; }
+        public IFormFile AvatarImage { get; set; }
     }
 }

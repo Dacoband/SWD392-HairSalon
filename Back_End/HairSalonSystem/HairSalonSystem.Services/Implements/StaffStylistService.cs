@@ -13,17 +13,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace HairSalonSystem.Services.Implements
 {
     public class StaffStylistService : IStaffStylistService
     {
         private readonly IStaffStylistRepository _staffStylistRepository;
         private readonly IAccountRepository _accountRepository;
-
-        public StaffStylistService(IStaffStylistRepository staffStylistRepository, IAccountRepository accountRepository)
+        private readonly IFirebaseService _firebaseService;
+        public StaffStylistService(IStaffStylistRepository staffStylistRepository, IAccountRepository accountRepository, IFirebaseService firebaseService)
         {
             _staffStylistRepository = staffStylistRepository;
             _accountRepository = accountRepository;
+            _firebaseService = firebaseService;
         }
 
         public async Task<CreateStaffStylistResponse> CreateStaffStylistAsync(CreateStaffStylistRequest request, HttpContext httpContext)
@@ -42,6 +44,7 @@ namespace HairSalonSystem.Services.Implements
                 DelFlg = true
             };
             await _accountRepository.AddAccount(account);
+            var url = await _firebaseService.UploadFile(request.AvatarImage);
             var staffStylist = new StaffStylist
             {
                 StaffStylistId = Guid.NewGuid(),
@@ -51,7 +54,7 @@ namespace HairSalonSystem.Services.Implements
                 DateOfBirth = request.DateOfBirth,
                 PhoneNumber = request.PhoneNumber,
                 Address = request.Address,
-                AvatarImage = request.AvatarImage,
+                AvatarImage = url,
                 InsDate = DateTime.Now,
                 UpdDate = DateTime.Now,
                 DelFlg = true
@@ -78,6 +81,7 @@ namespace HairSalonSystem.Services.Implements
                 StaffStylistName = staffStylist.StaffStylistName,
                 DateOfBirth = staffStylist.DateOfBirth,
                 PhoneNumber = staffStylist.PhoneNumber,
+                BranchId = staffStylist.BranchID,
                 Address = staffStylist.Address,
                 AvatarImage = staffStylist.AvatarImage
             };
@@ -95,6 +99,7 @@ namespace HairSalonSystem.Services.Implements
                     StaffStylistId = stylist.StaffStylistId,
                     StaffStylistName = stylist.StaffStylistName,
                     DateOfBirth = stylist.DateOfBirth,
+                    BranchId = stylist.BranchID,
                     PhoneNumber = stylist.PhoneNumber,
                     Address = stylist.Address,
                     AvatarImage = stylist.AvatarImage

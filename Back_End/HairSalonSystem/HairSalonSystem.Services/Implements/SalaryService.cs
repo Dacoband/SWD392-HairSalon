@@ -48,8 +48,8 @@ namespace HairSalonSystem.Services.Implements
                         BaseSalary = 5000000,
                         CommissionPercentage = 0,
                         PaymentDate = lastDayOfMonth,
-                        InsDate = TimeUtils.GetCurrentSEATime(),
-                        UpdDate = TimeUtils.GetCurrentSEATime(),
+                        InsDate = DateTime.Now,
+                        UpdDate = DateTime.Now,
                         DelFlg = true,
                     };
                     salary.TotalSalary = salary.BaseSalary + salary.CommissionPercentage;

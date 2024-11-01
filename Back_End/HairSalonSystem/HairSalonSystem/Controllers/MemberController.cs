@@ -16,14 +16,13 @@ namespace HairSalonSystem.Services.Controllers
     {
         private readonly IMemberService _memberService;
         private readonly IAccountService _accountService;
+        private readonly IFirebaseService _firebaseService;
 
-
-        public MemberController(IMemberService memberService, IAccountService accountService) 
+        public MemberController(IMemberService memberService, IAccountService accountService, IFirebaseService firebaseService) 
         {
             _memberService = memberService;
             _accountService = accountService;
-          
-
+            _firebaseService = firebaseService;
         }
 
         
@@ -63,25 +62,7 @@ namespace HairSalonSystem.Services.Controllers
                 return Problem(MessageConstant.MemberMessage.EmailExist);
             }
 
-            string avatarImagePath = null;
-            if (memberRequest.AvatarImage != null && memberRequest.AvatarImage.Length > 0)
-            {
-                var uploadsFolder = Path.Combine("wwwroot", "uploads");
-                if (!Directory.Exists(uploadsFolder))
-                {
-                    Directory.CreateDirectory(uploadsFolder);
-                }
-
-                var uniqueFileName = Guid.NewGuid().ToString() + "_" + memberRequest.AvatarImage.FileName;
-                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await memberRequest.AvatarImage.CopyToAsync(fileStream);
-                }
-                avatarImagePath = "/uploads/" + uniqueFileName;
-            }
-
-
+            var url = await _firebaseService.UploadFile(memberRequest.AvatarImage);
             var account = new Account()
             {
                 AccountId = Guid.NewGuid(),
@@ -101,7 +82,7 @@ namespace HairSalonSystem.Services.Controllers
                 DateOfBirth = memberRequest.DateOfBirth,
                 PhoneNumber = memberRequest.PhoneNumber,
                 Address = memberRequest.Address,
-                AvatarImage = avatarImagePath,
+                AvatarImage = url,
                 InsDate = DateTime.Now,
                 UpdDate = DateTime.Now,
                 DelFlg = true
