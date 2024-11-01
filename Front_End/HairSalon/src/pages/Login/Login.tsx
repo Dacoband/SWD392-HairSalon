@@ -27,16 +27,16 @@ const SignInForm = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null); 
+    setError(null);
     try {
       const response = await login(email, password);
       const userDatas = response?.userDatas; // Access 'userDatas' instead of 'userData'
-  
+
       if (userDatas) {
         // Navigate based on 'roleName' inside 'userDatas'
         switch (userDatas.roleName) {
           case "SA":
-            navigate("/SystemAdmin");
+            navigate("/manageService");
             break;
           case "SM":
             navigate("/StaffManager");
@@ -53,19 +53,18 @@ const SignInForm = () => {
           default:
             navigate("/unknown-role");
             break;
-          }
-    }   else {
-      setError("Sai tên người dùng hoặc mật khẩu!");
-    }
-   } catch (err: any) {
-      if (err.response && err.response.status === 401) {
-        setError(err.response.data.error); 
+        }
       } else {
-        setError("Sai tên người dùng hoặc mật khẩu!"); 
+        setError("Sai tên người dùng hoặc mật khẩu!");
       }
-    };
-
-  }
+    } catch (err: any) {
+      if (err.response && err.response.status === 401) {
+        setError(err.response.data.error);
+      } else {
+        setError("Sai tên người dùng hoặc mật khẩu!");
+      }
+    }
+  };
 
   const handleForgotPassword = () => {
     alert("Forgot password functionality not implemented yet.");
@@ -78,19 +77,17 @@ const SignInForm = () => {
     navigate("/SignUp");
   };
   const handleBackToHome = () => {
-    navigate("/"); 
+    navigate("/");
   };
-  
-
 
   return (
     <form className="sign-in-form" onSubmit={handleLogin}>
       <div className="upper-part">
-      <img 
-          src={logo} 
-          alt="Logo" 
-          className="back-to-home-logo" 
-          onClick={handleBackToHome} 
+        <img
+          src={logo}
+          alt="Logo"
+          className="back-to-home-logo"
+          onClick={handleBackToHome}
         />
         <div className="greeting">Đăng Nhập</div>
         <InputField
@@ -155,4 +152,3 @@ const SignInPage = () => {
 };
 
 export default SignInPage;
-

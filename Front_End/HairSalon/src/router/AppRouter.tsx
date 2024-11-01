@@ -24,10 +24,10 @@ import Branch from "../pages/Branch";
 import ManagerAppoimentStylish from "../pages/Stylish/ManagerAppoinmentStylish";
 import ManagerMoney from "../pages/Stylish/ManagerMoney";
 import profileCustomer from "../pages/customer/profileCustomer";
-
+import LayoutSA from "../layout/LayoutSA";
 import BookSucssess from "../pages/customer/BookSucssess";
 import ManagerService from "../pages/admin/ManagerService";
-
+import ManagerBranch from "../pages/admin/ManagerBranch";
 import CategogySM from "../pages/StaffManager/CategogySM";
 import LayoutSM from "../layout/LayoutSM";
 import LayoutSL from "../layout/LayoutSL";
@@ -85,7 +85,7 @@ const AppRouter = () => {
           <Route
             path="/profile"
             element={
-              <PrivateRoute element={ProfileAll} allowedRoles={["MB"]} />
+              <PrivateRoute element={profileCustomer} allowedRoles={["MB"]} />
             }
           />
         </Route>
@@ -141,11 +141,17 @@ const AppRouter = () => {
           />
         </Route>
         {/* ADMIN */}
-        <Route element={<LayoutMain />}>
+        <Route element={<LayoutSA />}>
           <Route
             path="/manageService"
             element={
-              <PrivateRoute element={ManagerService} allowedRoles={["AD"]} />
+              <PrivateRoute element={ManagerService} allowedRoles={["SA"]} />
+            }
+          />
+          <Route
+            path="/ManagerBranch_AD"
+            element={
+              <PrivateRoute element={ManagerBranch} allowedRoles={["SA"]} />
             }
           />
         </Route>
