@@ -58,15 +58,9 @@ namespace HairSalonSystem.Services.Controllers
             if (isEmailExist)
             {
                 return Problem(MessageConstant.MemberMessage.EmailExist);
-<<<<<<< HEAD
             }           
             var url = await _firebaseService.UploadFile(memberRequest.AvatarImage);
 
-=======
-            }
-
-            var url = await _firebaseService.UploadFile(memberRequest.AvatarImage);
->>>>>>> Nhan/SIT
             var account = new Account()
             {
                 AccountId = Guid.NewGuid(),

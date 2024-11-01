@@ -16,11 +16,7 @@ namespace HairSalonSystem.Services.Implements
         private readonly IStaffManagerRepository _staffManagerRepository;
         private readonly IAccountRepository _accountRepository;
         private readonly IBranchRespository _branchRespository;
-<<<<<<< HEAD
-        private readonly  IFirebaseService _firebaseService;
-=======
         private readonly IFirebaseService _firebaseService;
->>>>>>> Nhan/SIT
 
         public StaffManagerService(IStaffManagerRepository staffManagerRepository, IAccountRepository accountRepository,IBranchRespository branchRespository, IFirebaseService firebaseService)
         {

@@ -42,11 +42,6 @@ namespace HairSalonSystem.Services.PayLoads.Requests.StaffManagers
 
         [Required(ErrorMessage = "Address is required")]
         public string Address { get; set; }
-
-<<<<<<< HEAD
         public IFormFile?  AvatarImage { get; set; }
-=======
-        public IFormFile  AvatarImage { get; set; }
->>>>>>> Nhan/SIT
     }
 }

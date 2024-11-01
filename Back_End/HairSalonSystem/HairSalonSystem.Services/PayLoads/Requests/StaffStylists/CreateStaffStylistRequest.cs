@@ -38,10 +38,6 @@ namespace HairSalonSystem.Services.PayLoads.Requests.StaffStylists
         public string? Address { get; set; }
 
         [Required(ErrorMessage = "AvatarImage is required.")]
-<<<<<<< HEAD
         public IFormFile? AvatarImage { get; set; }
-=======
-        public IFormFile AvatarImage { get; set; }
->>>>>>> Nhan/SIT
     }
 }

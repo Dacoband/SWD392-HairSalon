@@ -21,10 +21,6 @@ namespace HairSalonSystem.Services.Implements
         private readonly IStaffStylistRepository _staffStylistRepository;
         private readonly IAccountRepository _accountRepository;
         private readonly IFirebaseService _firebaseService;
-<<<<<<< HEAD
-
-=======
->>>>>>> Nhan/SIT
         public StaffStylistService(IStaffStylistRepository staffStylistRepository, IAccountRepository accountRepository, IFirebaseService firebaseService)
         {
             _staffStylistRepository = staffStylistRepository;
@@ -49,7 +45,6 @@ namespace HairSalonSystem.Services.Implements
                 DelFlg = true
             };
             await _accountRepository.AddAccount(account);
-            var url = await _firebaseService.UploadFile(request.AvatarImage);
             var staffStylist = new StaffStylist
             {
                 StaffStylistId = Guid.NewGuid(),
