@@ -95,9 +95,9 @@
             public const string AppointmentEndpoint = ApiEndpoint + "/appointment";
             public const string CreateAppointment = AppointmentEndpoint + "/create";
             public const string GetAppointmentById = AppointmentEndpoint + "{id}";
-            public const string UpdateAppointment = AppointmentEndpoint + "update/{id}";
-            public const string GetAllAppointment = AppointmentEndpoint + "get-all";
-            public const string GetSuitableSlot = AppointmentEndpoint + "get-slot";
+            public const string UpdateAppointment = AppointmentEndpoint + "/update/{id}";
+            public const string GetAllAppointment = AppointmentEndpoint + "/get-all";
+            public const string GetSuitableSlot = AppointmentEndpoint + "/get-slot";
         }
 
         public static class CancelAppointment
@@ -121,5 +121,13 @@
 
         }
 
+        public static class Salary
+        {
+            public const string SalaryEndpoint = ApiEndpoint + "/salary";
+            public const string CreateSalary = SalaryEndpoint + "/create";
+            public const string GetSalaryById = SalaryEndpoint + "{id}";
+            public const string UpdateSalảy = SalaryEndpoint + "/update/{id}";
+            public const string GetAllSalary = SalaryEndpoint + "/get-all";
+        }
     }
 }
