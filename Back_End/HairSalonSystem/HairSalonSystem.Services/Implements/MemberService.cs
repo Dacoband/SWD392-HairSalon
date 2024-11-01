@@ -18,12 +18,13 @@ namespace HairSalonSystem.Services.Implements
     {
         private readonly IMemberRepository _memberRepository;
         private readonly IAccountRepository _accountRepository;
+        private readonly IFirebaseService _firebaseService;
 
-
-        public MemberService(IMemberRepository memberRepository, IAccountRepository accountRepository)
+        public MemberService(IMemberRepository memberRepository, IAccountRepository accountRepository, IFirebaseService firebaseService)
         {
             _memberRepository = memberRepository;
             _accountRepository = accountRepository;
+            _firebaseService = firebaseService;
         }
 
         public async Task<Member> GetMemberById(Guid id)
@@ -57,7 +58,7 @@ namespace HairSalonSystem.Services.Implements
                 throw new BadHttpRequestException(MessageConstant.LoginMessage.NotFoundAccount);
                
             }
-
+            var url = await _firebaseService.UploadFile(memberRequest.AvatarImage);
             var existingMember = await _memberRepository.GetMemberById(id);
             if (existingMember == null)
             {
@@ -71,7 +72,7 @@ namespace HairSalonSystem.Services.Implements
             existingMember.PhoneNumber = memberRequest.PhoneNumber;
             existingMember.Address = memberRequest.Address;
             existingMember.DateOfBirth = memberRequest.DateOfBirth;
-            existingMember.AvatarImage = memberRequest.AvatarImage;
+            existingMember.AvatarImage = url;
             existingMember.UpdDate = DateTime.Now;
 
             

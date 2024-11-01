@@ -89,8 +89,6 @@ namespace HairSalonSystem.Services.Implements
                 };
             }
 
-
-
             await _staffManagerRepository.AddStaffManager(staffmanager);
 
             var response = new CreateNewStaffManagerResponse()
@@ -129,14 +127,14 @@ namespace HairSalonSystem.Services.Implements
             {
                 throw new BadHttpRequestException(MessageConstant.StaffManagerMessage.StaffManagerNotFound);
             }
-
+            var url = await _firebaseService.UploadFile(staffManagerRequest.AvatarImage);
             // Cập nhật thông tin StaffManager và Account
             existingStaffManager.StaffManagerName = staffManagerRequest.StaffManagerName ?? existingStaffManager.StaffManagerName;
             existingAccount.Email = staffManagerRequest.Email ?? existingAccount.Email;
             existingStaffManager.PhoneNumber = staffManagerRequest.PhoneNumber ?? existingStaffManager.PhoneNumber;
             existingStaffManager.Address = staffManagerRequest.Address ?? existingStaffManager.Address;
             existingStaffManager.DateOfBirth = staffManagerRequest.DateOfBirth != DateTime.MinValue ? staffManagerRequest.DateOfBirth : existingStaffManager.DateOfBirth;
-            existingStaffManager.AvatarImage = staffManagerRequest.AvatarImage ?? existingStaffManager.AvatarImage;
+            existingStaffManager.AvatarImage = url;
             existingStaffManager.UpdDate = DateTime.Now;
 
              await _staffManagerRepository.UpdateStaffManager(existingStaffManager);

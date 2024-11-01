@@ -18,7 +18,7 @@ namespace HairSalonSystem.BusinessObject.Entities
         [BsonRepresentation(MongoDB.Bson.BsonType.String)]
         public Guid MemberId { get; set; }
         [BsonElement("message")]
-        public string Message { get; set; }
+        public string? Message { get; set; }
 
         [BsonElement("insDate")]
         public DateTime InsDate { get; set; }
