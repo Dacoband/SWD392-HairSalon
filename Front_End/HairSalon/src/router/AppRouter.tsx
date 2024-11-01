@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 
 // import Role1 from "../pages/Role1";
-import Role2 from "../pages/Role2";
+
 import Logout from "../components/Logout";
 import LayoutMain from "../layout/LayoutMain";
 import BookingPage from "../pages/customer/BookPage";
@@ -53,10 +53,7 @@ const AppRouter = () => {
         {/* CUSTOMER */}
         <Route element={<LayoutMain />}>
           <Route path="/homePage" element={<HomePage />} />
-          {/* <Route
-            path="/homePage"
-            element={<PrivateRoute element={HomePage} allowedRoles={["MB"]} />}
-          /> */}
+
           <Route
             path="/bookAppoiment"
             element={
@@ -89,11 +86,7 @@ const AppRouter = () => {
             }
           />
         </Route>
-        {/* ADMIN */}
-        <Route
-          path="/SystemAdmin"
-          element={<PrivateRoute element={Role2} allowedRoles={["SA"]} />}
-        />
+
         {/* StaffManager route */}
         {/* StaffManager có layout */}
         <Route element={<LayoutSM />}>

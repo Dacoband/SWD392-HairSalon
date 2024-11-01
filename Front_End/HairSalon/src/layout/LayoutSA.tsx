@@ -38,12 +38,11 @@ const SidebarData = [
 const LayoutSA: React.FC = () => {
   const navigate = useNavigate();
 
-  // Tạo các items cho Menu với sự kiện onClick để điều hướng
   const items = SidebarData.map((item, index) => ({
     key: String(index + 1),
     icon: React.createElement(item.icon),
     label: item.heading,
-    onClick: () => navigate(item.navigate), // Sử dụng navigate để điều hướng
+    onClick: () => navigate(item.navigate),
   }));
 
   return (
