@@ -86,7 +86,23 @@ namespace HairSalonSystem.Services.Implements
                 AvatarImage = staffStylist.AvatarImage
             };
         }
+        public async Task<StaffStylistResponse> GetStaffStylistByAccountIdAsync(Guid accountId)
+        {
+            var staffStylist = await _staffStylistRepository.GetStaffStylistByAccountId(accountId);
+            if (staffStylist == null)
+                throw new KeyNotFoundException(MessageConstant.StaffStylistMessage.StaffStylistNotFound);
 
+            return new StaffStylistResponse
+            {
+                StaffStylistId = staffStylist.StaffStylistId,
+                StaffStylistName = staffStylist.StaffStylistName,
+                DateOfBirth = staffStylist.DateOfBirth,
+                PhoneNumber = staffStylist.PhoneNumber,
+                Address = staffStylist.Address,
+                AvatarImage = staffStylist.AvatarImage
+            };
+
+        }
         public async Task<List<StaffStylistResponse>> GetAllStaffStylistsAsync()
         {
             var staffStylists = await _staffStylistRepository.GetAllStaffStylists();
@@ -125,7 +141,7 @@ namespace HairSalonSystem.Services.Implements
 
             await _staffStylistRepository.UpdateStaffStylist(id, staffStylist);
         }
-
+   
         public async Task DeleteStaffStylistAsync(Guid id)
         {
             var staffStylist = await _staffStylistRepository.GetStaffStylistById(id);
@@ -155,5 +171,7 @@ namespace HairSalonSystem.Services.Implements
 
             return responseList;
         }
+
+       
     }
 }

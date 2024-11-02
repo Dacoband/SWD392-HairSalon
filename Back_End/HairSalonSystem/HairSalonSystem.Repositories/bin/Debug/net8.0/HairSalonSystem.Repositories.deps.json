@@ -1112,10 +1112,7 @@
           "payOS": "1.0.8"
         },
         "runtime": {
-          "HairSalonSystem.BusinessObject.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "HairSalonSystem.BusinessObject.dll": {}
         }
       },
       "HairSalonSystem.DAOs/1.0.0": {
@@ -1126,10 +1123,7 @@
           "HairSalonSystem.BusinessObject": "1.0.0"
         },
         "runtime": {
-          "HairSalonSystem.DAOs.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "HairSalonSystem.DAOs.dll": {}
         }
       }
     }

@@ -1,0 +1,49 @@
+.group {
+  position: relative;
+
+  a {
+    font-family: "Lato", sans-serif;
+  }
+
+  .dropdown {
+    background-color: #b59242;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: none;
+    z-index: 10;
+
+    li {
+      border-bottom: 1px solid #dcdcdc;
+
+      a {
+        display: block;
+        padding: 10px 10px;
+        color: white;
+        font-weight: bold;
+        text-transform: uppercase;
+        text-decoration: none;
+
+        &:hover {
+          background-color: #aa9144;
+        }
+      }
+    }
+  }
+
+  &:hover .dropdown {
+    display: block;
+  }
+}
+
+.ml-auto {
+  margin-left: auto;
+}
+
+.flex.justify-evenly {
+  justify-content: space-between;
+}
+
+.ant-dropdown-placement-bottomCenter {
+  transform: translateX(-50%);
+}

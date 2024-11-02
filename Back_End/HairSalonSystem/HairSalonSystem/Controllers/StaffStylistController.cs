@@ -35,6 +35,18 @@ namespace HairSalonSystem.API.Controllers
         }
 
         [HttpGet]
+<<<<<<< HEAD
+=======
+        [Authorize(Roles = "SA,SM,SL,ST")]
+        [Route(APIEndPointConstant.StaffStylist.GetStaffStylistByAccountId)]
+        public async Task<IActionResult> GetStaffStylistByAccountId(Guid accountId)
+        {
+            var result = await _staffStylistService.GetStaffStylistByAccountIdAsync(accountId);
+            return Ok(result);
+        }
+        [HttpGet]
+        [Authorize(Roles = "SA,SM")] 
+>>>>>>> TAT
         [Route(APIEndPointConstant.StaffStylist.GetAllStaffStylists)]
         public async Task<IActionResult> GetAllStaffStylists()
         {
