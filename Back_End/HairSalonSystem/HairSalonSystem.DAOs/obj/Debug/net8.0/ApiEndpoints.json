@@ -489,5 +489,480 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "HairSalonSystem.API.Controllers.ServiceController",
+    "Method": "GetServiceById",
+    "RelativePath": "api/v1/service{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "HairSalonSystem.BusinessObject.Entities.Service",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "HairSalonSystem.API.Controllers.ServiceController",
+    "Method": "CreateService",
+    "RelativePath": "api/v1/service/create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "serviceModel",
+        "Type": "HairSalonSystem.Services.PayLoads.Requests.Service.CreateServiceRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "HairSalonSystem.BusinessObject.Entities.Service",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 201
+      }
+    ]
+  },
+  {
+    "ContainingType": "HairSalonSystem.API.Controllers.ServiceController",
+    "Method": "DeleteService",
+    "RelativePath": "api/v1/service/delete/{id}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "HairSalonSystem.API.Controllers.ServiceController",
+    "Method": "GetAllService",
+    "RelativePath": "api/v1/service/get-all",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ServiceName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Type",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "MaxPrice",
+        "Type": "System.Nullable\u00601[[System.Single, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "DelFig",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageIndex",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "HairSalonSystem.BusinessObject.Entities.Service",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "HairSalonSystem.API.Controllers.ServiceController",
+    "Method": "UpdateService",
+    "RelativePath": "api/v1/service/update/{id}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "HairSalonSystem.Services.PayLoads.Requests.Service.CreateServiceRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "HairSalonSystem.API.Controllers.StaffManagerController",
+    "Method": "GetStaffManagerById",
+    "RelativePath": "api/v1/staff-manager/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "HairSalonSystem.BusinessObject.Entities.StaffManager",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "HairSalonSystem.API.Controllers.StaffManagerController",
+    "Method": "AddStaffManager",
+    "RelativePath": "api/v1/staff-manager/add",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "staffManagerDto",
+        "Type": "HairSalonSystem.Services.PayLoads.Requests.StaffManagers.CreateNewStaffManagerRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "HairSalonSystem.Services.PayLoads.Responses.StaffManagers.CreateNewStaffManagerResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 201
+      }
+    ]
+  },
+  {
+    "ContainingType": "HairSalonSystem.API.Controllers.StaffManagerController",
+    "Method": "GetAllStaffManagers",
+    "RelativePath": "api/v1/staff-manager/all",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[HairSalonSystem.BusinessObject.Entities.StaffManager, HairSalonSystem.BusinessObject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "HairSalonSystem.API.Controllers.StaffManagerController",
+    "Method": "DeleteStaffManager",
+    "RelativePath": "api/v1/staff-manager/delete/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 204
+      }
+    ]
+  },
+  {
+    "ContainingType": "HairSalonSystem.API.Controllers.StaffManagerController",
+    "Method": "UpdateStaffManager",
+    "RelativePath": "api/v1/staff-manager/update/{id}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "staffManagerDto",
+        "Type": "HairSalonSystem.Services.PayLoads.Requests.StaffManagers.UpdateStaffManagerRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "HairSalonSystem.Services.PayLoads.Responses.StaffManagers.UpdateStaffManagerResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "HairSalonSystem.API.Controllers.StaffStylistController",
+    "Method": "GetStaffStylistById",
+    "RelativePath": "api/v1/staff-stylist/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HairSalonSystem.API.Controllers.StaffStylistController",
+    "Method": "CreateStaffStylist",
+    "RelativePath": "api/v1/staff-stylist/add",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "HairSalonSystem.Services.PayLoads.Requests.StaffStylists.CreateStaffStylistRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HairSalonSystem.API.Controllers.StaffStylistController",
+    "Method": "GetAllStaffStylists",
+    "RelativePath": "api/v1/staff-stylist/all",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HairSalonSystem.API.Controllers.StaffStylistController",
+    "Method": "GetStaffStylistsByBranchId",
+    "RelativePath": "api/v1/staff-stylist/branch/{branchId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "branchId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HairSalonSystem.API.Controllers.StaffStylistController",
+    "Method": "DeleteStaffStylist",
+    "RelativePath": "api/v1/staff-stylist/delete/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HairSalonSystem.API.Controllers.StaffStylistController",
+    "Method": "UpdateStaffStylist",
+    "RelativePath": "api/v1/staff-stylist/update/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "HairSalonSystem.Services.PayLoads.Requests.StaffStylists.UpdateStaffStylistRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HairSalonSystem.API.Controllers.StylistController",
+    "Method": "GetStylistById",
+    "RelativePath": "api/v1/stylist/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HairSalonSystem.API.Controllers.StylistController",
+    "Method": "CreateStylist",
+    "RelativePath": "api/v1/stylist/add",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "HairSalonSystem.Services.PayLoads.Requests.Stylists.CreateStylistRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HairSalonSystem.API.Controllers.StylistController",
+    "Method": "GetAllStylists",
+    "RelativePath": "api/v1/stylist/all",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HairSalonSystem.API.Controllers.StylistController",
+    "Method": "DeleteStylist",
+    "RelativePath": "api/v1/stylist/delete/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HairSalonSystem.API.Controllers.StylistController",
+    "Method": "GetStylistByStaffStylist",
+    "RelativePath": "api/v1/stylist/staff-stylist/{staffStylistId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "staffStylistId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HairSalonSystem.API.Controllers.StylistController",
+    "Method": "UpdateStylist",
+    "RelativePath": "api/v1/stylist/update/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "HairSalonSystem.Services.PayLoads.Requests.Stylists.UpdateStylistRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]
