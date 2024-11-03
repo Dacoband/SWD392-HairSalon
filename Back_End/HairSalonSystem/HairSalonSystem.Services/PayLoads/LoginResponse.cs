@@ -7,6 +7,5 @@
         public Guid actorId { get; set; }
         public string Email { get; set; }
         public string RoleName { get; set; }
-        public Guid AccountID { get; set; } 
     }
 }
