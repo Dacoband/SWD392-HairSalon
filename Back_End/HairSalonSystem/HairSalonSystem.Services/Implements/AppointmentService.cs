@@ -29,9 +29,10 @@ namespace HairSalonSystem.Services.Implements
         private readonly IBranchRespository _branchRepository;
         private readonly IAppointmentServiceRepository _appointmentServiceRepository;
         private readonly IMongoClient _mongoClient;
+        private readonly IMemberRepository _memberRepository;
 
         public AppointmentService(IAppointmentRepository appointmentRepository, IStylistRepository stylistRepository, IServiceRepository serviceRepository
-, IAppointmentServiceRepository appointmentServiceRepository, IMongoClient mongoClient
+, IAppointmentServiceRepository appointmentServiceRepository, IMongoClient mongoClient, IMemberRepository memberRepository
 )
         {
             _mongoClient = mongoClient; 
@@ -39,6 +40,7 @@ namespace HairSalonSystem.Services.Implements
             _stylistRepository = stylistRepository;
             _serviceRepository = serviceRepository;
             _appointmentServiceRepository = appointmentServiceRepository;
+            _memberRepository = memberRepository;
 
         }
         public async Task<ActionResult<BusinessObject.Entities.Appointment>> CreateAppointment(CreateAppointmentRequest request, HttpContext context)
@@ -60,6 +62,9 @@ namespace HairSalonSystem.Services.Implements
                     StatusCode = StatusCodes.Status403Forbidden
                 };
             }
+        
+            var memberList = await _memberRepository.GetAllMembers();
+            var member = memberList.Where(x => x.AccountId == accountID).FirstOrDefault();
             //initiate
             List<BusinessObject.Entities.Appointment> appointments = await _appointmentRepository.GetAllAppointment();
             List<BusinessObject.Entities.AppointmentService> appointmentDetails = new List<BusinessObject.Entities.AppointmentService>();
@@ -67,7 +72,7 @@ namespace HairSalonSystem.Services.Implements
             {
                 AppointmentId = Guid.NewGuid(),
                 TotalPrice = 0,
-                CustomerId = (Guid)accountID,
+                CustomerId = (Guid)member.MemberId,
                 Status = 1,
                 InsDate = DateTime.Now,
                 UpDate = DateTime.Now
