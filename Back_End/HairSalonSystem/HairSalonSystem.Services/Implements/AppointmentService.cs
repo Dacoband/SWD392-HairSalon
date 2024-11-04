@@ -1,5 +1,6 @@
 ﻿using Amazon.Runtime.Internal;
 using Amazon.Runtime.Internal.Util;
+using Firebase.Auth;
 using HairSalonSystem.BusinessObject.Entities;
 using HairSalonSystem.Repositories.Interface;
 using HairSalonSystem.Services.Constant;
@@ -13,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -227,6 +229,21 @@ namespace HairSalonSystem.Services.Implements
                 };
             }
 
+            var roleName = UserUtil.GetRoleName(context);
+            if(roleName == "MB")
+            {
+
+                var memberList = await _memberRepository.GetAllMembers();
+                var member = memberList.Where(x => x.AccountId == accountID).FirstOrDefault();
+                query.CustomerId = member.MemberId;
+            }
+            if (roleName == "ST")
+            {
+                var stylistList = await _stylistRepository.GetAllStylist();
+                var stylist = stylistList.Where(x => x.AccountId != accountID).FirstOrDefault();
+                query.StylistId = stylist.StylistId;
+            }
+
             // Fetch all appointments from the repository
             var appointmentList = await _appointmentRepository.GetAllAppointment();
 
@@ -408,8 +425,22 @@ namespace HairSalonSystem.Services.Implements
 
             var roleName = UserUtil.GetRoleName(context);
             var appointment = await _appointmentRepository.GetAppointmentById(appointmentId);
+            var userId = new Guid();
 
-            if (accountID != appointment.StylistId && accountID != appointment.CustomerId && roleName != "SL")
+            if (roleName == "MB")
+            {
+
+                var memberList = await _memberRepository.GetAllMembers();
+                var member = memberList.Where(x => x.AccountId == accountID).FirstOrDefault();
+                userId = member.MemberId;
+            }
+            if(roleName == "ST")
+            {
+                var stylistList = await _stylistRepository.GetAllStylist();
+                var stylist = stylistList.Where(x => x.AccountId != accountID).FirstOrDefault();
+                userId = stylist.StylistId;
+            }
+            if (userId != appointment.StylistId && userId != appointment.CustomerId && roleName != "SL")
             {
                 return new ObjectResult(MessageConstant.AppointmentMessage.UpdateRight)
                 {

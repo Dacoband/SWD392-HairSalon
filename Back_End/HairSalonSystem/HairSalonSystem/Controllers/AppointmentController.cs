@@ -37,7 +37,7 @@ namespace HairSalonSystem.API.Controllers
         [Route(APIEndPointConstant.Appointment.GetAppointmentById)]
         [ProducesResponseType(typeof(AppointmentResponse), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
-        [Authorize]
+        [Authorize(Roles = "SL,ST,SA")]
         public async Task<ActionResult<AppointmentResponse>> GetAppointmentById([FromRoute] Guid id)
         {
             var result = await _appointmentService.GetAppointmentById(id, HttpContext);
@@ -48,7 +48,7 @@ namespace HairSalonSystem.API.Controllers
         [Route(APIEndPointConstant.Appointment.GetAllAppointment)]
         [ProducesResponseType(typeof(List<AppointmentResponse>), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
-        [Authorize]
+        [Authorize(Roles = "MB,SL,ST,SA")]
         public async Task<ActionResult<List<AppointmentResponse>>> GetAppointments([FromQuery] QueryAppointment query)
         {
             var result = await _appointmentService.GetAppointmentList(query, HttpContext);
@@ -59,7 +59,7 @@ namespace HairSalonSystem.API.Controllers
         [Route(APIEndPointConstant.Appointment.UpdateAppointment)]
         [ProducesResponseType(typeof(Appointment), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
-        [Authorize(Roles = "MB,SL,ST")]
+        [Authorize(Roles = "MB,SL,ST,SA")]
         public async Task<ActionResult<Appointment>> UpdateAppointment([FromRoute] Guid id, [FromBody] int status)
         {
             var result = await _appointmentService.UpdateAppointmentStatus(id, status, HttpContext);
@@ -70,7 +70,6 @@ namespace HairSalonSystem.API.Controllers
         [Route(APIEndPointConstant.Appointment.GetSuitableSlot)]
         [ProducesResponseType(typeof(List<DateTime>), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
-        [Authorize]
         public async Task<ActionResult<List<DateTime>>> GetSlots([FromQuery] QuerySlot query)
         {
             var result = await _appointmentService.GetSuitableSlot(query, HttpContext);
