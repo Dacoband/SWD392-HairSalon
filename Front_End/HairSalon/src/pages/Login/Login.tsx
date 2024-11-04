@@ -30,10 +30,9 @@ const SignInForm = () => {
     setError(null);
     try {
       const response = await login(email, password);
-      const userDatas = response?.userDatas; // Access 'userDatas' instead of 'userData'
+      const userDatas = response?.userDatas;
 
       if (userDatas) {
-        // Navigate based on 'roleName' inside 'userDatas'
         switch (userDatas.roleName) {
           case "SA":
             navigate("/manageService");
@@ -77,68 +76,70 @@ const SignInForm = () => {
     navigate("/SignUp");
   };
   const handleBackToHome = () => {
-    navigate("/");
+    navigate("/HomePage");
   };
 
   return (
-    <form className="sign-in-form" onSubmit={handleLogin}>
-      <div className="upper-part">
-        <img
-          src={logo}
-          alt="Logo"
-          className="back-to-home-logo"
-          onClick={handleBackToHome}
-        />
-        <div className="greeting">Đăng Nhập</div>
-        <InputField
-          className="input-style"
-          label="email"
-          type="text"
-          value={email}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setEmail(e.target.value)
-          }
-          icon={FaUserAlt}
-        />
-        <InputField
-          className="input-style"
-          label="Mật khẩu"
-          type="password"
-          value={password}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setPassword(e.target.value)
-          }
-          icon={FaLock}
-        />
-        {error && <div className="error-message">{error}</div>}
-        <a onClick={handleForgotPassword} className="forgot-password">
-          Quên mật khẩu
-        </a>
+    <div className="login-container">
+      <div className="login-left">
+        <h1>Mr.Salon</h1>
+        <p>Sự phong cách quý phái và lịch lãm của nam phái hãy đến với Mr.Salon</p>
+        <img src={logo} alt="Logo" className="logo" />
       </div>
-      <button type="submit" className="sign-in-button">
-        Đăng nhập
-      </button>
+      <form className="sign-in-form" onSubmit={handleLogin}>
+        <div className="upper-part">
+          <div className="greeting">Đăng nhập</div>
+          <InputField
+            label="Địa chỉ email"
+            type="text"
+            value={email}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setEmail(e.target.value)
+            }
+            icon={FaUserAlt}
+          />
+          <InputField
+            label="Mật khẩu"
+            type="password"
+            value={password}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setPassword(e.target.value)
+            }
+            icon={FaLock}
+          />
+          {error && <div className="error-message">{error}</div>}
+          <a onClick={handleForgotPassword} className="forgot-password">
+            Quên mật khẩu?
+          </a>
+        </div>
+        <button type="submit" className="sign-in-button">
+          Đăng nhập
+        </button>
 
-      <div className="divider">
-        <hr className="divider-line" />
-        <span>hoặc tiếp tục với</span>
-        <hr className="divider-line" />
-      </div>
+        <div className="divider">
+          <hr className="divider-line" />
+          <span>Hoặc đăng nhập với</span>
+          <hr className="divider-line" />
+        </div>
 
-      <button
-        type="button"
-        className="google-login-button"
-        onClick={handleGoogleLogin}
-      >
-        <FaGoogle className="google-icon" /> Đăng nhập bằng Google
-      </button>
-      <p className="prompt">
-        Chưa có tài khoản?
-        <a onClick={handleSignUp} className="sign-up-link">
-          Đăng ký
-        </a>
-      </p>
-    </form>
+        <button
+          type="button"
+          className="google-login-button"
+          onClick={handleGoogleLogin}
+        >
+          <FaGoogle className="google-icon" /> Google
+        </button>
+        <p className="prompt">
+          Không có tài khoản?
+          <a onClick={handleSignUp} className="sign-up-link">
+            Đăng ký
+          </a>
+        </p>
+        <button onClick={handleBackToHome} className="back-to-home-button">
+          Quay về trang chủ
+        </button>
+      </form>
+    </div>
   );
 };
 
@@ -146,7 +147,6 @@ const SignInPage = () => {
   return (
     <div className="sign-in-page">
       <SignInForm />
-      {/* <Footer /> */}
     </div>
   );
 };
