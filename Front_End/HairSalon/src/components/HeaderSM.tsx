@@ -29,16 +29,16 @@ const HeaderSM: React.FC = () => {
   return (
     <div className="bg-white shadow-md h-16 flex items-center">
       <Row align="middle" className="w-full">
-        <Col span={6} className="flex items-center">
+        <Col span={4} className="flex items-center">
           <a onClick={() => navigate("/homePage")}>
             <img
               src="src\assets\logo_mini-removebg-preview.png" // Make sure the path is correct
-              className="h-12 ml-10" // Adjust height for a smaller header
+              className="h-12 ml-16" // Adjust height for a smaller header
               alt="Logo"
             />
           </a>
         </Col>
-        <Col span={18}>
+        <Col span={20}>
           <div className="flex justify-end items-center pr-12 h-full">
             {isLoggedIn ? ( // Show the dropdown if the user is logged in
               <Dropdown

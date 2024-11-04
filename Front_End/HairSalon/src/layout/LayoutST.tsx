@@ -12,27 +12,17 @@ const { Content, Sider } = Layout;
 const SidebarData = [
   {
     icon: MenuUnfoldOutlined,
-    heading: "Thống kê",
-    navigate: "/StaffManager",
+    heading: "Quản lí cuộc hẹn",
+    navigate: "/Appoiment-Stylish",
   },
   {
     icon: ShoppingCartOutlined,
-    heading: "Quản lí nhân viên",
-    navigate: "/staffmanager-staff",
-  },
-  {
-    icon: ShoppingCartOutlined,
-    heading: "Quản lí stylish",
-    navigate: "/managerstaff-stylish",
-  },
-  {
-    icon: ShoppingCartOutlined,
-    heading: "Quản lí ",
-    navigate: "/managerstaff-appoinment",
+    heading: "Quản lí lương",
+    navigate: "/manager-money",
   },
 ];
 
-const LayoutSL: React.FC = () => {
+const LayoutST: React.FC = () => {
   const navigate = useNavigate();
 
   const items = SidebarData.map((item, index) => ({
@@ -59,8 +49,8 @@ const LayoutSL: React.FC = () => {
         >
           <div className="mt-10">
             <FaCircleUser className="text-white mx-auto " size={70} />
-            <div className="text-white font-bold mt-2 text-center text-lg">
-              Quản lí khu vực
+            <div className="text-white mt-2 font-bold text-center text-lg">
+              Stylish
             </div>
           </div>
           <Menu
@@ -80,4 +70,4 @@ const LayoutSL: React.FC = () => {
   );
 };
 
-export default LayoutSL;
+export default LayoutST;
