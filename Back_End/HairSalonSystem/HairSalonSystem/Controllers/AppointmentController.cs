@@ -75,5 +75,14 @@ namespace HairSalonSystem.API.Controllers
             var result = await _appointmentService.GetSuitableSlot(query, HttpContext);
             return result;
         }
+        [HttpGet]
+        [Route(APIEndPointConstant.Appointment.GetAvailableStylist)]
+        [ProducesResponseType(typeof(Stylist), StatusCodes.Status200OK)]
+        [ProducesErrorResponseType(typeof(ProblemDetails))]
+        public async Task<ActionResult<Stylist>> GetStylist([FromQuery] QueryStylist query)
+        {
+            var result = await _appointmentService.GetSuitableStylist(query, HttpContext);
+            return result;
+        }
     }
 }
