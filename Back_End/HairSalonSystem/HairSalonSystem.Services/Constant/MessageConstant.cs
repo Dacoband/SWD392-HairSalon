@@ -11,6 +11,11 @@
             public const string NotFoundAccount = "Không tìm thấy account";
 
         }
+        public static class AccountMessage
+        {
+            public const string AccountNotFound = "Không tìm thấy account";
+            public const string AccountDeleted = "Account đã được xoá";
+        }
         public static class BranchMessage
         {
             public const string BranchCreated = "Chi nhánh đã được tạo thành công";

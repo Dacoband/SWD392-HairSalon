@@ -27,10 +27,10 @@ namespace HairSalonSystem.Services.PayLoads.Requests.Members
         [StringLength(10, MinimumLength = 10, ErrorMessage = "Phone number must be exactly 10 digits")]
         [RegularExpression(@"^(03|05|07|08|09)\d{8}$", ErrorMessage = "Phone number must be a valid Vietnamese phone number")]
 
-        public string? PhoneNumber { get; set; }
+        public required string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "Address is required")]
-        public string? Address { get; set; }
+        public string? Address { get; set; } 
 
         public IFormFile? AvatarImage { get; set; } 
     }

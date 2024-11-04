@@ -1,0 +1,8 @@
+/* Add this to your CSS file */
+.description-cell {
+    max-height: 60px; /* Set a max height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    white-space: normal; /* Allow text to wrap */
+  }
+  
