@@ -1,33 +1,36 @@
 // import React, { useState } from "react";
 // import { Button, message, Steps, theme } from "antd";
-import demo from "../../assets/images/demo.jpg";
-import bg from "../../assets/images/bgsdn.jpg";
-import { FaUsers } from "react-icons/fa";
-import { RiMapPinUserFill } from "react-icons/ri";
-import { MdAccessTimeFilled } from "react-icons/md";
+import demo from '../../assets/images/demo.jpg'
+import bg from '../../assets/images/bgsdn.jpg'
+import { FaUsers } from 'react-icons/fa'
+import { RiMapPinUserFill } from 'react-icons/ri'
+import { MdAccessTimeFilled } from 'react-icons/md'
+import { Calendar } from 'antd'
+import { SearchOutlined } from '@ant-design/icons'
+import '../../App.css'
+import { Select } from 'antd'
+import { MdAddBox } from 'react-icons/md'
+import { FaCheckSquare } from 'react-icons/fa'
+import { Tabs } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { Steps, Button, Popover, Input, Row, Col } from 'antd'
+import type { StepsProps } from 'antd'
+import { getBranchesAll } from '../../services/Branches/branches'
+import { Branches, Services, Stylish } from '../../models/type'
+import { getStylishByBranchID, getStylishRandom } from '../../services/Stylish'
+import { RiDeleteBin6Line } from 'react-icons/ri'
+import { FaFrownOpen } from 'react-icons/fa'
 
-import { SearchOutlined } from "@ant-design/icons";
-import "../../App.css";
-import { Select } from "antd";
-import { MdAddBox } from "react-icons/md";
-import { FaCheckSquare } from "react-icons/fa";
-import { Tabs } from "antd";
-import React, { useEffect, useState } from "react";
-import { Steps, Button, Popover, Input } from "antd";
-import type { StepsProps } from "antd";
-import { getBranchesAll } from "../../services/Branches/branches";
-import { Branches, Services, Stylish } from "../../models/type";
-import { getStylishByBranchID, getStylishRandom } from "../../services/Stylish";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { FaFrownOpen } from "react-icons/fa";
+import { FaScissors } from 'react-icons/fa6'
+import { FaLocationDot } from 'react-icons/fa6'
+import { FaUserClock } from 'react-icons/fa6'
+import { FaStar } from 'react-icons/fa'
 
-import { FaScissors } from "react-icons/fa6";
-import { FaLocationDot } from "react-icons/fa6";
-import { FaUserClock } from "react-icons/fa6";
-import { FaStar } from "react-icons/fa";
+import { getServicesByType, getAllServices } from '../../services/serviceSalon'
+import type { DatePickerProps } from 'antd'
+import { Dayjs } from 'dayjs'
 
-import { getServicesByType, getAllServices } from "../../services/serviceSalon";
-const customDot: StepsProps["progressDot"] = (dot, { status, index }) => (
+const customDot: StepsProps['progressDot'] = (dot, { status, index }) => (
   <Popover
     content={
       <span>
@@ -37,121 +40,140 @@ const customDot: StepsProps["progressDot"] = (dot, { status, index }) => (
   >
     {dot}
   </Popover>
-);
-
+)
+const defaultStylist =
+  'https://firebasestorage.googleapis.com/v0/b/hairsalon-588fe.appspot.com/o/fb106a17a7b0835f40c1c6f529fc0a0d.jpg?alt=media'
 const BookingPage: React.FC = () => {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [branches, setBranches] = useState<Branches[]>([]);
-  const [serviceAll, setServicesAll] = useState<Services[]>([]);
-  const [servicesType1, setServicesType1] = useState<Services[]>([]);
-  const [servicesType2, setServicesType2] = useState<Services[]>([]);
-  const [servicesType3, setServicesType3] = useState<Services[]>([]);
-  const [selectedServices, setSelectedServices] = useState<Services[]>([]);
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [selectedStylist, setSelectedStylist] = useState<string | null>(null); // Trạng thái cho stylist đã chọn
+  const [currentStep, setCurrentStep] = useState(0)
+  const [branches, setBranches] = useState<Branches[]>([])
+  const [serviceAll, setServicesAll] = useState<Services[]>([])
+  const [servicesType1, setServicesType1] = useState<Services[]>([])
+  const [servicesType2, setServicesType2] = useState<Services[]>([])
+  const [servicesType3, setServicesType3] = useState<Services[]>([])
+  const [selectedServices, setSelectedServices] = useState<Services[]>([])
+  const [searchTerm, setSearchTerm] = useState<string>('')
+  const [selectedStylist, setSelectedStylist] = useState<string | null>(null) // Trạng thái cho stylist đã chọn
 
-  const [stylists, setStylists] = useState<Stylish[]>([]); // Thêm trạng thái cho stylist
-  const [selectedBranch, setSelectedBranch] = useState<string | null>(null); // Trạng thái cho cơ sở đã chọn
+  const [stylists, setStylists] = useState<Stylish[]>([]) // Thêm trạng thái cho stylist
+  const [selectedBranch, setSelectedBranch] = useState<string | null>(null) // Trạng thái cho cơ sở đã chọn
+  const [selectedDate, setDate] = useState<Date | null>(new Date())
+  const [selectedTime, setSelectedTime] = useState<string | null>(null)
   useEffect(() => {
     const fetchBranches = async () => {
       try {
-        const response = await getBranchesAll();
-        setBranches(response);
+        const response = await getBranchesAll()
+        setBranches(response)
       } catch (error) {
-        console.error("Error fetching branches:", error);
+        console.error('Error fetching branches:', error)
       }
-    };
+    }
 
     const fetchServices = async () => {
       try {
-        const serviceAll = await getAllServices();
-        const services1 = await getServicesByType(1);
-        const services2 = await getServicesByType(2);
-        const services3 = await getServicesByType(3);
-        setServicesAll(serviceAll);
-        setServicesType1(services1);
-        setServicesType2(services2);
-        setServicesType3(services3);
+        const serviceAll = await getAllServices()
+        const services1 = await getServicesByType(1)
+        const services2 = await getServicesByType(2)
+        const services3 = await getServicesByType(3)
+        setServicesAll(serviceAll)
+        setServicesType1(services1)
+        setServicesType2(services2)
+        setServicesType3(services3)
       } catch (error) {
-        console.error("Error fetching services:", error);
+        console.error('Error fetching services:', error)
       }
-    };
+    }
 
-    fetchBranches();
-    fetchServices();
-  }, []);
+    fetchBranches()
+    fetchServices()
+  }, [])
   const handleBranchChange = async (branchId: string) => {
-    setSelectedBranch(branchId);
+    setSelectedBranch(branchId)
 
     // Gọi API để lấy danh sách stylist dựa trên branchId
     try {
-      const stylistList = await getStylishByBranchID(branchId);
-      setStylists(stylistList);
+      const stylistList = await getStylishByBranchID(branchId)
+      setStylists(stylistList)
     } catch (error) {
-      console.error("Error fetching stylists:", error);
+      console.error('Error fetching stylists:', error)
     }
-  };
+  }
 
   const handleConfirm = () => {
     if (selectedServices.length > 0) {
-      setCurrentStep(currentStep + 1);
+      setCurrentStep(currentStep + 1)
     }
-  };
+  }
   const handleConfirmBack = () => {
-    setCurrentStep((prev) => Math.max(prev - 1, 0));
-  };
+    setCurrentStep((prev) => Math.max(prev - 1, 0))
+  }
   const handleServiceClick = (service: Services) => {
     const isSelected = selectedServices.some(
       (s) => s.serviceID === service.serviceID
-    );
+    )
 
     if (isSelected) {
       setSelectedServices(
         selectedServices.filter((s) => s.serviceID !== service.serviceID)
-      );
+      )
     } else {
-      setSelectedServices([...selectedServices, service]);
+      setSelectedServices([...selectedServices, service])
     }
-  };
+  }
   const handleDeleteService = (serviceID: string) => {
     setSelectedServices(
       selectedServices.filter((service) => service.serviceID !== serviceID)
-    );
-  };
+    )
+  }
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("vi-VN", {
-      style: "decimal",
+    return new Intl.NumberFormat('vi-VN', {
+      style: 'decimal',
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
-    }).format(amount);
-  };
+    }).format(amount)
+  }
   const formatDuration = (duration: number) => {
     if (duration > 60) {
-      const hours = Math.floor(duration / 60);
-      const minutes = duration % 60;
-      return `${hours} giờ ${minutes} phút`;
+      const hours = Math.floor(duration / 60)
+      const minutes = duration % 60
+      return minutes > 0 ? `${hours} giờ ${minutes} phút` : `${hours} giờ`
     }
-    return `${duration} phút`;
-  };
+    return `${duration} phút`
+  }
 
+  const handleSelectDate = (value: Dayjs) => {
+    console.log(value.format('YYYY-MM-DD'))
+  }
+
+  function generateTimeSlots(start: number, end: number): string[] {
+    const timeSlots: string[] = []
+
+    for (let hour = start; hour <= end; hour++) {
+      timeSlots.push(`${hour}:00`)
+    }
+
+    return timeSlots
+  }
+
+  const timeSlots = generateTimeSlots(8, 17)
   const filteredServicesAll = serviceAll.filter((service) =>
     service.serviceName.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  )
 
   const filteredServicesType1 = servicesType1.filter((service) =>
     service.serviceName.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  )
 
   const filteredServicesType2 = servicesType2.filter((service) =>
     service.serviceName.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  )
   const filteredServicesType3 = servicesType3.filter((service) =>
     service.serviceName.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
+  )
+  console.log(serviceAll)
+  console.log(stylists)
   const steps = [
     {
-      title: "Chọn cơ sở và dịch vụ",
+      title: 'Chọn cơ sở và dịch vụ',
       content: (
         <div className="w-5/6 mx-auto flex">
           <div className="flex-1 h-[84vh] overflow-y-auto custom-scrollbar">
@@ -170,7 +192,7 @@ const BookingPage: React.FC = () => {
                   onChange={(e) => setSearchTerm(e.target.value)}
                   prefix={
                     <SearchOutlined
-                      style={{ fontSize: "20px", marginRight: "15px" }}
+                      style={{ fontSize: '20px', marginRight: '15px' }}
                     />
                   }
                   className="mb-5 text-base h-12"
@@ -189,7 +211,7 @@ const BookingPage: React.FC = () => {
                         Tất cả
                       </Button>
                     ),
-                    key: "1",
+                    key: '1',
                     children: (
                       <div className="mt-2">
                         {filteredServicesAll.map((service) => (
@@ -199,13 +221,13 @@ const BookingPage: React.FC = () => {
                               selectedServices.some(
                                 (s) => s.serviceID === service.serviceID
                               )
-                                ? "border-[#937b34]" // Màu nền khi dịch vụ được chọn
-                                : "border-slate-400" // Màu nền mặc định
+                                ? 'border-[#937b34]' // Màu nền khi dịch vụ được chọn
+                                : 'border-slate-400' // Màu nền mặc định
                             }`}
                           >
                             <div>
                               <img
-                                src={demo}
+                                src={service.avatarImage?.toString()}
                                 alt={service.serviceName}
                                 className="w-36 h-32 rounded-md object-cover object-top mr-4 m-1"
                               />
@@ -274,7 +296,7 @@ const BookingPage: React.FC = () => {
                         Cắt Tóc Và Tạo Kiểu
                       </Button>
                     ),
-                    key: "2",
+                    key: '2',
                     children: (
                       <div className="mt-2">
                         {filteredServicesType1.map((service) => (
@@ -284,8 +306,8 @@ const BookingPage: React.FC = () => {
                               selectedServices.some(
                                 (s) => s.serviceID === service.serviceID
                               )
-                                ? "border-[#937b34]" // Màu nền khi dịch vụ được chọn
-                                : "border-slate-400" // Màu nền mặc định
+                                ? 'border-[#937b34]' // Màu nền khi dịch vụ được chọn
+                                : 'border-slate-400' // Màu nền mặc định
                             }`}
                           >
                             <div>
@@ -346,7 +368,7 @@ const BookingPage: React.FC = () => {
                         Nhuộm Tóc và Uốn Tóc
                       </Button>
                     ),
-                    key: "3",
+                    key: '3',
                     children: (
                       <div className="mt-2">
                         {filteredServicesType2.map((service) => (
@@ -356,8 +378,8 @@ const BookingPage: React.FC = () => {
                               selectedServices.some(
                                 (s) => s.serviceID === service.serviceID
                               )
-                                ? "border-[#937b34]" // Màu nền khi dịch vụ được chọn
-                                : "border-slate-400" // Màu nền mặc định
+                                ? 'border-[#937b34]' // Màu nền khi dịch vụ được chọn
+                                : 'border-slate-400' // Màu nền mặc định
                             }`}
                           >
                             <div>
@@ -418,7 +440,7 @@ const BookingPage: React.FC = () => {
                         Combo Hot
                       </Button>
                     ),
-                    key: "4",
+                    key: '4',
                     children: (
                       <div className="mt-2">
                         {filteredServicesType3.map((service) => (
@@ -428,8 +450,8 @@ const BookingPage: React.FC = () => {
                               selectedServices.some(
                                 (s) => s.serviceID === service.serviceID
                               )
-                                ? "border-[#937b34]" // Màu nền khi dịch vụ được chọn
-                                : "border-slate-400" // Màu nền mặc định
+                                ? 'border-[#937b34]' // Màu nền khi dịch vụ được chọn
+                                : 'border-slate-400' // Màu nền mặc định
                             }`}
                           >
                             <div>
@@ -493,10 +515,12 @@ const BookingPage: React.FC = () => {
               />
             </div>
           </div>
+
+          {/* xac nhan dich vu */}
           <div className="w-[30%] ml-5 border-2 px-5 border-slate-500 rounded-md h-fit pb-8">
             <div className="flex justify-center mt-6">
               <div className="text-xl text-[#937b34] font-bold w-fit mb-10 text-center border-b-2 border-[#937b34]">
-                Xác nhận
+                Dịch vụ đã chọn
               </div>
             </div>
             <div>
@@ -517,8 +541,8 @@ const BookingPage: React.FC = () => {
                       <span className="text-base font-bold">
                         {service.serviceName}:
                       </span>
-                      <span className="text-base ml-1 flex">
-                        <span>{formatCurrency(service.price)} | </span>
+                      <span className="text-base ml-2 flex">
+                        <span>{formatCurrency(service.price)} </span>
                         <span>
                           <RiDeleteBin6Line
                             className="cursor-pointer ml-2 text-[#df4343]"
@@ -563,8 +587,8 @@ const BookingPage: React.FC = () => {
                 type="primary"
                 className={`py-5 rounded-full bg-black font-medium text-base  mt-8 ${
                   selectedServices.length === 0
-                    ? "opacity-80 cursor-not-allowed"
-                    : ""
+                    ? 'opacity-80 cursor-not-allowed'
+                    : ''
                 }`}
                 disabled={selectedServices.length === 0}
                 onClick={handleConfirm}
@@ -577,7 +601,7 @@ const BookingPage: React.FC = () => {
       ),
     },
     {
-      title: "Đặt lịch với Stylish",
+      title: 'Đặt lịch với Stylist',
       content: (
         <div className="w-3/4 mx-auto pt-5 pb-12">
           {/* LOCAL */}
@@ -593,16 +617,16 @@ const BookingPage: React.FC = () => {
                 showSearch
                 suffixIcon={
                   <SearchOutlined
-                    style={{ fontSize: "35px", marginRight: "20px" }}
+                    style={{ fontSize: '35px', marginRight: '20px' }}
                   />
                 }
                 //
                 placeholder={
                   <span
                     style={{
-                      fontSize: "20px",
-                      color: "#a0a0a0",
-                      padding: "20px 20px",
+                      fontSize: '20px',
+                      color: '#a0a0a0',
+                      padding: '20px 20px',
                     }}
                   >
                     Tìm kiếm cơ sở
@@ -610,7 +634,7 @@ const BookingPage: React.FC = () => {
                 }
                 optionLabelProp="label"
                 filterOption={(input, option) =>
-                  typeof option?.address === "string" &&
+                  typeof option?.address === 'string' &&
                   option.address.toLowerCase().includes(input.toLowerCase())
                 }
                 options={branches.map((branch) => ({
@@ -630,33 +654,34 @@ const BookingPage: React.FC = () => {
               />
             </div>
           </div>
+          {/* stylist */}
           <div>
             <div className="text-lg mb-3 font-semibold flex items-center">
               <FaUserClock className="mr-2" />
-              Lựa chọn stylish:
+              Lựa chọn stylist:
             </div>
             <div>
               <div className="flex flex-wrap justify-center">
                 {selectedBranch ? (
                   <>
-                    <div className="w-40 h-56 shadow-lg border-2 rounded-lg flex justify-center items-center flex-col mr-5 mb-5">
+                    {/* <div className="w-40 h-56 shadow-lg border-2 rounded-lg flex justify-center items-center flex-col mr-5 mb-5">
                       <FaUsers size={50} />
                       <span className="mt-4 font-bold mx-1 text-center">
                         Salon chọn giúp bạn
                       </span>
-                    </div>
+                    </div> */}
                     {stylists.map((stylist) => (
                       <div
                         key={stylist.stylistId}
                         className={`w-40 h-56  rounded-lg flex flex-col mr-5 mb-5 cursor-pointer ${
                           selectedStylist === stylist.stylistId
-                            ? "border-[#937b34] border-4 "
-                            : "border-slate-400 border-2"
+                            ? 'border-[#937b34] border-4 '
+                            : 'border-slate-400 border-2'
                         }`}
                         onClick={() => setSelectedStylist(stylist.stylistId)}
                       >
                         <img
-                          src={stylist.avatarImage}
+                          src={stylist.avatarImage || defaultStylist}
                           alt={stylist.stylistName}
                           className="h-40 w-40 object-cover rounded-t-lg"
                         />
@@ -671,6 +696,19 @@ const BookingPage: React.FC = () => {
                         </span>
                       </div>
                     ))}
+                    <div
+                      className={`w-40 h-56  rounded-lg flex flex-col mr-5 mb-5 cursor-pointer justify-center items-center ${
+                        selectedStylist === '0'
+                          ? 'border-[#937b34] border-4 '
+                          : 'border-slate-400 border-2'
+                      }`}
+                      onClick={() => setSelectedStylist('0')}
+                    >
+                      <FaUsers size={50} />
+                      <span className="mt-4 font-bold mx-1 text-center">
+                        Salon chọn giúp bạn
+                      </span>
+                    </div>
                   </>
                 ) : (
                   <div className="w-full text-center my-5 h-56 ">
@@ -686,44 +724,142 @@ const BookingPage: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="text-lg mb-3 font-semibold flex items-center">
-            <MdAccessTimeFilled className="mr-2" />
-            Thời gian đặt lịch
+          {/* time */}
+          <div>
+            <div className="text-lg mb-3 font-semibold flex items-center">
+              <MdAccessTimeFilled className="mr-2" />
+              Thời gian đặt lịch
+            </div>
+            <Row gutter={20} justify="space-between" align="middle">
+              {/* date */}
+              <Col span={10}>
+                <div>
+                  <Calendar fullscreen={false} onChange={handleSelectDate} />
+                </div>
+              </Col>
+              <Col span={10}>
+                {/* slot */}
+                <div className="flex flex-wrap">
+                  {timeSlots.map((time, index) => (
+                    <div
+                      key={index}
+                      className={`w-1/3 h-10 rounded-lg flex flex-row mr-5 mb-1 cursor-pointer justify-center items-center ${
+                        selectedTime === time
+                          ? 'border-[#937b34] border-4 '
+                          : 'border-slate-400 border-2'
+                      }`}
+                      onClick={() => setSelectedTime(time)}
+                    >
+                      {time}
+                    </div>
+                  ))}
+                </div>
+              </Col>
+            </Row>
           </div>
+
           <div className="w-full flex justify-center">
-            <Button
-              type="primary"
-              className={`py-5 rounded-full bg-black font-medium text-base  mt-8  mr-10 ${
-                selectedServices.length === 0
-                  ? "opacity-80 cursor-not-allowed"
-                  : ""
-              }`}
-              disabled={selectedServices.length === 0}
-              onClick={handleConfirm}
-            >
-              Xác nhận thanh toán
-            </Button>
             <Button
               type="primary"
               className={`py-5 rounded-full bg-black font-medium text-base  mt-8 ${
                 selectedServices.length === 0
-                  ? "opacity-80 cursor-not-allowed"
-                  : ""
+                  ? 'opacity-80 cursor-not-allowed'
+                  : ''
               }`}
               disabled={selectedServices.length === 0}
               onClick={handleConfirmBack}
             >
               Quay lại
             </Button>
+            <Button
+              type="primary"
+              className={`py-5 rounded-full bg-black font-medium text-base  mt-8  ml-10 ${
+                selectedServices.length === 0
+                  ? 'opacity-80 cursor-not-allowed'
+                  : ''
+              }`}
+              disabled={selectedServices.length === 0}
+              onClick={handleConfirm}
+            >
+              Tạo lịch hẹn
+            </Button>
           </div>
         </div>
       ),
     },
     {
-      title: "Xác nhận thông tin",
-      content: "Nội dung cho bước 3: Xác nhận thông tin",
+      title: 'Xác nhận thanh toán',
+      content: (
+        <div className="pb-8 flex justify-center">
+          <div className="w-[50%]  ml-5 border-2 px-5 bg-slate-100  rounded-md h-fit pb-8">
+            <div className="flex justify-center mt-6">
+              <div className="text-xl text-[#937b34] font-bold w-fit mb-10 text-center border-b-2 border-[#937b34]">
+                Chi tiết lịch hẹn
+              </div>
+              <div></div>
+            </div>
+            <div>
+              {
+                <>
+                  {selectedServices.map((service) => (
+                    <div
+                      key={service.serviceID}
+                      className="mb-2 flex justify-between"
+                    >
+                      <span className="text-base font-bold">
+                        {service.serviceName}:
+                      </span>
+                      <span className="text-base ml-2 flex">
+                        <span>{formatCurrency(service.price)} VND</span>
+                      </span>
+                    </div>
+                  ))}
+                  <hr className="my-4" />
+                  <div className="flex justify-between text-base">
+                    <span className="font-bold ">Tổng tiền:</span>
+                    <span>
+                      {formatCurrency(
+                        selectedServices.reduce(
+                          (total, service) => total + service.price,
+                          0
+                        )
+                      )}
+                      VNĐ
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-base">
+                    <span className="font-bold ">Tổng thời gian:</span>
+                    <span>
+                      {formatDuration(
+                        selectedServices.reduce(
+                          (total, service) => total + service.duration,
+                          0
+                        )
+                      )}
+                    </span>
+                  </div>
+                </>
+              }
+            </div>
+            <div className="flex justify-center">
+              <Button
+                type="primary"
+                className={`py-5 rounded-full bg-black font-medium text-base  mt-8 ${
+                  selectedServices.length === 0
+                    ? 'opacity-80 cursor-not-allowed'
+                    : ''
+                }`}
+                disabled={selectedServices.length === 0}
+                onClick={handleConfirm}
+              >
+                Xác nhận đặt dịch vụ
+              </Button>
+            </div>
+          </div>
+        </div>
+      ),
     },
-  ];
+  ]
 
   // const next = () => {
   //   setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
@@ -775,7 +911,7 @@ const BookingPage: React.FC = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default BookingPage;
+export default BookingPage
