@@ -29,8 +29,12 @@ import { FaStar } from 'react-icons/fa'
 import { getServicesByType, getAllServices } from '../../services/serviceSalon'
 import type { DatePickerProps } from 'antd'
 import { Dayjs } from 'dayjs'
-import { getSuitableSlots } from '../../services/Appoinment'
-
+import {
+  getAvailableStylist,
+  getSuitableSlots,
+  createAppointment,
+} from '../../services/Appoinment'
+import { CreateAppointmentRequest } from '../../models/type'
 const customDot: StepsProps['progressDot'] = (dot, { status, index }) => (
   <Popover
     content={
@@ -69,7 +73,7 @@ const BookingPage: React.FC = () => {
 
   const [stylists, setStylists] = useState<Stylish[]>([]) // Thêm trạng thái cho stylist
   const [selectedBranch, setSelectedBranch] = useState<string | null>(null) // Trạng thái cho cơ sở đã chọn
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date())
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date(Date.now()))
   const [selectedTime, setSelectedTime] = useState<string | null>(null)
   const [availableSlot, setAvailableSlot] = useState<Date[] | null>(
     timeSlots.map((time) => {
@@ -81,6 +85,17 @@ const BookingPage: React.FC = () => {
   ) // Convert timeSlots to Date[]
   const fetchTimeSlot = async () => {
     try {
+      if (selectedStylist == '0') {
+        setAvailableSlot(
+          timeSlots.map((time) => {
+            const [hour] = time.split(':') // Extract the hour from the string
+            const date = new Date() // Create a new Date object
+            date.setHours(Number(hour), 0, 0, 0) // Set the hour, minutes, seconds, and milliseconds
+            return date // Return the Date object
+          })
+        )
+        return
+      }
       const response = await getSuitableSlots({
         stylistId: selectedStylist || '0',
         serviceId: selectedServices.map((service) => service.serviceID),
@@ -95,6 +110,45 @@ const BookingPage: React.FC = () => {
       console.log(availableSlot)
     } catch (error) {
       console.error('Error fetching available slot', error)
+    }
+  }
+  const fetchAvailableStylist = async () => {
+    try {
+      const response = await getAvailableStylist({
+        startTime: selectedDate,
+        serviceIds: selectedServices.map((service) => service.serviceID),
+        branchId: selectedBranch!,
+      })
+      console.log(
+        selectedDate,
+        selectedServices.map((service) => service.serviceID),
+        selectedBranch
+      )
+      setSelectedStylist(response.stylistId)
+      console.log(availableSlot)
+    } catch (error) {
+      console.log('Error fetching available stylist ', error)
+    }
+  }
+  const handleCreateAppointment = async () => {
+    try {
+      if (selectedStylist === '0') {
+        fetchAvailableStylist()
+      }
+      const appointmentRequest: CreateAppointmentRequest = {
+        stylistId: selectedStylist || 'err',
+        appointmentDate: selectedDate.toISOString(),
+        serviceIds: selectedServices.map((service) => service.serviceID),
+      }
+      console.log(
+        selectedStylist,
+        selectedDate,
+        selectedServices.map((service) => service.serviceID)
+      )
+      const response = await createAppointment(appointmentRequest)
+      console.log(response)
+    } catch (error) {
+      console.log('Error creating appointment ', error)
     }
   }
   useEffect(() => {
@@ -125,6 +179,9 @@ const BookingPage: React.FC = () => {
     fetchBranches()
     fetchServices()
   }, [])
+  useEffect(() => {
+    fetchTimeSlot()
+  }, [selectedDate, selectedStylist])
   const handleBranchChange = async (branchId: string) => {
     setSelectedBranch(branchId)
 
@@ -708,7 +765,10 @@ const BookingPage: React.FC = () => {
                             ? 'border-[#937b34] border-4 '
                             : 'border-slate-400 border-2'
                         }`}
-                        onClick={() => setSelectedStylist(stylist.stylistId)}
+                        onClick={() => {
+                          setSelectedStylist(stylist.stylistId)
+                          setSelectedDate(new Date())
+                        }}
                       >
                         <img
                           src={stylist.avatarImage || defaultStylist}
@@ -732,7 +792,10 @@ const BookingPage: React.FC = () => {
                           ? 'border-[#937b34] border-4 '
                           : 'border-slate-400 border-2'
                       }`}
-                      onClick={() => setSelectedStylist('0')}
+                      onClick={() => {
+                        setSelectedStylist('0')
+                        setSelectedDate(new Date())
+                      }}
                     >
                       <FaUsers size={50} />
                       <span className="mt-4 font-bold mx-1 text-center">
@@ -760,32 +823,70 @@ const BookingPage: React.FC = () => {
               <MdAccessTimeFilled className="mr-2" />
               Thời gian đặt lịch
             </div>
-            <Row gutter={20} justify="space-between" align="middle">
-              {/* date */}
-              <Col span={10}>
-                <div>
-                  <Calendar fullscreen={false} onChange={handleSelectDate} />
-                </div>
-              </Col>
-              <Col span={10}>
-                {/* slot */}
-                <div className="flex flex-wrap">
-                  {timeSlots.map((time, index) => (
-                    <div
-                      key={index}
-                      className={`w-1/3 h-10 rounded-lg flex flex-row mr-5 mb-1 cursor-pointer justify-center items-center ${
-                        selectedTime === time
-                          ? 'border-[#937b34] border-4 '
-                          : 'border-slate-400 border-2'
-                      }`}
-                      onClick={() => setSelectedTime(time)}
-                    >
-                      {time}
+            {selectedStylist ? (
+              <>
+                {' '}
+                <Row gutter={20} justify="space-between" align="middle">
+                  {/* date */}
+                  <Col span={10}>
+                    <div>
+                      <Calendar
+                        fullscreen={false}
+                        onChange={handleSelectDate}
+                      />
                     </div>
-                  ))}
+                  </Col>
+                  {selectedStylist && selectedDate ? (
+                    <>
+                      {' '}
+                      <Col span={10}>
+                        {/* slot */}
+                        <div className="flex flex-wrap">
+                          {timeSlots.map((time, index) => (
+                            <div
+                              key={index}
+                              className={`w-1/3 h-10 rounded-lg flex flex-row mr-5 mb-1 cursor-pointer justify-center items-center ${
+                                selectedTime === time
+                                  ? 'border-[#937b34] border-4 '
+                                  : 'border-slate-400 border-2'
+                              }`}
+                              onClick={() => setSelectedTime(time)}
+                            >
+                              {time}
+                            </div>
+                          ))}
+                        </div>
+                      </Col>
+                    </>
+                  ) : (
+                    <>
+                      <Col span={10}>
+                        {' '}
+                        <div className="w-full text-center my-5 h-56 ">
+                          <div className="w-full flex justify-center text-gray-400 mb-2">
+                            <RiMapPinUserFill size={100} />
+                          </div>
+
+                          <span className="text-lg font-bold text-gray-400">
+                            Vui lòng chọn thoi gian
+                          </span>
+                        </div>
+                      </Col>
+                    </>
+                  )}
+                </Row>
+              </>
+            ) : (
+              <div className="w-full text-center my-5 h-56 ">
+                <div className="w-full flex justify-center text-gray-400 mb-2">
+                  <RiMapPinUserFill size={100} />
                 </div>
-              </Col>
-            </Row>
+
+                <span className="text-lg font-bold text-gray-400">
+                  Vui lòng chọn stylist
+                </span>
+              </div>
+            )}
           </div>
 
           <div className="w-full flex justify-center">
@@ -809,7 +910,8 @@ const BookingPage: React.FC = () => {
                   : ''
               }`}
               disabled={selectedServices.length === 0}
-              onClick={handleConfirm}
+              // onClick={handleConfirm}
+              onClick={handleCreateAppointment}
             >
               Tạo lịch hẹn
             </Button>
