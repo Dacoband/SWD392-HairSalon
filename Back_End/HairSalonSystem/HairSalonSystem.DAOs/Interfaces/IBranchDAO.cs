@@ -12,7 +12,7 @@ namespace HairSalonSystem.DAOs.Interfaces
         Task AddBranchAsync(Branch branch);
         Task UpdateBranchAsync(Branch branch);
         Task DeleteBranchAsync(Guid branchId);
-        Task<Branch> GetBranchByIdAsync(Guid branchId);
+        Task<Branch> GetBranchByIdAsync(Guid? branchId);
         Task<List<Branch>> GetAllBranchesAsync();
         Task<List<Branch>> GetBranchesByManagerIdAsync(Guid managerId);
     }
