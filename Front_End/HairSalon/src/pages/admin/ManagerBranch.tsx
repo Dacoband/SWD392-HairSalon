@@ -119,8 +119,8 @@ const ManagerBranch: React.FC = () => {
       dataIndex: "delFlg",
       key: "delFlg",
       render: (delFlg: boolean) => (
-        <span style={{ color: delFlg ? "red" : "green" }}>
-          {delFlg ? "Inactive" : "Active"}
+        <span style={{ color: delFlg ? "green" : "red" }}>
+          {!delFlg ? "Inactive" : "Active"}
         </span>
       ),
     },
