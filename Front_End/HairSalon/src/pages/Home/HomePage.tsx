@@ -69,7 +69,7 @@ const HomePage: React.FC = () => {
               localStorage.getItem("userData") || "{}"
             );
 
-            if (userData && userData.role === "MB") {
+            if (userData && userData.roleName === "MB") {
               navigate("/service");
             } else {
               navigate("/login");

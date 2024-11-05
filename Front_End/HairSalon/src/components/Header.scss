@@ -47,3 +47,22 @@
 .ant-dropdown-placement-bottomCenter {
   transform: translateX(-50%);
 }
+
+.search-input {
+  width: 200px;
+  margin-bottom: 0;
+  height: 32px;
+}
+
+.book-button {
+  margin-left: 10px;
+  padding: 6px 12px;
+  background-color: #000;
+  color: #fff;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  &:hover {
+    background-color: #74601d;
+  }
+}

@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { Input, Dropdown, Menu } from "antd";
 import { Col, Row } from "antd";
 import { useNavigate } from "react-router-dom";
-import { UserOutlined } from "@ant-design/icons";
+import { UserOutlined, SearchOutlined } from "@ant-design/icons";
 import "./Header.scss";
 
 const Header = () => {
   const navigate = useNavigate();
   const isLoggedIn = localStorage.getItem("token"); // Check if token exists in localStorage
+  const [searchTerm, setSearchTerm] = useState<string>(""); // Thêm trạng thái cho từ khóa tìm kiếm
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    // Thực hiện hành động tìm kiếm ở đây, ví dụ: navigate đến trang kết quả tìm kiếm
+  };
 
   const menu = (
     <Menu>
@@ -48,7 +54,7 @@ const Header = () => {
             />
           </a>
         </Col>
-        <Col span={18}>
+        <Col span={12}>
           <div className="flex justify-evenly items-center pr-10">
             <div className="items-center text-center">
               <a
@@ -70,38 +76,43 @@ const Header = () => {
                 Chi Nhánh
               </a>
             </div>
-
-            <button
-              className="font-bold px-6 py-2 bg-[#8e7424] text-white rounded-full hover:bg-[#74601d]"
-              onClick={() => {
-                navigate("/bookAppoiment");
-              }}
-            >
-              Đặt Lịch Hẹn Ngay!
-            </button>
-
-            {isLoggedIn ? (
-              <Dropdown
-                overlay={menu}
-                trigger={["click"]}
-                placement="bottomRight"
-              >
-                <a
-                  className="flex hover:text-[#8e7424] items-center cursor-pointer ml-2"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  <UserOutlined style={{ fontSize: "24px" }} />
-                </a>
-              </Dropdown>
-            ) : (
-              <a
-                onClick={() => navigate("/login")}
-                className="font-bold px-6 py-2 bg-[#000] hover:text-[#ffff] text-white rounded-full hover:bg-[#74601d]"
-              >
-                Login
-              </a>
-            )}
           </div>
+        </Col>
+        <Col span={6} className="flex items-center">
+          <Input
+            placeholder="Tìm kiếm..."
+            value={searchTerm}
+            onChange={handleSearchChange}
+            prefix={<SearchOutlined style={{ fontSize: "20px", marginRight: "15px" }} />}
+            className="search-input"
+          />
+          <button
+            className="book-button"
+            onClick={() => navigate("/bookAppoiment")}
+          >
+            Đặt Lịch
+          </button>
+          {isLoggedIn ? (
+            <Dropdown
+              overlay={menu}
+              trigger={["click"]}
+              placement="bottomRight"
+            >
+              <a
+                className="flex hover:text-[#8e7424] items-center cursor-pointer ml-2"
+                onClick={(e) => e.preventDefault()}
+              >
+                <UserOutlined style={{ fontSize: "24px" }} />
+              </a>
+            </Dropdown>
+          ) : (
+            <a
+              onClick={() => navigate("/login")}
+              className="font-bold px-6 py-2 bg-[#000] hover:text-[#ffff] text-white rounded-full hover:bg-[#74601d]"
+            >
+              Login
+            </a>
+          )}
         </Col>
       </Row>
     </div>
