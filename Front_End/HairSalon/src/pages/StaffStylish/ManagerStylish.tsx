@@ -3,35 +3,40 @@ import axios from "axios";
 import { Table, Button, Modal, Input, Form, message } from "antd";
 import type { ColumnsType } from "antd/es/table";
 
-interface Stylish {
+interface Stylist {
+  branchId: string;
   stylistId: string;
   stylistName: string;
   averageRating: number;
   phoneNumber: string;
   address: string;
   avatarImage: string;
-  insDate: string;
-  updDate: string;
 }
 
-const ManagerStylish_staff: React.FC<{ branchId: string }> = ({ branchId }) => {
-  const [stylists, setStylists] = useState<Stylish[]>([]);
+const ManagerStylishStaff: React.FC = () => {
+  const [stylists, setStylists] = useState<Stylist[]>([]);
   const [loading, setLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [editingStylist, setEditingStylist] = useState<Stylish | null>(null);
+  const [editingStylist, setEditingStylist] = useState<Stylist | null>(null);
+
+  // Lấy branchId từ nơi bạn đã lưu trữ, ví dụ như localStorage
+  const loggedInBranchId = localStorage.getItem("branchId");
 
   useEffect(() => {
-    if (branchId) fetchStylists();
-  }, [branchId]);
+    fetchStylists();
+  }, []);
 
-  // Fetch stylists based on branchId
   const fetchStylists = async () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `https://api.vol-ka.studio/api/v1/stylist/branch?branchId=${branchId}`
+        "https://api.vol-ka.studio/api/v1/stylist/all"
       );
-      setStylists(response.data);
+      // Lọc stylist theo branchId của nhân viên đang đăng nhập
+      const filteredStylists = response.data.filter(
+        (stylist: Stylist) => stylist.branchId === loggedInBranchId
+      );
+      setStylists(filteredStylists);
     } catch (error) {
       console.error("Error fetching stylists:", error);
       message.error("Error fetching stylists");
@@ -40,14 +45,27 @@ const ManagerStylish_staff: React.FC<{ branchId: string }> = ({ branchId }) => {
     }
   };
 
-  // Handle modal open for edit
-  const handleEdit = (stylist: Stylish) => {
+  const handleEdit = (stylist: Stylist) => {
     setEditingStylist(stylist);
     setIsModalVisible(true);
   };
 
-  // Handle stylist update
-  const handleModalOk = async (values: Partial<Stylish>) => {
+  const handleDelete = async (stylistId: string) => {
+    try {
+      await axios.delete(
+        `https://api.vol-ka.studio/api/v1/stylist/delete/${stylistId}`
+      );
+      setStylists(
+        stylists.filter((stylist) => stylist.stylistId !== stylistId)
+      );
+      message.success("Stylist deleted successfully");
+    } catch (error) {
+      console.error("Error deleting stylist:", error);
+      message.error("Error deleting stylist");
+    }
+  };
+
+  const handleModalOk = async (values: Partial<Stylist>) => {
     if (editingStylist) {
       try {
         const response = await axios.put(
@@ -55,8 +73,8 @@ const ManagerStylish_staff: React.FC<{ branchId: string }> = ({ branchId }) => {
           values
         );
         const updatedStylist = response.data;
-        setStylists((prev) =>
-          prev.map((stylist) =>
+        setStylists((prevStylists) =>
+          prevStylists.map((stylist) =>
             stylist.stylistId === updatedStylist.stylistId
               ? updatedStylist
               : stylist
@@ -66,20 +84,18 @@ const ManagerStylish_staff: React.FC<{ branchId: string }> = ({ branchId }) => {
       } catch (error) {
         console.error("Error updating stylist:", error);
         message.error("Error updating stylist");
-      } finally {
-        setIsModalVisible(false);
-        setEditingStylist(null);
       }
     }
+    setIsModalVisible(false);
+    setEditingStylist(null);
   };
 
-  // Handle modal close
   const handleModalCancel = () => {
     setIsModalVisible(false);
     setEditingStylist(null);
   };
 
-  const columns: ColumnsType<Stylish> = [
+  const columns: ColumnsType<Stylist> = [
     {
       title: "Avatar",
       dataIndex: "avatarImage",
@@ -93,18 +109,22 @@ const ManagerStylish_staff: React.FC<{ branchId: string }> = ({ branchId }) => {
       ),
     },
     {
-      title: "Stylist Name",
+      title: "Name",
       dataIndex: "stylistName",
       key: "stylistName",
+    },
+    {
+      title: "Branch ID",
+      dataIndex: "branchId",
+      key: "branchId",
     },
     {
       title: "Rating",
       dataIndex: "averageRating",
       key: "averageRating",
-      render: (rating: number) => rating.toFixed(1),
     },
     {
-      title: "Phone Number",
+      title: "Phone",
       dataIndex: "phoneNumber",
       key: "phoneNumber",
     },
@@ -112,26 +132,24 @@ const ManagerStylish_staff: React.FC<{ branchId: string }> = ({ branchId }) => {
       title: "Address",
       dataIndex: "address",
       key: "address",
-    },
-    {
-      title: "Added On",
-      dataIndex: "insDate",
-      key: "insDate",
-      render: (date: string) => new Date(date).toLocaleDateString(),
-    },
-    {
-      title: "Last Updated",
-      dataIndex: "updDate",
-      key: "updDate",
-      render: (date: string) => new Date(date).toLocaleDateString(),
+      width: 200,
     },
     {
       title: "Actions",
       key: "actions",
       render: (_, record) => (
-        <Button type="link" onClick={() => handleEdit(record)}>
-          Edit
-        </Button>
+        <>
+          <Button type="link" onClick={() => handleEdit(record)}>
+            Edit
+          </Button>
+          <Button
+            type="link"
+            danger
+            onClick={() => handleDelete(record.stylistId)}
+          >
+            Delete
+          </Button>
+        </>
       ),
     },
   ];
@@ -156,29 +174,17 @@ const ManagerStylish_staff: React.FC<{ branchId: string }> = ({ branchId }) => {
           onFinish={handleModalOk}
           layout="vertical"
         >
-          <Form.Item
-            name="stylistName"
-            label="Stylist Name"
-            rules={[
-              { required: true, message: "Please input the stylist's name" },
-            ]}
-          >
+          <Form.Item name="stylistName" label="Stylist Name">
             <Input />
           </Form.Item>
-          <Form.Item
-            name="phoneNumber"
-            label="Phone Number"
-            rules={[
-              { required: true, message: "Please input the phone number" },
-            ]}
-          >
+          <Form.Item name="phoneNumber" label="Phone Number">
             <Input />
           </Form.Item>
           <Form.Item name="address" label="Address">
             <Input />
           </Form.Item>
-          <Form.Item name="avatarImage" label="Avatar Image URL">
-            <Input />
+          <Form.Item name="avatarImage" label="Avatar URL">
+            <Input type="url" />
           </Form.Item>
           <Button type="primary" htmlType="submit">
             Save
@@ -189,4 +195,4 @@ const ManagerStylish_staff: React.FC<{ branchId: string }> = ({ branchId }) => {
   );
 };
 
-export default ManagerStylish_staff;
+export default ManagerStylishStaff;
