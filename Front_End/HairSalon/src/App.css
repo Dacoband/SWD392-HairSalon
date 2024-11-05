@@ -104,5 +104,12 @@
 .custom-scrollbar::-webkit-scrollbar {
   width: 2px !important; 
 }
+.custom-menu .ant-menu-item-selected {
+  background-color: #b78c39 !important; /* Change this to your desired color */
+  color: white !important; /* Change this to your desired text color */
+}
 
+.custom-menu .ant-menu-item:hover {
+  background-color: #b78c39 !important; /* Change this to your desired hover color */
+}
 
