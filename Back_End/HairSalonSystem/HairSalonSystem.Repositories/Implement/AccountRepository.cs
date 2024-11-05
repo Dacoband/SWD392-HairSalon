@@ -91,7 +91,7 @@ namespace HairSalonSystem.Repositories.Implement
             var member = await _members.Find(n => n.AccountId == accountId).FirstOrDefaultAsync();
             return member.MemberId;
         }
-        public async Task<Guid> GetBranchIdByAccountId(Guid accountId)
+        public async Task<Guid?> GetBranchIdByAccountId(Guid accountId)
         {
             var stylist = await _Stylists.Find(n => n.AccountId == accountId).FirstOrDefaultAsync();
             if (stylist != null)
@@ -111,7 +111,7 @@ namespace HairSalonSystem.Repositories.Implement
                 return staffStylist.BranchID;
             }
 
-            return Guid.Empty;
+            return null;
         }
     }
 }

@@ -40,6 +40,7 @@ namespace HairSalonSystem.Services.Implements
                 "MB" => await _accountRepository.GetMemberId(account.AccountId),
                 _ => null
             };
+
             Guid? branchId = await _accountRepository.GetBranchIdByAccountId(account.AccountId);
 
             return (account, actorId, branchId);
