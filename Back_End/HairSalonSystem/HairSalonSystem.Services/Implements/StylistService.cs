@@ -34,13 +34,18 @@ namespace HairSalonSystem.Services.Implements
             var roleName = UserUtil.GetRoleName(httpContext);
             if (roleName != Enums.RoleEnums.SL.ToString() && roleName != Enums.RoleEnums.SA.ToString())
                 return new CreateStylistResponse { Message = MessageConstant.StylistMessage.NotRights };
-            var url = await _firebaseService.UploadFile(request.AvatarImage);
+            var url = "";
+            if(request.AvatarImage != null)
+            {
+                 url = await _firebaseService.UploadFile(request.AvatarImage);
+
+            }
             var account = new Account
             {
                 AccountId = Guid.NewGuid(),
                 Email = request.Email,
                 Password = PasswordUtil.HashPassword(request.Password),
-                RoleName = Enums.RoleEnums.ST.ToString(),
+                RoleName = Enums.RoleEnums.SL.ToString(),
                 InsDate = DateTime.Now,
                 UpdDate = DateTime.Now,
                 DelFlg = true
@@ -117,7 +122,11 @@ namespace HairSalonSystem.Services.Implements
             var stylist = await _stylistRepository.GetStylistById(id);
             if (stylist == null)
                 throw new KeyNotFoundException(MessageConstant.StylistMessage.StylistNotFound);
-            var url = await _firebaseService.UploadFile(request.AvatarImage);
+            var url = "";
+            if(request.AvatarImage != null)
+            {
+                url = await _firebaseService.UploadFile(request.AvatarImage);
+            }
             stylist.StaffStylistId = request.StaffStylistId;
             stylist.StylistName = request.StylistName;
             stylist.PhoneNumber = request.PhoneNumber;

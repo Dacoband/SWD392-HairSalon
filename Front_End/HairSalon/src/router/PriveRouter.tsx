@@ -11,7 +11,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({
   allowedRoles,
 }) => {
   const userData = localStorage.getItem("userData");
-  const userRole = userData ? JSON.parse(userData).role : null;
+  const userRole = userData ? JSON.parse(userData).roleName : null;
 
   if (userRole && allowedRoles.includes(userRole)) {
     return <Component />;
