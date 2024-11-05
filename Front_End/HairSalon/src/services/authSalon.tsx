@@ -1,4 +1,5 @@
 import axios from "axios";
+import Branch from "../pages/Branch";
 
 export const login = async (email: string, password: string) => {
     try {
@@ -13,11 +14,11 @@ export const login = async (email: string, password: string) => {
       });
     
      if (response.data && response.data.token && response.data.email && response.data.roleName) {
-      const { token, email: userEmail, roleName ,accountId, actorId} = response.data;
+      const { token, email: userEmail, roleName ,accountId, actorId,branchId} = response.data;
       
 
       localStorage.setItem('token', token);
-      const userDatas = { email: userEmail, roleName ,accountId, actorId};
+      const userDatas = { email: userEmail, roleName ,accountId, actorId, branchId};
       localStorage.setItem('userData', JSON.stringify(userDatas));
   
       return { token, userDatas };
