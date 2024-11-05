@@ -29,6 +29,7 @@ import { FaStar } from 'react-icons/fa'
 import { getServicesByType, getAllServices } from '../../services/serviceSalon'
 import type { DatePickerProps } from 'antd'
 import { Dayjs } from 'dayjs'
+import { getSuitableSlots } from '../../services/Appoinment'
 
 const customDot: StepsProps['progressDot'] = (dot, { status, index }) => (
   <Popover
@@ -43,6 +44,18 @@ const customDot: StepsProps['progressDot'] = (dot, { status, index }) => (
 )
 const defaultStylist =
   'https://firebasestorage.googleapis.com/v0/b/hairsalon-588fe.appspot.com/o/fb106a17a7b0835f40c1c6f529fc0a0d.jpg?alt=media'
+
+function generateTimeSlots(start: number, end: number): string[] {
+  const timeSlots: string[] = []
+
+  for (let hour = start; hour <= end; hour++) {
+    timeSlots.push(`${hour}:00`)
+  }
+
+  return timeSlots
+}
+
+const timeSlots = generateTimeSlots(8, 17)
 const BookingPage: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0)
   const [branches, setBranches] = useState<Branches[]>([])
@@ -56,8 +69,28 @@ const BookingPage: React.FC = () => {
 
   const [stylists, setStylists] = useState<Stylish[]>([]) // Thêm trạng thái cho stylist
   const [selectedBranch, setSelectedBranch] = useState<string | null>(null) // Trạng thái cho cơ sở đã chọn
-  const [selectedDate, setDate] = useState<Date | null>(new Date())
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date())
   const [selectedTime, setSelectedTime] = useState<string | null>(null)
+  const [availableSlot, setAvailableSlot] = useState<Date[] | null>(
+    timeSlots.map((time) => {
+      const [hour] = time.split(':') // Extract the hour from the string
+      const date = new Date() // Create a new Date object
+      date.setHours(Number(hour), 0, 0, 0) // Set the hour, minutes, seconds, and milliseconds
+      return date // Return the Date object
+    })
+  ) // Convert timeSlots to Date[]
+  const fetchTimeSlot = async () => {
+    try {
+      const response = await getSuitableSlots({
+        stylistId: selectedStylist || '0',
+        serviceId: selectedServices.map((service) => service.serviceID),
+        date: selectedDate,
+      })
+      setAvailableSlot(response)
+    } catch (error) {
+      console.error('Error fetching available slot', error)
+    }
+  }
   useEffect(() => {
     const fetchBranches = async () => {
       try {
@@ -141,20 +174,11 @@ const BookingPage: React.FC = () => {
   }
 
   const handleSelectDate = (value: Dayjs) => {
+    setSelectedDate(value.toDate())
+    fetchTimeSlot()
     console.log(value.format('YYYY-MM-DD'))
   }
 
-  function generateTimeSlots(start: number, end: number): string[] {
-    const timeSlots: string[] = []
-
-    for (let hour = start; hour <= end; hour++) {
-      timeSlots.push(`${hour}:00`)
-    }
-
-    return timeSlots
-  }
-
-  const timeSlots = generateTimeSlots(8, 17)
   const filteredServicesAll = serviceAll.filter((service) =>
     service.serviceName.toLowerCase().includes(searchTerm.toLowerCase())
   )
