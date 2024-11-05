@@ -20,11 +20,13 @@ namespace HairSalonSystem.Services.Implements
     {
         private readonly IStylistRepository _stylistRepository;
         private readonly IAccountRepository _accountRepository;
+        private readonly IFirebaseService _firebaseService;
+        public StylistService(IStylistRepository stylistRepository, IAccountRepository accountRepository, IFirebaseService firebaseService)
 
-        public StylistService(IStylistRepository stylistRepository, IAccountRepository accountRepository)
         {
             _stylistRepository = stylistRepository;
             _accountRepository = accountRepository;
+            _firebaseService = firebaseService;
         }
 
         public async Task<CreateStylistResponse> CreateStylistAsync(CreateStylistRequest request, HttpContext httpContext)
@@ -32,19 +34,23 @@ namespace HairSalonSystem.Services.Implements
             var roleName = UserUtil.GetRoleName(httpContext);
             if (roleName != Enums.RoleEnums.SL.ToString() && roleName != Enums.RoleEnums.SA.ToString())
                 return new CreateStylistResponse { Message = MessageConstant.StylistMessage.NotRights };
+            var url = "";
+            if(request.AvatarImage != null)
+            {
+                 url = await _firebaseService.UploadFile(request.AvatarImage);
 
+            }
             var account = new Account
             {
                 AccountId = Guid.NewGuid(),
                 Email = request.Email,
                 Password = PasswordUtil.HashPassword(request.Password),
-                RoleName = Enums.RoleEnums.ST.ToString(),
-                InsDate = TimeUtils.GetCurrentSEATime(),
-                UpdDate = TimeUtils.GetCurrentSEATime(),
+                RoleName = Enums.RoleEnums.SL.ToString(),
+                InsDate = DateTime.Now,
+                UpdDate = DateTime.Now,
                 DelFlg = true
             };
             await _accountRepository.AddAccount(account);
-
             var stylist = new Stylist
             {
                 StylistId = Guid.NewGuid(),
@@ -55,9 +61,10 @@ namespace HairSalonSystem.Services.Implements
                 StylistName = request.StylistName,
                 PhoneNumber = request.PhoneNumber,
                 Address = request.Address,
-                AvatarImage = request.AvatarImage,
-                InsDate = TimeUtils.GetCurrentSEATime(),
-                UpdDate = TimeUtils.GetCurrentSEATime(),
+                AvatarImage = url,
+                BaseSalary = 5000000,
+                InsDate = DateTime.Now,
+                UpdDate = DateTime.Now,
                 DelFlg = true
             };
 
@@ -115,13 +122,17 @@ namespace HairSalonSystem.Services.Implements
             var stylist = await _stylistRepository.GetStylistById(id);
             if (stylist == null)
                 throw new KeyNotFoundException(MessageConstant.StylistMessage.StylistNotFound);
-
+            var url = "";
+            if(request.AvatarImage != null)
+            {
+                url = await _firebaseService.UploadFile(request.AvatarImage);
+            }
             stylist.StaffStylistId = request.StaffStylistId;
             stylist.StylistName = request.StylistName;
             stylist.PhoneNumber = request.PhoneNumber;
             stylist.Address = request.Address;
-            stylist.AvatarImage = request.AvatarImage;
-            stylist.UpdDate = TimeUtils.GetCurrentSEATime();
+            stylist.AvatarImage = url;
+            stylist.UpdDate = DateTime.Now;
 
             await _stylistRepository.UpdateStylist(id, stylist);
 

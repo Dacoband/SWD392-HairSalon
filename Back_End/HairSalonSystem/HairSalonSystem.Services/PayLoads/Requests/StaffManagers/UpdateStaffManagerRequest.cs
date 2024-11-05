@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using Microsoft.AspNetCore.Http;
+using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -26,10 +27,10 @@ namespace HairSalonSystem.Services.PayLoads.Requests.StaffManagers
         [BsonElement("email")]
         public string Email { get; set; }
         [BsonElement("address")]
-        public string Address { get; set; }
+        public string? Address { get; set; }
 
         [BsonElement("avatarImage")]
-        public string AvatarImage { get; set; } = string.Empty;
+        public IFormFile? AvatarImage { get; set; } 
 
         [BsonElement("updDate")]
         public DateTime? UpdDate { get; set; }

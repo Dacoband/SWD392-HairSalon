@@ -19,9 +19,11 @@ namespace HairSalonSystem.Services.Implements
     public class ServiceService : IServiceService
     {
         private readonly IServiceRepository _serviceRepository;
-        public ServiceService(IServiceRepository serviceRepository)
+        private readonly IFirebaseService _firebaseService;
+        public ServiceService(IServiceRepository serviceRepository, IFirebaseService firebaseService)
         {
             _serviceRepository = serviceRepository;
+            _firebaseService = firebaseService;
         }
 
         public async Task<ActionResult> CreateService(CreateServiceRequest serviceModel, HttpContext context)
@@ -43,7 +45,7 @@ namespace HairSalonSystem.Services.Implements
                     StatusCode = StatusCodes.Status403Forbidden
                 };
             }
-
+            var url = await _firebaseService.UploadFile(serviceModel.AvatarImage);
             var service = new BusinessObject.Entities.Service
             {
                 ServiceID = Guid.NewGuid(),
@@ -52,9 +54,9 @@ namespace HairSalonSystem.Services.Implements
                 Price = serviceModel.Price,
                 Description = serviceModel.Description,
                 Duration = serviceModel.Duration,
-                AvatarImage = serviceModel.AvatarImage,
-                InsDate = TimeUtils.GetCurrentSEATime(),
-                UpdDate = TimeUtils.GetCurrentSEATime(),
+                AvatarImage = url,
+                InsDate = DateTime.Now,
+                UpdDate = DateTime.Now,
                 DelFlg = serviceModel.DelFlg,
 
             };
@@ -181,22 +183,22 @@ namespace HairSalonSystem.Services.Implements
         public async Task<ActionResult> UpdateService(Guid serviceId, CreateServiceRequest serviceModel, HttpContext context)
         {
             var accountID = UserUtil.GetAccountId(context);
-            if (accountID == null)
-            {
-                return new ObjectResult(MessageConstant.ServiceMessage.UpdateRight)
-                {
-                    StatusCode = StatusCodes.Status403Forbidden
-                };
-            }
+            //if (accountID == null)
+            //{
+            //    return new ObjectResult(MessageConstant.ServiceMessage.UpdateRight)
+            //    {
+            //        StatusCode = StatusCodes.Status403Forbidden
+            //    };
+            //}
 
-            var roleName = UserUtil.GetRoleName(context);
-            if (roleName != "SA")
-            {
-                return new ObjectResult(MessageConstant.ServiceMessage.UpdateRight)
-                {
-                    StatusCode = StatusCodes.Status403Forbidden
-                };
-            }
+            //var roleName = UserUtil.GetRoleName(context);
+            //if (roleName != "SA")
+            //{
+            //    return new ObjectResult(MessageConstant.ServiceMessage.UpdateRight)
+            //    {
+            //        StatusCode = StatusCodes.Status403Forbidden
+            //    };
+            //}
             var oldService = await _serviceRepository.GetServiceById(serviceId);
             if (oldService == null)
             {
@@ -205,13 +207,15 @@ namespace HairSalonSystem.Services.Implements
                     StatusCode = StatusCodes.Status404NotFound
                 };
             }
+
+            var url = await _firebaseService.UploadFile(serviceModel.AvatarImage);
             oldService.ServiceName = serviceModel.ServiceName;
             oldService.Type = serviceModel.Type;
             oldService.Price = serviceModel.Price;
             oldService.Description = serviceModel.Description;
             oldService.Duration = serviceModel.Duration;
-            oldService.AvatarImage = serviceModel.AvatarImage;
-            oldService.UpdDate = TimeUtils.GetCurrentSEATime();
+            oldService.AvatarImage = url;
+            oldService.UpdDate = DateTime.Now;
             oldService.DelFlg = serviceModel.DelFlg;
             await _serviceRepository.UpdateService(oldService);
             return new ObjectResult(MessageConstant.ServiceMessage.UpdateSuccess);

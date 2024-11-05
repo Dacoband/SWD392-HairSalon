@@ -9,7 +9,7 @@ namespace HairSalonSystem.Services.Interfaces
 {
     public interface IAuthService
     {
-        Task<string> GenerateJwtToken(Account account);
-        Task<Account> Authenticate(string email, string password);
+        Task<string> GenerateJwtToken(Account account,Guid? actorId, Guid? branchId);
+        Task<(Account, Guid?, Guid?)> Authenticate(string email, string password);
     }
 }

@@ -48,8 +48,8 @@ namespace HairSalonSystem.Services.Implements
                 StylistId = stylist.StylistId,
                 Rating = request.Rating,
                 Comment = request.Comment,
-                InsDate = TimeUtils.GetCurrentSEATime(),
-                UpdDate = TimeUtils.GetCurrentSEATime(),
+                InsDate = DateTime.Now,
+                UpdDate = DateTime.Now,
                 DelFlg = true
             };
             await _feedbackRepository.AddFeedbackAsync(feedback);
@@ -111,11 +111,8 @@ namespace HairSalonSystem.Services.Implements
                     StatusCode = StatusCodes.Status404NotFound
                 };
             }
-            await _feedbackRepository.GetFeedbacksByMemberIdAsync(memberId);
-            return new ObjectResult(MessageConstant.FeedbackMessage.NotFound)
-            {
-                StatusCode = StatusCodes.Status404NotFound
-            };
+            return await _feedbackRepository.GetFeedbacksByMemberIdAsync(memberId);
+            
         }
 
         public async Task<ActionResult<List<Feedback>>> GetFeedbackByStylistIdAsync(Guid stylistId)
@@ -127,13 +124,7 @@ namespace HairSalonSystem.Services.Implements
                     StatusCode = StatusCodes.Status404NotFound
                 };
             }
-
-            await _feedbackRepository.GetFeedbacksByStylistIdAsync(stylistId);
-
-            return new ObjectResult(MessageConstant.FeedbackMessage.NotFound)
-            {
-                StatusCode = StatusCodes.Status404NotFound
-            };
+            return await _feedbackRepository.GetFeedbacksByStylistIdAsync(stylistId);   
         }
     }
 }

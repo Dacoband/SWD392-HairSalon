@@ -16,12 +16,14 @@ namespace HairSalonSystem.Services.Implements
         private readonly IStaffManagerRepository _staffManagerRepository;
         private readonly IAccountRepository _accountRepository;
         private readonly IBranchRespository _branchRespository;
+        private readonly IFirebaseService _firebaseService;
 
-        public StaffManagerService(IStaffManagerRepository staffManagerRepository, IAccountRepository accountRepository,IBranchRespository branchRespository)
+        public StaffManagerService(IStaffManagerRepository staffManagerRepository, IAccountRepository accountRepository,IBranchRespository branchRespository, IFirebaseService firebaseService)
         {
             _staffManagerRepository = staffManagerRepository;
             _accountRepository = accountRepository;
             _branchRespository = branchRespository;
+            _firebaseService = firebaseService;
         }
 
         public async Task<StaffManager> GetStaffManagerById(Guid id)
@@ -36,34 +38,18 @@ namespace HairSalonSystem.Services.Implements
 
         public async Task<ActionResult> AddStaffManager(CreateNewStaffManagerRequest staffManager,HttpContext httpContext)
         {
-            var accountID = UserUtil.GetAccountId(httpContext);
-            if (accountID == null)
-            {
-                return new ObjectResult(MessageConstant.BranchMessage.NotRights)
-                {
-                    StatusCode = StatusCodes.Status403Forbidden
-                };
-            }
-            var roleName = UserUtil.GetRoleName(httpContext);
-            if (roleName != "SA")
-            {
-                return new ObjectResult(MessageConstant.BranchMessage.NotRights)
-                {
-                    StatusCode = StatusCodes.Status403Forbidden
-                };
-            }
             var account = new Account()
             {
                 AccountId = Guid.NewGuid(),
                 Email = staffManager.Email,
                 Password = PasswordUtil.HashPassword(staffManager.Password),
                 RoleName = Enums.RoleEnums.SM.ToString(),
-                InsDate = TimeUtils.GetCurrentSEATime(),
-                UpdDate = TimeUtils.GetCurrentSEATime(),
+                InsDate = DateTime.Now,
+                UpdDate = DateTime.Now,
                 DelFlg = true
             };
              await _accountRepository.AddAccount(account);
-
+            var url = await _firebaseService.UploadFile(staffManager.AvatarImage);
             var staffmanager = new StaffManager()
             {
                 StaffManagerID = Guid.NewGuid(),
@@ -73,21 +59,19 @@ namespace HairSalonSystem.Services.Implements
                 DateOfBirth = DateTime.Now,
                 PhoneNumber = staffManager.PhoneNumber,
                 Address = staffManager.Address,
-                AvatarImage = staffManager.AvatarImage,
-                InsDate = TimeUtils.GetCurrentSEATime(),
-                UpdDate =TimeUtils.GetCurrentSEATime(),
+                AvatarImage = url,
+                InsDate = DateTime.Now,
+                UpdDate =DateTime.Now,
                 DelFlg = true 
                 };
-            var brach = await _branchRespository.GetBranchById(staffManager.BranchID);
-            if (brach == null)
-            {
-                return new ObjectResult(MessageConstant.BranchMessage.BranchNotFound)
-                {
-                    StatusCode = StatusCodes.Status404NotFound
-                };
-            }
-
-
+            //var brach = await _branchRespository.GetBranchById(staffManager.BranchID);
+            //if (brach == null)
+            //{
+            //    return new ObjectResult(MessageConstant.BranchMessage.BranchNotFound)
+            //    {
+            //        StatusCode = StatusCodes.Status404NotFound
+            //    };
+            //}
 
             await _staffManagerRepository.AddStaffManager(staffmanager);
 
@@ -127,15 +111,15 @@ namespace HairSalonSystem.Services.Implements
             {
                 throw new BadHttpRequestException(MessageConstant.StaffManagerMessage.StaffManagerNotFound);
             }
-
+            var url = await _firebaseService.UploadFile(staffManagerRequest.AvatarImage);
             // Cập nhật thông tin StaffManager và Account
             existingStaffManager.StaffManagerName = staffManagerRequest.StaffManagerName ?? existingStaffManager.StaffManagerName;
             existingAccount.Email = staffManagerRequest.Email ?? existingAccount.Email;
             existingStaffManager.PhoneNumber = staffManagerRequest.PhoneNumber ?? existingStaffManager.PhoneNumber;
             existingStaffManager.Address = staffManagerRequest.Address ?? existingStaffManager.Address;
             existingStaffManager.DateOfBirth = staffManagerRequest.DateOfBirth != DateTime.MinValue ? staffManagerRequest.DateOfBirth : existingStaffManager.DateOfBirth;
-            existingStaffManager.AvatarImage = staffManagerRequest.AvatarImage ?? existingStaffManager.AvatarImage;
-            existingStaffManager.UpdDate = TimeUtils.GetCurrentSEATime();
+            existingStaffManager.AvatarImage = url;
+            existingStaffManager.UpdDate = DateTime.Now;
 
              await _staffManagerRepository.UpdateStaffManager(existingStaffManager);
             await _accountRepository.UpdateEmailAsync(accountIdFromToken, existingAccount.Email);

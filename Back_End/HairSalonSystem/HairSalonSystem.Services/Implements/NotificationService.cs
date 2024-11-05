@@ -27,7 +27,7 @@ namespace HairSalonSystem.Services.Implements
                 NotificationId = Guid.NewGuid(),
                 MemberId = notificationRequest.MemberId,
                 Message = notificationRequest.Message,
-                InsDate = TimeUtils.GetCurrentSEATime()
+                InsDate = DateTime.Now
             };
             await _notificationRepository.CreateNotification(notification);
         }

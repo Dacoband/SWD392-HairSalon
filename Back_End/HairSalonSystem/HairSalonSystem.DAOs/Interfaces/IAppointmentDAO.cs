@@ -1,4 +1,5 @@
 ﻿using HairSalonSystem.BusinessObject.Entities;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace HairSalonSystem.DAOs.Interfaces
 {
     public interface IAppointmentDAO
     {
-        Task CreateAppointment(Appointment appointment);
+        Task CreateAppointment(Appointment appointment, IClientSessionHandle session = null);
         Task UpdateAppointmentStatus(Guid appointmentId, int status);
         Task UpdateAppointment(Appointment appointment);
         Task<List<Appointment>> GetAllAppointment();

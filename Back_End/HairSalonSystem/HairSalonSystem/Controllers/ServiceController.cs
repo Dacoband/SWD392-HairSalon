@@ -20,7 +20,7 @@ namespace HairSalonSystem.API.Controllers
             _serviceService = serviceService;
         }
         [HttpGet(APIEndPointConstant.Service.GetServiceById)]
-        [ProducesResponseType(typeof(Service), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ServiceResponse), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
 
         public async Task<ActionResult<ServiceResponse>> GetServiceById([FromRoute] Guid id)
@@ -31,13 +31,13 @@ namespace HairSalonSystem.API.Controllers
         [HttpPost(APIEndPointConstant.Service.CreateService)]
         [ProducesResponseType(typeof(Service), StatusCodes.Status201Created)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
-        public async Task<ActionResult> CreateService([FromBody] CreateServiceRequest serviceModel)
+        public async Task<ActionResult> CreateService([FromForm] CreateServiceRequest serviceModel)
         {
             return await _serviceService.CreateService(serviceModel, HttpContext);
 
         }
         [HttpGet(APIEndPointConstant.Service.GetAllService)]
-        [ProducesResponseType(typeof(Service), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ServiceResponse), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
 
         public async Task<ActionResult<List<ServiceResponse>>> GetAllService([FromQuery] QueryService query)
@@ -48,7 +48,7 @@ namespace HairSalonSystem.API.Controllers
         [HttpPatch(APIEndPointConstant.Service.UpdateService)]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
-        public async Task<ActionResult> UpdateService([FromRoute] Guid id, [FromBody] CreateServiceRequest request)
+        public async Task<ActionResult> UpdateService([FromRoute] Guid id, [FromForm] CreateServiceRequest request)
         {
             return await _serviceService.UpdateService(id, request,HttpContext);
         }

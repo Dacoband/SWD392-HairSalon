@@ -8,7 +8,7 @@ namespace HairSalonSystem.Services.PayLoads.Responses.StaffManagers
 {
      public class UpdateStaffManagerResponse
     {
-        public Guid BranchID { get; set; }
+        public Guid? BranchID { get; set; }
         public string StaffManagerName { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string PhoneNumber { get; set; }

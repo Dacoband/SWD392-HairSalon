@@ -43,29 +43,22 @@ namespace HairSalonSystem.API.Controllers
         
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateAccount(Guid id, [FromBody] Account accountDto)
+        public async Task<bool> UpdateAccount([FromRoute] Guid id, [FromBody] CreateUpdateAccountRequest request)
         {
-            if (id != accountDto.AccountId)
-            {
-                return BadRequest();
-            }
+            var account = await _accountService.GetAccountById(id);
+ 
+            account.Email = string.IsNullOrEmpty(request.Email) ? account.Email : request.Email;
+            account.Password = string.IsNullOrEmpty(request.Password) ? account.Password : PasswordUtil.HashPassword(request.Password);
 
-            var account = new Account
-            {
-                AccountId = id,
-                Email = accountDto.Email,
-                Password = PasswordUtil.HashPassword(accountDto.Password),
-                RoleName = accountDto.RoleName
-            };
             await _accountService.UpdateAccount(account);
-            return NoContent();
+            return true;
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> RemoveAccount(Guid id)
         {
             await _accountService.RemoveAccount(id);
-            return NoContent();
+            return Content(MessageConstant.AccountMessage.AccountDeleted);
         }
 
 
@@ -73,9 +66,9 @@ namespace HairSalonSystem.API.Controllers
         [ProducesResponseType(typeof(LoginResponse), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(UnauthorizedObjectResult))]
        
-        public async Task<ActionResult<string>> Login([FromBody] LoginRequest request)
+        public async Task<ActionResult<string>> Login([FromForm] LoginRequest request)
         {
-            var account = await _authService.Authenticate(request.Email, PasswordUtil.HashPassword(request.Password));
+            var (account, actorId, branchId) = await _authService.Authenticate(request.Email, PasswordUtil.HashPassword(request.Password));
             if (account == null)
             {
                 return Unauthorized(new Services.PayLoads.ErrorResponse()
@@ -86,13 +79,14 @@ namespace HairSalonSystem.API.Controllers
                 });
             }
 
-            var token = await _authService.GenerateJwtToken(account);
+            var token = await _authService.GenerateJwtToken(account, actorId, account.AccountId);
             var loginResponse = new LoginResponse
             {
                 Token = token,
+                actorId = actorId ?? Guid.Empty,
+                branchId = branchId ?? Guid.Empty,
                 Email = account.Email,
-                RoleName = account.RoleName,
-                AccountID = account.AccountId,
+                RoleName = account.RoleName
             };
             return Ok(loginResponse);
         }
