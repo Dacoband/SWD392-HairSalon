@@ -63,6 +63,7 @@ export const getAvailableStylist = async (query: {
           branchId: query.branchId,
         },
         headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
           'Content-Type': 'application/json',
         },
       }

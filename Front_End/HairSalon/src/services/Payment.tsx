@@ -1,10 +1,13 @@
 import axios from 'axios'
-const API_PAYMENT = 'https://api.vol-ka.studio/api/v1/Payment'
-export const createPayment = async (appointmentId: string): Promise<string> => {
+import { CreatePaymentReponse } from '../models/type'
+const API_PAYMENT = 'https://api.vol-ka.studio/api/Payment'
+export const createPayment = async (
+  appointmentId: string
+): Promise<CreatePaymentReponse> => {
   try {
-    const response = await axios.post<string>(
+    const response = await axios.post<CreatePaymentReponse>(
       `${API_PAYMENT}/create-payment-link`,
-      { appointmentId },
+      appointmentId,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,

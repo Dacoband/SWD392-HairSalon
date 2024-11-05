@@ -79,3 +79,7 @@ export interface CreateAppointmentRequest {
   appointmentDate: string
   serviceIds: string[]
 }
+export interface CreatePaymentReponse {
+  paymentLink: string
+  paymentLinkId: string
+}

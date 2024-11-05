@@ -140,8 +140,8 @@ const BookingPage: React.FC = () => {
   const handleCreatePAyment = async (appointmentId: string) => {
     try {
       const response = await createPayment(appointmentId)
-      console.log(response)
-      window.location.href = response
+      console.log(response.paymentLink)
+      window.location.href = response.paymentLink
     } catch (err) {
       console.log(err)
     }
