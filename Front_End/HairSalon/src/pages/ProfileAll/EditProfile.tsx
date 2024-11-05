@@ -1,11 +1,15 @@
-// import React, { useEffect, useState } from 'react';
-// import { fetchUserProfile, updateUserProfile, UserProfile } from '../services/profileService';
+// import React, { useEffect, useState } from "react";
+// import {
+//   fetchUserProfile,
+//   updateUserProfile,
+//   UserProfile,
+// } from "../../services/ProfileAll";
 
 // const EditProfile: React.FC = () => {
-//   const [userData, setUserData] = useState<UserProfile | null>(null);
+//   const [userData, setUserData] = (useState < UserProfile) | (null > null);
 //   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState<string | null>(null);
-//   const userId = '98fd2bfb-b022-46d2-8110-460c99754e62';
+//   const [error, setError] = (useState < string) | (null > null);
+//   const userId = "98fd2bfb-b022-46d2-8110-460c99754e62";
 
 //   // Load initial data
 //   useEffect(() => {
@@ -15,7 +19,7 @@
 //         const data = await fetchUserProfile(userId);
 //         setUserData(data);
 //       } catch (err) {
-//         setError('Failed to fetch user data');
+//         setError("Failed to fetch user data");
 //         console.error(err);
 //       } finally {
 //         setLoading(false);
@@ -28,7 +32,9 @@
 //   // Handle input changes
 //   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 //     const { name, value } = e.target;
-//     setUserData(prevData => prevData ? { ...prevData, [name]: value } : null);
+//     setUserData((prevData) =>
+//       prevData ? { ...prevData, [name]: value } : null
+//     );
 //   };
 
 //   // Handle form submission
@@ -38,9 +44,9 @@
 
 //     try {
 //       await updateUserProfile(userId, userData);
-//       alert('Profile updated successfully!');
+//       alert("Profile updated successfully!");
 //     } catch (err) {
-//       setError('Failed to update profile');
+//       setError("Failed to update profile");
 //       console.error(err);
 //     }
 //   };
@@ -50,7 +56,7 @@
 //   }
 
 //   if (error) {
-//     return <div style={{ color: 'red' }}>{error}</div>;
+//     return <div style={{ color: "red" }}>{error}</div>;
 //   }
 
 //   return (
@@ -62,7 +68,7 @@
 //           <input
 //             type="text"
 //             name="MemberName"
-//             value={userData?.MemberName || ''}
+//             value={userData?.MemberName || ""}
 //             onChange={handleChange}
 //             style={styles.input}
 //           />
@@ -72,7 +78,7 @@
 //           <input
 //             type="email"
 //             name="Email"
-//             value={userData?.Email || ''}
+//             value={userData?.Email || ""}
 //             onChange={handleChange}
 //             style={styles.input}
 //           />
@@ -82,7 +88,7 @@
 //           <input
 //             type="text"
 //             name="PhoneNumber"
-//             value={userData?.PhoneNumber || ''}
+//             value={userData?.PhoneNumber || ""}
 //             onChange={handleChange}
 //             style={styles.input}
 //           />
@@ -92,7 +98,7 @@
 //           <input
 //             type="date"
 //             name="DateOfBirth"
-//             value={userData?.DateOfBirth || ''}
+//             value={userData?.DateOfBirth || ""}
 //             onChange={handleChange}
 //             style={styles.input}
 //           />
@@ -102,12 +108,14 @@
 //           <input
 //             type="text"
 //             name="Address"
-//             value={userData?.Address || ''}
+//             value={userData?.Address || ""}
 //             onChange={handleChange}
 //             style={styles.input}
 //           />
 //         </label>
-//         <button type="submit" style={styles.button}>Save Changes</button>
+//         <button type="submit" style={styles.button}>
+//           Save Changes
+//         </button>
 //       </form>
 //     </div>
 //   );
@@ -115,36 +123,36 @@
 
 // const styles = {
 //   container: {
-//     fontFamily: 'Arial, sans-serif',
-//     maxWidth: '600px',
-//     margin: '0 auto',
-//     padding: '20px',
+//     fontFamily: "Arial, sans-serif",
+//     maxWidth: "600px",
+//     margin: "0 auto",
+//     padding: "20px",
 //   },
 //   form: {
-//     display: 'flex',
-//     flexDirection: 'column' as const,
+//     display: "flex",
+//     // flexDirection: 'column' as const,
 //   },
 //   label: {
-//     marginBottom: '10px',
-//     fontWeight: 'bold',
+//     marginBottom: "10px",
+//     fontWeight: "bold",
 //   },
 //   input: {
-//     padding: '8px',
-//     fontSize: '1em',
-//     borderRadius: '4px',
-//     border: '1px solid #ddd',
-//     marginTop: '5px',
-//     marginBottom: '15px',
+//     padding: "8px",
+//     fontSize: "1em",
+//     borderRadius: "4px",
+//     border: "1px solid #ddd",
+//     marginTop: "5px",
+//     marginBottom: "15px",
 //   },
 //   button: {
-//     padding: '10px 15px',
-//     fontSize: '1em',
-//     backgroundColor: '#4CAF50',
-//     color: 'white',
-//     border: 'none',
-//     borderRadius: '5px',
-//     cursor: 'pointer',
-//   }
+//     padding: "10px 15px",
+//     fontSize: "1em",
+//     backgroundColor: "#4CAF50",
+//     color: "white",
+//     border: "none",
+//     borderRadius: "5px",
+//     cursor: "pointer",
+//   },
 // };
 
 // export default EditProfile;
