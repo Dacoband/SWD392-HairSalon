@@ -58,7 +58,12 @@ namespace HairSalonSystem.Services.Implements
                 throw new BadHttpRequestException(MessageConstant.LoginMessage.NotFoundAccount);
                
             }
-            var url = await _firebaseService.UploadFile(memberRequest.AvatarImage);
+            var url = "";
+            if(memberRequest.AvatarImage != null)
+            {
+                url = await _firebaseService.UploadFile(memberRequest.AvatarImage);
+
+            }
             var existingMember = await _memberRepository.GetMemberById(id);
             if (existingMember == null)
             {

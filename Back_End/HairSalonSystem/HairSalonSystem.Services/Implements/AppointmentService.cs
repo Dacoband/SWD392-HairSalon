@@ -297,7 +297,7 @@ namespace HairSalonSystem.Services.Implements
             {
                 return new ObjectResult(MessageConstant.AppointmentMessage.NotFound)
                 {
-                    StatusCode = StatusCodes.Status403Forbidden
+                    StatusCode = StatusCodes.Status404NotFound
                 };
             }
 
@@ -325,7 +325,7 @@ namespace HairSalonSystem.Services.Implements
             var accountID = UserUtil.GetAccountId(context);
             if (accountID == null)
             {
-                return new ObjectResult(MessageConstant.AppointmentMessage.NotFound)
+                return new ObjectResult(MessageConstant.AppointmentMessage.NotRight)
                 {
                     StatusCode = StatusCodes.Status403Forbidden
                 };
@@ -342,7 +342,7 @@ namespace HairSalonSystem.Services.Implements
                 if (existingService == null) {
                     return new ObjectResult(MessageConstant.ServiceMessage.NotFound)
                     {
-                        StatusCode = StatusCodes.Status403Forbidden
+                        StatusCode = StatusCodes.Status404NotFound
                     };
 
                 }
@@ -368,7 +368,7 @@ namespace HairSalonSystem.Services.Implements
             };
             // Get stylist appointment
             var appointmentList = await _appointmentRepository.GetAllAppointment();
-            var existingAppointments =  appointmentList.Where(x => x.StylistId == request.StylistId && x .Status == 2 && x.StartTime >= startOfDay).ToList();
+            var existingAppointments =  appointmentList.Where(x => x.StylistId == request.StylistId && (x .Status == 2 || x.Status == 1) && x.StartTime >= startOfDay).ToList();
             
             // Innitiate slot
             List<DateTime> allTimeSlots = Enumerable.Range(0, 11)
@@ -448,7 +448,7 @@ namespace HairSalonSystem.Services.Implements
                 {
                     return new ObjectResult(MessageConstant.ServiceMessage.NotFound)
                     {
-                        StatusCode = StatusCodes.Status403Forbidden
+                        StatusCode = StatusCodes.Status404NotFound
                     };
 
                 }
