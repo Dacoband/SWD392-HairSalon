@@ -21,14 +21,16 @@ const ManagerStylish: React.FC<{ branchId: string }> = ({ branchId }) => {
   const [editingStylist, setEditingStylist] = useState<Stylish | null>(null);
 
   useEffect(() => {
-    fetchStylists();
+    if (branchId) fetchStylists();
   }, [branchId]);
 
-  // Lấy danh sách stylist theo branchId
+  // Fetch stylists based on branchId
   const fetchStylists = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`https://api.vol-ka.studio/api/v1/stylist/branch?branchId=${branchId}`);
+      const response = await axios.get(
+        `https://api.vol-ka.studio/api/v1/stylist/branch?branchId=${branchId}`
+      );
       setStylists(response.data);
     } catch (error) {
       console.error("Error fetching stylists:", error);
@@ -38,20 +40,23 @@ const ManagerStylish: React.FC<{ branchId: string }> = ({ branchId }) => {
     }
   };
 
-  // Xử lý mở modal chỉnh sửa
+  // Handle modal open for edit
   const handleEdit = (stylist: Stylish) => {
     setEditingStylist(stylist);
     setIsModalVisible(true);
   };
 
-  // Xử lý khi bấm "OK" để cập nhật stylist
+  // Handle stylist update
   const handleModalOk = async (values: Partial<Stylish>) => {
     if (editingStylist) {
       try {
-        const response = await axios.put(`https://api.vol-ka.studio/api/v1/stylist/update/${editingStylist.stylistId}`, values);
+        const response = await axios.put(
+          `https://api.vol-ka.studio/api/v1/stylist/update/${editingStylist.stylistId}`,
+          values
+        );
         const updatedStylist = response.data;
-        setStylists((prevStylists) =>
-          prevStylists.map((stylist) =>
+        setStylists((prev) =>
+          prev.map((stylist) =>
             stylist.stylistId === updatedStylist.stylistId ? updatedStylist : stylist
           )
         );
@@ -59,13 +64,14 @@ const ManagerStylish: React.FC<{ branchId: string }> = ({ branchId }) => {
       } catch (error) {
         console.error("Error updating stylist:", error);
         message.error("Error updating stylist");
+      } finally {
+        setIsModalVisible(false);
+        setEditingStylist(null);
       }
     }
-    setIsModalVisible(false);
-    setEditingStylist(null);
   };
 
-  // Xử lý đóng modal
+  // Handle modal close
   const handleModalCancel = () => {
     setIsModalVisible(false);
     setEditingStylist(null);
@@ -148,10 +154,18 @@ const ManagerStylish: React.FC<{ branchId: string }> = ({ branchId }) => {
           onFinish={handleModalOk}
           layout="vertical"
         >
-          <Form.Item name="stylistName" label="Stylist Name">
+          <Form.Item
+            name="stylistName"
+            label="Stylist Name"
+            rules={[{ required: true, message: "Please input the stylist's name" }]}
+          >
             <Input />
           </Form.Item>
-          <Form.Item name="phoneNumber" label="Phone Number">
+          <Form.Item
+            name="phoneNumber"
+            label="Phone Number"
+            rules={[{ required: true, message: "Please input the phone number" }]}
+          >
             <Input />
           </Form.Item>
           <Form.Item name="address" label="Address">

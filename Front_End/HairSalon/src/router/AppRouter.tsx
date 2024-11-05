@@ -29,8 +29,7 @@ import ManagerMoney from "../pages/Stylish/ManagerMoney";
 import profileCustomer from "../pages/customer/profileCustomer";
 import LayoutSA from "../layout/LayoutSA";
 import BookSucssess from "../pages/customer/BookSucssess";
-import ManagerService from "../pages/admin/ManagerService";
-import ManagerBranch from "../pages/admin/ManagerBranch";
+
 
 // import CategogySM from "../pages/StaffManager/CategogySM";
 import LayoutSM from "../layout/LayoutSM";
@@ -39,6 +38,8 @@ import LayoutSL from "../layout/LayoutSL";
 import ManagerStylish_staff from "../pages/StaffStylish/ManagerStylish";
 import ManagerAppoimentStaff from "../pages/StaffStylish//ManagerAppoimentStaff";
 import ManagerSchedule from "../pages/StaffStylish/ManagerSchedule";
+import ManagerService from "../pages/Admin/ManagerService";
+import ManagerBranch from "../pages/Admin/ManagerBranch";
 // import CategogySL from "../pages/StaffStylish/CategogySL";
 
 const AppRouter = () => {

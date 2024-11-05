@@ -48,7 +48,7 @@ const SignInForm = () => {
             navigate("/Appoiment-Stylish");
             break;
           case "MB":
-            navigate("/HomePage");
+            navigate("/homePage");
             break;
           default:
             navigate("/unknown-role");
