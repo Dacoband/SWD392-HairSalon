@@ -1,6 +1,7 @@
 ﻿using HairSalonSystem.BusinessObject.Entities;
 using HairSalonSystem.DAOs.Interfaces;
 using HairSalonSystem.Repositories.Interface;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace HairSalonSystem.Repositories.Implement
         {
             _appointmentDAO = appointmentDAO;
         }
-        public async Task CreateAppointment(Appointment appointment)
+        public async Task CreateAppointment(Appointment appointment, IClientSessionHandle session = null)
         {
           await  _appointmentDAO.CreateAppointment(appointment);
         }

@@ -6,6 +6,7 @@ using HairSalonSystem.BusinessObject.Entities;
 using HairSalonSystem.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HairSalonSystem.Services.Controllers
 {
@@ -15,17 +16,15 @@ namespace HairSalonSystem.Services.Controllers
     {
         private readonly IMemberService _memberService;
         private readonly IAccountService _accountService;
+        private readonly IFirebaseService _firebaseService;
 
-
-        public MemberController(IMemberService memberService, IAccountService accountService) 
+        public MemberController(IMemberService memberService, IAccountService accountService, IFirebaseService firebaseService) 
         {
             _memberService = memberService;
             _accountService = accountService;
-          
-
+            _firebaseService = firebaseService;
         }
 
-        // Get Member by ID
         [HttpGet(APIEndPointConstant.Member.GetMemberById)]
         [ProducesResponseType(typeof(Member), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(NotFoundResult))]
@@ -39,7 +38,7 @@ namespace HairSalonSystem.Services.Controllers
             return Ok(member);
         }
 
-        // Get All Members
+       
         [HttpGet(APIEndPointConstant.Member.GetAllMembers)]
         [ProducesResponseType(typeof(List<Member>), StatusCodes.Status200OK)]
         public async Task<ActionResult<List<Member>>> GetAllMembers()
@@ -48,7 +47,7 @@ namespace HairSalonSystem.Services.Controllers
             return Ok(members);
         }
 
-        // Create New Member
+        
         [HttpPost(APIEndPointConstant.Member.AddMember)]
         [ProducesResponseType(typeof(CreateNewMemberResponse), StatusCodes.Status201Created)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
@@ -59,26 +58,8 @@ namespace HairSalonSystem.Services.Controllers
             if (isEmailExist)
             {
                 return Problem(MessageConstant.MemberMessage.EmailExist);
-            }
-
-            string avatarImagePath = null;
-            if (memberRequest.AvatarImage != null && memberRequest.AvatarImage.Length > 0)
-            {
-                var uploadsFolder = Path.Combine("wwwroot", "uploads");
-                if (!Directory.Exists(uploadsFolder))
-                {
-                    Directory.CreateDirectory(uploadsFolder);
-                }
-
-                var uniqueFileName = Guid.NewGuid().ToString() + "_" + memberRequest.AvatarImage.FileName;
-                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await memberRequest.AvatarImage.CopyToAsync(fileStream);
-                }
-                avatarImagePath = "/uploads/" + uniqueFileName;
-            }
-
+            }           
+            var url = await _firebaseService.UploadFile(memberRequest.AvatarImage);
 
             var account = new Account()
             {
@@ -86,8 +67,8 @@ namespace HairSalonSystem.Services.Controllers
                 Email = memberRequest.Email,
                 Password = PasswordUtil.HashPassword(memberRequest.Password),
                 RoleName = Enums.RoleEnums.MB.GetDescriptionFromEnum(),
-                InsDate = TimeUtils.GetCurrentSEATime(),
-                UpdDate = TimeUtils.GetCurrentSEATime(),
+                InsDate = DateTime.Now,
+                UpdDate = DateTime.Now,
                 DelFlg = true
             };
             await _accountService.AddAccount(account);
@@ -99,9 +80,9 @@ namespace HairSalonSystem.Services.Controllers
                 DateOfBirth = memberRequest.DateOfBirth,
                 PhoneNumber = memberRequest.PhoneNumber,
                 Address = memberRequest.Address,
-                AvatarImage = avatarImagePath,
-                InsDate = TimeUtils.GetCurrentSEATime(),
-                UpdDate = TimeUtils.GetCurrentSEATime(),
+                AvatarImage = url,
+                InsDate = DateTime.Now,
+                UpdDate = DateTime.Now,
                 DelFlg = true
             };
 
@@ -127,12 +108,13 @@ namespace HairSalonSystem.Services.Controllers
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
        
-        public async Task<bool> UpdateMember(Guid id, [FromBody] UpdateMemberRequest memberRequest)
+        public async Task<bool> UpdateMember([FromRoute] Guid id, [FromForm] UpdateMemberRequest memberRequest)
         {
            return  await _memberService.UpdateMember(id, memberRequest, HttpContext);
         }
         // Delete Member
         [HttpDelete(APIEndPointConstant.Member.DeleteMember)]
+        [Authorize(Roles = "SA")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesErrorResponseType(typeof(NotFoundResult))]
         public async Task<ActionResult> RemoveMember(Guid id)
@@ -144,8 +126,7 @@ namespace HairSalonSystem.Services.Controllers
             }
 
             await _memberService.RemoveMember(id);
-
-            return NoContent();
+            return Content( MessageConstant.MemberMessage.MemberDeleted);
         }
     }
 }

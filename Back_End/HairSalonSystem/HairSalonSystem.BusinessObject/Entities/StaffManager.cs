@@ -27,7 +27,7 @@ namespace HairSalonSystem.BusinessObject.Entities
         [Required]
         [StringLength(100)]
         [BsonElement("staffManagerName")]
-        public string StaffManagerName { get; set; }
+        public required string StaffManagerName { get; set; }
 
         [Required]
         [BsonElement("dateOfBirth")]
@@ -37,11 +37,11 @@ namespace HairSalonSystem.BusinessObject.Entities
         [StringLength(10, MinimumLength = 10)]
         [RegularExpression(@"^[0-9]{10}$", ErrorMessage = "Phone number must be 10 digits.")]
         [BsonElement("phoneNumber")]
-        public string PhoneNumber { get; set; }
+        public required string PhoneNumber { get; set; }
 
         [Required]
         [BsonElement("address")]
-        public string Address { get; set; }
+        public string? Address { get; set; }
 
         [BsonElement("avatarImage")]
         public string AvatarImage { get; set; } = string.Empty; // Max size constraint not set here

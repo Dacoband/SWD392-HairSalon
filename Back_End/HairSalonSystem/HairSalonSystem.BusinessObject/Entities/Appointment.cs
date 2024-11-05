@@ -25,6 +25,8 @@ namespace HairSalonSystem.BusinessObject.Entities
         [BsonElement]
         [BsonRepresentation(BsonType.Int32)]
         public int Status { get; set; }
+        // 1: created -> 2: paid -> 3: cancel by cus -> 4: cancel by salon -> 5: completed 
+
         [BsonElement]
         [BsonRepresentation(BsonType.Decimal128)]
         public float TotalPrice { get; set; }
@@ -42,7 +44,7 @@ namespace HairSalonSystem.BusinessObject.Entities
         [BsonRepresentation(BsonType.DateTime)]
         public DateTime EndTime { get; set; }
 
-        public virtual ICollection<AppointmentService> AppointmentService { get; set; } = new List<AppointmentService>();
+        //public virtual ICollection<AppointmentService> AppointmentService { get; set; } = new List<AppointmentService>();
 
     }
 }

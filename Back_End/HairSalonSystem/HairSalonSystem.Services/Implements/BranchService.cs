@@ -79,8 +79,8 @@ namespace HairSalonSystem.Services.Implements
                 SalonBranches = branchDto.SalonBranches,
                 Address = branchDto.Address,
                 Phone = branchDto.Phone,
-                InsDate = TimeUtils.GetCurrentSEATime(),
-                UpdDate = TimeUtils.GetCurrentSEATime(),
+                InsDate = DateTime.Now,
+                UpdDate = DateTime.Now,
                 DelFlg = true
             };
             await _branchRepository.AddBranch(branch);
@@ -107,7 +107,7 @@ namespace HairSalonSystem.Services.Implements
             existingBranch.SalonBranches = string.IsNullOrEmpty(branchDto.SalonBranches) ? existingBranch.SalonBranches : branchDto.SalonBranches;
             existingBranch.Address = string.IsNullOrEmpty(branchDto.Address) ? existingBranch.Address : branchDto.Address;
             existingBranch.Phone = string.IsNullOrEmpty(branchDto.Phone) ? existingBranch.Phone : branchDto.Phone;
-            existingBranch.UpdDate = TimeUtils.GetCurrentSEATime();
+            existingBranch.UpdDate = DateTime.Now;
 
             await _branchRepository.UpdateBranch(existingBranch);
             return true;

@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using Microsoft.AspNetCore.Http;
+using MongoDB.Bson.Serialization.Attributes;
 using System.ComponentModel.DataAnnotations;
 
 namespace HairSalonSystem.Services.PayLoads.Requests.Members
@@ -24,7 +25,7 @@ namespace HairSalonSystem.Services.PayLoads.Requests.Members
         [Required(ErrorMessage = "Address is required")]
         public string Address { get; set; }
 
-        public string AvatarImage { get; set; }
+        public IFormFile? AvatarImage { get; set; }
         public DateTime DateOfBirth { get; set; }
     }
 }

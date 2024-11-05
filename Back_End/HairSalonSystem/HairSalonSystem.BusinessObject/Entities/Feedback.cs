@@ -22,7 +22,7 @@ namespace HairSalonSystem.BusinessObject.Entities
         [BsonElement("Rating")]
         public int Rating { get; set; }
         [BsonElement("Comment")]
-        public string Comment { get; set; }
+        public string? Comment { get; set; }
         [BsonElement("InsDate")]
         public DateTime InsDate { get; set; }
         [BsonElement("UpdDate")]

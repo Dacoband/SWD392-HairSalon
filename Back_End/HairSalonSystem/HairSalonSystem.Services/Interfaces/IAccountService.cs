@@ -10,7 +10,7 @@ namespace HairSalonSystem.Services.Interfaces
 {
     public interface IAccountService
     {
-        Task<ActionResult<Account>> GetAccountById(Guid id);
+        Task<Account> GetAccountById(Guid id);
         Task<List<Account>> GetAllAccounts();
         Task AddAccount(Account account);
         Task UpdateAccount(Account account);

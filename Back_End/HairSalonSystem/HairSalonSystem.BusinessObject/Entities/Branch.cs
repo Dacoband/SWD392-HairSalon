@@ -21,7 +21,7 @@ namespace HairSalonSystem.BusinessObject.Entities
         public Guid StaffManagerID { get; set; } 
 
         [BsonElement("SalonBranches")]
-        public string SalonBranches { get; set; }
+        public required string SalonBranches { get; set; }
         [BsonElement("Address")]
         public string Address { get; set; }
 
@@ -29,7 +29,7 @@ namespace HairSalonSystem.BusinessObject.Entities
         [StringLength(10, MinimumLength = 10)]
         [RegularExpression(@"^[0-9]{10}$", ErrorMessage = "Phone number must be 10 digits.")]
         [BsonElement("Phone")]
-        public string Phone { get; set; }
+        public required string Phone { get; set; }
         [BsonElement("InsDate")]
         public DateTime InsDate { get; set; } 
         [BsonElement("UpdDate")]
