@@ -1,38 +1,52 @@
 import React from "react";
 import { Layout, Menu } from "antd";
 import { Outlet, useNavigate } from "react-router-dom";
-
+import "../App.css";
 import {
-  PieChartOutlined,
   MenuUnfoldOutlined,
-  ShoppingCartOutlined,
-  BellOutlined,
+  BankOutlined,
+  UserOutlined,
+  CalendarOutlined,
+  CustomerServiceOutlined,
+  BarChartOutlined
 } from "@ant-design/icons";
+import HeaderSM from "../components/HeaderSM";
+import { FaCircleUser } from "react-icons/fa6";
 
 const { Content, Sider } = Layout;
 
 // Dữ liệu Sidebar
 const SidebarData = [
   {
-    icon: PieChartOutlined,
-    heading: "About",
-    navigate: "/student/profile-student",
-  },
-  {
     icon: MenuUnfoldOutlined,
     heading: "Quản lí dịch vụ",
     navigate: "/manageService",
   },
   {
-    icon: ShoppingCartOutlined,
-    heading: "Quản lí khu vực",
+    icon: BankOutlined,
+    heading: "Quản lí chi nhánh",
     navigate: "/ManagerBranch_AD",
   },
   {
-    icon: BellOutlined,
-    heading: "Manager Subscription",
-    navigate: "/student/profile-student/subscription-student",
+    icon: UserOutlined,
+    heading: "Quản lí nhân viên quản lí",
+    navigate: "/ManagerStaff_AD",
   },
+  {
+    icon: CalendarOutlined,
+    heading: "Quản lí cuộc hẹn",
+    navigate: "/ManagerAppointment_AD",
+  },
+  {
+    icon: CustomerServiceOutlined,
+    heading: "Quản lí nhà tạo mẫu",
+    navigate: "/ManagerStylist_AD",
+  },
+  {
+    icon: BarChartOutlined,
+    heading: "Biểu đồ",
+    navigate: "/ManagerChart_AD",
+  }
 ];
 
 const LayoutSA: React.FC = () => {
@@ -46,30 +60,38 @@ const LayoutSA: React.FC = () => {
   }));
 
   return (
-    <Layout>
-      <Sider
-        className="h-screen"
-        breakpoint="lg"
-        collapsedWidth="0"
-        onBreakpoint={(broken) => {
-          console.log(broken);
-        }}
-        onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
-        }}
-      >
-        <div className="demo-logo-vertical" />
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["1"]}
-          items={items}
-        />
-      </Sider>
-      <Layout>
-        <Content>
-          <Outlet />
-        </Content>
+    <Layout className="w-full h-screen flex flex-col">
+      <HeaderSM />
+      <Layout className="flex flex-1">
+        <Sider
+          className="h-full bg-[#c89c47]"
+          breakpoint="lg"
+          collapsedWidth="0"
+          onBreakpoint={(broken) => {
+            console.log(broken);
+          }}
+          onCollapse={(collapsed, type) => {
+            console.log(collapsed, type);
+          }}
+        >
+          <div className="mt-10">
+            <FaCircleUser className="text-white mx-auto " size={70} />
+            <div className="text-white font-bold text-center text-lg">
+              Admin
+            </div>
+          </div>
+          <Menu
+            className="bg-[#c89c47] text-white font-medium  mt-5 custom-menu"
+            theme="dark"
+            defaultSelectedKeys={["1"]}
+            items={items}
+          />
+        </Sider>
+        <Layout>
+          <Content className="p-6 bg-gray-100">
+            <Outlet />
+          </Content>
+        </Layout>
       </Layout>
     </Layout>
   );
