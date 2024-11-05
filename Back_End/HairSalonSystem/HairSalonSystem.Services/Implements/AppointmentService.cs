@@ -368,7 +368,7 @@ namespace HairSalonSystem.Services.Implements
             };
             // Get stylist appointment
             var appointmentList = await _appointmentRepository.GetAllAppointment();
-            var existingAppointments =  appointmentList.Where(x => x.StylistId == request.StylistId && x .Status == 2 && x.StartTime >= startOfDay).ToList();
+            var existingAppointments =  appointmentList.Where(x => x.StylistId == request.StylistId && (x .Status == 2 || x.Status == 1) && x.StartTime >= startOfDay).ToList();
             
             // Innitiate slot
             List<DateTime> allTimeSlots = Enumerable.Range(0, 11)
