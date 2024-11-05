@@ -20,11 +20,12 @@ namespace HairSalonSystem.Services.Implements
     {
         private readonly IStaffStylistRepository _staffStylistRepository;
         private readonly IAccountRepository _accountRepository;
-
-        public StaffStylistService(IStaffStylistRepository staffStylistRepository, IAccountRepository accountRepository)
+        private readonly IFirebaseService _firebaseService;
+        public StaffStylistService(IStaffStylistRepository staffStylistRepository, IAccountRepository accountRepository, IFirebaseService firebaseService)
         {
             _staffStylistRepository = staffStylistRepository;
             _accountRepository = accountRepository;
+            _firebaseService = firebaseService;
         }
 
         public async Task<CreateStaffStylistResponse> CreateStaffStylistAsync(CreateStaffStylistRequest request, HttpContext httpContext)
@@ -32,14 +33,15 @@ namespace HairSalonSystem.Services.Implements
             var roleName = UserUtil.GetRoleName(httpContext);
             if (roleName != Enums.RoleEnums.SL.ToString() && roleName != Enums.RoleEnums.SA.ToString())
                 return new CreateStaffStylistResponse { Message = MessageConstant.StaffStylistMessage.NotRights };
+            var url = await _firebaseService.UploadFile(request.AvatarImage);
             var account = new Account
             {
                 AccountId = Guid.NewGuid(),
                 Email = request.Email,
                 Password = PasswordUtil.HashPassword(request.Password),
                 RoleName = Enums.RoleEnums.SL.ToString(),
-                InsDate = TimeUtils.GetCurrentSEATime(),
-                UpdDate = TimeUtils.GetCurrentSEATime(),
+                InsDate = DateTime.Now,
+                UpdDate = DateTime.Now,
                 DelFlg = true
             };
             await _accountRepository.AddAccount(account);
@@ -52,9 +54,9 @@ namespace HairSalonSystem.Services.Implements
                 DateOfBirth = request.DateOfBirth,
                 PhoneNumber = request.PhoneNumber,
                 Address = request.Address,
-                AvatarImage = request.AvatarImage,
-                InsDate = TimeUtils.GetCurrentSEATime(),
-                UpdDate = TimeUtils.GetCurrentSEATime(),
+                AvatarImage = url,
+                InsDate = DateTime.Now,
+                UpdDate = DateTime.Now,
                 DelFlg = true
             };
 
@@ -79,6 +81,7 @@ namespace HairSalonSystem.Services.Implements
                 StaffStylistName = staffStylist.StaffStylistName,
                 DateOfBirth = staffStylist.DateOfBirth,
                 PhoneNumber = staffStylist.PhoneNumber,
+                BranchId = staffStylist.BranchID,
                 Address = staffStylist.Address,
                 AvatarImage = staffStylist.AvatarImage
             };
@@ -112,6 +115,7 @@ namespace HairSalonSystem.Services.Implements
                     StaffStylistId = stylist.StaffStylistId,
                     StaffStylistName = stylist.StaffStylistName,
                     DateOfBirth = stylist.DateOfBirth,
+                    BranchId = stylist.BranchID,
                     PhoneNumber = stylist.PhoneNumber,
                     Address = stylist.Address,
                     AvatarImage = stylist.AvatarImage
@@ -126,13 +130,14 @@ namespace HairSalonSystem.Services.Implements
             var staffStylist = await _staffStylistRepository.GetStaffStylistById(id);
             if (staffStylist == null)
                 throw new KeyNotFoundException(MessageConstant.StaffStylistMessage.StaffStylistNotFound);
+            var url = await _firebaseService.UploadFile(request.AvatarImage);
 
             staffStylist.StaffStylistName = request.StaffStylistName;
             staffStylist.DateOfBirth = request.DateOfBirth;
             staffStylist.PhoneNumber = request.PhoneNumber;
             staffStylist.Address = request.Address;
-            staffStylist.AvatarImage = request.AvatarImage;
-            staffStylist.UpdDate = TimeUtils.GetCurrentSEATime();
+            staffStylist.AvatarImage = url;
+            staffStylist.UpdDate = DateTime.Now ;
 
             await _staffStylistRepository.UpdateStaffStylist(id, staffStylist);
         }

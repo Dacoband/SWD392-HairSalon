@@ -30,22 +30,24 @@ namespace HairSalonSystem.BusinessObject.Entities
         [Required]
         [StringLength(100)]
         [BsonElement("stylistName")]
-        public string StylistName { get; set; }
+        public required string StylistName { get; set; }
 
         [BsonElement("averageRating")]
         public double AverageRating { get; set; }
+        [BsonElement("baseSalary")]
+        public double BaseSalary { get; set; }
 
         [Required]
         [StringLength(10, MinimumLength = 10)]
         [RegularExpression(@"^[0-9]{10}$", ErrorMessage = "Phone number must be 10 digits.")]
         [BsonElement("phoneNumber")]
-        public string PhoneNumber { get; set; }
+        public required string PhoneNumber { get; set; }
 
         [BsonElement("Address")]
-        public string Address { get; set; }
+        public string? Address { get; set; }
 
         [BsonElement("AvatarImage")]
-        public string AvatarImage { get; set; }
+        public string? AvatarImage { get; set; }
 
         [BsonElement("InsDate")]
         public DateTime InsDate { get; set; }
