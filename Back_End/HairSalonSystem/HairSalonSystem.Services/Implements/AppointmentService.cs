@@ -1,5 +1,6 @@
 ﻿using Amazon.Runtime.Internal;
 using Amazon.Runtime.Internal.Util;
+using Firebase.Auth;
 using HairSalonSystem.BusinessObject.Entities;
 using HairSalonSystem.Repositories.Interface;
 using HairSalonSystem.Services.Constant;
@@ -13,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -29,9 +31,10 @@ namespace HairSalonSystem.Services.Implements
         private readonly IBranchRespository _branchRepository;
         private readonly IAppointmentServiceRepository _appointmentServiceRepository;
         private readonly IMongoClient _mongoClient;
+        private readonly IMemberRepository _memberRepository;
 
         public AppointmentService(IAppointmentRepository appointmentRepository, IStylistRepository stylistRepository, IServiceRepository serviceRepository
-, IAppointmentServiceRepository appointmentServiceRepository, IMongoClient mongoClient
+, IAppointmentServiceRepository appointmentServiceRepository, IMongoClient mongoClient, IMemberRepository memberRepository
 )
         {
             _mongoClient = mongoClient; 
@@ -39,6 +42,7 @@ namespace HairSalonSystem.Services.Implements
             _stylistRepository = stylistRepository;
             _serviceRepository = serviceRepository;
             _appointmentServiceRepository = appointmentServiceRepository;
+            _memberRepository = memberRepository;
 
         }
         public async Task<ActionResult<BusinessObject.Entities.Appointment>> CreateAppointment(CreateAppointmentRequest request, HttpContext context)
@@ -60,6 +64,9 @@ namespace HairSalonSystem.Services.Implements
                     StatusCode = StatusCodes.Status403Forbidden
                 };
             }
+        
+            var memberList = await _memberRepository.GetAllMembers();
+            var member = memberList.Where(x => x.AccountId == accountID).FirstOrDefault();
             //initiate
             List<BusinessObject.Entities.Appointment> appointments = await _appointmentRepository.GetAllAppointment();
             List<BusinessObject.Entities.AppointmentService> appointmentDetails = new List<BusinessObject.Entities.AppointmentService>();
@@ -67,7 +74,7 @@ namespace HairSalonSystem.Services.Implements
             {
                 AppointmentId = Guid.NewGuid(),
                 TotalPrice = 0,
-                CustomerId = (Guid)accountID,
+                CustomerId = (Guid)member.MemberId,
                 Status = 1,
                 InsDate = DateTime.Now,
                 UpDate = DateTime.Now
@@ -222,6 +229,21 @@ namespace HairSalonSystem.Services.Implements
                 };
             }
 
+            var roleName = UserUtil.GetRoleName(context);
+            if(roleName == "MB")
+            {
+
+                var memberList = await _memberRepository.GetAllMembers();
+                var member = memberList.Where(x => x.AccountId == accountID).FirstOrDefault();
+                query.CustomerId = member.MemberId;
+            }
+            if (roleName == "ST")
+            {
+                var stylistList = await _stylistRepository.GetAllStylist();
+                var stylist = stylistList.Where(x => x.AccountId != accountID).FirstOrDefault();
+                query.StylistId = stylist.StylistId;
+            }
+
             // Fetch all appointments from the repository
             var appointmentList = await _appointmentRepository.GetAllAppointment();
 
@@ -247,15 +269,20 @@ namespace HairSalonSystem.Services.Implements
             {
                 appointmentList = appointmentList.Where(x => x.Status == query.Status).ToList();
             }
-
             if (query.StartTime.HasValue)
             {
-                appointmentList = appointmentList.Where(x => x.StartTime >= query.StartTime).ToList();
+                var queryDate = query.StartTime.Value.Date; 
+                appointmentList = appointmentList
+                    .Where(x => x.StartTime.Date == queryDate && x.StartTime >= query.StartTime)
+                    .ToList();
             }
 
             if (query.EndTime.HasValue)
             {
-                appointmentList = appointmentList.Where(x => x.EndTime <= query.EndTime).ToList();
+                var queryDate = query.StartTime.Value.Date; 
+                appointmentList = appointmentList
+                    .Where(x => x.EndTime.Date == queryDate && x.EndTime <= query.EndTime)
+                    .ToList();
             }
 
             if (query.pageIndex.HasValue && query.pageSize.HasValue)
@@ -356,10 +383,23 @@ namespace HairSalonSystem.Services.Implements
 
             foreach (var appointment in existingAppointments)
             {
-
                 // Remove appointment from available
-                availableTimeSlots.RemoveAll(slot =>
-                    slot.Hour >= appointment.StartTime.Hour && slot.Hour < appointment.EndTime.Hour);
+                if (appointment.EndTime.Minute == 0)
+                {
+                    // Remove slots from StartTime's hour up to, but not including, EndTime's hour
+                    availableTimeSlots.RemoveAll(slot =>
+                        slot.Hour == appointment.StartTime.Hour && slot.Minute >= appointment.StartTime.Minute ||
+                        slot.Hour > appointment.StartTime.Hour && slot.Hour < appointment.EndTime.Hour);
+                }
+                else
+                {
+                    // Remove slots from StartTime's hour up to and including EndTime's hour and minute
+                    availableTimeSlots.RemoveAll(slot =>
+                        (slot.Hour == appointment.StartTime.Hour && slot.Minute >= appointment.StartTime.Minute) ||
+                        (slot.Hour > appointment.StartTime.Hour && slot.Hour < appointment.EndTime.Hour) ||
+                        (slot.Hour == appointment.EndTime.Hour && slot.Minute <= appointment.EndTime.Minute));
+                }
+
             }
 
             // Filter duration
@@ -370,11 +410,10 @@ namespace HairSalonSystem.Services.Implements
                 var slot = availableTimeSlots[i];
                 DateTime endServiceTime = slot.AddMinutes(duration); 
 
-                if (endServiceTime <= endOfDay)
-                {
+               
                     if (i < availableTimeSlots.Count - 1)
                     {
-                        DateTime nextSlot = availableTimeSlots.Find(x => x.Hour == endServiceTime.Hour);
+                        DateTime nextSlot = availableTimeSlots.Find(x => x.Hour == endServiceTime.Hour );
                         if (nextSlot != default) 
                         {
                             suitableTimeSlots.Add(slot);
@@ -385,9 +424,48 @@ namespace HairSalonSystem.Services.Implements
                         suitableTimeSlots.Add(slot);
                     }
                 }
-            }
+            
 
             return new ObjectResult(suitableTimeSlots);
+        }
+
+        public async Task<ActionResult<Stylist>> GetSuitableStylist(QueryStylist query, HttpContext context)
+        {
+            var accountID = UserUtil.GetAccountId(context);
+            if (accountID == null)
+            {
+                return new ObjectResult(MessageConstant.AppointmentMessage.NotFound)
+                {
+                    StatusCode = StatusCodes.Status403Forbidden
+                };
+            }
+            var endTime = query.StartTime;
+            
+            foreach (var service in query.ServiceIds)
+            {
+                var existingService = await _serviceRepository.GetServiceById(service);
+                if (existingService == null)
+                {
+                    return new ObjectResult(MessageConstant.ServiceMessage.NotFound)
+                    {
+                        StatusCode = StatusCodes.Status403Forbidden
+                    };
+
+                }
+                endTime = endTime.AddMinutes(existingService.Duration);
+            }
+           
+            var stylistList = await _stylistRepository.GetStylistByBranchId(query.BranchId);
+            var appointmentList = await _appointmentRepository.GetAllAppointment();
+            appointmentList = appointmentList
+    .Where(x => x.StartTime < endTime && x.EndTime > query.StartTime && x.Status == 2)
+    .ToList();
+            var stylistIds = appointmentList.Select(x => x.StylistId).Distinct().ToList();
+
+            stylistList.RemoveAll(stylist => stylistIds.Contains(stylist.StylistId));
+
+
+            return new OkObjectResult(stylistList[0]);
         }
 
         public async Task<ActionResult> UpdateAppointmentStatus(Guid appointmentId, int status, HttpContext context)
@@ -403,8 +481,22 @@ namespace HairSalonSystem.Services.Implements
 
             var roleName = UserUtil.GetRoleName(context);
             var appointment = await _appointmentRepository.GetAppointmentById(appointmentId);
+            var userId = new Guid();
 
-            if (accountID != appointment.StylistId && accountID != appointment.CustomerId && roleName != "SL")
+            if (roleName == "MB")
+            {
+
+                var memberList = await _memberRepository.GetAllMembers();
+                var member = memberList.Where(x => x.AccountId == accountID).FirstOrDefault();
+                userId = member.MemberId;
+            }
+            if(roleName == "ST")
+            {
+                var stylistList = await _stylistRepository.GetAllStylist();
+                var stylist = stylistList.Where(x => x.AccountId != accountID).FirstOrDefault();
+                userId = stylist.StylistId;
+            }
+            if (userId != appointment.StylistId && userId != appointment.CustomerId && roleName != "SL")
             {
                 return new ObjectResult(MessageConstant.AppointmentMessage.UpdateRight)
                 {
@@ -425,6 +517,24 @@ namespace HairSalonSystem.Services.Implements
                 {
                     StatusCode = StatusCodes.Status400BadRequest
                 };
+            }
+            if(status == 4) {
+            if(DateTime.Now.CompareTo(appointment.EndTime) < 0) {
+                    return new ObjectResult(MessageConstant.AppointmentMessage.InvalidComplete)
+                    {
+                        StatusCode = StatusCodes.Status400BadRequest
+                    };
+                }
+            
+            }
+            if (status == 3)
+            {
+                if (DateTime.Now.CompareTo(appointment.StartTime) > 0)
+                {
+                    status = 5;
+                   
+                }
+
             }
             try
             {
@@ -448,5 +558,6 @@ namespace HairSalonSystem.Services.Implements
 
 
         }
+
     }
 }
