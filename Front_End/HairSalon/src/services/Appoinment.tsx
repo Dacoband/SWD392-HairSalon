@@ -11,6 +11,7 @@ export const createAppointment = async (
   try {
     const response = await axios.post<Appointment>(API_URL, appointment, {
       headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'application/json',
       },
     })
@@ -35,6 +36,7 @@ export const getSuitableSlots = async (query: {
         date: query.date.toISOString(),
       },
       headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'application/json',
       },
     })

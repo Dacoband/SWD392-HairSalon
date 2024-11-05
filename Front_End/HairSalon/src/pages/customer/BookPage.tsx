@@ -28,13 +28,14 @@ import { FaStar } from 'react-icons/fa'
 
 import { getServicesByType, getAllServices } from '../../services/serviceSalon'
 import type { DatePickerProps } from 'antd'
-import { Dayjs } from 'dayjs'
+
 import {
   getAvailableStylist,
   getSuitableSlots,
   createAppointment,
 } from '../../services/Appoinment'
 import { CreateAppointmentRequest } from '../../models/type'
+import dayjs, { Dayjs } from 'dayjs'
 const customDot: StepsProps['progressDot'] = (dot, { status, index }) => (
   <Popover
     content={
@@ -74,6 +75,7 @@ const BookingPage: React.FC = () => {
   const [stylists, setStylists] = useState<Stylish[]>([]) // Thêm trạng thái cho stylist
   const [selectedBranch, setSelectedBranch] = useState<string | null>(null) // Trạng thái cho cơ sở đã chọn
   const [selectedDate, setSelectedDate] = useState<Date>(new Date(Date.now()))
+
   const [selectedTime, setSelectedTime] = useState<string | null>(null)
   const [availableSlot, setAvailableSlot] = useState<Date[] | null>(
     timeSlots.map((time) => {
@@ -107,7 +109,7 @@ const BookingPage: React.FC = () => {
         selectedDate
       )
       setAvailableSlot(response)
-      console.log(availableSlot)
+      console.log(response)
     } catch (error) {
       console.error('Error fetching available slot', error)
     }
@@ -135,9 +137,17 @@ const BookingPage: React.FC = () => {
       if (selectedStylist === '0') {
         fetchAvailableStylist()
       }
+      const selectedDateObject = new Date(selectedDate)
+      const selectedTimeDate = new Date(selectedTime!)
+
+      const selectedHours = selectedTimeDate.getHours()
+      const selectedMinutes = selectedTimeDate.getMinutes()
+
       const appointmentRequest: CreateAppointmentRequest = {
         stylistId: selectedStylist || 'err',
-        appointmentDate: selectedDate.toISOString(),
+        appointmentDate: new Date(
+          selectedDateObject.setHours(selectedHours, selectedMinutes)
+        ).toISOString(),
         serviceIds: selectedServices.map((service) => service.serviceID),
       }
       console.log(
@@ -236,10 +246,10 @@ const BookingPage: React.FC = () => {
     return `${duration} phút`
   }
 
-  const handleSelectDate = (value: Dayjs) => {
-    setSelectedDate(value.toDate())
+  const handleSelectDate = (value) => {
+    setSelectedDate(value)
     fetchTimeSlot()
-    console.log(value.format('YYYY-MM-DD'))
+    console.log(value)
   }
 
   const filteredServicesAll = serviceAll.filter((service) =>
@@ -831,6 +841,9 @@ const BookingPage: React.FC = () => {
                   <Col span={10}>
                     <div>
                       <Calendar
+                        disabledDate={(current) =>
+                          current && current <= dayjs().startOf('day')
+                        }
                         fullscreen={false}
                         onChange={handleSelectDate}
                       />
@@ -842,17 +855,19 @@ const BookingPage: React.FC = () => {
                       <Col span={10}>
                         {/* slot */}
                         <div className="flex flex-wrap">
-                          {timeSlots.map((time, index) => (
+                          {availableSlot?.map((time, index) => (
                             <div
                               key={index}
-                              className={`w-1/3 h-10 rounded-lg flex flex-row mr-5 mb-1 cursor-pointer justify-center items-center ${
-                                selectedTime === time
+                              className={`w-1/3 h-10 rounded-lg flex flex-col mr-5 mb-1 cursor-pointer justify-center items-center ${
+                                selectedTime &&
+                                new Date(selectedTime).getTime() ===
+                                  new Date(time).getTime()
                                   ? 'border-[#937b34] border-4 '
                                   : 'border-slate-400 border-2'
                               }`}
                               onClick={() => setSelectedTime(time)}
                             >
-                              {time}
+                              {new Date(time).toISOString().substring(11, 16)}{' '}
                             </div>
                           ))}
                         </div>
@@ -866,7 +881,6 @@ const BookingPage: React.FC = () => {
                           <div className="w-full flex justify-center text-gray-400 mb-2">
                             <RiMapPinUserFill size={100} />
                           </div>
-
                           <span className="text-lg font-bold text-gray-400">
                             Vui lòng chọn thoi gian
                           </span>
@@ -924,11 +938,26 @@ const BookingPage: React.FC = () => {
       content: (
         <div className="pb-8 flex justify-center">
           <div className="w-[50%]  ml-5 border-2 px-5 bg-slate-100  rounded-md h-fit pb-8">
-            <div className="flex justify-center mt-6">
-              <div className="text-xl text-[#937b34] font-bold w-fit mb-10 text-center border-b-2 border-[#937b34]">
+            <div className="flex justify-center flex-col items-center mt-6">
+              <div className="text-xl text-[#937b34] font-bold w-fit mb-2 text-center border-b-2 border-[#937b34]">
                 Chi tiết lịch hẹn
               </div>
-              <div></div>
+              <div className="text-sm">
+                Địa chỉ:{' '}
+                {
+                  branches.find((branch) => branch.branchID === selectedBranch)
+                    ?.salonBranches
+                }
+              </div>
+              <div className="text-sm">
+                <b>Tổng thời gian</b>
+                {formatDuration(
+                  selectedServices.reduce(
+                    (total, service) => total + service.duration,
+                    0
+                  )
+                )}
+              </div>
             </div>
             <div>
               {
