@@ -36,7 +36,7 @@ const SignInForm = () => {
         // Navigate based on 'roleName' inside 'userDatas'
         switch (userDatas.roleName) {
           case "SA":
-            navigate("/SystemAdmin");
+            navigate("/manageService");
             break;
           case "SM":
             navigate("/StaffManager");

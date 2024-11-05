@@ -17,6 +17,7 @@ import { Steps, Button, Popover, Input } from "antd";
 import type { StepsProps } from "antd";
 import { getBranchesAll } from "../../services/Branches/branches";
 import { Branches, Services, Stylish } from "../../models/type";
+import { getStylishByBranchID, getStylishRandom } from "../../services/Stylish";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaFrownOpen } from "react-icons/fa";
 
@@ -24,7 +25,6 @@ import { FaScissors } from "react-icons/fa6";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaUserClock } from "react-icons/fa6";
 import { FaStar } from "react-icons/fa";
-import { MdDateRange } from "react-icons/md";
 
 import { getServicesByType, getAllServices } from "../../services/serviceSalon";
 const customDot: StepsProps["progressDot"] = (dot, { status, index }) => (
@@ -38,140 +38,7 @@ const customDot: StepsProps["progressDot"] = (dot, { status, index }) => (
     {dot}
   </Popover>
 );
-const stylistsBranch1 = [
-  {
-    email: "stylist1@example.com",
-    password: "password1",
-    branchId: "af638270-05e0-48b6-b47b-9fde0b937151",
-    staffStylistId: "stylist1",
-    stylistName: "Nguyễn Văn A",
-    level: 1,
-    phoneNumber: "0123456789",
-    address: "123 Đường ABC, Quận 1, TP.HCM",
-    avatarImage:
-      "https://i.pinimg.com/736x/0a/6f/49/0a6f497141e02d2ca9f88b1c97c38afa.jpg",
-    insDate: new Date("2023-01-01"),
-  },
-  {
-    email: "stylist2@example.com",
-    password: "password2",
-    branchId: "af638270-05e0-48b6-b47b-9fde0b937151",
-    staffStylistId: "stylist2",
-    stylistName: "Trần Thị B",
-    level: 2,
-    phoneNumber: "0123456790",
-    address: "456 Đường DEF, Quận 2, TP.HCM",
-    avatarImage:
-      "https://i.pinimg.com/564x/23/f0/8e/23f08e66d95b85bad4c2850ea7cc8b50.jpg",
-    insDate: new Date("2023-02-01"),
-  },
-  {
-    email: "stylist3@example.com",
-    password: "password3",
-    branchId: "af638270-05e0-48b6-b47b-9fde0b937151",
-    staffStylistId: "stylist3",
-    stylistName: "Lê Văn C",
-    level: 3,
-    phoneNumber: "0123456791",
-    address: "789 Đường GHI, Quận 3, TP.HCM",
-    avatarImage:
-      "https://i.pinimg.com/564x/7c/7f/77/7c7f7702bf5db07b29249ff68039597f.jpg",
-    insDate: new Date("2023-03-01"),
-  },
-  {
-    email: "stylist4@example.com",
-    password: "password4",
-    branchId: "af638270-05e0-48b6-b47b-9fde0b937151",
-    staffStylistId: "stylist4",
-    stylistName: "Phạm Thị D",
-    level: 1,
-    phoneNumber: "0123456792",
-    address: "321 Đường JKL, Quận 4, TP.HCM",
-    avatarImage:
-      "https://i.pinimg.com/736x/3f/d6/33/3fd6338a8ee6e356b0b40b7b51e398b0.jpg",
-    insDate: new Date("2023-04-01"),
-  },
-  {
-    email: "stylist5@example.com",
-    password: "password5",
-    branchId: "af638270-05e0-48b6-b47b-9fde0b937151",
-    staffStylistId: "stylist5",
-    stylistName: "Nguyễn Thị E",
-    level: 2,
-    phoneNumber: "0123456793",
-    address: "654 Đường MNO, Quận 5, TP.HCM",
-    avatarImage:
-      "https://i.pinimg.com/564x/5c/1a/ba/5c1abaed94d3944131ca5febfbccf651.jpg",
-    insDate: new Date("2023-05-01"),
-  },
-];
-const stylistsBranch2 = [
-  {
-    email: "stylist6@example.com",
-    password: "password6",
-    branchId: "d05a4fa3-9882-4b04-87e7-a73904f99ed0",
-    staffStylistId: "stylist6",
-    stylistName: "Nguyễn Văn F",
-    level: 1,
-    phoneNumber: "0123456794",
-    address: "987 Đường PQR, Quận 6, TP.HCM",
-    avatarImage:
-      "https://i.pinimg.com/736x/0a/6f/49/0a6f497141e02d2ca9f88b1c97c38afa.jpg",
-    insDate: new Date("2023-01-15"),
-  },
-  {
-    email: "stylist7@example.com",
-    password: "password7",
-    branchId: "d05a4fa3-9882-4b04-87e7-a73904f99ed0",
-    staffStylistId: "stylist7",
-    stylistName: "Trần Thị G",
-    level: 2,
-    phoneNumber: "0123456795",
-    address: "654 Đường STU, Quận 7, TP.HCM",
-    avatarImage:
-      " https://i.pinimg.com/564x/5c/1a/ba/5c1abaed94d3944131ca5febfbccf651.jpg",
-    insDate: new Date("2023-02-15"),
-  },
-  {
-    email: "stylist8@example.com",
-    password: "password8",
-    branchId: "d05a4fa3-9882-4b04-87e7-a73904f99ed0",
-    staffStylistId: "stylist8",
-    stylistName: "Lê Văn H",
-    level: 3,
-    phoneNumber: "0123456796",
-    address: "321 Đường VWX, Quận 8, TP.HCM",
-    avatarImage:
-      "https://i.pinimg.com/564x/23/f0/8e/23f08e66d95b85bad4c2850ea7cc8b50.jpg",
-    insDate: new Date("2023-03-15"),
-  },
-  {
-    email: "stylist9@example.com",
-    password: "password9",
-    branchId: "d05a4fa3-9882-4b04-87e7-a73904f99ed0",
-    staffStylistId: "stylist9",
-    stylistName: "Phạm Thị I",
-    level: 1,
-    phoneNumber: "0123456797",
-    address: "456 Đường YZA, Quận 9, TP.HCM",
-    avatarImage:
-      "https://i.pinimg.com/564x/23/f0/8e/23f08e66d95b85bad4c2850ea7cc8b50.jpg",
-    insDate: new Date("2023-04-15"),
-  },
-  {
-    email: "stylist10@example.com",
-    password: "password10",
-    branchId: "d05a4fa3-9882-4b04-87e7-a73904f99ed0",
-    staffStylistId: "stylist10",
-    stylistName: "Nguyễn Thị J",
-    level: 2,
-    phoneNumber: "0123456798",
-    address: "123 Đường ABC, Quận 10, TP.HCM",
-    avatarImage:
-      "https://kpopvotes.com/vote/1718342307sjHj7M026K.jpg?w=150&t=webp",
-    insDate: new Date("2023-05-15"),
-  },
-];
+
 const BookingPage: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [branches, setBranches] = useState<Branches[]>([]);
@@ -213,15 +80,15 @@ const BookingPage: React.FC = () => {
     fetchBranches();
     fetchServices();
   }, []);
-  const handleBranchChange = (branchId: string) => {
+  const handleBranchChange = async (branchId: string) => {
     setSelectedBranch(branchId);
-    // Lấy danh sách stylist dựa trên branchId
-    if (branchId === "af638270-05e0-48b6-b47b-9fde0b937151") {
-      setStylists(stylistsBranch1);
-    } else if (branchId === "d05a4fa3-9882-4b04-87e7-a73904f99ed0") {
-      setStylists(stylistsBranch2);
-    } else {
-      setStylists([]);
+
+    // Gọi API để lấy danh sách stylist dựa trên branchId
+    try {
+      const stylistList = await getStylishByBranchID(branchId);
+      setStylists(stylistList);
+    } catch (error) {
+      console.error("Error fetching stylists:", error);
     }
   };
 
@@ -780,15 +647,13 @@ const BookingPage: React.FC = () => {
                     </div>
                     {stylists.map((stylist) => (
                       <div
-                        key={stylist.staffStylistId}
+                        key={stylist.stylistId}
                         className={`w-40 h-56  rounded-lg flex flex-col mr-5 mb-5 cursor-pointer ${
-                          selectedStylist === stylist.staffStylistId
+                          selectedStylist === stylist.stylistId
                             ? "border-[#937b34] border-4 "
                             : "border-slate-400 border-2"
-                        }`} // Thay đổi màu sắc khi stylist được chọn
-                        onClick={() =>
-                          setSelectedStylist(stylist.staffStylistId)
-                        } // Thêm sự kiện click để chọn stylist
+                        }`}
+                        onClick={() => setSelectedStylist(stylist.stylistId)}
                       >
                         <img
                           src={stylist.avatarImage}
@@ -800,7 +665,9 @@ const BookingPage: React.FC = () => {
                         </span>
                         <span className="flex justify-center items-center">
                           <FaStar size={20} className="text-yellow-500" />
-                          <span className="font-bold">{stylist.level}/5</span>
+                          <span className="font-bold">
+                            {stylist.averageRating}/5
+                          </span>
                         </span>
                       </div>
                     ))}
@@ -858,13 +725,13 @@ const BookingPage: React.FC = () => {
     },
   ];
 
-  const next = () => {
-    setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
-  };
+  // const next = () => {
+  //   setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
+  // };
 
-  const prev = () => {
-    setCurrentStep((prev) => Math.max(prev - 1, 0));
-  };
+  // const prev = () => {
+  //   setCurrentStep((prev) => Math.max(prev - 1, 0));
+  // };
 
   return (
     <div>
