@@ -60,6 +60,7 @@ export interface Stylish {
   staffStylistId: string;
   stylistName: string;
   averageRating: number;
+  dateOfBirth: string;
   phoneNumber: string;
   address: string;
   avatarImage: string;
@@ -74,7 +75,7 @@ export interface UserInfoData {
   DateOfBirth: string;
   PhoneNumber: string;
   Address: string;
- avatarImage?: string; 
+  avatarImage?: string;
 }
 
 export interface StaffStylish {

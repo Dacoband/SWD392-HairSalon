@@ -13,11 +13,11 @@ export const login = async (email: string, password: string) => {
       });
      // Check if response contains token, email, and roleName
      if (response.data && response.data.token && response.data.email && response.data.roleName) {
-      const { token, email: userEmail, roleName ,accountId, actorId} = response.data;
+      const { token, email: userEmail, roleName ,branchId, actorId} = response.data;
       
       // Store token and userData in localStorage
       localStorage.setItem('token', token);
-      const userDatas = { email: userEmail, roleName ,accountId, actorId};
+      const userDatas = { email: userEmail, roleName ,branchId, actorId};
       localStorage.setItem('userData', JSON.stringify(userDatas));
   
       return { token, userDatas };

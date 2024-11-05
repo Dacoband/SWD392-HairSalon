@@ -43,11 +43,11 @@ const ManagerStylish_staff: React.FC = () => {
           avatarImage: staff.avatarImage,
           email: staff.email || "",
           password: staff.password || "",
+          dateOfBirth: staff.dateOfBirth,  // Ensure this is correct
           insDate: new Date(),
           updDate: new Date(),
           staffStylistId: staff.staffStylistId,
         }));
-        
         setStylists(styledList);
       } catch (error) {
         console.error("Failed to fetch stylists:", error);
@@ -112,6 +112,7 @@ const ManagerStylish_staff: React.FC = () => {
       avatarImage: staff.avatarImage,
       email: staff.email || "",
       password: staff.password || "",
+      dateOfBirth: staff.dateOfBirth,
       insDate: new Date(),
       updDate: new Date(),
       staffStylistId: staff.staffStylistId,
@@ -182,7 +183,7 @@ const ManagerStylish_staff: React.FC = () => {
 
   return (
     <div>
-      <h2>Manager Staff Stylists</h2>
+  
       <Button
         type="primary"
         onClick={() => {
@@ -220,6 +221,12 @@ const ManagerStylish_staff: React.FC = () => {
           }}
           onFinish={handleAddStylist}
         >
+           <Form.Item label="Email" name="email" rules={[{ required: true, message: 'Please enter email' }]}>
+            <Input />
+          </Form.Item>
+          <Form.Item label="Password" name="password" rules={[{ required: true, message: 'Please enter password' }]}>
+            <Input.Password />
+          </Form.Item>
           <Form.Item label="Name" name="stylistName" rules={[{ required: true, message: 'Please enter stylist name' }]}>
             <Input />
           </Form.Item>
@@ -232,12 +239,7 @@ const ManagerStylish_staff: React.FC = () => {
           <Form.Item label="Date of Birth" name="dateOfBirth">
             <DatePicker />
           </Form.Item>
-          <Form.Item label="Email" name="email" rules={[{ required: true, message: 'Please enter email' }]}>
-            <Input />
-          </Form.Item>
-          <Form.Item label="Password" name="password" rules={[{ required: true, message: 'Please enter password' }]}>
-            <Input.Password />
-          </Form.Item>
+         
           <Form.Item label="Avatar">
             <Upload
               listType="picture"
@@ -285,6 +287,7 @@ const ManagerStylish_staff: React.FC = () => {
           <Form.Item label="Date of Birth" name="dateOfBirth">
             <DatePicker />
           </Form.Item>
+         
           <Form.Item label="Avatar">
             <Upload
               listType="picture"
