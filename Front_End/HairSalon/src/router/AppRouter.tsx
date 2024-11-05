@@ -1,5 +1,3 @@
-// src/AppRouter.jsx
-// import React from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -40,7 +38,10 @@ import ManagerStylish_staff from "../pages/StaffStylish/ManagerStylish";
 import ManagerAppoimentStaff from "../pages/StaffStylish//ManagerAppoimentStaff";
 import ManagerSchedule from "../pages/StaffStylish/ManagerSchedule";
 // import CategogySL from "../pages/StaffStylish/CategogySL";
-
+import ManagerStaff_AD from "../pages/admin/ManagerStaffManger.tsx";
+import ManagerAppointment_AD from "../pages/admin/ManagerAppointment.tsx";
+import ManagerStylist from "../pages/admin/ManagetStylist.tsx";
+import ManagerChart from "../pages/admin/ManagerChart.tsx";
 const AppRouter = () => {
   return (
     <Router>
@@ -50,7 +51,7 @@ const AppRouter = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/logout" element={<Logout />} />
-        {/* GUEST có layout */}
+        {/* GUEST cÃ³ layout */}
         <Route element={<LayoutMain />}>
           <Route path="/" element={<Navigate to="/homePage" />} />
           <Route path="/homePage" element={<HomePage />} />
@@ -191,6 +192,33 @@ const AppRouter = () => {
             path="/ManagerBranch_AD"
             element={
               <PrivateRoute element={ManagerBranch} allowedRoles={["SA"]} />
+            }
+          />
+          <Route
+            path="/ManagerStaff_AD"
+            element={
+              <PrivateRoute element={ManagerStaff_AD} allowedRoles={["SA"]} />
+            }
+          />
+          <Route
+            path="/ManagerAppointment_AD"
+            element={
+              <PrivateRoute
+                element={ManagerAppointment_AD}
+                allowedRoles={["SA"]}
+              />
+            }
+          />
+          <Route
+            path="/ManagerStylist_AD"
+            element={
+              <PrivateRoute element={ManagerStylist} allowedRoles={["SA"]} />
+            }
+          />
+          <Route
+            path="/ManagerChart_AD"
+            element={
+              <PrivateRoute element={ManagerChart} allowedRoles={["SA"]} />
             }
           />
         </Route>
