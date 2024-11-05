@@ -88,8 +88,7 @@ builder.Services.AddSingleton(firebaseApp);
 
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
 
-//Load VNPay settings
-builder.Services.Configure<VNPaySettings>(builder.Configuration.GetSection("VNPay"));
+
 
 
 // Add JWT Authentication
@@ -153,7 +152,6 @@ builder.Services.AddScoped<ISalaryRepository, SalaryRepository>();
 // Register Services
 builder.Services.AddScoped<IFirebaseService, FirebaseService>();
 
-builder.Services.AddScoped<IVNPayService, VNPayService>();
 builder.Services.AddScoped<IAccountService, AccountService>(); 
 builder.Services.AddScoped<IAuthService, AuthService>(); 
 builder.Services.AddScoped<IBranchService, BranchService>();
