@@ -325,7 +325,7 @@ namespace HairSalonSystem.Services.Implements
             var accountID = UserUtil.GetAccountId(context);
             if (accountID == null)
             {
-                return new ObjectResult(MessageConstant.AppointmentMessage.NotFound)
+                return new ObjectResult(MessageConstant.AppointmentMessage.NotRight)
                 {
                     StatusCode = StatusCodes.Status403Forbidden
                 };
