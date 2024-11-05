@@ -86,7 +86,13 @@ const BookingPage: React.FC = () => {
         serviceId: selectedServices.map((service) => service.serviceID),
         date: selectedDate,
       })
+      console.log(
+        selectedStylist,
+        selectedServices.map((service) => service.serviceID),
+        selectedDate
+      )
       setAvailableSlot(response)
+      console.log(availableSlot)
     } catch (error) {
       console.error('Error fetching available slot', error)
     }
