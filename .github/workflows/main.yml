@@ -25,3 +25,6 @@ jobs:
     # build docker
     - name: Run `docker compose`
       run:  docker compose up --build --remove-orphans -d
+
+    - name: Remove unused
+      run: docker system prune -a -f

@@ -1,7 +1,11 @@
 import React from "react";
 
 const ManagerAppoimentStylish = () => {
-  return <h2> Profile All</h2>;
+  return (
+    <div>
+      <p>No user data available</p>
+    </div>
+  );
 };
 
 export default ManagerAppoimentStylish;

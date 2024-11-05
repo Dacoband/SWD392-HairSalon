@@ -134,15 +134,7 @@ const AppRouter = () => {
               <PrivateRoute element={ProfileAll} allowedRoles={["ST"]} />
             }
           />
-          <Route
-            path="/Appoiment-Stylish"
-            element={
-              <PrivateRoute
-                element={ManagerAppoimentStylish}
-                allowedRoles={["ST"]}
-              />
-            }
-          />
+
           <Route
             path="/Appoiment-Stylish"
             element={

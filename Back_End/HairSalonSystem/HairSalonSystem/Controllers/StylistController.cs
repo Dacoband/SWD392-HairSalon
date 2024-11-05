@@ -21,7 +21,7 @@ namespace HairSalonSystem.API.Controllers
         [HttpPost]
         [Authorize(Roles = "SA,SM,SL")]
         [Route(APIEndPointConstant.Stylist.AddStylist)]
-        public async Task<IActionResult> CreateStylist([FromBody] CreateStylistRequest request)
+        public async Task<IActionResult> CreateStylist([FromForm] CreateStylistRequest request)
         {
             var result = await _stylistService.CreateStylistAsync(request, HttpContext);
             return Ok(result);
@@ -46,7 +46,7 @@ namespace HairSalonSystem.API.Controllers
         [HttpPut]
         [Authorize(Roles = "SA,SM,SL")]
         [Route(APIEndPointConstant.Stylist.UpdateStylist)]
-        public async Task<IActionResult> UpdateStylist(Guid id, [FromBody] UpdateStylistRequest request)
+        public async Task<IActionResult> UpdateStylist([FromRoute] Guid id, [FromForm] UpdateStylistRequest request)
         {
             await _stylistService.UpdateStylistAsync(id, request);
             return Ok(new { Message = MessageConstant.StylistMessage.StylistUpdated });
