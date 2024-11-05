@@ -297,7 +297,7 @@ namespace HairSalonSystem.Services.Implements
             {
                 return new ObjectResult(MessageConstant.AppointmentMessage.NotFound)
                 {
-                    StatusCode = StatusCodes.Status403Forbidden
+                    StatusCode = StatusCodes.Status404NotFound
                 };
             }
 
@@ -342,7 +342,7 @@ namespace HairSalonSystem.Services.Implements
                 if (existingService == null) {
                     return new ObjectResult(MessageConstant.ServiceMessage.NotFound)
                     {
-                        StatusCode = StatusCodes.Status403Forbidden
+                        StatusCode = StatusCodes.Status404NotFound
                     };
 
                 }
@@ -448,7 +448,7 @@ namespace HairSalonSystem.Services.Implements
                 {
                     return new ObjectResult(MessageConstant.ServiceMessage.NotFound)
                     {
-                        StatusCode = StatusCodes.Status403Forbidden
+                        StatusCode = StatusCodes.Status404NotFound
                     };
 
                 }
