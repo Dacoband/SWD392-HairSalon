@@ -16,7 +16,7 @@ import React, { useEffect, useState } from 'react'
 import { Steps, Button, Popover, Input, Row, Col } from 'antd'
 import type { StepsProps } from 'antd'
 import { getBranchesAll } from '../../services/Branches/branches'
-import { Branches, Services, Stylish } from '../../models/type'
+import { Appointment, Branches, Services, Stylish } from '../../models/type'
 import { getStylishByBranchID, getStylishRandom } from '../../services/Stylish'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { FaFrownOpen } from 'react-icons/fa'
@@ -36,6 +36,9 @@ import {
 } from '../../services/Appoinment'
 import { CreateAppointmentRequest } from '../../models/type'
 import dayjs, { Dayjs } from 'dayjs'
+import { message } from 'antd'
+import { createPayment } from '../../services/Payment'
+
 const customDot: StepsProps['progressDot'] = (dot, { status, index }) => (
   <Popover
     content={
@@ -84,7 +87,8 @@ const BookingPage: React.FC = () => {
       date.setHours(Number(hour), 0, 0, 0) // Set the hour, minutes, seconds, and milliseconds
       return date // Return the Date object
     })
-  ) // Convert timeSlots to Date[]
+  )
+  const [appointment, setAppointment] = useState<Appointment | null>(null)
   const fetchTimeSlot = async () => {
     try {
       if (selectedStylist == '0') {
@@ -132,6 +136,16 @@ const BookingPage: React.FC = () => {
       console.log('Error fetching available stylist ', error)
     }
   }
+  const [messageApi, contextHolder] = message.useMessage()
+  const handleCreatePAyment = async (appointmentId: string) => {
+    try {
+      const response = await createPayment(appointmentId)
+      console.log(response)
+      window.location.href = response
+    } catch (err) {
+      console.log(err)
+    }
+  }
   const handleCreateAppointment = async () => {
     try {
       if (selectedStylist === '0') {
@@ -142,7 +156,27 @@ const BookingPage: React.FC = () => {
 
       const selectedHours = selectedTimeDate.getHours()
       const selectedMinutes = selectedTimeDate.getMinutes()
-
+      if (selectedBranch == null) {
+        messageApi.open({
+          type: 'error',
+          content: 'Không tìm thấy cửa hàng',
+        })
+        return
+      }
+      if (selectedTime == null) {
+        messageApi.open({
+          type: 'error',
+          content: 'Vui lòng chọn thời gian cho lịch hẹn',
+        })
+        return
+      }
+      if (selectedStylist == null) {
+        messageApi.open({
+          type: 'error',
+          content: 'Vui lòng chọn stylist',
+        })
+        return
+      }
       const appointmentRequest: CreateAppointmentRequest = {
         stylistId: selectedStylist || 'err',
         appointmentDate: new Date(
@@ -156,6 +190,10 @@ const BookingPage: React.FC = () => {
         selectedServices.map((service) => service.serviceID)
       )
       const response = await createAppointment(appointmentRequest)
+      if (response != null) {
+        setAppointment(response)
+        handleCreatePAyment(response.appointmentId)
+      }
       console.log(response)
     } catch (error) {
       console.log('Error creating appointment ', error)
@@ -919,12 +957,19 @@ const BookingPage: React.FC = () => {
             <Button
               type="primary"
               className={`py-5 rounded-full bg-black font-medium text-base  mt-8  ml-10 ${
-                selectedServices.length === 0
+                selectedServices.length === 0 ||
+                selectedStylist == null ||
+                selectedTime == null ||
+                selectedBranch == null
                   ? 'opacity-80 cursor-not-allowed'
                   : ''
               }`}
-              disabled={selectedServices.length === 0}
-              // onClick={handleConfirm}
+              disabled={
+                selectedServices.length === 0 ||
+                selectedStylist == null ||
+                selectedTime == null ||
+                selectedBranch == null
+              }
               onClick={handleCreateAppointment}
             >
               Tạo lịch hẹn
@@ -933,93 +978,93 @@ const BookingPage: React.FC = () => {
         </div>
       ),
     },
-    {
-      title: 'Xác nhận thanh toán',
-      content: (
-        <div className="pb-8 flex justify-center">
-          <div className="w-[50%]  ml-5 border-2 px-5 bg-slate-100  rounded-md h-fit pb-8">
-            <div className="flex justify-center flex-col items-center mt-6">
-              <div className="text-xl text-[#937b34] font-bold w-fit mb-2 text-center border-b-2 border-[#937b34]">
-                Chi tiết lịch hẹn
-              </div>
-              <div className="text-sm">
-                Địa chỉ:{' '}
-                {
-                  branches.find((branch) => branch.branchID === selectedBranch)
-                    ?.salonBranches
-                }
-              </div>
-              <div className="text-sm">
-                <b>Tổng thời gian</b>
-                {formatDuration(
-                  selectedServices.reduce(
-                    (total, service) => total + service.duration,
-                    0
-                  )
-                )}
-              </div>
-            </div>
-            <div>
-              {
-                <>
-                  {selectedServices.map((service) => (
-                    <div
-                      key={service.serviceID}
-                      className="mb-2 flex justify-between"
-                    >
-                      <span className="text-base font-bold">
-                        {service.serviceName}:
-                      </span>
-                      <span className="text-base ml-2 flex">
-                        <span>{formatCurrency(service.price)} VND</span>
-                      </span>
-                    </div>
-                  ))}
-                  <hr className="my-4" />
-                  <div className="flex justify-between text-base">
-                    <span className="font-bold ">Tổng tiền:</span>
-                    <span>
-                      {formatCurrency(
-                        selectedServices.reduce(
-                          (total, service) => total + service.price,
-                          0
-                        )
-                      )}
-                      VNĐ
-                    </span>
-                  </div>
-                  <div className="flex justify-between text-base">
-                    <span className="font-bold ">Tổng thời gian:</span>
-                    <span>
-                      {formatDuration(
-                        selectedServices.reduce(
-                          (total, service) => total + service.duration,
-                          0
-                        )
-                      )}
-                    </span>
-                  </div>
-                </>
-              }
-            </div>
-            <div className="flex justify-center">
-              <Button
-                type="primary"
-                className={`py-5 rounded-full bg-black font-medium text-base  mt-8 ${
-                  selectedServices.length === 0
-                    ? 'opacity-80 cursor-not-allowed'
-                    : ''
-                }`}
-                disabled={selectedServices.length === 0}
-                onClick={handleConfirm}
-              >
-                Xác nhận đặt dịch vụ
-              </Button>
-            </div>
-          </div>
-        </div>
-      ),
-    },
+    // {
+    //   title: 'Xác nhận thanh toán',
+    //   content: (
+    //     <div className="pb-8 flex justify-center">
+    //       <div className="w-[50%]  ml-5 border-2 px-5 bg-slate-100  rounded-md h-fit pb-8">
+    //         <div className="flex justify-center flex-col items-center mt-6">
+    //           <div className="text-xl text-[#937b34] font-bold w-fit mb-2 text-center border-b-2 border-[#937b34]">
+    //             Chi tiết lịch hẹn
+    //           </div>
+    //           <div className="text-sm">
+    //             Địa chỉ:{' '}
+    //             {
+    //               branches.find((branch) => branch.branchID === selectedBranch)
+    //                 ?.salonBranches
+    //             }
+    //           </div>
+    //           <div className="text-sm">
+    //             <b>Tổng thời gian</b>
+    //             {formatDuration(
+    //               selectedServices.reduce(
+    //                 (total, service) => total + service.duration,
+    //                 0
+    //               )
+    //             )}
+    //           </div>
+    //         </div>
+    //         <div>
+    //           {
+    //             <>
+    //               {selectedServices.map((service) => (
+    //                 <div
+    //                   key={service.serviceID}
+    //                   className="mb-2 flex justify-between"
+    //                 >
+    //                   <span className="text-base font-bold">
+    //                     {service.serviceName}:
+    //                   </span>
+    //                   <span className="text-base ml-2 flex">
+    //                     <span>{formatCurrency(service.price)} VND</span>
+    //                   </span>
+    //                 </div>
+    //               ))}
+    //               <hr className="my-4" />
+    //               <div className="flex justify-between text-base">
+    //                 <span className="font-bold ">Tổng tiền:</span>
+    //                 <span>
+    //                   {formatCurrency(
+    //                     selectedServices.reduce(
+    //                       (total, service) => total + service.price,
+    //                       0
+    //                     )
+    //                   )}
+    //                   VNĐ
+    //                 </span>
+    //               </div>
+    //               <div className="flex justify-between text-base">
+    //                 <span className="font-bold ">Tổng thời gian:</span>
+    //                 <span>
+    //                   {formatDuration(
+    //                     selectedServices.reduce(
+    //                       (total, service) => total + service.duration,
+    //                       0
+    //                     )
+    //                   )}
+    //                 </span>
+    //               </div>
+    //             </>
+    //           }
+    //         </div>
+    //         <div className="flex justify-center">
+    //           <Button
+    //             type="primary"
+    //             className={`py-5 rounded-full bg-black font-medium text-base  mt-8 ${
+    //               selectedServices.length === 0
+    //                 ? 'opacity-80 cursor-not-allowed'
+    //                 : ''
+    //             }`}
+    //             disabled={selectedServices.length === 0}
+    //             onClick={handleConfirm}
+    //           >
+    //             Xác nhận đặt dịch vụ
+    //           </Button>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   ),
+    // },
   ]
 
   // const next = () => {
@@ -1031,31 +1076,33 @@ const BookingPage: React.FC = () => {
   // };
 
   return (
-    <div>
-      <div
-        className="bg-cover bg-center flex items-center justify-center "
-        style={{ backgroundImage: `url(${bg})` }}
-      >
-        <div className="bg-black bg-opacity-75 h-60 my-auto w-full flex flex-col items-center justify-center">
-          <div className="text-white font-bold text-2xl p-5 mb-8">
-            HAIR SALON
-          </div>
-          <div className="w-3/5">
-            <Steps
-              className="custom-dot"
-              current={currentStep}
-              progressDot={customDot}
-              items={steps.map((step) => ({
-                title: step.title,
-              }))}
-            />
+    <>
+      {contextHolder}
+      <div>
+        <div
+          className="bg-cover bg-center flex items-center justify-center "
+          style={{ backgroundImage: `url(${bg})` }}
+        >
+          <div className="bg-black bg-opacity-75 h-60 my-auto w-full flex flex-col items-center justify-center">
+            <div className="text-white font-bold text-2xl p-5 mb-8">
+              HAIR SALON
+            </div>
+            <div className="w-3/5">
+              <Steps
+                className="custom-dot"
+                current={currentStep}
+                progressDot={customDot}
+                items={steps.map((step) => ({
+                  title: step.title,
+                }))}
+              />
+            </div>
           </div>
         </div>
-      </div>
-      <div className="pt-10 bg-[#FFFFFF] ">
-        <div className="steps-content">{steps[currentStep].content}</div>
-        <div className="steps-action">
-          {/* <Button
+        <div className="pt-10 bg-[#FFFFFF] ">
+          <div className="steps-content">{steps[currentStep].content}</div>
+          <div className="steps-action">
+            {/* <Button
             type="primary"
             onClick={next}
             disabled={currentStep === steps.length - 1}
@@ -1069,9 +1116,10 @@ const BookingPage: React.FC = () => {
           >
             Quay lại
           </Button> */}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
