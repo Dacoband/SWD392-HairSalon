@@ -131,7 +131,7 @@ const AppRouter = () => {
           <Route
             path="/profile"
             element={
-              <PrivateRoute element={ProfileAll} allowedRoles={["ST"]} />
+              <PrivateRoute element={ProfileAll} allowedRoles={["SL"]} />
             }
           />
 
@@ -140,7 +140,7 @@ const AppRouter = () => {
             element={
               <PrivateRoute
                 element={ManagerAppoimentStylish}
-                allowedRoles={["ST"]}
+                allowedRoles={["SL"]}
               />
             }
           />
@@ -148,7 +148,7 @@ const AppRouter = () => {
           <Route
             path="/manager-money"
             element={
-              <PrivateRoute element={ManagerMoney} allowedRoles={["ST"]} />
+              <PrivateRoute element={ManagerMoney} allowedRoles={["SL"]} />
             }
           />
           <Route path="/manage-appointments" element={<Appointment />} />
@@ -160,7 +160,7 @@ const AppRouter = () => {
             element={
               <PrivateRoute
                 element={ManagerAppoimentStaff}
-                allowedRoles={["SL"]}
+                allowedRoles={["ST"]}
               />
             }
           />
@@ -169,14 +169,14 @@ const AppRouter = () => {
             element={
               <PrivateRoute
                 element={ManagerStylish_staff}
-                allowedRoles={["SL"]}
+                allowedRoles={["ST"]}
               />
             }
           />
           <Route
             path="/managerSchedule"
             element={
-              <PrivateRoute element={ManagerSchedule} allowedRoles={["SL"]} />
+              <PrivateRoute element={ManagerSchedule} allowedRoles={["ST"]} />
             }
           />
         </Route>

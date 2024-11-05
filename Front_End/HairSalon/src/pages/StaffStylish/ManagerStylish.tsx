@@ -12,7 +12,7 @@ import {
 } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { Stylish, StaffStylish } from "../../models/type"; 
-import { getStaffStylishByBranchID, addStylish } from "../../services/StaffStylish"; 
+import { getStaffStylishByBranchID, addStylishById } from "../../services/StaffStylish"; 
 
 const ManagerStylish_staff: React.FC = () => {
   const [stylists, setStylists] = useState<Stylish[]>([]);
@@ -55,35 +55,6 @@ const ManagerStylish_staff: React.FC = () => {
       fetchStylists();
     }
   }, [branchId]);
-
-  const handleAddStylist = async (values: any) => {
-    const token = "your-auth-token"; // Retrieve this from context or secure storage
-
-    const stylistData: Stylish = {
-      stylistId: "",
-      email: values.email,
-      password: values.password,
-      branchId: branchId,
-      staffStylistId: "unique-id", // Replace with actual ID if needed
-      stylistName: values.stylistName,
-      averageRating: 0,
-      phoneNumber: values.phoneNumber,
-      address: values.address,
-      avatarImage: avatarFile ? avatarFile.url : "",
-      insDate: new Date(),
-      updDate: new Date(),
-    };
-  
-    try {
-      await addStylish(stylistData, token);
-      message.success("Stylist added successfully!");
-      setAvatarFile(null);
-      setIsModalVisible(false);
-      // Optionally reload stylists
-    } catch (error) {
-      message.error("Failed to add stylist: " + (error as Error).message);
-    }
-  };
 
   const handleUploadChange = ({ fileList }: any) => {
     setAvatarFile(fileList[0] || null); // Store the latest file or reset to null
@@ -171,7 +142,7 @@ const ManagerStylish_staff: React.FC = () => {
             }
           }
           layout="vertical"
-          onFinish={handleAddStylist}
+    
         >
           <Form.Item
             label="Name"
