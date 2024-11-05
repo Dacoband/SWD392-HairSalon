@@ -40,7 +40,7 @@ namespace HairSalonSystem.Services.Implements
                 AccountId = Guid.NewGuid(),
                 Email = request.Email,
                 Password = PasswordUtil.HashPassword(request.Password),
-                RoleName = Enums.RoleEnums.ST.ToString(),
+                RoleName = Enums.RoleEnums.SL.ToString(),
                 InsDate = DateTime.Now,
                 UpdDate = DateTime.Now,
                 DelFlg = true

@@ -21,5 +21,6 @@ namespace HairSalonSystem.Repositories.Interface
         Task<Guid> GetStaffStylistId(Guid accountId);
         Task<Guid> GetStaffManagerId(Guid accountId);
         Task<Guid> GetMemberId(Guid accountId);
+        Task<Guid> GetBranchIdByAccountId(Guid accountId);
     }
 }

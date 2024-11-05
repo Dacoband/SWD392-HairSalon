@@ -17,7 +17,7 @@ namespace HairSalonSystem.BusinessObject.Entities
 
         [BsonElement("branchID")]
         [BsonRepresentation(BsonType.String)] // BranchID stored as string in MongoDB
-        public Guid? BranchID { get; set; }
+        public Guid BranchID { get; set; }
 
         [Required]
         [BsonElement("accountID")]
