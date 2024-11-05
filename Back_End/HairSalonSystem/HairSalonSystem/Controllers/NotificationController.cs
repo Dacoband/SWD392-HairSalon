@@ -1,7 +1,5 @@
 ﻿using HairSalonSystem.BusinessObject.Entities;
 using HairSalonSystem.Services.Constant;
-using HairSalonSystem.Services.Constant;
-
 using HairSalonSystem.Services.Controllers;
 using HairSalonSystem.Services.Interfaces;
 using HairSalonSystem.Services.PayLoads.Requests.Notifications;
