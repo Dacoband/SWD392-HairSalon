@@ -14,7 +14,7 @@ interface Stylish {
   updDate: string;
 }
 
-const ManagerStylish: React.FC<{ branchId: string }> = ({ branchId }) => {
+const ManagerStylish_staff: React.FC<{ branchId: string }> = ({ branchId }) => {
   const [stylists, setStylists] = useState<Stylish[]>([]);
   const [loading, setLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -57,7 +57,9 @@ const ManagerStylish: React.FC<{ branchId: string }> = ({ branchId }) => {
         const updatedStylist = response.data;
         setStylists((prev) =>
           prev.map((stylist) =>
-            stylist.stylistId === updatedStylist.stylistId ? updatedStylist : stylist
+            stylist.stylistId === updatedStylist.stylistId
+              ? updatedStylist
+              : stylist
           )
         );
         message.success("Stylist updated successfully");
@@ -157,14 +159,18 @@ const ManagerStylish: React.FC<{ branchId: string }> = ({ branchId }) => {
           <Form.Item
             name="stylistName"
             label="Stylist Name"
-            rules={[{ required: true, message: "Please input the stylist's name" }]}
+            rules={[
+              { required: true, message: "Please input the stylist's name" },
+            ]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             name="phoneNumber"
             label="Phone Number"
-            rules={[{ required: true, message: "Please input the phone number" }]}
+            rules={[
+              { required: true, message: "Please input the phone number" },
+            ]}
           >
             <Input />
           </Form.Item>
@@ -183,4 +189,4 @@ const ManagerStylish: React.FC<{ branchId: string }> = ({ branchId }) => {
   );
 };
 
-export default ManagerStylish;
+export default ManagerStylish_staff;
