@@ -13,17 +13,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace HairSalonSystem.Services.Implements
 {
     public class StaffStylistService : IStaffStylistService
     {
         private readonly IStaffStylistRepository _staffStylistRepository;
         private readonly IAccountRepository _accountRepository;
-
-        public StaffStylistService(IStaffStylistRepository staffStylistRepository, IAccountRepository accountRepository)
+        private readonly IFirebaseService _firebaseService;
+        public StaffStylistService(IStaffStylistRepository staffStylistRepository, IAccountRepository accountRepository, IFirebaseService firebaseService)
         {
             _staffStylistRepository = staffStylistRepository;
             _accountRepository = accountRepository;
+            _firebaseService = firebaseService;
         }
 
         public async Task<CreateStaffStylistResponse> CreateStaffStylistAsync(CreateStaffStylistRequest request, HttpContext httpContext)
@@ -31,6 +33,7 @@ namespace HairSalonSystem.Services.Implements
             var roleName = UserUtil.GetRoleName(httpContext);
             if (roleName != Enums.RoleEnums.SL.ToString() && roleName != Enums.RoleEnums.SA.ToString())
                 return new CreateStaffStylistResponse { Message = MessageConstant.StaffStylistMessage.NotRights };
+            var url = await _firebaseService.UploadFile(request.AvatarImage);
             var account = new Account
             {
                 AccountId = Guid.NewGuid(),
@@ -51,7 +54,7 @@ namespace HairSalonSystem.Services.Implements
                 DateOfBirth = request.DateOfBirth,
                 PhoneNumber = request.PhoneNumber,
                 Address = request.Address,
-                AvatarImage = request.AvatarImage,
+                AvatarImage = url,
                 InsDate = DateTime.Now,
                 UpdDate = DateTime.Now,
                 DelFlg = true
@@ -78,11 +81,28 @@ namespace HairSalonSystem.Services.Implements
                 StaffStylistName = staffStylist.StaffStylistName,
                 DateOfBirth = staffStylist.DateOfBirth,
                 PhoneNumber = staffStylist.PhoneNumber,
+                BranchId = staffStylist.BranchID,
                 Address = staffStylist.Address,
                 AvatarImage = staffStylist.AvatarImage
             };
         }
+        public async Task<StaffStylistResponse> GetStaffStylistByAccountIdAsync(Guid accountId)
+        {
+            var staffStylist = await _staffStylistRepository.GetStaffStylistByAccountId(accountId);
+            if (staffStylist == null)
+                throw new KeyNotFoundException(MessageConstant.StaffStylistMessage.StaffStylistNotFound);
 
+            return new StaffStylistResponse
+            {
+                StaffStylistId = staffStylist.StaffStylistId,
+                StaffStylistName = staffStylist.StaffStylistName,
+                DateOfBirth = staffStylist.DateOfBirth,
+                PhoneNumber = staffStylist.PhoneNumber,
+                Address = staffStylist.Address,
+                AvatarImage = staffStylist.AvatarImage
+            };
+
+        }
         public async Task<List<StaffStylistResponse>> GetAllStaffStylistsAsync()
         {
             var staffStylists = await _staffStylistRepository.GetAllStaffStylists();
@@ -95,6 +115,7 @@ namespace HairSalonSystem.Services.Implements
                     StaffStylistId = stylist.StaffStylistId,
                     StaffStylistName = stylist.StaffStylistName,
                     DateOfBirth = stylist.DateOfBirth,
+                    BranchId = stylist.BranchID,
                     PhoneNumber = stylist.PhoneNumber,
                     Address = stylist.Address,
                     AvatarImage = stylist.AvatarImage
@@ -109,17 +130,18 @@ namespace HairSalonSystem.Services.Implements
             var staffStylist = await _staffStylistRepository.GetStaffStylistById(id);
             if (staffStylist == null)
                 throw new KeyNotFoundException(MessageConstant.StaffStylistMessage.StaffStylistNotFound);
+            var url = await _firebaseService.UploadFile(request.AvatarImage);
 
             staffStylist.StaffStylistName = request.StaffStylistName;
             staffStylist.DateOfBirth = request.DateOfBirth;
             staffStylist.PhoneNumber = request.PhoneNumber;
             staffStylist.Address = request.Address;
-            staffStylist.AvatarImage = request.AvatarImage;
-            staffStylist.UpdDate = DateTime.Now;
+            staffStylist.AvatarImage = url;
+            staffStylist.UpdDate = DateTime.Now ;
 
             await _staffStylistRepository.UpdateStaffStylist(id, staffStylist);
         }
-
+   
         public async Task DeleteStaffStylistAsync(Guid id)
         {
             var staffStylist = await _staffStylistRepository.GetStaffStylistById(id);
@@ -149,5 +171,7 @@ namespace HairSalonSystem.Services.Implements
 
             return responseList;
         }
+
+       
     }
 }

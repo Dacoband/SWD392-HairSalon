@@ -37,14 +37,14 @@ namespace HairSalonSystem.API.Controllers
         [HttpPost(APIEndPointConstant.StaffManager.AddStaffManager)]
         [ProducesResponseType(typeof(CreateNewStaffManagerResponse), StatusCodes.Status201Created)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
-        public async Task<ActionResult> AddStaffManager([FromBody] CreateNewStaffManagerRequest staffManagerDto)
+        public async Task<ActionResult> AddStaffManager([FromForm] CreateNewStaffManagerRequest staffManagerDto)
         {
             return await _staffManagerService.AddStaffManager(staffManagerDto, HttpContext);
         }
         [HttpPatch(APIEndPointConstant.StaffManager.UpdateStaffManager)]
         [ProducesResponseType(typeof(UpdateStaffManagerResponse), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
-        public async Task<ActionResult> UpdateStaffManager(Guid id,[FromBody] UpdateStaffManagerRequest staffManagerDto)
+        public async Task<ActionResult> UpdateStaffManager([FromRoute] Guid id,[FromForm] UpdateStaffManagerRequest staffManagerDto)
         {
             return await _staffManagerService.UpdateStaffManager(id,staffManagerDto, HttpContext);
         }

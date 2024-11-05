@@ -11,6 +11,11 @@
             public const string NotFoundAccount = "Không tìm thấy account";
 
         }
+        public static class AccountMessage
+        {
+            public const string AccountNotFound = "Không tìm thấy account";
+            public const string AccountDeleted = "Account đã được xoá";
+        }
         public static class BranchMessage
         {
             public const string BranchCreated = "Chi nhánh đã được tạo thành công";
@@ -100,8 +105,9 @@
             public const string UpdateSuccess = "Cập nhật trạng thái lịch hẹn thành công";
             public const string NotOpen = "Bạn chỉ có thể đặt lịch trong khoảng 8:00 - 20:00";
             public const string InvalidTime = "Bạn phải đặt lịch hẹn trước ít nhất 1 tiếng";
+            public const string InvalidComplete = "Không thể chuyển sang trạng thái hoàn tất do thời gian hoàn thành lịch hẹn sớm hơn hiện tại";
+            public const string InvalidCancel = "Không thể hủy hẹn vì đã quá thời gian quy định";
 
-            // 1: created -> 2: cancel by cus -> 3: cancel by salon -> 4 : completed 
 
         }
 
@@ -123,6 +129,14 @@
             public const string NotFound = "Không tìm thấy phản hồi";
             public const string DeleteRight = "Bạn không có quyền xóa phản hồi";
             public const string DeleteSuccess = "Xoá phản hồi thành công";
+}
+        public static class SalaryMessage
+        {
+            public const string CreateRight = "Bạn không có quyền thay đổi mức lương";
+            public const string NotFound = "Không tìm thấy mức lương";
+            public const string NotRight = "Bạn không có quyền truy cập các mức lương";
+
+
         }
     }
 }
