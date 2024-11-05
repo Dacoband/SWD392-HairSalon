@@ -71,5 +71,14 @@ export interface UserInfoData {
   DateOfBirth: string;
   PhoneNumber: string;
   Address: string;
- avatarImage?: string; 
+  avatarImage?: string;
+}
+export interface StaffStylist {
+  staffStylistId: string;
+  staffStylistName: string;
+  dateOfBirth: string;
+  phoneNumber: string;
+  address: string;
+  avatarImage: string;
+  branchId: string;
 }
