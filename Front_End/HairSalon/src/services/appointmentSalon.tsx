@@ -15,8 +15,7 @@ export const getAppointmentsByCustomer = async (customerId: string): Promise<App
       if (error.response && error.response.status === 403) {
         console.warn("Access forbidden. Response body:", error.response.data);
 
-        // Return the response body when a 403 error occurs
-        return error.response.data as string; // Return the response body as a string
+        return error.response.data as string; 
       } else {
         console.error("Error fetching appointments:", error);
       }
