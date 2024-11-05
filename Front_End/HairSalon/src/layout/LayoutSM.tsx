@@ -18,7 +18,7 @@ const SidebarData = [
   {
     icon: ShoppingCartOutlined,
     heading: "Quản lí nhân viên",
-    navigate: "/staffmanager-staff",
+    navigate: "/managerstaff-staff",
   },
   {
     icon: ShoppingCartOutlined,

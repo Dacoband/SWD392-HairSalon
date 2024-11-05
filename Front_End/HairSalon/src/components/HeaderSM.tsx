@@ -9,9 +9,8 @@ const HeaderSM: React.FC = () => {
 
   const menu = (
     <Menu>
-      <Menu.Item key="profile" onClick={() => navigate("/profile")}>
-        Thông Tin Cá Nhân
-      </Menu.Item>
+      {/* <Menu.Item key="profile" onClick={() => navigate("/profile")}> */}
+      <Menu.Item>Thông Tin Cá Nhân</Menu.Item>
       <Menu.Item
         key="logout"
         onClick={() => {
