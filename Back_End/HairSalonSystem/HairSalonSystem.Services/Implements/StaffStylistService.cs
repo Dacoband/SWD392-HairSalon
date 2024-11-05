@@ -39,7 +39,7 @@ namespace HairSalonSystem.Services.Implements
                 AccountId = Guid.NewGuid(),
                 Email = request.Email,
                 Password = PasswordUtil.HashPassword(request.Password),
-                RoleName = Enums.RoleEnums.SL.ToString(),
+                RoleName = Enums.RoleEnums.ST.ToString(),
                 InsDate = DateTime.Now,
                 UpdDate = DateTime.Now,
                 DelFlg = true
@@ -162,6 +162,7 @@ namespace HairSalonSystem.Services.Implements
                 {
                     StaffStylistId = stylist.StaffStylistId,
                     StaffStylistName = stylist.StaffStylistName,
+                    BranchId = stylist.BranchID,
                     DateOfBirth = stylist.DateOfBirth,
                     PhoneNumber = stylist.PhoneNumber,
                     Address = stylist.Address,
