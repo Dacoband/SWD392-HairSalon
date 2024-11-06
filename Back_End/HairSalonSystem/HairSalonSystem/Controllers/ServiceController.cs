@@ -48,7 +48,7 @@ namespace HairSalonSystem.API.Controllers
         [HttpPatch(APIEndPointConstant.Service.UpdateService)]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
-        public async Task<ActionResult> UpdateService([FromRoute] Guid id, [FromForm] CreateServiceRequest request)
+        public async Task<ActionResult> UpdateService([FromRoute] Guid id, [FromForm] UpdateServiceRequest request)
         {
             return await _serviceService.UpdateService(id, request,HttpContext);
         }

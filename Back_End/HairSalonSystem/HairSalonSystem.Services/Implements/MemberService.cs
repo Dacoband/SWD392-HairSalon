@@ -42,24 +42,24 @@ namespace HairSalonSystem.Services.Implements
             await _memberRepository.AddMember(member);
         }
 
-        public async Task<bool> UpdateMember(Guid id, UpdateMemberRequest memberRequest, HttpContext httpContext)
+        public async Task<bool> UpdateMember(Guid id,UpdateMemberRequest memberRequest, HttpContext httpContext)
         {
             var RoleName = UserUtil.GetRoleName(httpContext);
             Guid? accountIdFromToken = UserUtil.GetAccountId(httpContext);
 
-            if (RoleName != "SA" && RoleName != "SM" && RoleName != "SL" && RoleName != "MB" || string.IsNullOrEmpty(RoleName))
+            if ( RoleName != "MB" || string.IsNullOrEmpty(RoleName))
             {
                 throw new BadHttpRequestException(MessageConstant.MemberMessage.MemberNotRightsUpdate);
-                
+
             }
-            var  existingAccount = await _accountRepository.GetAccountById(accountIdFromToken);
+            var existingAccount = await _accountRepository.GetAccountById(accountIdFromToken);
             if (existingAccount == null)
             {
                 throw new BadHttpRequestException(MessageConstant.LoginMessage.NotFoundAccount);
-               
+
             }
             var url = "";
-            if(memberRequest.AvatarImage != null)
+            if (memberRequest.AvatarImage != null)
             {
                 url = await _firebaseService.UploadFile(memberRequest.AvatarImage);
 
@@ -68,23 +68,23 @@ namespace HairSalonSystem.Services.Implements
             if (existingMember == null)
             {
                 throw new BadHttpRequestException(MessageConstant.MemberMessage.MemberNotFound);
-               
+
             }
 
-           
-            existingMember.MemberName = memberRequest.MemberName;
-            existingAccount.Email = memberRequest.Email;
-            existingMember.PhoneNumber = memberRequest.PhoneNumber;
-            existingMember.Address = memberRequest.Address;
-            existingMember.DateOfBirth = memberRequest.DateOfBirth;
-            existingMember.AvatarImage = url;
+
+            existingMember.MemberName = memberRequest.MemberName ?? existingMember.MemberName;
+            existingAccount.Email = memberRequest.Email ?? existingAccount.Email;
+            existingMember.PhoneNumber = memberRequest.PhoneNumber ?? existingMember.PhoneNumber;
+            existingMember.Address = memberRequest.Address ?? existingMember.Address;
+            existingMember.DateOfBirth = memberRequest.DateOfBirth ?? existingMember.DateOfBirth;
+            existingMember.AvatarImage = memberRequest.AvatarImage != null ? url : existingMember.AvatarImage;
             existingMember.UpdDate = DateTime.Now;
 
-            
-            await _memberRepository.UpdateMember(existingMember);
-            await _accountRepository.UpdateEmailAsync(accountIdFromToken,existingAccount.Email);
 
-            return true;  
+            await _memberRepository.UpdateMember(existingMember);
+            await _accountRepository.UpdateEmailAsync(accountIdFromToken, existingAccount.Email);
+
+            return true;
         }
 
         public async Task RemoveMember(Guid id)

@@ -51,11 +51,10 @@ namespace HairSalonSystem.API.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "SA,SM")] 
         [Route(APIEndPointConstant.StaffStylist.UpdateStaffStylist)]
         public async Task<IActionResult> UpdateStaffStylist([FromRoute] Guid id, [FromForm] UpdateStaffStylistRequest request)
         {
-            await _staffStylistService.UpdateStaffStylistAsync(id, request);
+            await _staffStylistService.UpdateStaffStylistAsync(id, request,HttpContext);
             return Ok(new { Message = MessageConstant.StaffStylistMessage.StaffStylistUpdated });
         }
 

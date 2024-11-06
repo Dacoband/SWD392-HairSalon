@@ -125,20 +125,39 @@ namespace HairSalonSystem.Services.Implements
             return responseList;
         }
 
-        public async Task UpdateStaffStylistAsync(Guid id, UpdateStaffStylistRequest request)
+        public async Task UpdateStaffStylistAsync(Guid id, UpdateStaffStylistRequest request,HttpContext httpContext)
         {
+            var roleName = UserUtil.GetRoleName(httpContext);
+            Guid? accountIdFromToken = UserUtil.GetAccountId(httpContext);
+            if (roleName != "ST" || string.IsNullOrEmpty(roleName))
+            {
+                throw new BadHttpRequestException(MessageConstant.StaffStylistMessage.StaffStylistNotFound);
+
+            }
+            var existingAccount = await _accountRepository.GetAccountById(accountIdFromToken);
+            if (existingAccount == null)
+            {
+                throw new BadHttpRequestException(MessageConstant.LoginMessage.NotFoundAccount);
+
+            }
+            var url = "";
+            if (request.AvatarImage != null)
+            {
+                url = await _firebaseService.UploadFile(request.AvatarImage);
+
+            }
             var staffStylist = await _staffStylistRepository.GetStaffStylistById(id);
             if (staffStylist == null)
                 throw new KeyNotFoundException(MessageConstant.StaffStylistMessage.StaffStylistNotFound);
-            var url = await _firebaseService.UploadFile(request.AvatarImage);
 
-            staffStylist.StaffStylistName = request.StaffStylistName;
-            staffStylist.DateOfBirth = request.DateOfBirth;
-            staffStylist.PhoneNumber = request.PhoneNumber;
-            staffStylist.Address = request.Address;
-            staffStylist.AvatarImage = url;
+            staffStylist.StaffStylistName = request.StaffStylistName ?? staffStylist.StaffStylistName;
+            existingAccount.Email = request.Email ?? existingAccount.Email;
+            staffStylist.DateOfBirth = request.DateOfBirth ?? staffStylist.DateOfBirth;
+            staffStylist.PhoneNumber = request.PhoneNumber ?? staffStylist.PhoneNumber;
+            staffStylist.Address = request.Address ?? staffStylist.Address;
+            staffStylist.AvatarImage = request.AvatarImage != null ? url :staffStylist.AvatarImage;
             staffStylist.UpdDate = DateTime.Now ;
-
+            await _accountRepository.UpdateAccount(existingAccount);
             await _staffStylistRepository.UpdateStaffStylist(id, staffStylist);
         }
    
