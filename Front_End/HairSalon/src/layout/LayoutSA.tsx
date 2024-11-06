@@ -33,9 +33,9 @@ const LayoutSA: React.FC = () => {
   }));
 
   return (
-    <Layout className="w-full h-screen flex flex-col">
+    <Layout className="w-full h-screen flex flex-col ">
       <HeaderSM />
-      <Layout className="flex flex-1">
+      <Layout className="flex flex-1 ">
         <Sider
           className="h-full bg-[#c89c47]"
           breakpoint="lg"
