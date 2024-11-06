@@ -57,13 +57,13 @@ function generateTimeSlots(start: number, end: number): string[] {
   const timeSlots: string[] = []
 
   for (let hour = start; hour <= end; hour++) {
-    timeSlots.push(`${hour}:00`)
+    timeSlots.push(`${hour.toString().padStart(2, '0')}:00`)
   }
 
   return timeSlots
 }
 
-const timeSlots = generateTimeSlots(8, 17)
+const initialTimeSlots = generateTimeSlots(8, 17)
 const BookingPage: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0)
   const [branches, setBranches] = useState<Branches[]>([])
@@ -80,24 +80,25 @@ const BookingPage: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date(Date.now()))
 
   const [selectedTime, setSelectedTime] = useState<string | null>(null)
-  const [availableSlot, setAvailableSlot] = useState<Date[] | null>(
-    timeSlots.map((time) => {
-      const [hour] = time.split(':') // Extract the hour from the string
-      const date = new Date() // Create a new Date object
-      date.setHours(Number(hour), 0, 0, 0) // Set the hour, minutes, seconds, and milliseconds
-      return date // Return the Date object
+  const [availableSlot, setAvailableSlot] = useState<Date[]>(
+    initialTimeSlots.map((time) => {
+      const [hour] = time.split(':')
+      const date = new Date()
+      date.setUTCHours(Number(hour), 0, 0, 0) // Set UTC hours to avoid timezone issues
+      return date
     })
   )
+
   const [appointment, setAppointment] = useState<Appointment | null>(null)
   const fetchTimeSlot = async () => {
     try {
       if (selectedStylist == '0') {
         setAvailableSlot(
-          timeSlots.map((time) => {
-            const [hour] = time.split(':') // Extract the hour from the string
-            const date = new Date() // Create a new Date object
-            date.setHours(Number(hour), 0, 0, 0) // Set the hour, minutes, seconds, and milliseconds
-            return date // Return the Date object
+          initialTimeSlots.map((time) => {
+            const [hour] = time.split(':')
+            const date = new Date()
+            date.setUTCHours(Number(hour), 0, 0, 0) // Set UTC hours to avoid timezone issues
+            return date
           })
         )
         return
@@ -118,7 +119,7 @@ const BookingPage: React.FC = () => {
       console.error('Error fetching available slot', error)
     }
   }
-  const fetchAvailableStylist = async () => {
+  const fetchAvailableStylist = async (): Promise<string | undefined> => {
     try {
       const response = await getAvailableStylist({
         startTime: selectedDate,
@@ -131,7 +132,9 @@ const BookingPage: React.FC = () => {
         selectedBranch
       )
       setSelectedStylist(response.stylistId)
-      console.log(availableSlot)
+      console.log(selectedStylist)
+      console.log(response.stylistId)
+      return response.stylistId
     } catch (error) {
       console.log('Error fetching available stylist ', error)
     }
@@ -149,7 +152,8 @@ const BookingPage: React.FC = () => {
   const handleCreateAppointment = async () => {
     try {
       if (selectedStylist === '0') {
-        fetchAvailableStylist()
+        const id = await fetchAvailableStylist()
+        setSelectedStylist(id!)
       }
       const selectedDateObject = new Date(selectedDate)
       const selectedTimeDate = new Date(selectedTime!)
@@ -178,7 +182,10 @@ const BookingPage: React.FC = () => {
         return
       }
       const appointmentRequest: CreateAppointmentRequest = {
-        stylistId: selectedStylist || 'err',
+        stylistId:
+          selectedStylist == '0' || selectedStylist == null
+            ? (await fetchAvailableStylist()) || 'defaultStylistId'
+            : selectedStylist || 'err',
         appointmentDate: new Date(
           selectedDateObject.setHours(selectedHours, selectedMinutes)
         ).toISOString(),
@@ -978,93 +985,93 @@ const BookingPage: React.FC = () => {
         </div>
       ),
     },
-    // {
-    //   title: 'Xác nhận thanh toán',
-    //   content: (
-    //     <div className="pb-8 flex justify-center">
-    //       <div className="w-[50%]  ml-5 border-2 px-5 bg-slate-100  rounded-md h-fit pb-8">
-    //         <div className="flex justify-center flex-col items-center mt-6">
-    //           <div className="text-xl text-[#937b34] font-bold w-fit mb-2 text-center border-b-2 border-[#937b34]">
-    //             Chi tiết lịch hẹn
-    //           </div>
-    //           <div className="text-sm">
-    //             Địa chỉ:{' '}
-    //             {
-    //               branches.find((branch) => branch.branchID === selectedBranch)
-    //                 ?.salonBranches
-    //             }
-    //           </div>
-    //           <div className="text-sm">
-    //             <b>Tổng thời gian</b>
-    //             {formatDuration(
-    //               selectedServices.reduce(
-    //                 (total, service) => total + service.duration,
-    //                 0
-    //               )
-    //             )}
-    //           </div>
-    //         </div>
-    //         <div>
-    //           {
-    //             <>
-    //               {selectedServices.map((service) => (
-    //                 <div
-    //                   key={service.serviceID}
-    //                   className="mb-2 flex justify-between"
-    //                 >
-    //                   <span className="text-base font-bold">
-    //                     {service.serviceName}:
-    //                   </span>
-    //                   <span className="text-base ml-2 flex">
-    //                     <span>{formatCurrency(service.price)} VND</span>
-    //                   </span>
-    //                 </div>
-    //               ))}
-    //               <hr className="my-4" />
-    //               <div className="flex justify-between text-base">
-    //                 <span className="font-bold ">Tổng tiền:</span>
-    //                 <span>
-    //                   {formatCurrency(
-    //                     selectedServices.reduce(
-    //                       (total, service) => total + service.price,
-    //                       0
-    //                     )
-    //                   )}
-    //                   VNĐ
-    //                 </span>
-    //               </div>
-    //               <div className="flex justify-between text-base">
-    //                 <span className="font-bold ">Tổng thời gian:</span>
-    //                 <span>
-    //                   {formatDuration(
-    //                     selectedServices.reduce(
-    //                       (total, service) => total + service.duration,
-    //                       0
-    //                     )
-    //                   )}
-    //                 </span>
-    //               </div>
-    //             </>
-    //           }
-    //         </div>
-    //         <div className="flex justify-center">
-    //           <Button
-    //             type="primary"
-    //             className={`py-5 rounded-full bg-black font-medium text-base  mt-8 ${
-    //               selectedServices.length === 0
-    //                 ? 'opacity-80 cursor-not-allowed'
-    //                 : ''
-    //             }`}
-    //             disabled={selectedServices.length === 0}
-    //             onClick={handleConfirm}
-    //           >
-    //             Xác nhận đặt dịch vụ
-    //           </Button>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   ),
-    // },
+    {
+      title: 'Xác nhận thanh toán',
+      content: (
+        <div className="pb-8 flex justify-center">
+          <div className="w-[50%]  ml-5 border-2 px-5 bg-slate-100  rounded-md h-fit pb-8">
+            <div className="flex justify-center flex-col items-center mt-6">
+              <div className="text-xl text-[#937b34] font-bold w-fit mb-2 text-center border-b-2 border-[#937b34]">
+                Chi tiết lịch hẹn
+              </div>
+              <div className="text-sm">
+                Địa chỉ:{' '}
+                {
+                  branches.find((branch) => branch.branchID === selectedBranch)
+                    ?.salonBranches
+                }
+              </div>
+              <div className="text-sm">
+                <b>Tổng thời gian</b>
+                {formatDuration(
+                  selectedServices.reduce(
+                    (total, service) => total + service.duration,
+                    0
+                  )
+                )}
+              </div>
+            </div>
+            <div>
+              {
+                <>
+                  {selectedServices.map((service) => (
+                    <div
+                      key={service.serviceID}
+                      className="mb-2 flex justify-between"
+                    >
+                      <span className="text-base font-bold">
+                        {service.serviceName}:
+                      </span>
+                      <span className="text-base ml-2 flex">
+                        <span>{formatCurrency(service.price)} VND</span>
+                      </span>
+                    </div>
+                  ))}
+                  <hr className="my-4" />
+                  <div className="flex justify-between text-base">
+                    <span className="font-bold ">Tổng tiền:</span>
+                    <span>
+                      {formatCurrency(
+                        selectedServices.reduce(
+                          (total, service) => total + service.price,
+                          0
+                        )
+                      )}
+                      VNĐ
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-base">
+                    <span className="font-bold ">Tổng thời gian:</span>
+                    <span>
+                      {formatDuration(
+                        selectedServices.reduce(
+                          (total, service) => total + service.duration,
+                          0
+                        )
+                      )}
+                    </span>
+                  </div>
+                </>
+              }
+            </div>
+            <div className="flex justify-center">
+              <Button
+                type="primary"
+                className={`py-5 rounded-full bg-black font-medium text-base  mt-8 ${
+                  selectedServices.length === 0
+                    ? 'opacity-80 cursor-not-allowed'
+                    : ''
+                }`}
+                disabled={selectedServices.length === 0}
+                onClick={handleConfirm}
+              >
+                Xác nhận đặt dịch vụ
+              </Button>
+            </div>
+          </div>
+        </div>
+      ),
+    },
   ]
 
   // const next = () => {
