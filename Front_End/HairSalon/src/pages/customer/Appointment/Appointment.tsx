@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Button, Modal, Input, notification } from "antd";
-import { getAppointmentsByCustomer, cancelAppointment } from "../../../services/appointmentSalon";
+import {
+  getAppointmentsByCustomer,
+  cancelAppointment,
+} from "../../../services/appointmentSalon";
 import { Appointment, Services } from "../../../models/type";
-import { getServicesByServiceId } from "../../../services/serviceSalon"; 
+import { getServicesByServiceId } from "../../../services/serviceSalon";
 
 import "./Appointment.scss";
 
@@ -13,7 +16,8 @@ const AppointmentPage = () => {
   const [services, setServices] = useState<Record<string, Services | null>>({});
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
-  const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
+  const [selectedAppointment, setSelectedAppointment] =
+    useState<Appointment | null>(null);
   const [cancelReason, setCancelReason] = useState("");
   const [api, contextHolder] = notification.useNotification();
 
@@ -33,7 +37,7 @@ const AppointmentPage = () => {
         const userData = userDataString ? JSON.parse(userDataString) : null;
 
         if (userData && userData.actorId) {
-          const customerId = userData.actorId; 
+          const customerId = userData.actorId;
           const response = await getAppointmentsByCustomer(customerId);
           // setAppointments(response);
           if (Array.isArray(response)) {
@@ -62,7 +66,9 @@ const AppointmentPage = () => {
         if (appointment.sevicesList) {
           for (const service of appointment.sevicesList) {
             if (service.serviceId && !newServices[service.serviceId]) {
-              const serviceData = await getServicesByServiceId(service.serviceId);
+              const serviceData = await getServicesByServiceId(
+                service.serviceId
+              );
               newServices[service.serviceId] = serviceData;
             }
           }
@@ -113,7 +119,6 @@ const AppointmentPage = () => {
           setError("Invalid response format for appointments.");
         }
       }
-      
     } catch (error) {
       api.error({
         message: "Lỗi hủy",
@@ -159,11 +164,18 @@ const AppointmentPage = () => {
                 {new Date(appointment.endTime).toLocaleString()}
               </div>
               <div className="appointment-actions">
-                <Button type="primary" onClick={() => showServiceModal(appointment)}>
+                <Button
+                  type="primary"
+                  onClick={() => showServiceModal(appointment)}
+                >
                   Xem dịch vụ
                 </Button>
                 {appointment.status === 1 && (
-                  <Button type="default" danger onClick={() => showCancelModal(appointment)}>
+                  <Button
+                    type="default"
+                    danger
+                    onClick={() => showCancelModal(appointment)}
+                  >
                     Hủy lịch
                   </Button>
                 )}
@@ -187,13 +199,16 @@ const AppointmentPage = () => {
             {services[service.serviceId] ? (
               <>
                 <p>
-                  <strong>Dịch vụ:</strong> {services[service.serviceId]?.serviceName}
+                  <strong>Dịch vụ:</strong>{" "}
+                  {services[service.serviceId]?.serviceName}
                 </p>
                 <p>
-                  <strong>Giá dịch vụ:</strong> {services[service.serviceId]?.price} VND
+                  <strong>Giá dịch vụ:</strong>{" "}
+                  {services[service.serviceId]?.price} VND
                 </p>
                 <p>
-                  <strong>Thời gian làm:</strong> {services[service.serviceId]?.duration} Phút
+                  <strong>Thời gian làm:</strong>{" "}
+                  {services[service.serviceId]?.duration} Phút
                 </p>
               </>
             ) : (

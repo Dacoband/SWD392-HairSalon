@@ -19,7 +19,10 @@ namespace HairSalonSystem.Repositories.Implement
         private readonly IMongoCollection<StaffStylist> _staffStylists;
         private readonly IMongoCollection<StaffManager> _staffManagers;
         private readonly IMongoCollection<Member> _members;
+<<<<<<< HEAD
+=======
         private readonly IMongoCollection<Branch> _branches;
+>>>>>>> Thaiyud
 
         public AccountRepository(IAccountDAO accountDAO, HairSalonContext context)
         {
@@ -28,7 +31,10 @@ namespace HairSalonSystem.Repositories.Implement
             _staffStylists = context.StaffStylists;
             _staffManagers = context.StaffManagers;
             _members = context.Members;
+<<<<<<< HEAD
+=======
             _branches = context.Branchs;
+>>>>>>> Thaiyud
         }
 
         public async Task<Account> GetAccountById(Guid? id)
@@ -77,7 +83,11 @@ namespace HairSalonSystem.Repositories.Implement
         public async Task<Guid> GetStaffStylistId(Guid accountId)
         {
             var staffStylist = await _staffStylists.Find(n => n.AccountId == accountId).FirstOrDefaultAsync();
+<<<<<<< HEAD
+            return staffStylist.StaffStylistId;
+=======
             return staffStylist.StaffStylistId ;
+>>>>>>> Thaiyud
         }
 
         public async Task<Guid> GetStaffManagerId(Guid accountId)
@@ -91,6 +101,8 @@ namespace HairSalonSystem.Repositories.Implement
             var member = await _members.Find(n => n.AccountId == accountId).FirstOrDefaultAsync();
             return member.MemberId;
         }
+<<<<<<< HEAD
+=======
         public async Task<Guid?> GetBranchIdByAccountId(Guid accountId)
         {
             var stylist = await _Stylists.Find(n => n.AccountId == accountId).FirstOrDefaultAsync();
@@ -113,5 +125,6 @@ namespace HairSalonSystem.Repositories.Implement
 
             return null;
         }
+>>>>>>> Thaiyud
     }
 }

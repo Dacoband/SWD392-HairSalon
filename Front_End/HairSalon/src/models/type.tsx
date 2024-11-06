@@ -53,16 +53,19 @@ export interface UserData {
 }
 
 export interface Stylish {
+  branchId: string;
   email: string;
   password: string;
-  branchId: string;
+  stylistId: string;
   staffStylistId: string;
   stylistName: string;
-  level: number;
+  averageRating: number;
+  dateOfBirth: string;
   phoneNumber: string;
   address: string;
   avatarImage: string;
   insDate: Date;
+  updDate: Date;
 }
 
 export interface UserInfoData {
@@ -74,4 +77,16 @@ export interface UserInfoData {
   Address: string;
   BranchId?: string;
   avatarImage?: string| File;
+}
+
+export interface StaffStylish {
+  staffStylistId: string;
+  staffStylistName: string;
+  email: string;
+  password: string;
+  dateOfBirth: string;
+  branchId: string;
+  phoneNumber: string;
+  address: string;
+  avatarImage: string;
 }

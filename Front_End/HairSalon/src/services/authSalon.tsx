@@ -14,14 +14,16 @@ export const login = async (email: string, password: string) => {
       });
     
      if (response.data && response.data.token && response.data.email && response.data.roleName) {
-      const { token, email: userEmail, roleName ,accountId, actorId,branchId} = response.data;
+      const { token, email: userEmail, roleName ,branchId, actorId} = response.data;
       
 
       localStorage.setItem('token', token);
-      const userDatas = { email: userEmail, roleName ,accountId, actorId, branchId};
+      localStorage.setItem('branchId', branchId);
+      localStorage.setItem('actorId', actorId);
+      const userDatas = { email: userEmail, roleName ,branchId, actorId};
       localStorage.setItem('userData', JSON.stringify(userDatas));
   
-      return { token, userDatas };
+      return { token, userDatas, branchId  };
     } else {
       throw new Error('Invalid login response');
     }

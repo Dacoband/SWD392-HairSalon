@@ -39,7 +39,11 @@ namespace HairSalonSystem.Services.Implements
                 AccountId = Guid.NewGuid(),
                 Email = request.Email,
                 Password = PasswordUtil.HashPassword(request.Password),
+<<<<<<< HEAD
+                RoleName = Enums.RoleEnums.SL.ToString(),
+=======
                 RoleName = Enums.RoleEnums.ST.ToString(),
+>>>>>>> Thaiyud
                 InsDate = DateTime.Now,
                 UpdDate = DateTime.Now,
                 DelFlg = true

@@ -8,7 +8,10 @@ import {
 } from "react-router-dom";
 
 // import Role1 from "../pages/Role1";
-import Role2 from "../pages/Role2";
+import Dashboard from "../pages/StaffManager/Dashboard";
+import ManagerStaff from "../pages/StaffManager/ManagerStaff";
+import ManagerStylish from "../pages/StaffManager/ManagerStylish";
+import ManagerAppointments from "../pages/StaffManager/ManagerAppointments";
 import Logout from "../components/Logout";
 import LayoutMain from "../layout/LayoutMain";
 import BookingPage from "../pages/customer/BookPage";
@@ -23,13 +26,22 @@ import Contact from "../pages/Contact";
 import Branch from "../pages/Branch";
 import ManagerAppoimentStylish from "../pages/Stylish/ManagerAppoinmentStylish";
 import ManagerMoney from "../pages/Stylish/ManagerMoney";
-import ManagerAppoimentStaff from "../pages/StaffStylish/ManagerAppoimentStaff";
-import ManagerStylish from "../pages/StaffStylish/ManagerStylish";
 import profileCustomer from "../pages/customer/profileCustomer";
-import CategogySM from "../pages/StaffManager/CategogySM";
+import LayoutSA from "../layout/LayoutSA";
+import BookSucssess from "../pages/customer/BookSucssess";
+
+
+// import CategogySM from "../pages/StaffManager/CategogySM";
 import LayoutSM from "../layout/LayoutSM";
+import LayoutST from "../layout/LayoutST";
 import LayoutSL from "../layout/LayoutSL";
-import CategogySL from "../pages/StaffStylish/CategogySL";
+import ManagerStylish_staff from "../pages/StaffStylish/ManagerStylish";
+import ManagerAppoimentStaff from "../pages/StaffStylish//ManagerAppoimentStaff";
+import ManagerSchedule from "../pages/StaffStylish/ManagerSchedule";
+import ManagerService from "../pages/Admin/ManagerService";
+import ManagerBranch from "../pages/Admin/ManagerBranch";
+// import CategogySL from "../pages/StaffStylish/CategogySL";
+
 const AppRouter = () => {
   return (
     <Router>
@@ -49,15 +61,18 @@ const AppRouter = () => {
         </Route>
         {/* CUSTOMER */}
         <Route element={<LayoutMain />}>
-        <Route path="/homePage" element={<HomePage />} />
-          {/* <Route
-            path="/homePage"
-            element={<PrivateRoute element={HomePage} allowedRoles={["MB"]} />}
-          /> */}
+          <Route path="/homePage" element={<HomePage />} />
+
           <Route
             path="/bookAppoiment"
             element={
               <PrivateRoute element={BookingPage} allowedRoles={["MB"]} />
+            }
+          />
+          <Route
+            path="/bookSucssess"
+            element={
+              <PrivateRoute element={BookSucssess} allowedRoles={["MB"]} />
             }
           />
 
@@ -76,19 +91,39 @@ const AppRouter = () => {
           <Route
             path="/profile"
             element={
-              <PrivateRoute element={ProfileAll} allowedRoles={["MB"]} />
+              <PrivateRoute element={profileCustomer} allowedRoles={["MB"]} />
             }
           />
         </Route>
-        {/* ADMIN */}
-        <Route
-          path="/SystemAdmin"
-          element={<PrivateRoute element={Role2} allowedRoles={["SA"]} />}
-        />
+
         {/* StaffManager route */}
-        {/* StaffManager có layout */}
+
         <Route element={<LayoutSM />}>
-          <Route path="/StaffManager" element={<CategogySM/>} />
+          <Route
+            path="/StaffManager"
+            element={<PrivateRoute element={Dashboard} allowedRoles={["SM"]} />}
+          />
+          <Route
+            path="/managerstaff-staff"
+            element={
+              <PrivateRoute element={ManagerStaff} allowedRoles={["SM"]} />
+            }
+          />
+          <Route
+            path="/managerstaff-stylish"
+            element={
+              <PrivateRoute element={ManagerStylish} allowedRoles={["SM"]} />
+            }
+          />
+          <Route
+            path="/managerstaff-appoinment"
+            element={
+              <PrivateRoute
+                element={ManagerAppointments}
+                allowedRoles={["SM"]}
+              />
+            }
+          />
         </Route>
         <Route element={<LayoutSM />}>
         <Route
@@ -105,44 +140,59 @@ const AppRouter = () => {
             element={
               <PrivateRoute
                 element={ManagerAppoimentStylish}
-                allowedRoles={["ST"]}
+                allowedRoles={["SL"]}
               />
             }
           />
           <Route
             path="/manager-money"
             element={
-              <PrivateRoute element={ManagerMoney} allowedRoles={["ST"]} />
+              <PrivateRoute element={ManagerMoney} allowedRoles={["SL"]} />
             }
           />
           <Route path="/manage-appointments" element={<Appointment />} />
         </Route>
         {/* StaffStylish */}
-        {/* <Route element={<LayoutSL />}>
+        <Route element={<LayoutSL />}>
           <Route
-            path="/profile"
-            element={
-              <PrivateRoute element={ProfileAll} allowedRoles={["SL"]} />
-            }
-          />
-          <Route
-            path="/Appoiment-Staff"
+            path="/StaffStylish"
             element={
               <PrivateRoute
                 element={ManagerAppoimentStaff}
-                allowedRoles={["SL"]}
+                allowedRoles={["ST"]}
               />
             }
           />
           <Route
-            path="/Manager-stylish"
+            path="/staff-stylish"
             element={
-              <PrivateRoute element={ManagerStylish} allowedRoles={["SL"]} />
+              <PrivateRoute
+                element={ManagerStylish_staff}
+                allowedRoles={["ST"]}
+              />
             }
           />
-        </Route> */}
-         <Route element={<LayoutSL />}>
-         <Route path="/Staff-stylish" element={<CategogySL/>} />
+          <Route
+            path="/managerSchedule"
+            element={
+              <PrivateRoute element={ManagerSchedule} allowedRoles={["ST"]} />
+            }
+          />
+        </Route>
+        {/* ADMIN */}
+        <Route element={<LayoutSA />}>
+          <Route
+            path="/manageService"
+            element={
+              <PrivateRoute element={ManagerService} allowedRoles={["SA"]} />
+            }
+          />
+          <Route
+            path="/ManagerBranch_AD"
+            element={
+              <PrivateRoute element={ManagerBranch} allowedRoles={["SA"]} />
+            }
+          />
         </Route>
       </Routes>
     </Router>

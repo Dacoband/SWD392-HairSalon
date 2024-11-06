@@ -64,6 +64,16 @@ namespace HairSalonSystem.Services.Implements
                 UpdDate =DateTime.Now,
                 DelFlg = true 
                 };
+<<<<<<< HEAD
+            var brach = await _branchRespository.GetBranchById(staffManager.BranchID);
+            if (brach == null)
+            {
+                return new ObjectResult(MessageConstant.BranchMessage.BranchNotFound)
+                {
+                    StatusCode = StatusCodes.Status404NotFound
+                };
+            }
+=======
             //var brach = await _branchRespository.GetBranchById(staffManager.BranchID);
             //if (brach == null)
             //{
@@ -72,6 +82,7 @@ namespace HairSalonSystem.Services.Implements
             //        StatusCode = StatusCodes.Status404NotFound
             //    };
             //}
+>>>>>>> Thaiyud
 
             await _staffManagerRepository.AddStaffManager(staffmanager);
 
