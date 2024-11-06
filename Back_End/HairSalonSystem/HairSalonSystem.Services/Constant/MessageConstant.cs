@@ -105,10 +105,19 @@
             public const string UpdateSuccess = "Cập nhật trạng thái lịch hẹn thành công";
             public const string NotOpen = "Bạn chỉ có thể đặt lịch trong khoảng 8:00 - 20:00";
             public const string InvalidTime = "Bạn phải đặt lịch hẹn trước ít nhất 1 tiếng";
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> origin/Thaiyud
             public const string InvalidComplete = "Không thể chuyển sang trạng thái hoàn tất do thời gian hoàn thành lịch hẹn sớm hơn hiện tại";
             public const string InvalidCancel = "Không thể hủy hẹn vì đã quá thời gian quy định";
 
 
+<<<<<<< HEAD
+=======
+>>>>>>> Thaiyud
+>>>>>>> origin/Thaiyud
         }
 
         public static class CancelAppointmentMessage
