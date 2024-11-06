@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Table, Button, Modal, Input, Form, message } from "antd";
+import { Table, Button, Modal, Input, Form, message, Space } from "antd";
 import type { ColumnsType } from "antd/es/table";
+import { getAuthToken } from '../../services/authSalon';
+import { SearchOutlined } from "@ant-design/icons";
 
 interface Service {
   serviceID: string;
@@ -19,6 +21,7 @@ const ManagerService: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [editingService, setEditingService] = useState<Service | null>(null);
+  const [searchText, setSearchText] = useState<string>("");
 
   useEffect(() => {
     fetchServices();
@@ -27,8 +30,14 @@ const ManagerService: React.FC = () => {
   const fetchServices = async () => {
     setLoading(true);
     try {
+      const token = getAuthToken();
       const response = await axios.get(
-        "https://api.vol-ka.studio/api/v1/service/get-all"
+        "https://api.vol-ka.studio/api/v1/service/get-all",
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        }
       );
       setServices(response.data);
     } catch (error) {
@@ -46,8 +55,15 @@ const ManagerService: React.FC = () => {
 
   const handleDelete = async (serviceID: string) => {
     try {
-      await axios.delete(
-        `https://api.vol-ka.studio/api/v1/service/delete/${serviceID}`
+      const token = getAuthToken();
+      await axios.patch(
+        `https://api.vol-ka.studio/api/v1/service/delete/${serviceID}`,
+        {},
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        }
       );
       setServices(
         services.filter((service) => service.serviceID !== serviceID)
@@ -62,9 +78,15 @@ const ManagerService: React.FC = () => {
   const handleModalOk = async (values: Partial<Service>) => {
     if (editingService) {
       try {
-        const response = await axios.put(
+        const token = getAuthToken();
+        const response = await axios.patch(
           `https://api.vol-ka.studio/api/v1/service/update/${editingService.serviceID}`,
-          values
+          values,
+          {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          }
         );
         const updatedService = response.data;
         setServices((prevServices) =>
@@ -86,9 +108,15 @@ const ManagerService: React.FC = () => {
 
   const handleAddModalOk = async (values: Service) => {
     try {
+      const token = getAuthToken();
       const response = await axios.post(
         "https://api.vol-ka.studio/api/v1/service/create",
-        values
+        values,
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        }
       );
       setServices([...services, response.data]);
       message.success("Service added successfully");
@@ -107,6 +135,10 @@ const ManagerService: React.FC = () => {
   const handleAddModalCancel = () => {
     setIsAddModalVisible(false);
   };
+
+  const filteredServices = services.filter((service) =>
+    service.serviceName.toLowerCase().includes(searchText.toLowerCase())
+  );
 
   const columns: ColumnsType<Service> = [
     {
@@ -171,16 +203,26 @@ const ManagerService: React.FC = () => {
 
   return (
     <>
-      <Button
-        type="primary"
-        onClick={() => setIsAddModalVisible(true)}
-        style={{ marginBottom: 16 }}
-      >
-        Add Service
-      </Button>
+      <Space style={{ marginBottom: 16 }}>
+        <Input
+          placeholder="Search by service name"
+          prefix={<SearchOutlined />}
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+          style={{ width: 200 }}
+          allowClear
+        />
+        <Button
+          type="primary"
+          onClick={() => setIsAddModalVisible(true)}
+        >
+          Add Service
+        </Button>
+      </Space>
+
       <Table
         columns={columns}
-        dataSource={services}
+        dataSource={filteredServices}
         rowKey="serviceID"
         loading={loading}
         pagination={{ pageSize: 4 }}
