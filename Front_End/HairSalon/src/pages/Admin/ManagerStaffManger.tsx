@@ -1,9 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { Table, Button, message, Space, Input, Modal, Form, DatePicker, Upload } from "antd";
+import {
+  Table,
+  Button,
+  message,
+  Space,
+  Input,
+  Modal,
+  Form,
+  DatePicker,
+  Upload,
+} from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { SearchOutlined, PlusOutlined, UploadOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { getStaffAll, createStaffManager, deleteStaffManager, updateStaffManager } from "../../services/Admin/StaffManager";
-import moment from 'moment';
+import {
+  SearchOutlined,
+  PlusOutlined,
+  UploadOutlined,
+  DeleteOutlined,
+  EditOutlined,
+} from "@ant-design/icons";
+import {
+  getStaffAll,
+  createStaffManager,
+  deleteStaffManager,
+  updateStaffManager,
+} from "../../services/Admin/StaffManager";
+import moment from "moment";
 
 interface StaffManager {
   staffManagerID: string;
@@ -13,7 +34,7 @@ interface StaffManager {
   dateOfBirth: string;
   phoneNumber: string;
   address: string;
-  email: string;
+  // email: string;
   insDate: string;
   updDate: string;
   delFlg: boolean;
@@ -48,18 +69,20 @@ const ManagerStaffManager: React.FC = () => {
 
   const handleDelete = async (staffManagerId: string) => {
     Modal.confirm({
-      title: 'Are you sure you want to delete this staff manager?',
-      content: 'This action cannot be undone.',
-      okText: 'Yes',
-      okType: 'danger',
-      cancelText: 'No',
+      title: "Are you sure you want to delete this staff manager?",
+      content: "This action cannot be undone.",
+      okText: "Yes",
+      okType: "danger",
+      cancelText: "No",
       onOk: async () => {
         try {
           await deleteStaffManager(staffManagerId);
-          message.success('Staff manager deleted successfully');
+          message.success("Staff manager deleted successfully");
           fetchStaffManagers(); // Refresh the list
         } catch (error: any) {
-          message.error(error.response?.data?.message || 'Failed to delete staff manager');
+          message.error(
+            error.response?.data?.message || "Failed to delete staff manager"
+          );
         }
       },
     });
@@ -71,26 +94,28 @@ const ManagerStaffManager: React.FC = () => {
 
       const updateData = {
         staffManagerName: values.staffManagerName,
-        dateOfBirth: values.dateOfBirth.format('YYYY-MM-DD'),
+        dateOfBirth: values.dateOfBirth.format("YYYY-MM-DD"),
         phoneNumber: values.phoneNumber,
         address: values.address,
-        email: values.email,
+        // email: values.email,
       };
 
       await updateStaffManager(selectedStaff.staffManagerID, updateData);
-      message.success('Staff manager updated successfully');
+      message.success("Staff manager updated successfully");
       setIsUpdateModalVisible(false);
       updateForm.resetFields();
       fetchStaffManagers();
     } catch (error: any) {
-      message.error(error.response?.data?.message || 'Failed to update staff manager');
+      message.error(
+        error.response?.data?.message || "Failed to update staff manager"
+      );
     }
   };
 
   const showUpdateModal = (record: StaffManager) => {
     setSelectedStaff(record);
     updateForm.setFieldsValue({
-      email: record.email,
+      // email: record.email,
       staffManagerName: record.staffManagerName,
       dateOfBirth: moment(record.dateOfBirth),
       phoneNumber: record.phoneNumber,
@@ -140,40 +165,51 @@ const ManagerStaffManager: React.FC = () => {
           />
         </Space>
       ),
-    }
+    },
   ];
 
-  const filteredStaffManagers = staffManagers.filter((sm) =>
-    (sm.staffManagerName?.toLowerCase().includes(searchText.toLowerCase()) || false) ||
-    (sm.email?.toLowerCase().includes(searchText.toLowerCase()) || false)
+  const filteredStaffManagers = staffManagers.filter(
+    (sm) =>
+      sm.staffManagerName?.toLowerCase().includes(searchText.toLowerCase()) ||
+      false
+    // (sm.email?.toLowerCase().includes(searchText.toLowerCase()) || false)
   );
 
   const handleAddStaff = async (values: any) => {
     try {
       const formData = new FormData();
-      formData.append('email', values.email);
-      formData.append('password', values.password);
-      formData.append('staffManagerName', values.staffManagerName);
-      formData.append('dateOfBirth', values.dateOfBirth.format('YYYY-MM-DD'));
-      formData.append('phoneNumber', values.phoneNumber);
-      formData.append('address', values.address);
+      // formData.append('email', values.email);
+      formData.append("password", values.password);
+      formData.append("staffManagerName", values.staffManagerName);
+      formData.append("dateOfBirth", values.dateOfBirth.format("YYYY-MM-DD"));
+      formData.append("phoneNumber", values.phoneNumber);
+      formData.append("address", values.address);
       if (values.avatarImage?.fileList[0]?.originFileObj) {
-        formData.append('avatarImage', values.avatarImage.fileList[0].originFileObj);
+        formData.append(
+          "avatarImage",
+          values.avatarImage.fileList[0].originFileObj
+        );
       }
 
       await createStaffManager(formData);
-      message.success('Staff added successfully');
+      message.success("Staff added successfully");
       setIsModalVisible(false);
       form.resetFields();
       fetchStaffManagers();
     } catch (error: any) {
-      message.error(error.response?.data?.message || 'Failed to add staff');
+      message.error(error.response?.data?.message || "Failed to add staff");
     }
   };
 
   return (
     <div style={{ padding: "24px" }}>
-      <Space style={{ marginBottom: 16, justifyContent: 'space-between', width: '100%' }}>
+      <Space
+        style={{
+          marginBottom: 16,
+          justifyContent: "space-between",
+          width: "100%",
+        }}
+      >
         <Input
           placeholder="Search by name"
           prefix={<SearchOutlined />}
@@ -201,12 +237,8 @@ const ManagerStaffManager: React.FC = () => {
         onCancel={() => setIsModalVisible(false)}
         footer={null}
       >
-        <Form
-          form={form}
-          layout="vertical"
-          onFinish={handleAddStaff}
-        >
-          <Form.Item
+        <Form form={form} layout="vertical" onFinish={handleAddStaff}>
+          {/* <Form.Item
             name="email"
             label="Email"
             rules={[
@@ -215,14 +247,14 @@ const ManagerStaffManager: React.FC = () => {
             ]}
           >
             <Input />
-          </Form.Item>
+          </Form.Item> */}
 
           <Form.Item
             name="password"
             label="Password"
             rules={[
-              { required: true, message: 'Please input password!' },
-              { min: 6, message: 'Password must be at least 6 characters!' }
+              { required: true, message: "Please input password!" },
+              { min: 6, message: "Password must be at least 6 characters!" },
             ]}
           >
             <Input.Password />
@@ -231,7 +263,7 @@ const ManagerStaffManager: React.FC = () => {
           <Form.Item
             name="staffManagerName"
             label="Staff Manager Name"
-            rules={[{ required: true, message: 'Please input name!' }]}
+            rules={[{ required: true, message: "Please input name!" }]}
           >
             <Input />
           </Form.Item>
@@ -239,15 +271,17 @@ const ManagerStaffManager: React.FC = () => {
           <Form.Item
             name="dateOfBirth"
             label="Date of Birth"
-            rules={[{ required: true, message: 'Please select date of birth!' }]}
+            rules={[
+              { required: true, message: "Please select date of birth!" },
+            ]}
           >
-            <DatePicker style={{ width: '100%' }} />
+            <DatePicker style={{ width: "100%" }} />
           </Form.Item>
 
           <Form.Item
             name="phoneNumber"
             label="Phone Number"
-            rules={[{ required: true, message: 'Please input phone number!' }]}
+            rules={[{ required: true, message: "Please input phone number!" }]}
           >
             <Input />
           </Form.Item>
@@ -255,7 +289,7 @@ const ManagerStaffManager: React.FC = () => {
           <Form.Item
             name="address"
             label="Address"
-            rules={[{ required: true, message: 'Please input address!' }]}
+            rules={[{ required: true, message: "Please input address!" }]}
           >
             <Input />
           </Form.Item>
@@ -265,11 +299,7 @@ const ManagerStaffManager: React.FC = () => {
             label="Avatar Image"
             valuePropName="file"
           >
-            <Upload
-              maxCount={1}
-              beforeUpload={() => false}
-              listType="picture"
-            >
+            <Upload maxCount={1} beforeUpload={() => false} listType="picture">
               <Button icon={<UploadOutlined />}>Click to Upload</Button>
             </Upload>
           </Form.Item>
@@ -279,9 +309,7 @@ const ManagerStaffManager: React.FC = () => {
               <Button type="primary" htmlType="submit">
                 Submit
               </Button>
-              <Button onClick={() => setIsModalVisible(false)}>
-                Cancel
-              </Button>
+              <Button onClick={() => setIsModalVisible(false)}>Cancel</Button>
             </Space>
           </Form.Item>
         </Form>
@@ -299,10 +327,16 @@ const ManagerStaffManager: React.FC = () => {
           form={updateForm}
           layout="vertical"
           onFinish={handleUpdate}
-          style={{ maxWidth: '100%' }}
+          style={{ maxWidth: "100%" }}
         >
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-            <Form.Item
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "16px",
+            }}
+          >
+            {/* <Form.Item
               name="email"
               label="Email"
               rules={[
@@ -311,12 +345,12 @@ const ManagerStaffManager: React.FC = () => {
               ]}
             >
               <Input />
-            </Form.Item>
+            </Form.Item> */}
 
             <Form.Item
               name="staffManagerName"
               label="Staff Manager Name"
-              rules={[{ required: true, message: 'Please input name!' }]}
+              rules={[{ required: true, message: "Please input name!" }]}
             >
               <Input />
             </Form.Item>
@@ -324,15 +358,19 @@ const ManagerStaffManager: React.FC = () => {
             <Form.Item
               name="dateOfBirth"
               label="Date of Birth"
-              rules={[{ required: true, message: 'Please select date of birth!' }]}
+              rules={[
+                { required: true, message: "Please select date of birth!" },
+              ]}
             >
-              <DatePicker style={{ width: '100%' }} />
+              <DatePicker style={{ width: "100%" }} />
             </Form.Item>
 
             <Form.Item
               name="phoneNumber"
               label="Phone Number"
-              rules={[{ required: true, message: 'Please input phone number!' }]}
+              rules={[
+                { required: true, message: "Please input phone number!" },
+              ]}
             >
               <Input />
             </Form.Item>
@@ -341,12 +379,12 @@ const ManagerStaffManager: React.FC = () => {
           <Form.Item
             name="address"
             label="Address"
-            rules={[{ required: true, message: 'Please input address!' }]}
+            rules={[{ required: true, message: "Please input address!" }]}
           >
             <Input />
           </Form.Item>
 
-          <Form.Item style={{ marginBottom: 0, textAlign: 'right' }}>
+          <Form.Item style={{ marginBottom: 0, textAlign: "right" }}>
             <Space>
               <Button onClick={() => setIsUpdateModalVisible(false)}>
                 Cancel
@@ -363,4 +401,3 @@ const ManagerStaffManager: React.FC = () => {
 };
 
 export default ManagerStaffManager;
-
