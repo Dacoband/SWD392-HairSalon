@@ -22,29 +22,29 @@ const SidebarData = [
   },
   {
     icon: ShoppingCartOutlined,
-    heading: "Quản lí khu vực",
+    heading: "Quản lí nhân viên",
     navigate: "/ManagerStaff_AD",
   },
   {
     icon: ShoppingCartOutlined,
-    heading: "Quản lí khu vực",
+    heading: "Quản lí lịch hẹn",
     navigate: "/ManagerAppointment_AD",
   },
   {
     icon: ShoppingCartOutlined,
-    heading: "Quản lí khu vực",
+    heading: "Bảng thống kê",
     navigate: "/ManagerChart_AD",
   },
 
   {
     icon: ShoppingCartOutlined,
-    heading: "Quản lí khu vực",
+    heading: "Quản lí nhà tạo mẫu",
     navigate: "/ManagerStylist_AD",
   },
   {
     icon: ShoppingCartOutlined,
-    heading: "Quản lí khu vực",
-    navigate: "/ManagerBranch_AD",
+    heading: "Nhân viên tạo mẫu",
+    navigate: "/ManagerStaffStylist_AD",
   },
 ];
 

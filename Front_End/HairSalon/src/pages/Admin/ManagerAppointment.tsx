@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Table, message, Space, Input, Tag } from "antd";
-import type { ColumnsType } from "antd/es/table";
 import { SearchOutlined } from "@ant-design/icons";
-import { getAppointments } from "../../services/Admin/Appointment";
+import { getAppointmentsWithDetails } from "../../services/Admin/Appointment";
 
 interface Service {
   serviceId: string;
@@ -10,8 +9,11 @@ interface Service {
 }
 
 interface Appointment {
+  appointmentId: string;
   customerId: string;
+  memberName?: string;
   stylistId: string;
+  stylistName?: string;
   status: number;
   totalPrice: number;
   insDate: string;
@@ -33,7 +35,7 @@ const ManagerAppointment: React.FC = () => {
   const fetchAppointments = async () => {
     setLoading(true);
     try {
-      const data = await getAppointments();
+      const data = await getAppointmentsWithDetails();
       setAppointments(data);
     } catch (error) {
       console.error("Error fetching appointments:", error);
@@ -44,29 +46,29 @@ const ManagerAppointment: React.FC = () => {
   };
 
   const getStatusTag = (status: number) => {
-    let color = '';
-    let text = '';
+    let color = "";
+    let text = "";
 
     switch (status) {
       case 0:
-        color = 'gold';  // Màu vàng cho Pending
-        text = 'Pending';
+        color = "gold";
+        text = "Pending";
         break;
       case 1:
-        color = 'blue';  // Màu xanh dương cho Confirmed
-        text = 'Confirmed';
+        color = "blue";
+        text = "Confirmed";
         break;
       case 2:
-        color = 'green'; // Màu xanh lá cho Completed
-        text = 'Completed';
+        color = "green";
+        text = "Completed";
         break;
       case 3:
-        color = 'red';   // Màu đỏ cho Cancelled
-        text = 'Cancelled';
+        color = "red";
+        text = "Cancelled";
         break;
       default:
-        color = 'default';
-        text = 'Unknown';
+        color = "default";
+        text = "Unknown";
     }
 
     return <Tag color={color}>{text}</Tag>;
@@ -76,17 +78,17 @@ const ManagerAppointment: React.FC = () => {
     return new Date(dateTime).toLocaleString();
   };
 
-  const columns: ColumnsType<Appointment> = [
+  const columns = [
     {
-      title: "Customer ID",
-      dataIndex: "customerId",
-      key: "customerId",
+      title: "Customer Name",
+      dataIndex: "memberName",
+      key: "memberName",
       width: 300,
     },
     {
-      title: "Stylist ID",
-      dataIndex: "stylistId",
-      key: "stylistId",
+      title: "Stylist Name",
+      dataIndex: "stylistName",
+      key: "stylistName",
       width: 300,
     },
     {
@@ -107,12 +109,12 @@ const ManagerAppointment: React.FC = () => {
       key: "status",
       render: (status: number) => getStatusTag(status),
       filters: [
-        { text: 'Pending', value: 0 },
-        { text: 'Confirmed', value: 1 },
-        { text: 'Completed', value: 2 },
-        { text: 'Cancelled', value: 3 },
+        { text: "Pending", value: 0 },
+        { text: "Confirmed", value: 1 },
+        { text: "Completed", value: 2 },
+        { text: "Cancelled", value: 3 },
       ],
-      onFilter: (value, record) => record.status === value,
+      onFilter: (value: any, record: any) => record.status === value,
     },
     {
       title: "Total Price",
@@ -130,17 +132,17 @@ const ManagerAppointment: React.FC = () => {
 
   const filteredAppointments = appointments.filter(
     (appointment) =>
-      appointment.customerId.toLowerCase().includes(searchText.toLowerCase()) ||
-      appointment.stylistId.toLowerCase().includes(searchText.toLowerCase())
+      appointment.memberName?.toLowerCase().includes(searchText.toLowerCase()) ||
+      appointment.stylistName?.toLowerCase().includes(searchText.toLowerCase())
   );
 
   return (
     <div style={{ padding: "24px" }}>
       <h2>Appointment Management</h2>
-      
+
       <Space style={{ marginBottom: 16 }}>
         <Input
-          placeholder="Search by ID (Appointment/Customer/Stylist)"
+          placeholder="Search by Customer or Stylist Name"
           prefix={<SearchOutlined />}
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
@@ -155,7 +157,7 @@ const ManagerAppointment: React.FC = () => {
         rowKey="appointmentId"
         loading={loading}
         pagination={{ pageSize: 10 }}
-        scroll={{ x: 1500 }} // Add horizontal scroll for many columns
+        scroll={{ x: 1500 }}
       />
     </div>
   );
