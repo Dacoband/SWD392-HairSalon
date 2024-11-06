@@ -18,10 +18,12 @@ export const login = async (email: string, password: string) => {
       
 
       localStorage.setItem('token', token);
+      localStorage.setItem('branchId', branchId);
+      localStorage.setItem('actorId', actorId);
       const userDatas = { email: userEmail, roleName ,branchId, actorId};
       localStorage.setItem('userData', JSON.stringify(userDatas));
   
-      return { token, userDatas };
+      return { token, userDatas, branchId  };
     } else {
       throw new Error('Invalid login response');
     }
