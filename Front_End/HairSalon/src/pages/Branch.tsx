@@ -1,19 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
-interface Branch {
-  branchID: string;
-  salonBranches: string;
-  address: string;
-  phone: string;
-}
+import {Branches} from "../models/type";
 
 // URL API
 const API_URL = "https://api.vol-ka.studio/api/v1/branch/all";
 
 const Branch: React.FC = () => {
-  const [branches, setBranches] = useState<Branch[]>([]);
+  const [branches, setBranches] = useState<Branches[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();

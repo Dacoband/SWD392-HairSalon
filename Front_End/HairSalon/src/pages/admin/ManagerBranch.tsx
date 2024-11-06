@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Button, Table, Modal, Form, Input } from "antd";
+import { ColumnsType } from "antd/es/table";
 
 interface Branch {
   branchID: string;
@@ -46,7 +48,13 @@ const ManagerBranch: React.FC = () => {
   const handleAddBranch = async () => {
     try {
       await axios.post(`${API_URL}/add`, newBranch);
-      setNewBranch({ branchID: "", salonBranches: "", address: "", phone: "", staffManagerID: "" });
+      setNewBranch({
+        branchID: "",
+        salonBranches: "",
+        address: "",
+        phone: "",
+        staffManagerID: "",
+      });
       fetchBranches();
     } catch (error) {
       console.error("Error adding branch:", error);
@@ -58,7 +66,13 @@ const ManagerBranch: React.FC = () => {
 
     try {
       await axios.put(`${API_URL}/update/${editBranchID}`, newBranch);
-      setNewBranch({ branchID: "", salonBranches: "", address: "", phone: "", staffManagerID: "" });
+      setNewBranch({
+        branchID: "",
+        salonBranches: "",
+        address: "",
+        phone: "",
+        staffManagerID: "",
+      });
       setIsEditing(false);
       setEditBranchID(null);
       fetchBranches();
@@ -95,15 +109,57 @@ const ManagerBranch: React.FC = () => {
     return <div className="text-center text-red-600">{error}</div>;
   }
 
+  const columns: ColumnsType<Branch> = [
+    {
+      title: "Branch Name",
+      dataIndex: "branchName",
+      key: "branchName",
+    },
+    {
+      title: "Location",
+      dataIndex: "location",
+      key: "location",
+    },
+    {
+      title: "Phone Number",
+      dataIndex: "phoneNumber",
+      key: "phoneNumber",
+    },
+    {
+      title: "Manager",
+      dataIndex: "manager",
+      key: "manager",
+    },
+    {
+      title: "Actions",
+      key: "actions",
+      render: (_, record) => (
+        <>
+          <Button type="link" onClick={() => handleDeleteBranch(record)}>
+            Edit
+          </Button>
+          <Button
+            type="link"
+            danger
+            onClick={() => handleDeleteBranch(record.branchID)}
+          >
+            Delete
+          </Button>
+        </>
+      ),
+    },
+  ];
+  
+
   return (
     <div className="relative p-6">
       <h2 className="text-2xl font-bold mb-4">Manage Branches</h2>
-      
+
       <div className="mb-6">
         <h3 className="text-xl font-semibold mb-2">
           {isEditing ? "Edit Branch" : "Add New Branch"}
         </h3>
-        
+
         <input
           type="text"
           name="salonBranches"
@@ -112,7 +168,7 @@ const ManagerBranch: React.FC = () => {
           placeholder="Salon Branch Name"
           className="border rounded p-2 mb-2 w-full"
         />
-        
+
         <input
           type="text"
           name="address"
@@ -121,7 +177,7 @@ const ManagerBranch: React.FC = () => {
           placeholder="Address"
           className="border rounded p-2 mb-2 w-full"
         />
-        
+
         <input
           type="text"
           name="phone"
@@ -130,7 +186,7 @@ const ManagerBranch: React.FC = () => {
           placeholder="Phone"
           className="border rounded p-2 mb-2 w-full"
         />
-        
+
         <input
           type="text"
           name="staffManagerID"
@@ -139,20 +195,26 @@ const ManagerBranch: React.FC = () => {
           placeholder="Staff Manager ID"
           className="border rounded p-2 mb-2 w-full"
         />
-        
+
         <button
           onClick={isEditing ? handleUpdateBranch : handleAddBranch}
           className="bg-blue-500 text-white px-4 py-2 rounded"
         >
           {isEditing ? "Update Branch" : "Add Branch"}
         </button>
-        
+
         {isEditing && (
           <button
             onClick={() => {
               setIsEditing(false);
               setEditBranchID(null);
-              setNewBranch({ branchID: "", salonBranches: "", address: "", phone: "", staffManagerID: "" });
+              setNewBranch({
+                branchID: "",
+                salonBranches: "",
+                address: "",
+                phone: "",
+                staffManagerID: "",
+              });
             }}
             className="ml-4 bg-gray-400 text-white px-4 py-2 rounded"
           >
@@ -172,7 +234,7 @@ const ManagerBranch: React.FC = () => {
             </h3>
             <p className="text-gray-700 mb-1">Address: {branch.address}</p>
             <p className="text-gray-700">Phone: {branch.phone}</p>
-            
+
             <div className="flex space-x-4 mt-4">
               <button
                 onClick={() => handleEditClick(branch)}

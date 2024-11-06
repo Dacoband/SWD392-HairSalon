@@ -2,23 +2,15 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Table, Button, Modal, Input, Form, message } from "antd";
 import type { ColumnsType } from "antd/es/table";
+import { Services } from "../../models/type";
 
-interface Service {
-  serviceID: string;
-  serviceName: string;
-  type: number;
-  price: number;
-  description: string | null;
-  duration: number;
-  avatarImage: string;
-}
 
 const ManagerService: React.FC = () => {
-  const [services, setServices] = useState<Service[]>([]);
+  const [services, setServices] = useState<Services[]>([]);
   const [loading, setLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
-  const [editingService, setEditingService] = useState<Service | null>(null);
+  const [editingService, setEditingService] = useState<Services | null>(null);
 
   useEffect(() => {
     fetchServices();
@@ -39,7 +31,7 @@ const ManagerService: React.FC = () => {
     }
   };
 
-  const handleEdit = (service: Service) => {
+  const handleEdit = (service: Services) => {
     setEditingService(service);
     setIsModalVisible(true);
   };
@@ -59,7 +51,7 @@ const ManagerService: React.FC = () => {
     }
   };
 
-  const handleModalOk = async (values: Partial<Service>) => {
+  const handleModalOk = async (values: Partial<Services>) => {
     if (editingService) {
       try {
         const response = await axios.put(
@@ -84,7 +76,7 @@ const ManagerService: React.FC = () => {
     setEditingService(null);
   };
 
-  const handleAddModalOk = async (values: Service) => {
+  const handleAddModalOk = async (values: Services) => {
     try {
       const response = await axios.post(
         "https://api.vol-ka.studio/api/v1/service/add",
@@ -108,7 +100,7 @@ const ManagerService: React.FC = () => {
     setIsAddModalVisible(false);
   };
 
-  const columns: ColumnsType<Service> = [
+  const columns: ColumnsType<Services> = [
     {
       title: "Avatar",
       dataIndex: "avatarImage",
