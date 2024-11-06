@@ -98,7 +98,7 @@ const Header = () => {
                 onClick={() => navigate("/login")}
                 className="font-bold px-6 py-2 bg-[#000] hover:text-[#ffff] text-white rounded-full hover:bg-[#74601d]"
               >
-                Đăng Nhập
+                Login
               </a>
             )}
           </div>

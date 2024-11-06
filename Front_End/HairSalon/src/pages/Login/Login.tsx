@@ -41,14 +41,14 @@ const SignInForm = () => {
           case "SM":
             navigate("/StaffManager");
             break;
-          case "ST":
+          case "SL":
             navigate("/StaffStylish");
             break;
-          case "SL":
+          case "ST":
             navigate("/Appoiment-Stylish");
             break;
           case "MB":
-            navigate("/homePage");
+            navigate("/HomePage");
             break;
           default:
             navigate("/unknown-role");

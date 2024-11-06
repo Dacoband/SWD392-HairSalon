@@ -25,42 +25,23 @@ namespace HairSalonSystem.Services.Implements
             _jwtSettings = jwtSettings.Value;
         }
 
-<<<<<<< HEAD
         public async Task<(Account, Guid?)> Authenticate(string email, string password)
-=======
-        public async Task<(Account, Guid?, Guid?)> Authenticate(string email, string password)
->>>>>>> Thaiyud
         {
             var account = await _accountRepository.GetAccountByEmail(email);
             if (account == null || !VerifyPassword(account.Password, password))
             {
-<<<<<<< HEAD
                 return (null, null);
             }
             Guid? actorId = account.RoleName switch
             {
                 "ST" => await _accountRepository.GetStylistId(account.AccountId),
                 "SL" => await _accountRepository.GetStaffStylistId(account.AccountId),
-=======
-                return (null, null, null);
-            }
-            Guid? actorId = account.RoleName switch
-            {
-                "ST" => await _accountRepository.GetStaffStylistId(account.AccountId),
-                "SL" => await _accountRepository.GetStylistId(account.AccountId),
->>>>>>> Thaiyud
                 "SM" => await _accountRepository.GetStaffManagerId(account.AccountId),
                 "MB" => await _accountRepository.GetMemberId(account.AccountId),
                 _ => null
             };
 
-<<<<<<< HEAD
             return (account, actorId);
-=======
-            Guid? branchId = await _accountRepository.GetBranchIdByAccountId(account.AccountId);
-
-            return (account, actorId, branchId);
->>>>>>> Thaiyud
         }
 
         private bool VerifyPassword(string storedPassword, string providedPassword)
@@ -68,11 +49,7 @@ namespace HairSalonSystem.Services.Implements
             return storedPassword == providedPassword; 
         }
 
-<<<<<<< HEAD
         public async Task<string> GenerateJwtToken(Account account, Guid? actorId)
-=======
-        public async Task<string> GenerateJwtToken(Account account, Guid? actorId,Guid? branchId)
->>>>>>> Thaiyud
         {
             if (string.IsNullOrEmpty(account.RoleName))
             {
@@ -89,13 +66,6 @@ namespace HairSalonSystem.Services.Implements
             {
                 claims.Add(new Claim("actorId", actorId.Value.ToString()));
             }
-<<<<<<< HEAD
-=======
-            if (branchId.HasValue)
-            {
-                claims.Add(new Claim("branchId", branchId.Value.ToString()));
-            }
->>>>>>> Thaiyud
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
