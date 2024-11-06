@@ -90,15 +90,16 @@ const AppRouter = () => {
         <Route element={<LayoutSM />}>
           <Route path="/StaffManager" element={<CategogySM/>} />
         </Route>
-
-        {/* STYLISH */}
-        <Route element={<LayoutMain />}>
-          <Route
-            path="/profile"
+        <Route element={<LayoutSM />}>
+        <Route
+            path="/profile-Staff"
             element={
-              <PrivateRoute element={ProfileAll} allowedRoles={["ST"]} />
+              <PrivateRoute element={ProfileAll} allowedRoles={["SM", "SA" , "SL"]} />
             }
           />
+           </Route>
+        {/* STYLISH */}
+        <Route element={<LayoutMain />}>
           <Route
             path="/Appoiment-Stylish"
             element={
@@ -108,7 +109,6 @@ const AppRouter = () => {
               />
             }
           />
-
           <Route
             path="/manager-money"
             element={

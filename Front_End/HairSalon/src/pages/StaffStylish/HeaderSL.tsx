@@ -10,7 +10,7 @@ const HeaderSL: React.FC = () => {
 
   const menu = (
     <Menu>
-      <Menu.Item key="profile" onClick={() => navigate("/profile")}>
+      <Menu.Item key="profile" onClick={() => navigate("/profile-Staff")}>
         Thông Tin Cá Nhân
       </Menu.Item>
       <Menu.Item

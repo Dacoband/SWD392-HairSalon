@@ -12,9 +12,9 @@ export const getBranchesAll = async (): Promise<Branches[]> => {
   }
 };
 
-export const getBranchById = async (id: string): Promise<Branches[]> => {
+export const getBranchById = async (id: string): Promise<Branches> => {
   try {
-    const response = await axios.get<Branches[]>(
+    const response = await axios.get<Branches>(
       `https://api.vol-ka.studio/api/v1/branch/${id}`
     );
     return response.data;
