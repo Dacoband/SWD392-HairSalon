@@ -9,7 +9,7 @@ namespace HairSalonSystem.Repositories.Interface
 {
     public interface IBranchRespository
     {
-        Task<Branch> GetBranchById(Guid? branchId);
+        Task<Branch> GetBranchById(Guid branchId);
         Task<List<Branch>> GetAllBranches();
         Task AddBranch(Branch branch);
         Task UpdateBranch(Branch branch);

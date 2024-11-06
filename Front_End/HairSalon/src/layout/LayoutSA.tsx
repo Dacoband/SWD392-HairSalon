@@ -20,32 +20,6 @@ const SidebarData = [
     heading: "Quản lí khu vực",
     navigate: "/ManagerBranch_AD",
   },
-  {
-    icon: ShoppingCartOutlined,
-    heading: "Quản lí khu vực",
-    navigate: "/ManagerStaff_AD",
-  },
-  {
-    icon: ShoppingCartOutlined,
-    heading: "Quản lí khu vực",
-    navigate: "/ManagerAppointment_AD",
-  },
-  {
-    icon: ShoppingCartOutlined,
-    heading: "Quản lí khu vực",
-    navigate: "/ManagerChart_AD",
-  },
-
-  {
-    icon: ShoppingCartOutlined,
-    heading: "Quản lí khu vực",
-    navigate: "/ManagerStylist_AD",
-  },
-  {
-    icon: ShoppingCartOutlined,
-    heading: "Quản lí khu vực",
-    navigate: "/ManagerBranch_AD",
-  },
 ];
 
 const LayoutSA: React.FC = () => {
@@ -87,7 +61,7 @@ const LayoutSA: React.FC = () => {
           />
         </Sider>
         <Layout>
-          <Content className="p-6 bg-gray-100 overflow-y-auto h-full">
+          <Content className="p-6 bg-gray-100">
             <Outlet />
           </Content>
         </Layout>

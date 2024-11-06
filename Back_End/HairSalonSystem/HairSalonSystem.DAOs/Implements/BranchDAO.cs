@@ -45,7 +45,7 @@ namespace HairSalonSystem.DAOs.Implements
             await _branchCollection.UpdateOneAsync(filter, update);
         }
 
-        public async Task<Branch> GetBranchByIdAsync(Guid? branchId)
+        public async Task<Branch> GetBranchByIdAsync(Guid branchId)
         {
             return await _branchCollection
                 .Find(b => b.BranchID == branchId && b.DelFlg == true)

@@ -6,7 +6,6 @@ using HairSalonSystem.Services.PayLoads.Requests.StaffManagers;
 using HairSalonSystem.Services.PayLoads.Responses.StaffManagers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Authorization;
 namespace HairSalonSystem.API.Controllers
 {
     [ApiController]
@@ -36,7 +35,6 @@ namespace HairSalonSystem.API.Controllers
             return Ok(staffManagers);
         }
         [HttpPost(APIEndPointConstant.StaffManager.AddStaffManager)]
-        [Authorize(Roles = "SA")]
         [ProducesResponseType(typeof(CreateNewStaffManagerResponse), StatusCodes.Status201Created)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
         public async Task<ActionResult> AddStaffManager([FromForm] CreateNewStaffManagerRequest staffManagerDto)
@@ -44,7 +42,6 @@ namespace HairSalonSystem.API.Controllers
             return await _staffManagerService.AddStaffManager(staffManagerDto, HttpContext);
         }
         [HttpPatch(APIEndPointConstant.StaffManager.UpdateStaffManager)]
-        [Authorize(Roles= "SA,SM")]
         [ProducesResponseType(typeof(UpdateStaffManagerResponse), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
         public async Task<ActionResult> UpdateStaffManager([FromRoute] Guid id,[FromForm] UpdateStaffManagerRequest staffManagerDto)
@@ -52,7 +49,6 @@ namespace HairSalonSystem.API.Controllers
             return await _staffManagerService.UpdateStaffManager(id,staffManagerDto, HttpContext);
         }
         [HttpDelete(APIEndPointConstant.StaffManager.DeleteStaffManager)]
-        [Authorize(Roles = "SA")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
         public async Task<ActionResult> DeleteStaffManager(Guid id)

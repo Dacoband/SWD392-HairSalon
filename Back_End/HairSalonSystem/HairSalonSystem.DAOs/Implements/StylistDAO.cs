@@ -25,9 +25,9 @@ namespace HairSalonSystem.DAOs.Implements
         {
             return await _Stylists.Find(n => n.StylistId == id).FirstOrDefaultAsync();
         }
-        public async Task<List<Stylist>> GetStylistByBranchId(Guid branchId)
+        public async Task<Stylist> GetStylistByBranchId(Guid branchId)
         {
-            return await _Stylists.Find(n => n.BranchID == branchId).ToListAsync();
+            return await _Stylists.Find(n => n.BranchID == branchId).FirstOrDefaultAsync();
         }
         public async Task<Stylist> GetRandomStylistByBranchId(Guid branchId)
         {

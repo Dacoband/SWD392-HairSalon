@@ -18,7 +18,7 @@ namespace HairSalonSystem.Repositories.Implement
             _branchDao = branchDao;
         }
 
-        public async Task<Branch> GetBranchById(Guid? branchId)
+        public async Task<Branch> GetBranchById(Guid branchId)
         {
             return await _branchDao.GetBranchByIdAsync(branchId);
         }

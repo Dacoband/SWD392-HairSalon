@@ -30,7 +30,8 @@ namespace HairSalonSystem.Repositories.Implement
         }
         public async Task<List<Stylist>> GetStylistByBranchId(Guid branchId)
         {
-            return await _stylistDAO.GetStylistByBranchId(branchId);
+            var stylist = await _stylistDAO.GetStylistByBranchId(branchId);
+            return new List<Stylist> { stylist };
         }
         public async Task<Stylist> GetRandomStylistByBranchId(Guid branchId)
         {
