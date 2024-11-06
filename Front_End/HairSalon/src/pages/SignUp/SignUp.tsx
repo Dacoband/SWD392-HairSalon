@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserInfoData } from '../../models/type';
-import { signUpUser } from "../../services/authSalon";
+import axios from "axios";
 import { FaUserAlt, FaLock, FaEnvelope, FaPhone, FaCalendarAlt, FaHome } from 'react-icons/fa';
 import './SignUp.scss';
 import logo from "../../assets/logo-removebg-preview.png";
@@ -46,7 +46,11 @@ const SignUpPage: React.FC = () => {
     });
 
     try {
-      const response = await signUpUser(submissionData);
+      const response = await axios.post('https://api.vol-ka.studio/api/v1/member/add', submissionData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
       if (response.status === 201) {
         alert('Sign-up successful!');
