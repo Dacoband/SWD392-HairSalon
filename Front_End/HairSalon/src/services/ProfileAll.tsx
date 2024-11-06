@@ -40,7 +40,7 @@ export const fetchUserData = async (userId: string, email : string, role : strin
   };
 }; 
 
-export const updateUserData = async (userId: string, updatedData: Partial<UserInfoData>): Promise<void> => {
+export const updateUserData = async (userId: string, updatedData: Partial<UserInfoData>,role : string): Promise<void> => {
   try {
     console.log(updatedData);
     const formData = new FormData();
@@ -49,6 +49,7 @@ export const updateUserData = async (userId: string, updatedData: Partial<UserIn
     if (updatedData.DateOfBirth) formData.append('DateOfBirth', updatedData.DateOfBirth);
     if (updatedData.PhoneNumber) formData.append('PhoneNumber', updatedData.PhoneNumber);
     if (updatedData.Address) formData.append('Address', updatedData.Address);
+    if (updatedData.BranchId && role !=="MB") formData.append('BranchId', updatedData.BranchId);
 
    if (updatedData.avatarImage) {
     if (updatedData.avatarImage instanceof File) {

@@ -26,7 +26,6 @@ const Profile: React.FC = () => {
       try {
         const data = await fetchUserData(userDatas?.actorId, userDatas?.email, role);
         setUserData(data);
-        
         setEditData(data);
       } catch (error) {
         console.error('Failed to fetch user data:', error);
@@ -78,7 +77,7 @@ const Profile: React.FC = () => {
   const handleSave = async () => {
     if (editData) {
       try {
-        await updateUserData(userDatas?.actorId, { ...editData, avatarImage }); 
+        await updateUserData(userDatas?.actorId, { ...editData, avatarImage }, role); 
         setUserData(editData); 
         setIsModalOpen(false); 
       } catch (error: any) {

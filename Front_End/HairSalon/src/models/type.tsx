@@ -72,6 +72,6 @@ export interface UserInfoData {
   DateOfBirth: string;
   PhoneNumber: string;
   Address: string;
-  BranchId: string;
+  BranchId?: string;
   avatarImage?: string| File;
 }
