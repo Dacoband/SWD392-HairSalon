@@ -68,7 +68,7 @@ const ManagerService: React.FC = () => {
       setServices(
         services.filter((service) => service.serviceID !== serviceID)
       );
-      message.success("Service deleted");
+      message.success("Service deleted successfully");
     } catch (error) {
       console.error("Error deleting service:", error);
       message.error("Error deleting service");
@@ -110,6 +110,7 @@ const ManagerService: React.FC = () => {
     try {
       const token = getAuthToken();
       const response = await axios.post(
+<<<<<<< HEAD
         "https://api.vol-ka.studio/api/v1/service/create",
         values,
         {
@@ -117,6 +118,10 @@ const ManagerService: React.FC = () => {
             'Authorization': `Bearer ${token}`
           }
         }
+=======
+        "https://api.vol-ka.studio/api/v1/service/add",
+        values
+>>>>>>> origin/Thaiyud
       );
       setServices([...services, response.data]);
       message.success("Service added successfully");
@@ -180,6 +185,7 @@ const ManagerService: React.FC = () => {
       title: "Duration",
       dataIndex: "duration",
       key: "duration",
+      render: (duration: number) => `${duration} minutes`,
     },
     {
       title: "Actions",
@@ -238,19 +244,37 @@ const ManagerService: React.FC = () => {
           onFinish={handleModalOk}
           layout="vertical"
         >
-          <Form.Item name="serviceName" label="Service Name">
+          <Form.Item
+            name="serviceName"
+            label="Service Name"
+            rules={[{ required: true, message: "Please enter service name!" }]}
+          >
             <Input />
           </Form.Item>
-          <Form.Item name="avatarImage" label="Service Image">
+          <Form.Item
+            name="avatarImage"
+            label="Service Image"
+            rules={[
+              { required: true, message: "Please enter service image URL!" },
+            ]}
+          >
             <Input type="url" />
           </Form.Item>
           <Form.Item name="description" label="Description">
             <Input.TextArea rows={3} />
           </Form.Item>
-          <Form.Item name="price" label="Price">
+          <Form.Item
+            name="price"
+            label="Price"
+            rules={[{ required: true, message: "Please enter the price!" }]}
+          >
             <Input type="number" />
           </Form.Item>
-          <Form.Item name="duration" label="Duration">
+          <Form.Item
+            name="duration"
+            label="Duration"
+            rules={[{ required: true, message: "Please enter the duration!" }]}
+          >
             <Input type="number" />
           </Form.Item>
           <Button type="primary" htmlType="submit">
@@ -275,17 +299,27 @@ const ManagerService: React.FC = () => {
           <Form.Item
             name="avatarImage"
             label="Service Image"
-            rules={[{ required: true, message: "Please enter service Image!" }]}
+            rules={[
+              { required: true, message: "Please enter service image URL!" },
+            ]}
           >
             <Input type="url" />
           </Form.Item>
-          <Form.Item name="price" label="Price">
+          <Form.Item
+            name="price"
+            label="Price"
+            rules={[{ required: true, message: "Please enter the price!" }]}
+          >
             <Input type="number" />
           </Form.Item>
           <Form.Item name="description" label="Description">
             <Input.TextArea rows={3} />
           </Form.Item>
-          <Form.Item name="duration" label="Duration">
+          <Form.Item
+            name="duration"
+            label="Duration"
+            rules={[{ required: true, message: "Please enter the duration!" }]}
+          >
             <Input type="number" />
           </Form.Item>
           <Button type="primary" htmlType="submit">

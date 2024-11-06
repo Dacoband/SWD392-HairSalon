@@ -1,19 +1,7 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Table, Button, Modal, Input, Form, message } from "antd";
-import type { ColumnsType } from "antd/es/table";
-
-// Define the data type for a stylist
-interface StaffStylist {
-  staffStylistId: string;
-  staffStylistName: string;
-  dateOfBirth: string;
-  phoneNumber: string;
-  address: string;
-  avatarImage: string;
-}
+import React from "react";
 
 const ManagerStaff: React.FC = () => {
+<<<<<<< HEAD
   const [staffList, setStaffList] = useState<StaffStylist[]>([]);
   const [loading, setLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -163,6 +151,9 @@ const ManagerStaff: React.FC = () => {
   ];
 
   return <>ok</>;
+=======
+  return <h2>ManagerStaff </h2>;
+>>>>>>> origin/Thaiyud
 };
 
 export default ManagerStaff;
