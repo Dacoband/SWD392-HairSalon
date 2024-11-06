@@ -43,3 +43,6 @@ export const login = async (email: string, password: string) => {
       return { success: false, error: error.response?.data || error.message };
     }
   };
+  export const getAuthToken = () => {
+    return localStorage.getItem('token');
+  };
