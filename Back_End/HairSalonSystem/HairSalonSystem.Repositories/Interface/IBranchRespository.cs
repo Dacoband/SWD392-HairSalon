@@ -15,5 +15,6 @@ namespace HairSalonSystem.Repositories.Interface
         Task UpdateBranch(Branch branch);
         Task RemoveBranch(Guid branchId);
         Task<List<Branch>> GetBranchesByManagerId(Guid managerId);
+        Task<bool> CheckStaffManagerExists(Guid staffManagerId);
     }
 }

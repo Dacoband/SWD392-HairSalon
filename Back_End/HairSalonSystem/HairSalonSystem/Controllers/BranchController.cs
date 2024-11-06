@@ -82,7 +82,7 @@ namespace HairSalonSystem.Services.Controllers
 
         //    return CreatedAtAction(nameof(AddBranch),reponse);
         //}
-        [HttpPatch(APIEndPointConstant.Branch.UpdateBranch)]
+        [HttpPut(APIEndPointConstant.Branch.UpdateBranch)]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
         public async Task<bool> UpdateBranch([FromRoute] Guid id, [FromBody] UpdateBranchRequest branchDto)

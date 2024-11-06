@@ -47,5 +47,9 @@ namespace HairSalonSystem.Repositories.Implement
         {
             return await _branchDao.GetBranchesByManagerIdAsync(managerId);
         }
+        public async Task<bool> CheckStaffManagerExists(Guid staffManagerId)
+        {
+            return await _branchDao.CheckStaffManagerExistsAsync(staffManagerId);
+        }
     }
 }

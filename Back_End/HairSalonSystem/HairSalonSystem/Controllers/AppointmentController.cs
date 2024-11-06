@@ -37,7 +37,7 @@ namespace HairSalonSystem.API.Controllers
         [Route(APIEndPointConstant.Appointment.GetAppointmentById)]
         [ProducesResponseType(typeof(AppointmentResponse), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
-        [Authorize(Roles = "SL,ST,SA")]
+        [Authorize(Roles = "SL,ST,SA,MB")]
         public async Task<ActionResult<AppointmentResponse>> GetAppointmentById([FromRoute] Guid id)
         {
             var result = await _appointmentService.GetAppointmentById(id, HttpContext);

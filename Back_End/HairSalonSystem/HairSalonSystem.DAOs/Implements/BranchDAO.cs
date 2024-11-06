@@ -13,10 +13,12 @@ namespace HairSalonSystem.DAOs.Implements
     public class BranchDAO : IBranchDAO
     {
         private readonly IMongoCollection<Branch> _branchCollection;
+        private readonly IMongoCollection<StaffManager> _staffManagerCollection;
 
         public BranchDAO(HairSalonContext context)
         {
             _branchCollection = context.Branchs;
+            _staffManagerCollection = context.StaffManagers;
         }
 
         public async Task AddBranchAsync(Branch branch)
@@ -24,18 +26,14 @@ namespace HairSalonSystem.DAOs.Implements
             await _branchCollection.InsertOneAsync(branch);
         }
 
+        public async Task<bool> CheckStaffManagerExistsAsync(Guid staffManagerId)
+        {
+            return await _staffManagerCollection.Find(sm => sm.StaffManagerID == staffManagerId).AnyAsync();
+        }
+
         public async Task UpdateBranchAsync(Branch branch)
         {
-            var filter = Builders<Branch>.Filter.Eq(b => b.BranchID, branch.BranchID);
-
-            var update = Builders<Branch>.Update
-                .Set(b => b.StaffManagerID, branch.StaffManagerID)
-                .Set(b => b.SalonBranches, branch.SalonBranches)
-                .Set(b => b.Address, branch.Address)
-                .Set(b => b.Phone, branch.Phone)
-                .Set(b => b.UpdDate, branch.UpdDate);
-
-            await _branchCollection.UpdateOneAsync(filter, update);
+            await _branchCollection.ReplaceOneAsync(b => b.BranchID == branch.BranchID, branch);
         }
 
         public async Task DeleteBranchAsync(Guid branchId)
