@@ -47,56 +47,6 @@ const ManagerStylish_staff: React.FC = () => {
       message.error(`${info.file.name} upload failed.`);
     }
   };
-  // const handleAddSubmit = async (values: any) => {
-  //   setLoadingSubmit(true);
-  //   try {
-  //     const token = localStorage.getItem("token"); // Get the token from local storage
-  //     const staffStylistId = localStorage.getItem("actorId"); // Retrieve actorId as staffStylistId
-  //     const branchId = localStorage.getItem("branchId");
-  //     if (!token || !staffStylistId || !branchId) {
-  //       message.error("No authentication token or staff stylist ID found");
-  //       return;
-  //     }
-
-  //     const {
-  //       email,
-  //       password,
-  //       stylistName,
-  //       phoneNumber,
-  //       address,
-  //       averageRating,
-  //     } = values;
-  //     const avatar = avatarFile ? URL.createObjectURL(avatarFile) : "";
-
-  //     // Make API call
-  //     const newStylish: Stylish = {
-  //       stylistId: "", // Gán giá trị mặc định hoặc để trống nếu cần
-  //       staffStylistId: staffStylistId as string, // Gán giá trị từ localStorage
-  //       email,
-  //       password,
-  //       stylistName,
-  //       phoneNumber,
-  //       address,
-  //       averageRating: averageRating || 0,
-  //       avatarImage: avatar,
-  //       branchId,
-  //       updDate: new Date(), // Sử dụng updDate thay vì updDatets
-  //       insDate: new Date(),
-  //     };
-
-  //     await addStylishById(staffStylistId, newStylish, token);
-
-  //     message.success("Stylist added successfully");
-  //     setIsAddModalVisible(false);
-  //     setAvatarFile(null); // Reset avatar
-  //     fetchStylists(); // Re-fetch stylists to update list
-  //   } catch (error) {
-  //     message.error("Failed to add stylist");
-  //     console.error("Error adding stylist:", error);
-  //   } finally {
-  //     setLoadingSubmit(false);
-  //   }
-  // };
 
   
 
@@ -122,10 +72,6 @@ const ManagerStylish_staff: React.FC = () => {
      <h1 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom:'3px' }}>
   Manage Stylists
 </h1>
-
-      {/* <Button type="primary" onClick={() => setIsAddModalVisible(true)}>
-        Add Stylist
-      </Button> */}
       <Table
         columns={columns}
         dataSource={stylists}
@@ -133,56 +79,6 @@ const ManagerStylish_staff: React.FC = () => {
         loading={loading}
       />
 
-      {/* Add Stylist Modal
-      <Modal
-        title="Add Stylist"
-        open={isAddModalVisible}
-        onCancel={() => setIsAddModalVisible(false)}
-        footer={null}
-      >
-        <Form onFinish={handleAddSubmit}>
-          <Form.Item
-            name="email"
-            label="Email"
-            rules={[{ required: true, type: "email" }]}
-          >
-            <Input placeholder="Enter email" />
-          </Form.Item>
-          <Form.Item
-            name="password"
-            label="Password"
-            rules={[{ required: true }]}
-          >
-            <Input.Password placeholder="Enter password" />
-          </Form.Item>
-          <Form.Item
-            name="stylistName"
-            label="Name"
-            rules={[{ required: true }]}
-          >
-            <Input placeholder="Enter stylist name" />
-          </Form.Item>
-          <Form.Item name="averageRating" label="Average Rating">
-            <Input placeholder="Enter average rating" />
-          </Form.Item>
-          <Form.Item
-            name="phoneNumber"
-            label="Phone Number"
-            rules={[{ required: true }]}
-          >
-            <Input placeholder="Enter phone number" />
-          </Form.Item>
-          <Form.Item name="address" label="Address">
-            <Input placeholder="Enter address" />
-          </Form.Item>
-          <Upload onChange={handleUploadImage}>
-            <Button>Upload Avatar</Button>
-          </Upload>
-          <Button type="primary" htmlType="submit" loading={loadingSubmit}>
-            Submit
-          </Button>
-        </Form>
-      </Modal> */}
     </div>
   );
 };

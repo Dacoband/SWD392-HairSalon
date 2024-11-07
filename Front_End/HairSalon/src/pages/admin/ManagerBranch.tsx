@@ -135,7 +135,10 @@ const ManagerBranch: React.FC = () => {
       key: "actions",
       render: (_, record) => (
         <>
-          <Button type="link" onClick={() => handleDeleteBranch(record)}>
+          <Button
+            type="link"
+            onClick={() => handleDeleteBranch(record.branchID)}
+          >
             Edit
           </Button>
           <Button
@@ -149,7 +152,6 @@ const ManagerBranch: React.FC = () => {
       ),
     },
   ];
-  
 
   return (
     <div className="relative p-6">

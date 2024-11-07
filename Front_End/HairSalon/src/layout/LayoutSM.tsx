@@ -27,7 +27,7 @@ const SidebarData = [
   },
   {
     icon: ShoppingCartOutlined,
-    heading: "Quản lí ",
+    heading: "Quản lí cuộc hẹn",
     navigate: "/managerstaff-appoinment",
   },
 ];

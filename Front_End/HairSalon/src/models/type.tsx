@@ -89,3 +89,17 @@ export interface StaffStylish {
   address: string;
   avatarImage?: string| File;
 }
+
+
+export interface Member {
+  memberId: string; 
+  accountId: string; 
+  memberName: string; 
+  dateOfBirth: string; 
+  phoneNumber: string; 
+  address: string; 
+  avatarImage: string; 
+  insDate: string; 
+  updDate: string; 
+}
+

@@ -1,17 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Modal,
-  Input,
-  notification,
-  message,
-  Select,
-  Pagination,
-} from "antd";
+import { Table, Button, Modal, Input, notification, message, Select, Pagination } from "antd";
 import { getAppointmentsByCustomer, cancelAppointment, getAllAppointments } from "../../services/appointmentSalon";
-import { Appointment, Services, Stylish, UserInfoData } from "../../models/type";
+import { Appointment, Services, Stylish ,Member} from "../../models/type";
 import { getStylishByBranchID } from "../../services/Stylish";
-import { getMemberById } from "../../services/ProfileAll"; // Import the getMemberById function
+import { getAppointmentDetails,getMemberById } from "../../services/Member"; // Import the getAppointmentDetails function
 import "./AppointmentStaff.scss";
 
 const { Option } = Select;
@@ -19,17 +11,11 @@ const { Option } = Select;
 const ManagerAppointmentStaff = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [services, setServices] = useState<Record<string, Services | null>>({});
-  const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
-  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
-  const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
-  const [cancelReason, setCancelReason] = useState("");
-  const [api, contextHolder] = notification.useNotification();
   const [stylists, setStylists] = useState<Stylish[]>([]);
+  const [members, setMembers] = useState<Record<string, { name: string, phoneNumber: string }>>({}); // State to hold member names and phone numbers
   const [currentPage, setCurrentPage] = useState(1);
   const [filteredStatus, setFilteredStatus] = useState<number | null>(null);
-  const [members, setMembers] = useState<Record<string, string>>({}); // State to hold member names
-
+  
   const appointmentsPerPage = 4;
   const statusMap: { [key: number]: string } = {
     1: "Đã đặt lịch thành công",
@@ -64,41 +50,52 @@ const ManagerAppointmentStaff = () => {
         (appointment: Appointment) => stylistIds.includes(appointment.stylistId)
       );
       setAppointments(filteredAppointments);
-  
-      // Fetch member names separately
-      await fetchMemberNames(filteredAppointments);
+      await fetchMemberDetails(filteredAppointments);
     } catch (error) {
       console.error("Failed to fetch appointments:", error);
       message.error("Failed to fetch appointments");
     }
   };
 
-  const fetchMemberNames = async (appointments: Appointment[]) => {
+  const fetchMemberDetails = async (appointments: Appointment[]) => {
     try {
-      for (const appointment of appointments) {
-        const memberId = appointment.customerId;
-        console.log(`Fetching member data for customerId: ${memberId}`);
-        const member = await getMemberById(memberId);
-        setMembers((prev) => ({
-          ...prev,
-          [appointment.customerId]: member.MemberName, 
-        }));
-      }
+      const membersMap: Record<string, { name: string, phoneNumber: string }> = {}; // To store member details
+      const appointmentMap: Record<string, { customerId: string }> = {}; // To map customerId to appointmentId
+  
+      // Create a list of promises to fetch member details for each appointment
+      const memberPromises = appointments.map(async (appointment) => {
+        const customerId = appointment.customerId; // Use customerId to fetch member details
+        // Assuming getMemberById fetches member data by customerId
+        const member = await getMemberById(customerId);
+  
+        // Map the customerId to member details
+        membersMap[customerId] = {
+          name: member.memberName, // Corrected member name field
+          phoneNumber: member.phoneNumber,
+        };
+  
+        // You can also populate the appointmentMap if necessary (optional)
+        appointmentMap[appointment.appointmentId] = {
+          customerId: customerId,
+        };
+      });
+  
+      // Wait for all member data to be fetched
+      await Promise.all(memberPromises);
+  
+      // Update state with all member details at once
+      setMembers(membersMap);
     } catch (error) {
-      console.error("Failed to fetch member names:", error);
-      message.error("Failed to fetch member names");
+      console.error("Failed to fetch member details:", error);
+      message.error("Failed to fetch member details");
     }
   };
   
+
+
   useEffect(() => {
     fetchStylists();
   }, []);
-
-  useEffect(() => {
-    if (appointments.length > 0) {
-      fetchMemberNames(appointments);
-    }
-  }, [appointments]); // Ensure member names are fetched when appointments change
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -118,15 +115,54 @@ const ManagerAppointmentStaff = () => {
     currentPage * appointmentsPerPage
   );
 
-  return (
-    <div className="container position: relative;">
-      {contextHolder}
+  const columns = [
+    {
+      title: "Member",
+      dataIndex: "customerId",
+      render: (text: string) => (
+        <span>{members[text]?.name || "Unknown"}</span>  
+      ),
+    },
+    {
+      title: "Phone Number",
+      dataIndex: "customerId",
+      render: (text: string) => (
+        <span>{members[text]?.phoneNumber || "Unknown"}</span>  // Sử dụng customerId để tra cứu phoneNumber
+      ),
+    },
+    {
+      title: "Tổng tiền",
+      dataIndex: "totalPrice",
+      render: (text: number) => <span>{text} VND</span>,
+    },
+    {
+      title: "Trạng Thái",
+      dataIndex: "status",
+      render: (text: number) => <span>{statusMap[text] || "Unknown"}</span>,
+    },
+    {
+      title: "Start Time",
+      dataIndex: "startTime",
+      render: (text: string) => <span>{new Date(text).toLocaleString()}</span>,
+    },
+    {
+      title: "End Time",
+      dataIndex: "endTime",
+      render: (text: string) => <span>{new Date(text).toLocaleString()}</span>,
+    },
 
-      {/* Status Filter */}
+  ];
+
+  return (
+    <div className="container">
+      <h1 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '16px' }}>
+        Manage Appointments
+      </h1>
+
       <Select
         placeholder="Filter by status"
         onChange={handleStatusFilterChange}
-        value={filteredStatus} // Set the current selection in the dropdown
+        value={filteredStatus}
         style={{ marginBottom: 16, width: 200 }}
       >
         <Option value={null}>Tất cả các lịch hẹn</Option>
@@ -137,48 +173,16 @@ const ManagerAppointmentStaff = () => {
         ))}
       </Select>
 
-      {/* Appointment List */}
-      {paginatedAppointments.length > 0 ? (
-        <ul className="appointment-list">
-          {paginatedAppointments.map((appointment) => (
-            <li key={appointment.appointmentId} className="appointment-item">
-              <div className="appointment-info">
-                <strong>Tổng tiền:</strong> {appointment.totalPrice} VND
-              </div>
-              <div className="appointment-info">
-                <strong>Trạng Thái:</strong>
-                {statusMap[appointment.status] || "Unknown"}
-              </div>
-              <div className="appointment-info">
-                <strong>Start Time:</strong> {new Date(appointment.startTime).toLocaleString()}
-              </div>
-              <div className="appointment-info">
-                <strong>End Time:</strong> {new Date(appointment.endTime).toLocaleString()}
-              </div>
-
-              {/* Display member name */}
-              {members[appointment.customerId] && (
-                <div className="appointment-info">
-                  <strong>Member Name:</strong> {members[appointment.customerId]}
-                </div>
-              )}
-
-              <div className="appointment-actions">
-                {(appointment.status === 1 || appointment.status === 2) && (
-                  <Button type="default" danger>
-                    Hủy lịch
-                  </Button>
-                )}
-              </div>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>Không có lịch hẹn nào.</p>
-      )}
+      <Table
+        columns={columns}
+        dataSource={paginatedAppointments}
+        rowKey="appointmentId"
+        loading={loading}
+        pagination={false} // Disable table pagination, we'll use custom pagination
+      />
 
       {/* Pagination */}
-      <div className="pagination-container" style={{ position: "absolute" }}>
+      <div className="pagination-container" style={{ marginTop: 16 }}>
         <Pagination
           current={currentPage}
           pageSize={appointmentsPerPage}
