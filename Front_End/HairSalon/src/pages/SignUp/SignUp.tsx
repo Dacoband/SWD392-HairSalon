@@ -9,12 +9,12 @@ import logo from "../../assets/logo-removebg-preview.png";
 
 const SignUpPage: React.FC = () => {
   const [formData, setFormData] = useState<UserInfoData>({
-    Email: '',
-    Password: '',
-    MemberName: '',
-    DateOfBirth: '',
-    PhoneNumber: '',
-    Address: '',
+    email: '',
+    password: '',
+    memberName: '',
+    dateOfBirth: '',
+    phoneNumber: '',
+    address: '',
   });
   const [confirmPassword, setConfirmPassword] = useState('');
   const [apiErrors, setApiErrors] = useState<Record<string, string[]>>({});
@@ -35,7 +35,7 @@ const SignUpPage: React.FC = () => {
     e.preventDefault();
     setApiErrors({});
 
-    if (formData.Password !== confirmPassword) {
+    if (formData.password !== confirmPassword) {
       setApiErrors({ confirmPassword: ['Passwords do not match'] });
       return;
     }
@@ -92,7 +92,7 @@ const SignUpPage: React.FC = () => {
           <input
             type="text"
             name="MemberName"
-            value={formData.MemberName}
+            value={formData.memberName}
             onChange={handleChange}
             placeholder="Tên đầy đủ"
             required
@@ -106,7 +106,7 @@ const SignUpPage: React.FC = () => {
           <input
             type="email"
             name="Email"
-            value={formData.Email}
+            value={formData.email}
             onChange={handleChange}
             placeholder="Email"
             required
@@ -120,7 +120,7 @@ const SignUpPage: React.FC = () => {
           <input
             type="text"
             name="PhoneNumber"
-            value={formData.PhoneNumber}
+            value={formData.phoneNumber}
             onChange={handleChange}
             placeholder="Số điện thoại"
             required
@@ -134,7 +134,7 @@ const SignUpPage: React.FC = () => {
           <input
             type="password"
             name="Password"
-            value={formData.Password}
+            value={formData.password}
             onChange={handleChange}
             placeholder="Mật khẩu"
             required
@@ -162,7 +162,7 @@ const SignUpPage: React.FC = () => {
           <input
             type="date"
             name="DateOfBirth"
-            value={formData.DateOfBirth}
+            value={formData.dateOfBirth}
             onChange={handleChange}
             required
             className="input-style"
@@ -170,19 +170,19 @@ const SignUpPage: React.FC = () => {
           {apiErrors.DateOfBirth && <span className="error-message">{apiErrors.DateOfBirth[0]}</span>}
         </div>
 
-        {/* <div className="form-group">
+        <div className="form-group">
           <FaHome className="input-icon" />
           <input
             type="text"
             name="Address"
-            value={formData.Address}
+            value={formData.address}
             onChange={handleChange}
             placeholder="Địa chỉ"
             required
             className="input-style"
           />
           {apiErrors.Address && <span className="error-message">{apiErrors.Address[0]}</span>}
-        </div> */}
+        </div>
 
         <button type="submit" className="sign-up-button">Đăng ký</button>
         <p className="switch-page">
