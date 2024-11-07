@@ -31,7 +31,7 @@ namespace HairSalonSystem.Services.Implements
         public async Task<CreateStaffStylistResponse> CreateStaffStylistAsync(CreateStaffStylistRequest request, HttpContext httpContext)
         {
             var roleName = UserUtil.GetRoleName(httpContext);
-            if (roleName != Enums.RoleEnums.SL.ToString() && roleName != Enums.RoleEnums.SA.ToString())
+            if (roleName != Enums.RoleEnums.ST.ToString() && roleName != Enums.RoleEnums.SA.ToString() && roleName != Enums.RoleEnums.SM.ToString())
                 return new CreateStaffStylistResponse { Message = MessageConstant.StaffStylistMessage.NotRights };
             var url = await _firebaseService.UploadFile(request.AvatarImage);
             var account = new Account
@@ -49,7 +49,7 @@ namespace HairSalonSystem.Services.Implements
             {
                 StaffStylistId = Guid.NewGuid(),
                 AccountId = account.AccountId,
-                BranchID = request.BranchId,
+                BranchID = request.BranchID,
                 StaffStylistName = request.StaffStylistName,
                 DateOfBirth = request.DateOfBirth,
                 PhoneNumber = request.PhoneNumber,
@@ -129,11 +129,11 @@ namespace HairSalonSystem.Services.Implements
         {
             var roleName = UserUtil.GetRoleName(httpContext);
            // Guid? accountIdFromToken = UserUtil.GetAccountId(httpContext);
-            if (roleName != "ST" || string.IsNullOrEmpty(roleName))
-            {
-                throw new BadHttpRequestException(MessageConstant.StaffStylistMessage.StaffStylistNotFound);
+            //if (roleName != "ST" || string.IsNullOrEmpty(roleName))
+            //{
+            //    throw new BadHttpRequestException(MessageConstant.StaffStylistMessage.StaffStylistNotFound);
 
-            }
+            //}
             //var existingAccount = await _accountRepository.GetAccountById(accountIdFromToken);
             //if (existingAccount == null)
             //{
@@ -155,6 +155,7 @@ namespace HairSalonSystem.Services.Implements
             staffStylist.DateOfBirth = request.DateOfBirth ?? staffStylist.DateOfBirth;
             staffStylist.PhoneNumber = request.PhoneNumber ?? staffStylist.PhoneNumber;
             staffStylist.Address = request.Address ?? staffStylist.Address;
+            staffStylist.BranchID = request.BranchID ?? staffStylist.BranchID;
             staffStylist.AvatarImage = request.AvatarImage != null ? url :staffStylist.AvatarImage;
             staffStylist.UpdDate = DateTime.Now ;
            // await _accountRepository.UpdateAccount(existingAccount);

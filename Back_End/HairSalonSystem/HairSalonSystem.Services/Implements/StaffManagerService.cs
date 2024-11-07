@@ -121,6 +121,7 @@ namespace HairSalonSystem.Services.Implements
             }
             // Cập nhật thông tin StaffManager và Account
             existingStaffManager.StaffManagerName = staffManagerRequest.StaffManagerName ?? existingStaffManager.StaffManagerName;
+            existingStaffManager.BranchID = staffManagerRequest.BranchID ?? existingStaffManager.BranchID;
             //existingAccount.Email = staffManagerRequest.Email ?? existingAccount.Email;
             existingStaffManager.PhoneNumber = staffManagerRequest.PhoneNumber ?? existingStaffManager.PhoneNumber;
             existingStaffManager.Address = staffManagerRequest.Address ?? existingStaffManager.Address;

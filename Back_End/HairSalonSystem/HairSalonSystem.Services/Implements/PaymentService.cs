@@ -43,8 +43,12 @@ public class PaymentService
              (int)appointment.TotalPrice,
              description,  
              items,
-             $"https://localhost:7072/api/Payment/cancel?appointmentId={appoID}",
-             $"https://localhost:7072/api/Payment/success?appointmentId={appoID}"
+
+             // $"https://localhost:7072/api/Payment/cancel?appointmentId={appoID}",
+             // $"https://localhost:7072/api/Payment/success?appointmentId={appoID}"
+             $"http://localhost:5173/bookStatus/cancel?appointmentId={appoID}",
+             $"http://localhost:5173/bookStatus/success?appointmentId={appoID}"
+
         );
 
         // Gửi yêu cầu tạo liên kết thanh toán
