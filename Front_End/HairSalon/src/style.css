@@ -18,8 +18,8 @@
     background-color: black !important; /* Giữ nguyên màu nền đen khi hover */
     color: white !important; /* Giữ màu chữ trắng khi hover */
     border-color: black !important; /* Giữ viền đen khi hover */
-    padding-top:20px !important;
-  padding-bottom:20px !important;
+    /* padding-top:20px !important;
+  padding-bottom:20px !important; */
   }   
   
   .custom-dot .ant-steps-icon-dot {

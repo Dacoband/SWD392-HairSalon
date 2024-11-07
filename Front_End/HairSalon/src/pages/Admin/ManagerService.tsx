@@ -311,9 +311,9 @@ const ManagerService: React.FC = () => {
             rules={[{ required: true, message: "Vui lòng chọn loại dịch vụ!" }]}
           >
             <Select>
-              <Select.Option value={1}>Loại 1</Select.Option>
-              <Select.Option value={2}>Loại 2</Select.Option>
-              <Select.Option value={3}>Loại 3</Select.Option>
+              <Select.Option value={1}>Cắt tóc và Tạo Kiểu</Select.Option>
+              <Select.Option value={2}>Nhuộm Tóc và Uốn Tóc</Select.Option>
+              <Select.Option value={3}>Combo</Select.Option>
             </Select>
           </Form.Item>
 
@@ -383,9 +383,9 @@ const ManagerService: React.FC = () => {
             rules={[{ required: true, message: "Vui lòng chọn loại dịch vụ!" }]}
           >
             <Select>
-              <Select.Option value={1}>Loại 1</Select.Option>
-              <Select.Option value={2}>Loại 2</Select.Option>
-              <Select.Option value={3}>Loại 3</Select.Option>
+              <Select.Option value={1}>Cắt tóc và Tạo Kiểu</Select.Option>
+              <Select.Option value={2}>Nhuộm Tóc và Uốn Tóc</Select.Option>
+              <Select.Option value={3}>Combo</Select.Option>
             </Select>
           </Form.Item>
 
