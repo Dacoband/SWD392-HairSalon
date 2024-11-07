@@ -26,7 +26,7 @@ interface Service {
 }
 
 const ManagerService: React.FC = () => {
-  const [services, setServices] = useState<Service[]>([]);
+  const [services, setServices] = useState<Services[]>([]);
   const [loading, setLoading] = useState(false);
   const [avatarImage, setSelectedFile] = useState<File | null>(null);
   const [searchText, setSearchText] = useState<string>("");
@@ -213,7 +213,7 @@ const ManagerService: React.FC = () => {
       service.serviceName.toLowerCase().includes(searchText.toLowerCase())
     );
 
-  const columns: ColumnsType<Service> = [
+  const columns: ColumnsType<Services> = [
     {
       title: "Avatar",
       dataIndex: "avatarImage",

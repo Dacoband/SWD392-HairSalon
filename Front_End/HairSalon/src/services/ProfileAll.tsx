@@ -123,3 +123,15 @@ break;
     return false;  
   }
 };
+
+
+// In ProfileAll.tsx (or wherever getMemberById is defined)
+export const getMemberById = async (customerId: string) => {
+  try {
+    const response = await axios.get(`https://api.vol-ka.studio/api/v1/member/${customerId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching member by ID:", error);
+    throw error;
+  }
+};

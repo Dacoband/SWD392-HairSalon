@@ -272,6 +272,50 @@ const ManagerBranch: React.FC = () => {
     );
   };
 
+  const columns: ColumnsType<Branch> = [
+    {
+      title: "Branch Name",
+      dataIndex: "branchName",
+      key: "branchName",
+    },
+    {
+      title: "Location",
+      dataIndex: "location",
+      key: "location",
+    },
+    {
+      title: "Phone Number",
+      dataIndex: "phoneNumber",
+      key: "phoneNumber",
+    },
+    {
+      title: "Manager",
+      dataIndex: "manager",
+      key: "manager",
+    },
+    {
+      title: "Actions",
+      key: "actions",
+      render: (_, record) => (
+        <>
+          <Button
+            type="link"
+            onClick={() => handleDeleteBranch(record.branchID)}
+          >
+            Edit
+          </Button>
+          <Button
+            type="link"
+            danger
+            onClick={() => handleDeleteBranch(record.branchID)}
+          >
+            Delete
+          </Button>
+        </>
+      ),
+    },
+  ];
+
   return (
     <div style={{ padding: "24px" }}>
       <Space style={{ marginBottom: 16 }}>

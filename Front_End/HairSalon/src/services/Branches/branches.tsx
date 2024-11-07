@@ -57,3 +57,31 @@ export const addBranch = async (branchData: any) => {
     throw error;
   }
 };
+
+// Update an existing branch by ID
+export const updateBranch = async (
+  id: string,
+  branch: Partial<Branches>
+): Promise<Branches> => {
+  try {
+    const response = await axios.put<Branches>(
+      `https://api.vol-ka.studio/api/v1/branch/update/${id}`,
+      branch
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error updating branch:", error);
+    throw error;
+  }
+};
+
+// Delete a branch by ID
+export const deleteBranch = async (id: string): Promise<void> => {
+  try {
+    await axios.delete(`https://api.vol-ka.studio/api/v1/branch/delete/${id}`);
+    console.log("Branch deleted successfully");
+  } catch (error) {
+    console.error("Error deleting branch:", error);
+    throw error;
+  }
+};

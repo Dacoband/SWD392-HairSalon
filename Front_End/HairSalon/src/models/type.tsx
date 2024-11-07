@@ -53,15 +53,18 @@ export interface UserData {
 }
 
 export interface Stylish {
-  branchId: string
-  stylistId: string
-  stylistName: string
-  averageRating: number
-  phoneNumber: string
-  address: string
-  avatarImage: string
-  insDate: Date
-  updDate: Date
+  branchId: string;
+  email: string;
+  password: string;
+  stylistId: string;
+  staffStylistId: string;
+  stylistName: string;
+  averageRating: number;
+  phoneNumber: string;
+  address: string;
+  avatarImage: string;
+  insDate: Date;
+  updDate: Date;
 }
 
 export interface UserInfoData {
@@ -93,3 +96,17 @@ export interface CreatePaymentReponse {
   paymentLinkId: string
 
 }
+
+
+export interface Member {
+  memberId: string; 
+  accountId: string; 
+  memberName: string; 
+  dateOfBirth: string; 
+  phoneNumber: string; 
+  address: string; 
+  avatarImage: string; 
+  insDate: string; 
+  updDate: string; 
+}
+
