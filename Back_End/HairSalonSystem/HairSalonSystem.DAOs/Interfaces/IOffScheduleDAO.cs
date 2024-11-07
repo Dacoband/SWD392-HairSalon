@@ -13,5 +13,8 @@ namespace HairSalonSystem.DAOs.Interfaces
         Task<List<OffSchedule>> GetAll();
         Task<OffSchedule> GetByOffScheduleId(Guid id);
         Task DeleteOffSchedule(Guid id);
+        Task<List<OffSchedule>> GetOffScheduleByStylist(Guid stylistId);
+        Task<List<OffSchedule>> GetOffScheduleInDate(DateTime date);
+        Task<List<OffSchedule>> GetOffScheduleInMonth(DateTime date);
     }
 }

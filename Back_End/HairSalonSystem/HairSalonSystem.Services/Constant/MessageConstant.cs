@@ -140,6 +140,8 @@
         public static class OffScheduleMessage
         {
             public const string CreateRight = "Bạn không có quyền tạo lịch nghỉ";
+            public const string NotRight = "Bạn không có quyền truy cập lịch nghỉ";
+
         }
     }
 }
