@@ -74,7 +74,8 @@ export interface UserInfoData {
   DateOfBirth: string;
   PhoneNumber: string;
   Address: string;
-  avatarImage?: string;
+  BranchId?: string;
+  avatarImage?: string| File;
 }
 
 export interface StaffStylish {

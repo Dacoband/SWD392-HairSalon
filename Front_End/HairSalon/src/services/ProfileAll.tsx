@@ -3,21 +3,44 @@ import axios from 'axios';
 import { UserInfoData } from '../models/type'; 
 
 
-export const fetchUserData = async (userId: string, email : string,): Promise<UserInfoData> => {
-  const response = await axios.get('https://api.vol-ka.studio/api/v1/member/'+ userId);
+export const fetchUserData = async (userId: string, email : string, role : string): Promise<UserInfoData> => {
+  let response, name;
+
+  switch (role) {
+    case "MB":
+      response = await axios.get('https://api.vol-ka.studio/api/v1/member/'+ userId);
+      name = response.data.memberName;
+      break;
+    case "SL":
+      response = await axios.get('https://api.vol-ka.studio/api/v1/staff-stylist/'+ userId);
+      name = response.data.staffStylistName;
+        break;  
+    case "SM":
+      response = await axios.get('https://api.vol-ka.studio/api/v1/staff-manager/'+ userId);
+      name = response.data.staffManagerName;
+      break;   
+    case "SL":
+      response = await axios.get('https://api.vol-ka.studio/api/v1/stylist/'+ userId);
+      name = response.data.stylistName;
+      break;
+    default:
+      throw new Error(`Unsupported role: ${role}`);
+  }
+  
   const data = response.data;
   return {
     Email: email, 
-    Password: '',      
-    MemberName: data.memberName, 
+    Password: '',   
+    MemberName: name, 
     DateOfBirth: data.dateOfBirth,
     PhoneNumber: data.phoneNumber, 
-    Address: data.address,         
+    Address: data.address, 
+    BranchId: data.branchID,        
     avatarImage: data.avatarImage,        
   };
-};
+}; 
 
-export const updateUserData = async (userId: string, updatedData: Partial<UserInfoData>): Promise<void> => {
+export const updateUserData = async (userId: string, updatedData: Partial<UserInfoData>,role : string): Promise<void> => {
   try {
     console.log(updatedData);
     const formData = new FormData();
@@ -26,6 +49,7 @@ export const updateUserData = async (userId: string, updatedData: Partial<UserIn
     if (updatedData.DateOfBirth) formData.append('DateOfBirth', updatedData.DateOfBirth);
     if (updatedData.PhoneNumber) formData.append('PhoneNumber', updatedData.PhoneNumber);
     if (updatedData.Address) formData.append('Address', updatedData.Address);
+    if (updatedData.BranchId && role !=="MB") formData.append('BranchId', updatedData.BranchId);
 
    if (updatedData.avatarImage) {
     if (updatedData.avatarImage instanceof File) {
@@ -44,9 +68,7 @@ export const updateUserData = async (userId: string, updatedData: Partial<UserIn
     }
     await axios.put(`https://api.vol-ka.studio/api/Member/${userId}`, formData,{
       headers: {
-         'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${localStorage.getItem("token")}`,
-       
       }
     });
 
