@@ -183,19 +183,45 @@ public class PaymentController : ControllerBase
     // Hàm tạo nội dung email xác nhận thanh toán thành công
     private string GenerateSuccessEmailBody(Appointment appointment)
     {
+        string logoUrl = "https://drive.google.com/uc?export=view&id=1cjCSKHpV1HAQxgk-9vWDPZWaUJC4XYVr";
+
         return $@"
-            <html>
-            <body style='font-family: Arial, sans-serif;'>
-                <h2 style='color: #4CAF50;'>Payment Success Notification</h2>
-                <p>Dear {appointment.CustomerId},</p>
-                <p>We would like to inform you that your payment for the appointment scheduled on 
-                   <strong>{appointment.InsDate.ToString("MMMM dd, yyyy")}</strong> at 
-                   <strong>{appointment.EndTime}</strong> has been successfully processed.</p>
-                <p>If you have any questions or would like to reschedule, please contact us.</p>
-                <br>
-                <p>Best Regards,<br>Your Hair Salon Team</p>
-            </body>
-            </html>";
+        <html>
+    <body style='font-family: Arial, sans-serif; color: #333; line-height: 1.6;'>
+        <div style='max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px;'>
+            <!-- Logo -->
+            <div style='text-align: center; padding-bottom: 20px;'>
+                <img src='{logoUrl}' alt='Salon Logo' style='width: 150px; height: auto;'/>
+            </div>
+
+            <!-- Nội dung Email -->
+            <h2 style='color: #4CAF50; text-align: center;'>Thông Báo Thanh Toán Thành Công</h2>
+            <p style='text-align: center;'>Kính gửi <strong>{appointment.CustomerId}</strong>,</p>
+            
+            <p>Chúng tôi vui mừng thông báo rằng thanh toán của bạn cho cuộc hẹn vào ngày 
+                <strong>{appointment.InsDate.ToString("dd/MM/yyyy")}</strong> lúc 
+                <strong>{appointment.EndTime}</strong> đã được xử lý thành công.</p>
+
+            <p>Chi tiết cuộc hẹn của bạn như sau:</p>
+            <ul style='list-style: none; padding-left: 0;'>
+                <li><strong>ID Cuộc Hẹn:</strong> {appointment.AppointmentId}</li>
+                <li><strong>Ngày:</strong> {appointment.InsDate.ToString("dd/MM/yyyy")}</li>
+                <li><strong>Thời Gian:</strong> {appointment.StartTime} - {appointment.EndTime}</li>
+                <li><strong>Khách Hàng:</strong> {appointment.CustomerId}</li>
+            </ul>
+
+            <p>Nếu bạn có bất kỳ câu hỏi nào hoặc muốn thay đổi lịch hẹn, vui lòng liên hệ với chúng tôi.</p>
+
+            <!-- Thông Tin Liên Hệ -->
+            <div style='border-top: 1px solid #ddd; padding-top: 20px; text-align: center; color: #888;'>
+                <p>Cảm ơn bạn đã chọn salon của chúng tôi. Chúng tôi rất mong được phục vụ bạn!</p>
+                <p>Trân trọng,<br>Đội ngũ Salon của bạn</p>
+                <p style='font-size: 12px;'>Liên hệ với chúng tôi: (+84) 0948780759 | info@hairsalon.com</p>
+                <p style='font-size: 12px; color: #888;'>© 2024 Hair Salon. Bảo lưu mọi quyền.</p>
+            </div>
+        </div>
+    </body>
+    </html>";
     }
 
 
@@ -254,22 +280,41 @@ public class PaymentController : ControllerBase
         return BadRequest(new { message = "Yêu cầu không hợp lệ" });
     }
 
-    
+
     private string GenerateCancellationEmailBody(Appointment appointment)
     {
+        string logoUrl = "https://drive.google.com/uc?export=view&id=1cjCSKHpV1HAQxgk-9vWDPZWaUJC4XYVr";
+
         return $@"
-                <html>
-                <body style='font-family: Arial, sans-serif;'>
-                    <h2 style='color: #FF5733;'>Payment Cancellation Notice</h2>
-                    <p>Dear {appointment.CustomerId},</p>
-                    <p>We would like to inform you that your payment for the appointment scheduled on 
-                       <strong>{appointment.InsDate.ToString("MMMM dd, yyyy")}</strong> at 
-                       <strong>{appointment.EndTime}</strong> has been cancelled.</p>
-                    <p>If you have any questions or would like to reschedule, please contact us.</p>
-                    <br>
-                    <p>Best Regards,<br>Your Hair Salon Team</p>
-                </body>
-                </html>";
+        <html>
+        <body style='font-family: Arial, sans-serif; color: #333; line-height: 1.6;'>
+            <div style='max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px;'>
+                <!-- Logo -->
+                <div style='text-align: center; padding-bottom: 20px;'>
+                    <img src='{logoUrl}' alt='Salon Logo' style='width: 150px; height: auto;'/>
+                </div>
+
+                <!-- Nội dung Email -->
+                <h2 style='color: #FF5733; text-align: center;'>Thông Báo Hủy Thanh Toán</h2>
+                <p style='text-align: center;'>Kính gửi <strong>{appointment.CustomerId}</strong>,</p>
+                
+                <p>Chúng tôi xin thông báo rằng thanh toán của bạn cho cuộc hẹn vào ngày 
+                    <strong>{appointment.InsDate.ToString("dd/MM/yyyy")}</strong> lúc 
+                    <strong>{appointment.EndTime}</strong> đã bị hủy.</p>
+
+                <p>Nếu bạn có bất kỳ câu hỏi nào hoặc muốn đặt lịch hẹn lại, vui lòng liên hệ với chúng tôi.</p>
+
+                <!-- Thông Tin Liên Hệ -->
+                <div style='border-top: 1px solid #ddd; padding-top: 20px; text-align: center; color: #888;'>
+                    <p>Chúng tôi mong sẽ có cơ hội phục vụ bạn trong tương lai!</p>
+                    <p>Trân trọng,<br>Đội ngũ Salon của bạn</p>
+                    <p style='font-size: 12px;'>Liên hệ với chúng tôi: (123) 456-7890 | info@hairsalon.com</p>
+                    <p style='font-size: 12px; color: #888;'>© 2024 Hair Salon. Bảo lưu mọi quyền.</p>
+                </div>
+            </div>
+        </body>
+        </html>";
     }
-    
+
+
 }
