@@ -39,17 +39,19 @@ const AppointmentPage = () => {
         if (userData && userData.actorId) {
           const customerId = userData.actorId;
           const response = await getAppointmentsByCustomer(customerId);
-          // setAppointments(response);
+         
+         
           if (Array.isArray(response)) {
             setAppointments(response);
           } else {
-            setError("Invalid response format for appointments.");
+            setError(response);
+            console.log(error);
           }
         } else {
           setError("User ID not found in localStorage.");
         }
       } catch (err) {
-        setError("Failed to fetch appointments.");
+        setError("Không tìm thấy cuộc hẹn nào!");
       } finally {
         setLoading(false);
       }
@@ -138,7 +140,11 @@ const AppointmentPage = () => {
   };
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+ if (error) return (
+  <div className="error-messageinAppointment">
+    <p>{error}</p>
+  </div>
+);
 
   return (
     <div className="container">

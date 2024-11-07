@@ -68,13 +68,13 @@ export interface Stylish {
 }
 
 export interface UserInfoData {
-  Email: string;
-  Password: string;
-  MemberName: string;
-  DateOfBirth: string;
-  PhoneNumber: string;
-  Address: string;
-  BranchId?: string;
+  email: string;
+  password: string;
+  memberName: string;
+  dateOfBirth: string;
+  phoneNumber: string;
+  address: string;
+  branchId?: string;
   avatarImage?: string| File;
 }
 
@@ -87,5 +87,5 @@ export interface StaffStylish {
   branchId: string;
   phoneNumber: string;
   address: string;
-  avatarImage: string;
+  avatarImage?: string| File;
 }

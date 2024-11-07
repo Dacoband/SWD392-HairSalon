@@ -13,17 +13,12 @@ const SidebarData = [
   {
     icon: MenuUnfoldOutlined,
     heading: "Quản lí cuộc hẹn",
-    navigate: "/StaffStylish",
+    navigate: "/Appoiment-Stylish",
   },
   {
     icon: ShoppingCartOutlined,
-    heading: "Quản lí stylish",
-    navigate: "/staff-stylish",
-  },
-  {
-    icon: ShoppingCartOutlined,
-    heading: "Quản lí ",
-    navigate: "/managerSchedule",
+    heading: "Quản lí lương",
+    navigate: "/manager-money",
   },
 ];
 
@@ -54,8 +49,8 @@ const LayoutSL: React.FC = () => {
         >
           <div className="mt-10">
             <FaCircleUser className="text-white mx-auto " size={70} />
-            <div className="text-white font-bold mt-2 text-center text-lg">
-              Quản lí Stylish
+            <div className="text-white mt-2 font-bold text-center text-lg">
+              Stylish
             </div>
           </div>
           <Menu

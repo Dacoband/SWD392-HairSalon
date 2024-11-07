@@ -8,7 +8,7 @@ export const getAppointmentsByCustomer = async (customerId: string): Promise<App
       },
     });
 
-    return response.data as Appointment[]; // Return the fetched appointments
+    return response.data as Appointment[]; 
 
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -16,6 +16,8 @@ export const getAppointmentsByCustomer = async (customerId: string): Promise<App
         console.warn("Access forbidden. Response body:", error.response.data);
 
         return error.response.data as string; 
+      } else if (error.response && error.response.status === 404) {
+        return error.response.data as string;
       } else {
         console.error("Error fetching appointments:", error);
       }

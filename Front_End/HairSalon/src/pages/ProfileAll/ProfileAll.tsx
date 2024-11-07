@@ -1,13 +1,13 @@
 import React, { useEffect, useState, CSSProperties } from 'react';
-import { Modal, Button, Input, Form } from 'antd';
-import { fetchUserData, updateUserData } from '../../services/ProfileAll';
+import { Modal, Button, Input, Form, notification } from 'antd';
+import { fetchUserData, updateMemberData } from '../../services/ProfileAll';
 import { getBranchById } from '../../services/Branches/branches';
 import { UserInfoData } from '../../models/type';
 
 
 const Profile: React.FC = () => {
   const [userData, setUserData] = useState<UserInfoData | null>(null);
-  const [avatarImage, setAvatarImage] = useState<string | File>();
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [apiErrors, setApiErrors] = useState<Record<string, string[]>>({});
   const [branchName, setBranchName] = useState<string | null>(null);
   const [editData, setEditData] = useState<UserInfoData | null>(null);
@@ -44,9 +44,9 @@ const Profile: React.FC = () => {
   useEffect(() => {
     const fetchBranchName = async () => {
    
-      if ((role === 'SL' || role === 'SM' ||  role === 'SA') && userData?.BranchId) {
+      if ((role === 'SL' || role === 'SM' ||  role === 'SA') && userData?.branchId) {
         try {
-          const branchData = await getBranchById(userData.BranchId);
+          const branchData = await getBranchById(userData.branchId);
           console.log(branchData);
           setBranchName(branchData.salonBranches || 'N/A');
       
@@ -57,14 +57,14 @@ const Profile: React.FC = () => {
     };
 
     fetchBranchName();
-  }, [role, userData?.BranchId]);
+  }, [role, userData?.branchId]);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setAvatarImage(e.target.files[0]); 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files ? event.target.files[0] : null;
+    if (file) {
+      setSelectedFile(file);
     }
   };
-
   const getImageSrc = () => {
     const avatarImage = userData?.avatarImage;
     if (avatarImage instanceof File) {
@@ -76,24 +76,53 @@ const Profile: React.FC = () => {
 
   const handleSave = async () => {
     if (editData) {
-      try {
-        await updateUserData(userDatas?.actorId, { ...editData, avatarImage }, role); 
-        setUserData(editData); 
-        setIsModalOpen(false); 
-      } catch (error: any) {
-        if (error.response && error.response.status === 400) {
-          const validationErrors = error.response.data.errors;
-          if (validationErrors) {
-            const formattedErrors: Record<string, string[]> = {};
-            for (const field in validationErrors) {
-              formattedErrors[field] = validationErrors[field];
-            }
-            setApiErrors(formattedErrors);
+      const updateData: Record<string, any> = {};
+
+      if (editData.memberName !== userData?.memberName) updateData.memberName = editData.memberName;
+      if (editData.phoneNumber !== userData?.phoneNumber) updateData.phoneNumber = editData.phoneNumber;
+      if (editData.dateOfBirth !== userData?.dateOfBirth) updateData.dateOfBirth = editData.dateOfBirth;
+      if (editData.address !== userData?.address) updateData.address = editData.address;
+      if (selectedFile) {
+        updateData.avatarImage = selectedFile;
+      }
+      
+      if (Object.keys(updateData).length > 0) {
+        try {
+          const isSuccess  = await updateMemberData(userDatas?.actorId, updateData, role);
+          setUserData(prev => (prev ? { ...prev, ...updateData } : prev));
+          setIsModalOpen(false);
+          if (isSuccess) {
+            notification.success({
+              message: 'Update Successful',
+              description: 'Member data has been successfully updated.',
+              duration: 3,
+            });
+          } else {
+            notification.error({
+              message: 'Update Failed',
+              description: 'An error occurred while updating member data. Please try again.',
+              duration: 3,
+            });
           }
-        } else {
-          console.error('An unexpected error occurred:', error.message);
-          alert('An unexpected error occurred. Please try again later.');
+        } catch (error: any) {
+          if (error.response && error.response.status === 400) {
+            const validationErrors = error.response.data.errors;
+            if (validationErrors) {
+              const formattedErrors: Record<string, string[]> = {};
+              for (const field in validationErrors) {
+                formattedErrors[field] = validationErrors[field];
+              }
+              setApiErrors(formattedErrors);
+            }
+          } else {
+            console.error('An unexpected error occurred:', error.message);
+            alert('An unexpected error occurred. Please try again later.');
+          }
         }
+      }else 
+      {
+        handleCancel();
+        return;
       }
     }
   };
@@ -121,7 +150,7 @@ const Profile: React.FC = () => {
           <img src={getImageSrc()} alt="Profile" style={styles.image} />
         </div>
         <div style={styles.profileInfo}>
-          <h2 style={styles.greeting}>Xin chào, {userData.MemberName || 'Bạn'}!</h2>
+          <h2 style={styles.greeting}>Xin chào, {userData.memberName || 'Bạn'}!</h2>
           <h4 style={styles.role}>{branchName || 'Rất vui khi được phục vụ bạn'}</h4>
         </div>
         <div style={styles.userInfo}>
@@ -131,21 +160,22 @@ const Profile: React.FC = () => {
           </div>
           <div style={styles.infoColumn}>
             <h4>Số điện thoại:</h4>
-            <p>{userData.PhoneNumber || '(+00) 0000 0000'}</p>
+            <p>{userData.phoneNumber || '(+00) 0000 0000'}</p>
           </div>
           <div style={styles.infoColumn}>
             <h4>Ngày sinh:</h4>
-            <p>{userData.DateOfBirth ? new Date(userData.DateOfBirth).toLocaleDateString() : 'N/A'}</p>
+            <p>{userData.dateOfBirth ? new Date(userData.dateOfBirth).toLocaleDateString() : 'N/A'}</p>
           </div>
           <div style={styles.infoColumn}>
             <h4>Địa chỉ:</h4>
-            <p>{userData.Address || 'City, Country'}</p>
+            <p>{userData.address || 'City, Country'}</p>
           </div>
         </div>
-      </div>
-      <Button style={styles.editbtn} onClick={showEditModal}>
+        <Button style={styles.editbtn} onClick={showEditModal}>
         🛠️ Chỉnh sửa
       </Button>
+      </div>
+     
       <Modal
         title="Chỉnh sửa thông tin cá nhân"
         visible={isModalOpen}
@@ -175,40 +205,40 @@ const Profile: React.FC = () => {
           </Form.Item>
           <Form.Item label="Tên" style={styles.formItem}>
             <Input
-              value={editData?.MemberName}
-              onChange={(e) => handleChange('MemberName', e.target.value)}
+              value={editData?.memberName}
+              onChange={(e) => handleChange('memberName', e.target.value)}
             />
-            {apiErrors.MemberName && <span className="error-message">{apiErrors.MemberName[0]}</span>}
+            {apiErrors.memberName && <span className="error-message">{apiErrors.memberName[0]}</span>}
           </Form.Item>
-          <Form.Item label="Email" style={styles.formItem}>
+          {/* <Form.Item label="Email" style={styles.formItem}>
             <Input
               value={editData?.Email}
               onChange={(e) => handleChange('Email', e.target.value)}
             />
             {apiErrors.Email && <span className="error-message">{apiErrors.Email[0]}</span>}
-          </Form.Item>
+          </Form.Item> */}
           <Form.Item label="Số điện thoại" style={styles.formItem}>
             <Input
-              value={editData?.PhoneNumber}
-              onChange={(e) => handleChange('PhoneNumber', e.target.value)}
+              value={editData?.phoneNumber}
+              onChange={(e) => handleChange('phoneNumber', e.target.value)}
             />
-            {apiErrors.PhoneNumber && <span className="error-message">{apiErrors.PhoneNumber[0]}</span>}
+            {apiErrors.phoneNumber && <span className="error-message">{apiErrors.phoneNumber[0]}</span>}
           </Form.Item>
           <Form.Item label="Ngày sinh" style={styles.formItem}>
             <Input
               type="date"
               name="DateOfBirth"
-              value={editData?.DateOfBirth}
-              onChange={(e) => handleChange('DateOfBirth', e.target.value)}
+              value={editData?.dateOfBirth}
+              onChange={(e) => handleChange('dateOfBirth', e.target.value)}
             />
-            {apiErrors.DateOfBirth && <span className="error-message">{apiErrors.DateOfBirth[0]}</span>}
+            {apiErrors.dateOfBirth && <span className="error-message">{apiErrors.dateOfBirth[0]}</span>}
           </Form.Item>
           <Form.Item label="Địa chỉ" style={styles.formItem}>
             <Input
-              value={editData?.Address}
-              onChange={(e) => handleChange('Address', e.target.value)}
+              value={editData?.address}
+              onChange={(e) => handleChange('address', e.target.value)}
             />
-            {apiErrors.Address && <span className="error-message">{apiErrors.Address[0]}</span>}
+            {apiErrors.address && <span className="error-message">{apiErrors.address[0]}</span>}
           </Form.Item>
         </Form>
         <div style={styles.customFooter}>
@@ -292,6 +322,7 @@ const styles: { [key: string]: CSSProperties } = {
   },
   editbtn: {
     backgroundColor: '#AA9144',
+    marginTop: '20px',
     color: '#fff',
     border: 'none',
     borderRadius: '4px',
