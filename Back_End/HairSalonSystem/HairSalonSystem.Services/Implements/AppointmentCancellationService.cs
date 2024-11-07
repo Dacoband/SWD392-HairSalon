@@ -1,4 +1,5 @@
 ﻿using HairSalonSystem.BusinessObject.Entities;
+using HairSalonSystem.Repositories.Implement;
 using HairSalonSystem.Repositories.Interface;
 using HairSalonSystem.Services.Constant;
 using HairSalonSystem.Services.Interfaces;
@@ -21,6 +22,8 @@ namespace HairSalonSystem.Services.Implements
     {
         private readonly IAppointmentCancellationRepository _cancellationRepo;
         private readonly IAppointmentRepository _appointmentRepo;
+        private readonly IMemberRepository _memberRepo;
+
         public AppointmentCancellationService(IAppointmentCancellationRepository cancellationRepo, IAppointmentRepository appointmentRepo)
         {
             _cancellationRepo = cancellationRepo;
@@ -37,6 +40,7 @@ namespace HairSalonSystem.Services.Implements
                 };
             }
 
+
             var roleName = UserUtil.GetRoleName(context);
             if (roleName != "MB" && roleName !="SL" && roleName != "ST" )
             {
@@ -45,6 +49,10 @@ namespace HairSalonSystem.Services.Implements
                     StatusCode = StatusCodes.Status403Forbidden
                 };
             }
+            var memberList = await _memberRepo.GetAllMembers();
+            var member = memberList.Where(x => x.AccountId == accountID).FirstOrDefault();
+
+           
 
             var existAppointment = await _appointmentRepo.GetAppointmentById(req.AppointmetId);
             if (existAppointment == null) {
@@ -54,7 +62,7 @@ namespace HairSalonSystem.Services.Implements
                 };
             }
 
-            if(existAppointment.CustomerId != accountID && existAppointment.StylistId != accountID && roleName != "SL") {
+            if(existAppointment.CustomerId != member.MemberId && roleName != "ST") {
 
                 return new ObjectResult(MessageConstant.CancelAppointmentMessage.CreateRight)
                 {
