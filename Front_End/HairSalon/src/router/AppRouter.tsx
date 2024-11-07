@@ -3,7 +3,7 @@ import {
   Route,
   Routes,
   Navigate,
-} from "react-router-dom";
+} from 'react-router-dom'
 
 // import Role1 from "../pages/Role1";
 import Dashboard from "../pages/StaffManager/Dashboard";
@@ -24,11 +24,10 @@ import Contact from "../pages/Contact";
 import Branch from "../pages/Branch";
 import ManagerAppoimentStylish from "../pages/Stylish/ManagerAppoinmentStylish";
 import ManagerMoney from "../pages/Stylish/ManagerMoney";
-import profileCustomer from "../pages/customer/profileCustomer";
 import LayoutSA from "../layout/LayoutSA";
 import BookSucssess from "../pages/customer/BookSucssess";
-import ManagerService from "../pages/admin/ManagerService";
-import ManagerBranch from "../pages/admin/ManagerBranch";
+import ManagerService from "../pages/Admin/ManagerService";
+import ManagerBranch from "../pages/Admin/ManagerBranch";
 
 // import CategogySM from "../pages/StaffManager/CategogySM";
 import LayoutSM from "../layout/LayoutSM";
@@ -38,11 +37,11 @@ import ManagerStylish_staff from "../pages/StaffStylish/ManagerStylish";
 import ManagerAppoimentStaff from "../pages/StaffStylish//ManagerAppoimentStaff";
 import ManagerSchedule from "../pages/StaffStylish/ManagerSchedule";
 // import CategogySL from "../pages/StaffStylish/CategogySL";
-import ManagerStaff_AD from "../pages/admin/ManagerStaffManger.tsx";
-import ManagerAppointment_AD from "../pages/admin/ManagerAppointment.tsx";
-import ManagerStylist from "../pages/admin/ManagetStylist.tsx";
-import ManagerChart from "../pages/admin/ManagerChart.tsx";
-import ManagerStaffStylist_AD from "../pages/admin/ManagerStaffStylist.tsx";
+import ManagerStaff_AD from "../pages/Admin/ManagerStaffManger.tsx";
+import ManagerAppointment_AD from "../pages/Admin/ManagerAppointment.tsx";
+import ManagerStylist from "../pages/Admin/ManagetStylist.tsx";
+import ManagerChart from "../pages/Admin/ManagerChart.tsx";
+import ManagerStaffStylist_AD from "../pages/Admin/ManagerStaffStylist.tsx";
 const AppRouter = () => {
   return (
     <Router>
@@ -67,26 +66,26 @@ const AppRouter = () => {
           <Route
             path="/bookAppoiment"
             element={
-              <PrivateRoute element={BookingPage} allowedRoles={["MB"]} />
+              <PrivateRoute element={BookingPage} allowedRoles={['MB']} />
             }
           />
           <Route
-            path="/bookSucssess"
+            path="/bookStatus"
             element={
-              <PrivateRoute element={BookSucssess} allowedRoles={["MB"]} />
+              <PrivateRoute element={BookSucssess} allowedRoles={['MB']} />
             }
           />
 
           <Route
             path="/servicePage"
             element={
-              <PrivateRoute element={ServicesPage} allowedRoles={["MB"]} />
+              <PrivateRoute element={ServicesPage} allowedRoles={['MB']} />
             }
           />
           <Route
             path="/manage-appointments"
             element={
-              <PrivateRoute element={Appointment} allowedRoles={["MB"]} />
+              <PrivateRoute element={Appointment} allowedRoles={['MB']} />
             }
           />
           <Route
@@ -142,7 +141,7 @@ const AppRouter = () => {
             element={
               <PrivateRoute
                 element={ManagerAppoimentStylish}
-                allowedRoles={["ST"]}
+                allowedRoles={['ST']}
               />
             }
           />
@@ -150,7 +149,7 @@ const AppRouter = () => {
           <Route
             path="/manager-money"
             element={
-              <PrivateRoute element={ManagerMoney} allowedRoles={["ST"]} />
+              <PrivateRoute element={ManagerMoney} allowedRoles={['ST']} />
             }
           />
           <Route path="/manage-appointments" element={<Appointment />} />
@@ -206,13 +205,13 @@ const AppRouter = () => {
           <Route
             path="/manageService"
             element={
-              <PrivateRoute element={ManagerService} allowedRoles={["SA"]} />
+              <PrivateRoute element={ManagerService} allowedRoles={['SA']} />
             }
           />
           <Route
             path="/ManagerBranch_AD"
             element={
-              <PrivateRoute element={ManagerBranch} allowedRoles={["SA"]} />
+              <PrivateRoute element={ManagerBranch} allowedRoles={['SA']} />
             }
           />
           <Route
@@ -262,7 +261,7 @@ const AppRouter = () => {
            </Route>
       </Routes>
     </Router>
-  );
-};
+  )
+}
 
-export default AppRouter;
+export default AppRouter
