@@ -28,6 +28,33 @@ export const getAppointmentsByCustomer = async (customerId: string): Promise<App
     throw new Error("Failed to fetch appointments");
   }
 };
+export const getAllAppointments = async (): Promise<Appointment[]> => {
+  try {
+    const response = await axios.get(
+      `https://api.vol-ka.studio/api/v1/appointment/get-all`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+
+    return response.data as Appointment[];
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response && error.response.status === 403) {
+        console.warn("Access forbidden. Response body:", error.response.data);
+        throw new Error("Access forbidden.");
+      } else {
+        console.error("Error fetching all appointments:", error.message);
+      }
+    } else {
+      console.error("Unexpected error:", error);
+    }
+    throw new Error("Failed to fetch all appointments");
+  }
+};
+
   export const cancelAppointment = async (appointmentId: string, reason: string) => {
     try {
       const response = await axios.post(

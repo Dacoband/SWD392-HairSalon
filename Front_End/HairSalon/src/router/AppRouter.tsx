@@ -33,7 +33,7 @@ import ManagerBranch from "../pages/Admin/ManagerBranch";
 import LayoutSM from "../layout/LayoutSM";
 import LayoutST from "../layout/LayoutST";
 import LayoutSL from "../layout/LayoutSL";
-import ManagerStylish_staff from "../pages/StaffStylish/ManagerStylish";
+import ManagerStylish_staff from "../pages/StaffStylish/ManagerStylish_staff.tsx";
 import ManagerAppoimentStaff from "../pages/StaffStylish//ManagerAppoimentStaff";
 import ManagerSchedule from "../pages/StaffStylish/ManagerSchedule";
 // import CategogySL from "../pages/StaffStylish/CategogySL";

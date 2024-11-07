@@ -3,7 +3,7 @@ import { Table, Button, Modal, Input, notification, message, Select, Pagination 
 import { getAppointmentsByCustomer, cancelAppointment, getAllAppointments } from "../../services/appointmentSalon";
 import { Appointment, Services, Stylish ,Member} from "../../models/type";
 import { getStylishByBranchID } from "../../services/Stylish";
-import { getAppointmentDetails,getMemberById } from "../../services/Member"; // Import the getAppointmentDetails function
+import { getAppointmentDetails,getMemberById } from "../../services/Member"; 
 import "./AppointmentStaff.scss";
 
 const { Option } = Select;
@@ -194,4 +194,4 @@ const ManagerAppointmentStaff = () => {
   );
 };
 
-export default ManagerAppoimentStaff;
+export default ManagerAppointmentStaff;

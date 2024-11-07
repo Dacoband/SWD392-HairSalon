@@ -83,4 +83,4 @@ const ManagerStylish_staff: React.FC = () => {
   );
 };
 
-export default ManagerStylish;
+export default ManagerStylish_staff;
