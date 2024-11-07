@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
-import { getAppointments } from '../../services/Admin/Appointment'; // Đường dẫn đến file API của bạn
+import { getAppointmentsWithDetails } from '../../services/Admin/Appointment'; // Đường dẫn đến file API của bạn
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -11,7 +11,7 @@ const AppointmentChart: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const appointments = await getAppointments();
+        const appointments = await getAppointmentsWithDetails();
 
         // Sắp xếp và lấy 5 giá trị `totalPrice` lớn nhất
         const topPrices = appointments
@@ -20,7 +20,7 @@ const AppointmentChart: React.FC = () => {
 
         // Chuẩn bị dữ liệu cho Chart.js
         const data = {
-          labels: topPrices.map((appointment: any) => appointment.endTime),
+          labels: topPrices.map((appointment: any) => appointment.stylistName),
           datasets: [
             {
               label: 'Top 5 Total Prices',
@@ -57,6 +57,28 @@ const AppointmentChart: React.FC = () => {
                 text: 'Top 5 Appointments by Total Price',
               },
             },
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: 'Tên nhà tạo mẫu',
+                  font: {
+                    size: 14,
+                    weight: 'bold'
+                  }
+                }
+              },
+              y: {
+                title: {
+                  display: true,
+                  text: 'Tổng tiền (VNĐ)',
+                  font: {
+                    size: 14,
+                    weight: 'bold'
+                  }
+                }
+              }
+            }
           }}
         />
       ) : (

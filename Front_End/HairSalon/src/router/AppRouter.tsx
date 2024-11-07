@@ -42,6 +42,7 @@ import ManagerStaff_AD from "../pages/admin/ManagerStaffManger.tsx";
 import ManagerAppointment_AD from "../pages/admin/ManagerAppointment.tsx";
 import ManagerStylist from "../pages/admin/ManagetStylist.tsx";
 import ManagerChart from "../pages/admin/ManagerChart.tsx";
+import ManagerStaffStylist_AD from "../pages/admin/ManagerStaffStylist.tsx";
 const AppRouter = () => {
   return (
     <Router>
@@ -219,6 +220,15 @@ const AppRouter = () => {
             path="/ManagerChart_AD"
             element={
               <PrivateRoute element={ManagerChart} allowedRoles={["SA"]} />
+            }
+          />
+          <Route
+            path="/ManagerStaffStylist_AD"
+            element={
+              <PrivateRoute
+                element={ManagerStaffStylist_AD}
+                allowedRoles={["SA"]}
+              />
             }
           />
         </Route>
