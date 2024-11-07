@@ -2,7 +2,11 @@ import React from "react";
 import { Layout, Menu } from "antd";
 import { Outlet, useNavigate } from "react-router-dom";
 import "../App.css";
-import { MenuUnfoldOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import {
+  MenuUnfoldOutlined,
+  ShoppingCartOutlined,
+  ShopOutlined,
+} from "@ant-design/icons";
 import HeaderSM from "../components/HeaderSM";
 import { FaCircleUser } from "react-icons/fa6";
 
@@ -16,7 +20,7 @@ const SidebarData = [
     navigate: "/manageService",
   },
   {
-    icon: ShoppingCartOutlined,
+    icon: ShopOutlined,
     heading: "Quản lí khu vực",
     navigate: "/ManagerBranch_AD",
   },

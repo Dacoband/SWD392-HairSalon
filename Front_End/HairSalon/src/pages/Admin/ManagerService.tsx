@@ -64,27 +64,35 @@ const ManagerService: React.FC = () => {
       setSelectedFile(file);
     }
   };
-  const handleDelete = async (serviceID: string) => {
-    try {
-      const token = getAuthToken();
-      await axios.patch(
-        `https://api.vol-ka.studio/api/v1/service/delete/${serviceID}`,
-        { delFlg: false },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+  const handleDelete = (serviceID: string) => {
+    Modal.confirm({
+      title: "Xác nhận xóa",
+      content: "Bạn có chắc chắn muốn xóa dịch vụ này?",
+      okText: "Có",
+      okType: "danger",
+      cancelText: "Không",
+      onOk: async () => {
+        try {
+          const token = getAuthToken();
+          await axios.patch(
+            `https://api.vol-ka.studio/api/v1/service/delete/${serviceID}`,
+            { delFlg: false },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          setServices((prevServices) =>
+            prevServices.filter((service) => service.serviceID !== serviceID)
+          );
+          message.success("Dịch vụ đã được cập nhật trạng thái xóa");
+        } catch (error) {
+          console.error("Lỗi khi cập nhật trạng thái xóa dịch vụ:", error);
+          message.error("Lỗi khi cập nhật trạng thái xóa dịch vụ");
         }
-      );
-      // Cập nhật trạng thái để loại bỏ dịch vụ khỏi danh sách hiển thị
-      setServices((prevServices) =>
-        prevServices.filter((service) => service.serviceID !== serviceID)
-      );
-      message.success("Dịch vụ đã được cập nhật trạng thái xóa ");
-    } catch (error) {
-      console.error("Lỗi khi cập nhật trạng thái xóa dịch vụ:", error);
-      message.error("Lỗi khi cập nhật trạng thái xóa dịch vụ");
-    }
+      },
+    });
   };
   const handleAddService = async (values: any) => {
     const { serviceName, type, price, description, duration } = values;

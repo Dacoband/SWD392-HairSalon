@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Table, Input, Space, Button, message, Select, Form, Modal } from "antd";
+import {
+  Table,
+  Input,
+  Space,
+  Button,
+  message,
+  Select,
+  Form,
+  Modal,
+  Switch,
+} from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { SearchOutlined } from "@ant-design/icons";
 import { getBranchesAll, addBranch } from "../../services/Branches/branches";
@@ -42,17 +52,17 @@ const ManagerBranch: React.FC = () => {
     try {
       const [branchesData, staffManagersData] = await Promise.all([
         getBranchesAll(),
-        getStaffAll()
+        getStaffAll(),
       ]);
-      
+
       // Combine branch data with staff manager data
-      const branchesWithStaffInfo = branchesData.map(branch => ({
+      const branchesWithStaffInfo = branchesData.map((branch) => ({
         ...branch,
         staffManager: staffManagersData.find(
           (sm: StaffManager) => sm.staffManagerID === branch.staffManagerID
-        )
+        ),
       }));
-      
+
       setBranches(branchesWithStaffInfo);
       setStaffManagers(staffManagersData);
     } catch (error) {
@@ -62,7 +72,20 @@ const ManagerBranch: React.FC = () => {
       setLoading(false);
     }
   };
-
+  const handleStatusChange = async (branchID: string, delFlg: boolean) => {
+    try {
+      await updateBranchStatus(branchID, { delFlg }); // Call your API to update the status
+      setBranches((prevBranches) =>
+        prevBranches.map((branch) =>
+          branch.branchID === branchID ? { ...branch, delFlg } : branch
+        )
+      );
+      message.success("Branch status updated successfully");
+    } catch (error) {
+      console.error("Error updating branch status:", error);
+      message.error("Failed to update branch status");
+    }
+  };
   const fetchStaffManagers = async () => {
     try {
       const data = await getStaffAll();
@@ -118,41 +141,32 @@ const ManagerBranch: React.FC = () => {
       title: "Status",
       dataIndex: "delFlg",
       key: "delFlg",
-      render: (delFlg: boolean) => (
-        <span style={{ color: delFlg ? "green" : "red" }}>
-          {!delFlg ? "Inactive" : "Active"}
-        </span>
+      render: (delFlg: boolean, record: Branch) => (
+        <Switch
+          checked={delFlg}
+          // onChange={(checked) => handleStatusChange(record.branchID, checked)}
+          checkedChildren="Hoạt Động"
+          unCheckedChildren="Ngừng hoạt động"
+        />
       ),
     },
-    {
-      title: "Action",
-      key: "action",
-      render: (_, record) => (
-        <Space size="middle">
-          <Button type="primary" onClick={() => handleEdit(record)}>
-            Edit
-          </Button>
-          <Button 
-            danger 
-            onClick={() => handleDelete(record.branchID)}
-            disabled={record.delFlg}
-          >
-            Delete
-          </Button>
-        </Space>
-      ),
-    },
+    // {
+    //   title: "Action",
+    //   key: "action",
+    //   render: (_, record) => (
+    //     <Space size="middle">
+    //       <Button type="primary" onClick={() => handleEdit(record)}>
+    //         Edit
+    //       </Button>
+    //     </Space>
+    //   ),
+    // },
   ];
 
-  const handleEdit = (branch: Branch) => {
-    setEditingBranch(branch);
-    setIsModalVisible(true);
-  };
-
-  const handleDelete = (branchID: string) => {
-    // Implement delete functionality
-    console.log("Delete branch:", branchID);
-  };
+  // const handleEdit = (branch: Branch) => {
+  //   setEditingBranch(branch);
+  //   setIsModalVisible(true);
+  // };
 
   const handleModalOk = () => {
     setIsModalVisible(false);
@@ -177,15 +191,11 @@ const ManagerBranch: React.FC = () => {
 
   const EditBranchForm = ({ branch, staffManagers, onFinish }: any) => {
     return (
-      <Form
-        initialValues={branch}
-        onFinish={onFinish}
-        layout="vertical"
-      >
+      <Form initialValues={branch} onFinish={onFinish} layout="vertical">
         <Form.Item
           name="staffManagerID"
           label="Staff Manager"
-          rules={[{ required: true, message: 'Please select a staff manager' }]}
+          rules={[{ required: true, message: "Please select a staff manager" }]}
         >
           <Select>
             {staffManagers.map((sm: StaffManager) => (
@@ -213,14 +223,11 @@ const ManagerBranch: React.FC = () => {
 
   const AddBranchForm = ({ staffManagers, onFinish }: any) => {
     return (
-      <Form
-        onFinish={onFinish}
-        layout="vertical"
-      >
+      <Form onFinish={onFinish} layout="vertical">
         <Form.Item
           name="staffManagerID"
           label="Staff Manager"
-          rules={[{ required: true, message: 'Please select a staff manager' }]}
+          rules={[{ required: true, message: "Please select a staff manager" }]}
         >
           <Select>
             {staffManagers.map((sm: StaffManager) => (
@@ -234,7 +241,7 @@ const ManagerBranch: React.FC = () => {
         <Form.Item
           name="salonBranches"
           label="Branch Name"
-          rules={[{ required: true, message: 'Please enter branch name' }]}
+          rules={[{ required: true, message: "Please enter branch name" }]}
         >
           <Input />
         </Form.Item>
@@ -242,7 +249,7 @@ const ManagerBranch: React.FC = () => {
         <Form.Item
           name="address"
           label="Address"
-          rules={[{ required: true, message: 'Please enter address' }]}
+          rules={[{ required: true, message: "Please enter address" }]}
         >
           <Input />
         </Form.Item>
@@ -251,8 +258,8 @@ const ManagerBranch: React.FC = () => {
           name="phone"
           label="Phone"
           rules={[
-            { required: true, message: 'Please enter phone number' },
-            { pattern: /^\d+$/, message: 'Please enter valid phone number' }
+            { required: true, message: "Please enter phone number" },
+            { pattern: /^\d+$/, message: "Please enter valid phone number" },
           ]}
         >
           <Input />
@@ -267,7 +274,6 @@ const ManagerBranch: React.FC = () => {
 
   return (
     <div style={{ padding: "24px" }}>
-      <h2>Branch Management</h2>
       <Space style={{ marginBottom: 16 }}>
         <Input
           placeholder="Search by branch name"
@@ -277,10 +283,7 @@ const ManagerBranch: React.FC = () => {
           style={{ width: 200 }}
           allowClear
         />
-        <Button 
-          type="primary" 
-          onClick={() => setIsAddModalVisible(true)}
-        >
+        <Button type="primary" onClick={() => setIsAddModalVisible(true)}>
           Add Branch
         </Button>
       </Space>
