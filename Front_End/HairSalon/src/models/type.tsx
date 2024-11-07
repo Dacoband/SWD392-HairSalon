@@ -54,7 +54,10 @@ export interface UserData {
 
 export interface Stylish {
   branchId: string;
+  email: string;
+  password: string;
   stylistId: string;
+  staffStylistId: string;
   stylistName: string;
   averageRating: number;
   phoneNumber: string;
@@ -81,6 +84,16 @@ export interface StaffStylist {
   phoneNumber: string;
   address: string;
   avatarImage?: string | File;
+  branchId: string;
+}
+export interface CreateAppointmentRequest {
+  stylistId: string;
+  appointmentDate: string;
+  serviceIds: string[];
+}
+export interface CreatePaymentReponse {
+  paymentLink: string;
+  paymentLinkId: string;
 }
 
 export interface Member {

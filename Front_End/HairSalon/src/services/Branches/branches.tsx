@@ -45,12 +45,18 @@ export const getBranchById = async (id: string): Promise<Branches[]> => {
   }
 };
 
-// Add a new branch
-export const addBranch = async (branch: Branches): Promise<Branches> => {
+
+export const addBranch = async (branchData: any) => {
+  const token = getAuthToken();
   try {
-    const response = await axios.post<Branches>(
+    const response = await axios.post(
       "https://api.vol-ka.studio/api/v1/branch/add",
-      branch
+      branchData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     return response.data;
   } catch (error) {

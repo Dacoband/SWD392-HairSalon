@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { Button, Table, Modal, Form, Input } from "antd";
-import { ColumnsType } from "antd/es/table";
+
+import { Table, Input, Space, Button, message, Select, Form, Modal } from "antd";
+import type { ColumnsType } from "antd/es/table";
+import { SearchOutlined } from "@ant-design/icons";
+import { getBranchesAll, addBranch } from "../../services/Branches/branches";
+import { getStaffAll } from "../../services/Admin/StaffManager";
+import dayjs from "dayjs";
+
+interface StaffManager {
+  staffManagerID: string;
+  staffManagerName: string;
+}
+
 
 interface Branch {
   branchID: string;
@@ -10,26 +19,21 @@ interface Branch {
   salonBranches: string;
   address: string;
   phone: string;
-  staffManagerID?: string;
+  insDate: string;
+  updDate: string;
+  delFlg: boolean;
+  staffManager?: StaffManager;
 }
-
-// URL API
-const API_URL = "https://api.vol-ka.studio/api/v1/branch";
 
 const ManagerBranch: React.FC = () => {
   const [branches, setBranches] = useState<Branch[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const [newBranch, setNewBranch] = useState<Branch>({
-    branchID: "",
-    salonBranches: "",
-    address: "",
-    phone: "",
-    staffManagerID: "",
-  });
-  const [isEditing, setIsEditing] = useState(false);
-  const [editBranchID, setEditBranchID] = useState<string | null>(null);
-  const navigate = useNavigate();
+  const [staffManagers, setStaffManagers] = useState<StaffManager[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [searchText, setSearchText] = useState<string>("");
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [editingBranch, setEditingBranch] = useState<Branch | null>(null);
+  const [isAddModalVisible, setIsAddModalVisible] = useState(false);
+
 
   useEffect(() => {
     fetchBranches();
@@ -37,75 +41,32 @@ const ManagerBranch: React.FC = () => {
   }, []);
 
   const fetchBranches = async () => {
+
+    setLoading(true);
     try {
-      const response = await axios.get(`${API_URL}/all`);
-      setBranches(response.data);
+      const [branchesData, staffManagersData] = await Promise.all([
+        getBranchesAll(),
+        getStaffAll()
+      ]);
+      
+      // Combine branch data with staff manager data
+      const branchesWithStaffInfo = branchesData.map(branch => ({
+        ...branch,
+        staffManager: staffManagersData.find(
+          (sm: StaffManager) => sm.staffManagerID === branch.staffManagerID
+        )
+      }));
+      
+      setBranches(branchesWithStaffInfo);
+      setStaffManagers(staffManagersData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      message.error("Failed to fetch data");
+    } finally {
       setLoading(false);
-    } catch (err) {
-      setError("Failed to load branches");
-      setLoading(false);
     }
   };
 
-  const handleAddBranch = async () => {
-    try {
-      await axios.post(`${API_URL}/add`, newBranch);
-      setNewBranch({
-        branchID: "",
-        salonBranches: "",
-        address: "",
-        phone: "",
-        staffManagerID: "",
-      });
-      fetchBranches();
-    } catch (error) {
-      console.error("Error adding branch:", error);
-    }
-  };
-
-  const handleUpdateBranch = async () => {
-    if (!editBranchID) return;
-
-    try {
-      await axios.put(`${API_URL}/update/${editBranchID}`, newBranch);
-      setNewBranch({
-        branchID: "",
-        salonBranches: "",
-        address: "",
-        phone: "",
-        staffManagerID: "",
-      });
-      setIsEditing(false);
-      setEditBranchID(null);
-      fetchBranches();
-    } catch (error) {
-      console.error("Error updating branch:", error);
-    }
-  };
-
-  const handleDeleteBranch = async (id: string) => {
-    try {
-      await axios.delete(`${API_URL}/delete/${id}`);
-      fetchBranches();
-    } catch (error) {
-      console.error("Error deleting branch:", error);
-    }
-  };
-
-  const handleEditClick = (branch: Branch) => {
-    setIsEditing(true);
-    setEditBranchID(branch.branchID);
-    setNewBranch(branch);
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setNewBranch((prev) => ({ ...prev, [name]: value }));
-  };
-
-  if (loading) {
-    return <div className="text-center text-xl">Loading...</div>;
-  }
 
   const fetchStaffManagers = async () => {
     try {
@@ -116,77 +77,6 @@ const ManagerBranch: React.FC = () => {
     }
   };
 
-  const columns: ColumnsType<Branch> = [
-    {
-      title: "Staff Manager",
-      dataIndex: "staffManagerID",
-      key: "staffManagerID",
-      render: (staffManagerID: string) => {
-        const staffManager = staffManagers.find(
-          (sm) => sm.staffManagerID === staffManagerID
-        );
-        return staffManager?.staffManagerName || "Không có";
-      },
-    },
-    {
-      title: "Branch Name",
-      dataIndex: "salonBranches",
-      key: "salonBranches",
-      sorter: (a, b) => a.salonBranches.localeCompare(b.salonBranches),
-    },
-    {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
-    },
-    {
-      title: "Phone",
-      dataIndex: "phone",
-      key: "phone",
-    },
-    {
-      title: "Created Date",
-      dataIndex: "insDate",
-      key: "insDate",
-      render: (date: string) => dayjs(date).format("DD/MM/YYYY"),
-      sorter: (a, b) => dayjs(a.insDate).unix() - dayjs(b.insDate).unix(),
-    },
-    {
-      title: "Updated Date",
-      dataIndex: "updDate",
-      key: "updDate",
-      render: (date: string) => dayjs(date).format("DD/MM/YYYY"),
-      sorter: (a, b) => dayjs(a.updDate).unix() - dayjs(b.updDate).unix(),
-    },
-    {
-      title: "Status",
-      dataIndex: "delFlg",
-      key: "delFlg",
-      render: (delFlg: boolean) => (
-        <span style={{ color: delFlg ? "green" : "red" }}>
-          {!delFlg ? "Inactive" : "Active"}
-        </span>
-      ),
-    },
-    {
-      title: "Action",
-      key: "action",
-      render: (_, record) => (
-        <Space size="middle">
-          <Button type="primary" onClick={() => handleEdit(record)}>
-            Edit
-          </Button>
-          <Button 
-            danger 
-            onClick={() => handleDelete(record.branchID)}
-            disabled={record.delFlg}
-          >
-            Delete
-          </Button>
-        </Space>
-      ),
-    },
-  ];
 
   const handleEdit = (branch: Branch) => {
     setEditingBranch(branch);
@@ -354,106 +244,58 @@ const ManagerBranch: React.FC = () => {
   ];
 
   return (
-    <div className="relative p-6">
-      <h2 className="text-2xl font-bold mb-4">Manage Branches</h2>
 
-      <div className="mb-6">
-        <h3 className="text-xl font-semibold mb-2">
-          {isEditing ? "Edit Branch" : "Add New Branch"}
-        </h3>
-
-        <input
-          type="text"
-          name="salonBranches"
-          value={newBranch.salonBranches}
-          onChange={handleInputChange}
-          placeholder="Salon Branch Name"
-          className="border rounded p-2 mb-2 w-full"
+    <div style={{ padding: "24px" }}>
+      <h2>Branch Management</h2>
+      <Space style={{ marginBottom: 16 }}>
+        <Input
+          placeholder="Search by branch name"
+          prefix={<SearchOutlined />}
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+          style={{ width: 200 }}
+          allowClear
         />
-
-        <input
-          type="text"
-          name="address"
-          value={newBranch.address}
-          onChange={handleInputChange}
-          placeholder="Address"
-          className="border rounded p-2 mb-2 w-full"
-        />
-
-        <input
-          type="text"
-          name="phone"
-          value={newBranch.phone}
-          onChange={handleInputChange}
-          placeholder="Phone"
-          className="border rounded p-2 mb-2 w-full"
-        />
-
-        <input
-          type="text"
-          name="staffManagerID"
-          value={newBranch.staffManagerID || ""}
-          onChange={handleInputChange}
-          placeholder="Staff Manager ID"
-          className="border rounded p-2 mb-2 w-full"
-        />
-
-        <button
-          onClick={isEditing ? handleUpdateBranch : handleAddBranch}
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+        <Button 
+          type="primary" 
+          onClick={() => setIsAddModalVisible(true)}
         >
-          {isEditing ? "Update Branch" : "Add Branch"}
-        </button>
+          Add Branch
+        </Button>
+      </Space>
 
-        {isEditing && (
-          <button
-            onClick={() => {
-              setIsEditing(false);
-              setEditBranchID(null);
-              setNewBranch({
-                branchID: "",
-                salonBranches: "",
-                address: "",
-                phone: "",
-                staffManagerID: "",
-              });
-            }}
-            className="ml-4 bg-gray-400 text-white px-4 py-2 rounded"
-          >
-            Cancel
-          </button>
-        )}
-      </div>
+      <Table
+        columns={columns}
+        dataSource={filteredBranches}
+        rowKey="branchID"
+        loading={loading}
+        pagination={{ pageSize: 5 }}
+      />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {branches.map((branch) => (
-          <div
-            key={branch.branchID}
-            className="bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 p-4"
-          >
-            <h3 className="text-xl font-bold mb-2 text-[#333]">
-              {branch.salonBranches}
-            </h3>
-            <p className="text-gray-700 mb-1">Address: {branch.address}</p>
-            <p className="text-gray-700">Phone: {branch.phone}</p>
+      <Modal
+        title="Add New Branch"
+        visible={isAddModalVisible}
+        onCancel={() => setIsAddModalVisible(false)}
+        footer={null}
+      >
+        <AddBranchForm
+          staffManagers={staffManagers}
+          onFinish={handleAddBranch}
+        />
+      </Modal>
 
-            <div className="flex space-x-4 mt-4">
-              <button
-                onClick={() => handleEditClick(branch)}
-                className="bg-yellow-500 text-white px-4 py-1 rounded"
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => handleDeleteBranch(branch.branchID)}
-                className="bg-red-500 text-white px-4 py-1 rounded"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
+      <Modal
+        title="Edit Branch"
+        visible={isModalVisible}
+        onCancel={() => setIsModalVisible(false)}
+        footer={null}
+      >
+        <EditBranchForm
+          branch={editingBranch}
+          staffManagers={staffManagers}
+          onFinish={handleModalOk}
+        />
+      </Modal>
     </div>
   );
 };

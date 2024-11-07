@@ -11,16 +11,20 @@ import {
   Select,
 } from "antd";
 import type { ColumnsType } from "antd/es/table";
+import { getAuthToken } from "../../services/authSalon";
+import { SearchOutlined } from "@ant-design/icons";
 import { Services } from "../../models/type";
-
+import { getServicesByType } from "../../services/serviceSalon";
 
 const ManagerService: React.FC = () => {
   const [services, setServices] = useState<Services[]>([]);
   const [loading, setLoading] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isAddModalVisible, setIsAddModalVisible] = useState(false);
-  const [editingService, setEditingService] = useState<Services | null>(null);
-
+  const [avatarImage, setSelectedFile] = useState<File | null>(null);
+  const [searchText, setSearchText] = useState<string>("");
+  const [isAddModalVisible, setIsAddModalVisible] = useState(false); // State for modal visibility
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+  const [currentService, setCurrentService] = useState<Services | null>(null);
+  const [form] = Form.useForm(); // Form instance
   useEffect(() => {
     fetchServices();
   }, []);
@@ -45,62 +49,45 @@ const ManagerService: React.FC = () => {
       setLoading(false);
     }
   };
-
-  const handleEdit = (service: Services) => {
-    setEditingService(service);
-    setIsModalVisible(true);
-  };
-  const handleDelete = async (serviceID: string) => {
-    try {
-      const token = getAuthToken();
-      await axios.patch(
-        `https://api.vol-ka.studio/api/v1/service/delete/${serviceID}`,
-        { delFlg: false },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      // Cập nhật trạng thái để loại bỏ dịch vụ khỏi danh sách hiển thị
-      setServices((prevServices) =>
-        prevServices.filter((service) => service.serviceID !== serviceID)
-      );
-      message.success("Dịch vụ đã được cập nhật trạng thái xóa ");
-    } catch (error) {
-      console.error("Lỗi khi cập nhật trạng thái xóa dịch vụ:", error);
-      message.error("Lỗi khi cập nhật trạng thái xóa dịch vụ");
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files ? event.target.files[0] : null;
+    if (file) {
+      setSelectedFile(file);
     }
+  };
+  const handleDelete = (serviceID: string) => {
+    Modal.confirm({
+      title: "Xác nhận xóa",
+      content: "Bạn có chắc chắn muốn xóa dịch vụ này?",
+      okText: "Có",
+      okType: "danger",
+      cancelText: "Không",
+      onOk: async () => {
+        try {
+          const token = getAuthToken();
+          await axios.patch(
+            `https://api.vol-ka.studio/api/v1/service/delete/${serviceID}`,
+            { delFlg: false },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          setServices((prevServices) =>
+            prevServices.filter((service) => service.serviceID !== serviceID)
+          );
+          message.success("Dịch vụ đã được cập nhật trạng thái xóa");
+        } catch (error) {
+          console.error("Lỗi khi cập nhật trạng thái xóa dịch vụ:", error);
+          message.error("Lỗi khi cập nhật trạng thái xóa dịch vụ");
+        }
+      },
+    });
   };
   const handleAddService = async (values: any) => {
     const { serviceName, type, price, description, duration } = values;
 
-  const handleModalOk = async (values: Partial<Services>) => {
-    if (editingService) {
-      try {
-        const response = await axios.put(
-          `https://api.vol-ka.studio/api/v1/service/update/${editingService.serviceID}`,
-          values
-        );
-        const updatedService = response.data;
-        setServices((prevServices) =>
-          prevServices.map((service) =>
-            service.serviceID === updatedService.serviceID
-              ? updatedService
-              : service
-          )
-        );
-        message.success("Service updated successfully");
-      } catch (error) {
-        console.error("Error updating service:", error);
-        message.error("Error updating service");
-      }
-    }
-    setIsModalVisible(false);
-    setEditingService(null);
-  };
-
-  const handleAddModalOk = async (values: Services) => {
     try {
       const token = getAuthToken();
       const formData = new FormData();
@@ -199,7 +186,7 @@ const ManagerService: React.FC = () => {
       message.error("Lỗi khi cập nhật dịch vụ");
     }
   };
-  const openEditModal = (service: Service) => {
+  const openEditModal = (service: Services) => {
     setCurrentService(service);
     form.setFieldsValue({
       serviceName: service.serviceName,
