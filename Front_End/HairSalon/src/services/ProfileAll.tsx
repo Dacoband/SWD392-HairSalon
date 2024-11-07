@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { UserInfoData } from '../models/type';
 
-<<<<<<< HEAD
 export const fetchUserData = async (userId: string, email: string, role: string): Promise<UserInfoData> => {
   let response;
   let name;
@@ -136,21 +135,3 @@ export const getMemberById = async (customerId: string) => {
     throw error;
   }
 };
-=======
-import { UserInfoData } from '../models/type'; 
-
-
-export const fetchUserData = async (userId: string): Promise<UserInfoData> => {
-  const response = await axios.get('https://api.vol-ka.studio/api/v1/member/'+ userId);
-  const data = response.data;
-  return {
-    Email: data.email, 
-    Password: '',      
-    MemberName: data.memberName, 
-    DateOfBirth: data.dateOfBirth,
-    PhoneNumber: data.phoneNumber, 
-    Address: data.address,         
-    avatarImage: data.avatarImage,        
-  };
-};
->>>>>>> TAT

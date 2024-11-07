@@ -1,22 +1,8 @@
 import React, { useEffect, useState } from "react";
-<<<<<<< HEAD
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Button, Table, Modal, Form, Input } from "antd";
 import { ColumnsType } from "antd/es/table";
-=======
-import { Table, Input, Space, Button, message, Select, Form, Modal } from "antd";
-import type { ColumnsType } from "antd/es/table";
-import { SearchOutlined } from "@ant-design/icons";
-import { getBranchesAll, addBranch } from "../../services/Branches/branches";
-import { getStaffAll } from "../../services/Admin/StaffManager";
-import dayjs from "dayjs";
-
-interface StaffManager {
-  staffManagerID: string;
-  staffManagerName: string;
-}
->>>>>>> TAT
 
 interface Branch {
   branchID: string;
@@ -24,7 +10,6 @@ interface Branch {
   salonBranches: string;
   address: string;
   phone: string;
-<<<<<<< HEAD
   staffManagerID?: string;
 }
 
@@ -45,22 +30,6 @@ const ManagerBranch: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editBranchID, setEditBranchID] = useState<string | null>(null);
   const navigate = useNavigate();
-=======
-  insDate: string;
-  updDate: string;
-  delFlg: boolean;
-  staffManager?: StaffManager;
-}
-
-const ManagerBranch: React.FC = () => {
-  const [branches, setBranches] = useState<Branch[]>([]);
-  const [staffManagers, setStaffManagers] = useState<StaffManager[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [searchText, setSearchText] = useState<string>("");
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [editingBranch, setEditingBranch] = useState<Branch | null>(null);
-  const [isAddModalVisible, setIsAddModalVisible] = useState(false);
->>>>>>> TAT
 
   useEffect(() => {
     fetchBranches();
@@ -68,7 +37,6 @@ const ManagerBranch: React.FC = () => {
   }, []);
 
   const fetchBranches = async () => {
-<<<<<<< HEAD
     try {
       const response = await axios.get(`${API_URL}/all`);
       setBranches(response.data);
@@ -138,32 +106,6 @@ const ManagerBranch: React.FC = () => {
   if (loading) {
     return <div className="text-center text-xl">Loading...</div>;
   }
-=======
-    setLoading(true);
-    try {
-      const [branchesData, staffManagersData] = await Promise.all([
-        getBranchesAll(),
-        getStaffAll()
-      ]);
-      
-      // Combine branch data with staff manager data
-      const branchesWithStaffInfo = branchesData.map(branch => ({
-        ...branch,
-        staffManager: staffManagersData.find(
-          (sm: StaffManager) => sm.staffManagerID === branch.staffManagerID
-        )
-      }));
-      
-      setBranches(branchesWithStaffInfo);
-      setStaffManagers(staffManagersData);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      message.error("Failed to fetch data");
-    } finally {
-      setLoading(false);
-    }
-  };
->>>>>>> TAT
 
   const fetchStaffManagers = async () => {
     try {
@@ -412,7 +354,6 @@ const ManagerBranch: React.FC = () => {
   ];
 
   return (
-<<<<<<< HEAD
     <div className="relative p-6">
       <h2 className="text-2xl font-bold mb-4">Manage Branches</h2>
 
@@ -513,59 +454,6 @@ const ManagerBranch: React.FC = () => {
           </div>
         ))}
       </div>
-=======
-    <div style={{ padding: "24px" }}>
-      <h2>Branch Management</h2>
-      <Space style={{ marginBottom: 16 }}>
-        <Input
-          placeholder="Search by branch name"
-          prefix={<SearchOutlined />}
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-          style={{ width: 200 }}
-          allowClear
-        />
-        <Button 
-          type="primary" 
-          onClick={() => setIsAddModalVisible(true)}
-        >
-          Add Branch
-        </Button>
-      </Space>
-
-      <Table
-        columns={columns}
-        dataSource={filteredBranches}
-        rowKey="branchID"
-        loading={loading}
-        pagination={{ pageSize: 5 }}
-      />
-
-      <Modal
-        title="Add New Branch"
-        visible={isAddModalVisible}
-        onCancel={() => setIsAddModalVisible(false)}
-        footer={null}
-      >
-        <AddBranchForm
-          staffManagers={staffManagers}
-          onFinish={handleAddBranch}
-        />
-      </Modal>
-
-      <Modal
-        title="Edit Branch"
-        visible={isModalVisible}
-        onCancel={() => setIsModalVisible(false)}
-        footer={null}
-      >
-        <EditBranchForm
-          branch={editingBranch}
-          staffManagers={staffManagers}
-          onFinish={handleModalOk}
-        />
-      </Modal>
->>>>>>> TAT
     </div>
   );
 };

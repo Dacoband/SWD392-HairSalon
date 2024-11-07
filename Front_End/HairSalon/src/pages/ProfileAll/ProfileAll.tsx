@@ -1,23 +1,16 @@
 import React, { useEffect, useState, CSSProperties } from 'react';
-<<<<<<< HEAD
 import { Modal, Button, Input, Form, notification } from 'antd';
 import { fetchUserData, updateMemberData } from '../../services/ProfileAll';
 import { getBranchById } from '../../services/Branches/branches';
-=======
-import { fetchUserData } from '../../services/ProfileAll';
->>>>>>> TAT
 import { UserInfoData } from '../../models/type';
 
 const Profile: React.FC = () => {
   const [userData, setUserData] = useState<UserInfoData | null>(null);
-<<<<<<< HEAD
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [apiErrors, setApiErrors] = useState<Record<string, string[]>>({});
   const [branchName, setBranchName] = useState<string | null>(null);
   const [editData, setEditData] = useState<UserInfoData | null>(null);
 
-=======
->>>>>>> TAT
   const userDataString = localStorage.getItem("userData");
   const userDatas = userDataString ? JSON.parse(userDataString) : null;
   const role = userDatas?.roleName;
@@ -38,7 +31,6 @@ const Profile: React.FC = () => {
     };
 
     getUserData();
-<<<<<<< HEAD
   }, [userDatas?.actorId]);
 
   const handleChange = (field: keyof UserInfoData, value: string) => {
@@ -138,9 +130,6 @@ const Profile: React.FC = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-=======
-  }, [userId]);
->>>>>>> TAT
 
   if (loading) {
     return <div style={styles.loading}>Loading...</div>;
@@ -172,16 +161,9 @@ const Profile: React.FC = () => {
             <h3 style={styles.role}>{role || 'User Role'}</h3>
           </div>
         </div>
-<<<<<<< HEAD
         <div style={styles.profileInfo}>
           <h2 style={styles.greeting}>Xin chào, {userData.memberName || 'Bạn'}!</h2>
           <h4 style={styles.role}>{branchName || 'Rất vui khi được phục vụ bạn'}</h4>
-=======
-
-        {/* User Details */}
-        <div style={styles.userDetails}>
-          <h2>Welcome, {userData.MemberName || 'User Name'}!</h2>
->>>>>>> TAT
         </div>
 
         {/* User Information */}
@@ -191,7 +173,6 @@ const Profile: React.FC = () => {
             <p>{userData.Email || 'user@example.com'}</p>
           </div>
           <div style={styles.infoColumn}>
-<<<<<<< HEAD
             <h4>Số điện thoại:</h4>
             <p>{userData.phoneNumber || '(+00) 0000 0000'}</p>
           </div>
@@ -283,21 +264,6 @@ const Profile: React.FC = () => {
           </Button>
         </div>
       </Modal>
-=======
-            <h4>Phone Number:</h4>
-            <p>{userData.PhoneNumber || '(+00) 0000 0000'}</p>
-          </div>
-          <div style={styles.infoColumn}>
-            <h4>Date of Birth:</h4>
-            <p>{userData.DateOfBirth ? new Date(userData.DateOfBirth).toLocaleDateString() : 'N/A'}</p>
-          </div>
-          <div style={styles.infoColumn}>
-            <h4>Address:</h4>
-            <p>{userData.Address || 'City, Country'}</p>
-          </div>
-        </div>
-      </div>
->>>>>>> TAT
     </main>
   );
 };
@@ -370,7 +336,6 @@ const styles: { [key: string]: CSSProperties } = {
   infoColumn: {
     backgroundColor: '#f1f1f1',
     padding: '10px',
-<<<<<<< HEAD
   },
   editbtn: {
     backgroundColor: '#AA9144',
@@ -380,9 +345,6 @@ const styles: { [key: string]: CSSProperties } = {
     borderRadius: '4px',
     padding: '10px 20px',
     cursor: 'pointer',
-=======
-    borderRadius: '5px',
->>>>>>> TAT
   },
   loading: {
     textAlign: 'center',

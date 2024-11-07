@@ -45,26 +45,12 @@ export const getBranchById = async (id: string): Promise<Branches[]> => {
   }
 };
 
-<<<<<<< HEAD
 // Add a new branch
 export const addBranch = async (branch: Branches): Promise<Branches> => {
   try {
     const response = await axios.post<Branches>(
       "https://api.vol-ka.studio/api/v1/branch/add",
       branch
-=======
-export const addBranch = async (branchData: any) => {
-  const token = getAuthToken();
-  try {
-    const response = await axios.post(
-      "https://api.vol-ka.studio/api/v1/branch/add",
-      branchData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
->>>>>>> TAT
     );
     return response.data;
   } catch (error) {
@@ -72,7 +58,6 @@ export const addBranch = async (branchData: any) => {
     throw error;
   }
 };
-<<<<<<< HEAD
 
 // Update an existing branch by ID
 export const updateBranch = async (
@@ -101,5 +86,3 @@ export const deleteBranch = async (id: string): Promise<void> => {
     throw error;
   }
 };
-=======
->>>>>>> TAT

@@ -11,41 +11,16 @@ import {
   Select,
 } from "antd";
 import type { ColumnsType } from "antd/es/table";
-<<<<<<< HEAD
 import { Services } from "../../models/type";
 
-=======
-import { getAuthToken } from "../../services/authSalon";
-import { SearchOutlined } from "@ant-design/icons";
-
-interface Service {
-  serviceID: string;
-  serviceName: string;
-  type: number;
-  price: number;
-  description: string | null;
-  duration: number;
-  avatarImage: string;
-  delFlg: boolean;
-}
->>>>>>> TAT
 
 const ManagerService: React.FC = () => {
   const [services, setServices] = useState<Services[]>([]);
   const [loading, setLoading] = useState(false);
-<<<<<<< HEAD
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [editingService, setEditingService] = useState<Services | null>(null);
 
-=======
-  const [avatarImage, setSelectedFile] = useState<File | null>(null);
-  const [searchText, setSearchText] = useState<string>("");
-  const [isAddModalVisible, setIsAddModalVisible] = useState(false); // State for modal visibility
-  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
-  const [currentService, setCurrentService] = useState<Service | null>(null);
-  const [form] = Form.useForm(); // Form instance
->>>>>>> TAT
   useEffect(() => {
     fetchServices();
   }, []);
@@ -70,18 +45,10 @@ const ManagerService: React.FC = () => {
       setLoading(false);
     }
   };
-<<<<<<< HEAD
 
   const handleEdit = (service: Services) => {
     setEditingService(service);
     setIsModalVisible(true);
-=======
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files ? event.target.files[0] : null;
-    if (file) {
-      setSelectedFile(file);
-    }
->>>>>>> TAT
   };
   const handleDelete = async (serviceID: string) => {
     try {
@@ -108,7 +75,6 @@ const ManagerService: React.FC = () => {
   const handleAddService = async (values: any) => {
     const { serviceName, type, price, description, duration } = values;
 
-<<<<<<< HEAD
   const handleModalOk = async (values: Partial<Services>) => {
     if (editingService) {
       try {
@@ -135,8 +101,6 @@ const ManagerService: React.FC = () => {
   };
 
   const handleAddModalOk = async (values: Services) => {
-=======
->>>>>>> TAT
     try {
       const token = getAuthToken();
       const formData = new FormData();

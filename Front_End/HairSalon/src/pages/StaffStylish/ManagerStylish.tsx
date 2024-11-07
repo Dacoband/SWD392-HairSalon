@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import { Table, Button, Modal, Input, Form, message, Upload } from "antd";
 import type { ColumnsType } from "antd/es/table";
@@ -82,12 +81,6 @@ const ManagerStylish_staff: React.FC = () => {
 
     </div>
   );
-=======
-import React from "react";
-
-const ManagerStylish: React.FC = () => {
-  return <h2> Profile All</h2>;
->>>>>>> TAT
 };
 
-export default ManagerStylish;
+export default ManagerStylish_staff;
