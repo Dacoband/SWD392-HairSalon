@@ -1,7 +1,7 @@
 import axios from "axios";
-import { Stylish, Branches  } from "../models/type";
+import { Stylish, Branches } from "../models/type";
 // Base URL for the API
-const BASE_URL = 'https://api.vol-ka.studio/api/v1';
+const BASE_URL = "https://api.vol-ka.studio/api/v1";
 
 export const getStylishByBranchID = async (
   branchId: string
@@ -28,14 +28,13 @@ export const getStylishRandom = async (
   }
 };
 
-
 // Function to add a stylist or update if exists by stylist ID
 export const addStylishById = async (
   stylistId: string,
   stylistData: Stylish,
   token: string
 ): Promise<void> => {
-  const url = `${BASE_URL}/stylist/add-or-update/${stylistId}`;
+  const url = `https://api.vol-ka.studio/api/v1/stylist/add`;
 
   try {
     const response = await axios.put(url, stylistData, {
@@ -57,7 +56,7 @@ export const updateStylistById = async (
   stylistData: Stylish,
   token: string
 ): Promise<void> => {
-  const url = `${BASE_URL}/stylist/update/${stylistId}`;
+  const url = `https://api.vol-ka.studio/api/v1/stylist/update/${stylistId}`;
 
   try {
     const response = await axios.put(url, stylistData, {
@@ -73,12 +72,11 @@ export const updateStylistById = async (
   }
 };
 
-// Function to delete a stylist by stylist ID
 export const deleteStylistById = async (
   stylistId: string,
   token: string
-): Promise<void> => {
-  const url = `${BASE_URL}/stylist/delete/${stylistId}`;
+): Promise<string> => {  // Returning a message or status as a string
+  const url = `https://api.vol-ka.studio/api/v1/stylist/delete/${stylistId}`;
 
   try {
     const response = await axios.delete(url, {
@@ -87,19 +85,25 @@ export const deleteStylistById = async (
         "Content-Type": "application/json",
       },
     });
-    console.log("Stylist deleted successfully:", response.data);
-  } catch (error) {
-    console.error("Error deleting stylist:", error);
-    throw error; // Re-throw error for higher-level handling
-  }
-};
-export const getBranchId = async (): Promise<Branches[]> => { // Updated return type
-  const url = `${BASE_URL}/branch/`;
-  try {
-    const response = await axios.get<Branches[]>(url); // Updated type
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching branch data:", error);
-    throw error; // Handle errors as necessary
+
+    if (response.status === 200) {
+      console.log("Stylist deleted successfully:", response.data);
+      return "Stylist deleted successfully";  // Return success message
+    } else {
+      console.warn("Unexpected response status:", response.status);
+      return `Error: Unexpected status ${response.status}`;
+    }
+  } catch (error: any) {
+    // Check if it's an Axios error with a response
+    if (error.response) {
+      console.error("Error deleting stylist:", error.response.data);
+      return `Error deleting stylist: ${error.response.data.message || error.response.data}`;
+    } else if (error.request) {
+      console.error("No response received:", error.request);
+      return "Error deleting stylist: No response from the server.";
+    } else {
+      console.error("Error:", error.message);
+      return `Error: ${error.message}`;
+    }
   }
 };

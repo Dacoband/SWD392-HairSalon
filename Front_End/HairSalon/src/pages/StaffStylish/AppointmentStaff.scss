@@ -1,0 +1,67 @@
+.container {
+    position: relative;
+    padding: 20px;
+  }
+  
+  .appointment-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns per row */
+    gap: 20px; /* Space between the items */
+    margin-bottom: 20px;
+  }
+  
+  .appointment-item {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+    height: 250px; /* Set fixed height for square-like design */
+    overflow: hidden; /* Prevent overflowing content */
+    cursor: pointer;
+  
+    &:hover {
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Hover effect */
+    }
+  }
+  
+  .appointment-info {
+    margin-bottom: 12px;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .appointment-actions {
+    margin-top: auto; /* Push the action buttons to the bottom */
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    position: relative;
+    bottom: 0;
+  }
+  
+  .select-container {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-start;
+  }
+  .container {
+    position: relative;
+    padding-bottom: 50px; /* Adds space for pagination */
+  }
+  
+  .pagination-container {
+    position: absolute;
+    position: relative;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+  }

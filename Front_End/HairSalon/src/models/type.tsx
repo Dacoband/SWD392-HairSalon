@@ -60,7 +60,6 @@ export interface Stylish {
   staffStylistId: string;
   stylistName: string;
   averageRating: number;
-  dateOfBirth: string;
   phoneNumber: string;
   address: string;
   avatarImage: string;

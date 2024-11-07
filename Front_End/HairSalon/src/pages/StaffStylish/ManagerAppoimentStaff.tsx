@@ -1,26 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { Button, Modal, Input, notification } from "antd";
 import {
-  getAppointmentsByCustomer,
-  cancelAppointment,
-  getAllAppointments,
-  getServicesByServiceId,
-  
-} from "../../services/appointmentSalon";
-import { Appointment, Services } from "../../models/type";
+  Button,
+  Modal,
+  Input,
+  notification,
+  message,
+  Select,
+  Pagination,
+} from "antd";
+import { getAppointmentsByCustomer, cancelAppointment, getAllAppointments } from "../../services/appointmentSalon";
+import { Appointment, Services, Stylish, UserInfoData } from "../../models/type";
+import { getStylishByBranchID } from "../../services/Stylish";
+import { getMemberById } from "../../services/ProfileAll"; // Import the getMemberById function
+import "./AppointmentStaff.scss";
+
+const { Option } = Select;
 
 const ManagerAppointmentStaff = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
   const [services, setServices] = useState<Record<string, Services | null>>({});
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
-  const [selectedAppointment, setSelectedAppointment] =
-    useState<Appointment | null>(null);
+  const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
   const [cancelReason, setCancelReason] = useState("");
   const [api, contextHolder] = notification.useNotification();
+  const [stylists, setStylists] = useState<Stylish[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [filteredStatus, setFilteredStatus] = useState<number | null>(null);
+  const [members, setMembers] = useState<Record<string, string>>({}); // State to hold member names
 
+  const appointmentsPerPage = 4;
   const statusMap: { [key: number]: string } = {
     1: "Đã đặt lịch thành công",
     2: "Đã thanh toán",
@@ -28,144 +38,134 @@ const ManagerAppointmentStaff = () => {
     4: "Đã hoàn thành",
   };
 
-  // Fetch appointments on component mount
-  useEffect(() => {
-    const fetchAppointments = async () => {
-      setLoading(true);
-      try {
-        const response = await getAllAppointments();
-        if (Array.isArray(response)) {
-          setAppointments(response);
-        } else {
-          setError("Invalid response format for appointments.");
-        }
-      } catch (err) {
-        setError("Failed to fetch appointments.");
-      } finally {
-        setLoading(false);
+  const fetchStylists = async () => {
+    setLoading(true);
+    try {
+      const branchId = localStorage.getItem("branchId");
+      if (branchId) {
+        const fetchedStylists = await getStylishByBranchID(branchId);
+        setStylists(fetchedStylists);
+        await fetchAppointments(fetchedStylists.map((s) => s.stylistId));
+      } else {
+        message.error("Branch ID not found. User may not be logged in.");
       }
-    };
+    } catch (error) {
+      console.error("Failed to fetch stylists:", error);
+      message.error("Failed to fetch stylists");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchAppointments();
+  const fetchAppointments = async (stylistIds: string[]) => {
+    try {
+      const allAppointments = await getAllAppointments();
+      const filteredAppointments = allAppointments.filter(
+        (appointment: Appointment) => stylistIds.includes(appointment.stylistId)
+      );
+      setAppointments(filteredAppointments);
+  
+      // Fetch member names separately
+      await fetchMemberNames(filteredAppointments);
+    } catch (error) {
+      console.error("Failed to fetch appointments:", error);
+      message.error("Failed to fetch appointments");
+    }
+  };
+
+  const fetchMemberNames = async (appointments: Appointment[]) => {
+    try {
+      for (const appointment of appointments) {
+        const memberId = appointment.customerId;
+        console.log(`Fetching member data for customerId: ${memberId}`);
+        const member = await getMemberById(memberId);
+        setMembers((prev) => ({
+          ...prev,
+          [appointment.customerId]: member.MemberName, 
+        }));
+      }
+    } catch (error) {
+      console.error("Failed to fetch member names:", error);
+      message.error("Failed to fetch member names");
+    }
+  };
+  
+  useEffect(() => {
+    fetchStylists();
   }, []);
 
-  // Fetch services for each appointment
   useEffect(() => {
-    const fetchAllServiceDetails = async () => {
-      const newServices: Record<string, Services | null> = {};
-
-      const servicePromises = appointments.flatMap(
-        (appointment) =>
-          appointment.sevicesList?.map(async (service) => {
-            if (service.serviceId && !services[service.serviceId]) {
-              try {
-                const serviceData = await getServicesByServiceId(
-                  service.serviceId
-                );
-                newServices[service.serviceId] = serviceData;
-              } catch {
-                console.error(
-                  `Failed to fetch service details for ID: ${service.serviceId}`
-                );
-              }
-            }
-          }) ?? []
-      );
-
-      await Promise.all(servicePromises);
-      setServices((prevServices) => ({ ...prevServices, ...newServices }));
-    };
-
     if (appointments.length > 0) {
-      fetchAllServiceDetails();
+      fetchMemberNames(appointments);
     }
-  }, [appointments]);
+  }, [appointments]); // Ensure member names are fetched when appointments change
 
-  const showServiceModal = (appointment: Appointment) => {
-    setSelectedAppointment(appointment);
-    setIsServiceModalOpen(true);
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
   };
 
-  const showCancelModal = (appointment: Appointment) => {
-    setSelectedAppointment(appointment);
-    setIsCancelModalOpen(true);
+  const handleStatusFilterChange = (value: number | null) => {
+    setFilteredStatus(value);
+    setCurrentPage(1);
   };
 
-  const handleServiceModalOk = () => {
-    setIsServiceModalOpen(false);
-    setSelectedAppointment(null);
-  };
+  const filteredAppointments = appointments.filter((appointment) =>
+    filteredStatus !== null ? appointment.status === filteredStatus : true
+  );
 
-  const handleCancelModalOk = async () => {
-    if (!selectedAppointment) return;
-
-    try {
-      await cancelAppointment(selectedAppointment.appointmentId, cancelReason);
-      api.success({
-        message: "Hủy thành công",
-        description: "Lịch hẹn đã được hủy thành công.",
-      });
-
-      setAppointments((prev) =>
-        prev.map((appointment) =>
-          appointment.appointmentId === selectedAppointment.appointmentId
-            ? { ...appointment, status: 3 }
-            : appointment
-        )
-      );
-    } catch (error) {
-      api.error({
-        message: "Lỗi hủy",
-        description: "Đã có lỗi xảy ra khi hủy lịch hẹn.",
-      });
-    } finally {
-      setIsCancelModalOpen(false);
-      setSelectedAppointment(null);
-      setCancelReason("");
-    }
-  };
-
-  const handleCancelModalCancel = () => {
-    setIsCancelModalOpen(false);
-    setSelectedAppointment(null);
-    setCancelReason("");
-  };
+  const paginatedAppointments = filteredAppointments.slice(
+    (currentPage - 1) * appointmentsPerPage,
+    currentPage * appointmentsPerPage
+  );
 
   return (
-    <div className="container">
+    <div className="container position: relative;">
       {contextHolder}
-      {appointments.length > 0 ? (
+
+      {/* Status Filter */}
+      <Select
+        placeholder="Filter by status"
+        onChange={handleStatusFilterChange}
+        value={filteredStatus} // Set the current selection in the dropdown
+        style={{ marginBottom: 16, width: 200 }}
+      >
+        <Option value={null}>Tất cả các lịch hẹn</Option>
+        {Object.entries(statusMap).map(([key, value]) => (
+          <Option key={key} value={Number(key)}>
+            {value}
+          </Option>
+        ))}
+      </Select>
+
+      {/* Appointment List */}
+      {paginatedAppointments.length > 0 ? (
         <ul className="appointment-list">
-          {appointments.map((appointment) => (
+          {paginatedAppointments.map((appointment) => (
             <li key={appointment.appointmentId} className="appointment-item">
               <div className="appointment-info">
-                <strong>Tổng thiệt hại:</strong> {appointment.totalPrice} VND
+                <strong>Tổng tiền:</strong> {appointment.totalPrice} VND
               </div>
               <div className="appointment-info">
-                <strong>Trạng Thái:</strong>{" "}
+                <strong>Trạng Thái:</strong>
                 {statusMap[appointment.status] || "Unknown"}
               </div>
               <div className="appointment-info">
-                <strong>Start Time:</strong>{" "}
-                {new Date(appointment.startTime).toLocaleString()}
+                <strong>Start Time:</strong> {new Date(appointment.startTime).toLocaleString()}
               </div>
               <div className="appointment-info">
-                <strong>End Time:</strong>{" "}
-                {new Date(appointment.endTime).toLocaleString()}
+                <strong>End Time:</strong> {new Date(appointment.endTime).toLocaleString()}
               </div>
+
+              {/* Display member name */}
+              {members[appointment.customerId] && (
+                <div className="appointment-info">
+                  <strong>Member Name:</strong> {members[appointment.customerId]}
+                </div>
+              )}
+
               <div className="appointment-actions">
-                <Button
-                  type="primary"
-                  onClick={() => showServiceModal(appointment)}
-                >
-                  Xem dịch vụ
-                </Button>
-                {appointment.status === 1 && (
-                  <Button
-                    type="default"
-                    danger
-                    onClick={() => showCancelModal(appointment)}
-                  >
+                {(appointment.status === 1 || appointment.status === 2) && (
+                  <Button type="default" danger>
                     Hủy lịch
                   </Button>
                 )}
@@ -176,31 +176,16 @@ const ManagerAppointmentStaff = () => {
       ) : (
         <p>Không có lịch hẹn nào.</p>
       )}
-      <Modal
-        title="Xem dịch vụ"
-        open={isServiceModalOpen}
-        onOk={handleServiceModalOk}
-        onCancel={() => setIsServiceModalOpen(false)}
-      >
-        {selectedAppointment?.sevicesList?.map((service) => (
-          <div key={service.serviceId}>
-            <strong>{services[service.serviceId]?.serviceName}</strong>
-            <p>{services[service.serviceId]?.description}</p>
-          </div>
-        ))}
-      </Modal>
-      <Modal
-        title="Lý do hủy lịch"
-        open={isCancelModalOpen}
-        onOk={handleCancelModalOk}
-        onCancel={handleCancelModalCancel}
-      >
-        <Input.TextArea
-          placeholder="Nhập lý do hủy"
-          value={cancelReason}
-          onChange={(e) => setCancelReason(e.target.value)}
+
+      {/* Pagination */}
+      <div className="pagination-container" style={{ position: "absolute" }}>
+        <Pagination
+          current={currentPage}
+          pageSize={appointmentsPerPage}
+          total={filteredAppointments.length}
+          onChange={handlePageChange}
         />
-      </Modal>
+      </div>
     </div>
   );
 };
