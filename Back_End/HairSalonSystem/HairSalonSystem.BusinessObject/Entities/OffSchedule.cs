@@ -13,6 +13,9 @@ namespace HairSalonSystem.BusinessObject.Entities
         [BsonId]
         [BsonRepresentation(BsonType.String)]
         public Guid OffScheduleId { get; set; }
+        [BsonElement]
+        [BsonRepresentation(BsonType.String)]
+        public Guid StylistId { get; set; }
 
         [BsonElement]
         [BsonRepresentation(BsonType.DateTime)]

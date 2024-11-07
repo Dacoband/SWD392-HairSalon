@@ -1,4 +1,8 @@
-﻿using System;
+﻿using HairSalonSystem.BusinessObject.Entities;
+using HairSalonSystem.Services.PayLoads.Requests.OffSchedule;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +12,7 @@ namespace HairSalonSystem.Services.Interfaces
 {
     public interface IOffScheduleService
     {
+        Task<ActionResult<OffSchedule>> CreateOffSchedule(CreateOffScheduleRequest request, HttpContext context);
+
     }
 }

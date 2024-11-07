@@ -135,8 +135,11 @@
             public const string CreateRight = "Bạn không có quyền thay đổi mức lương";
             public const string NotFound = "Không tìm thấy mức lương";
             public const string NotRight = "Bạn không có quyền truy cập các mức lương";
+        }
 
-
+        public static class OffScheduleMessage
+        {
+            public const string CreateRight = "Bạn không có quyền tạo lịch nghỉ";
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HairSalonSystem.Services.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,8 @@ namespace HairSalonSystem.Services.PayLoads.Requests.OffSchedule
 {
     public class CreateOffScheduleRequest
     {
+        public Guid StylistId { get; set; } 
         public DateOnly OffDate {  get; set; }
-        public int OffSlot { get; set; }    
+        public SlotEnum OffSlot { get; set; }    
     }
 }
