@@ -66,12 +66,12 @@ const LayoutSA: React.FC = () => {
           className="h-full bg-[#c89c47]"
           breakpoint="lg"
           collapsedWidth="0"
-          onBreakpoint={(broken) => {
-            console.log(broken);
-          }}
-          onCollapse={(collapsed, type) => {
-            console.log(collapsed, type);
-          }}
+          // onBreakpoint={(broken) => {
+          //   console.log(broken);
+          // }}
+          // onCollapse={(collapsed, type) => {
+          //   console.log(collapsed, type);
+          // }}
         >
           <div className="mt-10">
             <FaCircleUser className="text-white mx-auto " size={70} />
