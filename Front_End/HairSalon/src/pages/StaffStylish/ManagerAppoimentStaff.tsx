@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import { Table, Button, Modal, Input, notification, message, Select, Pagination } from "antd";
 import { getAppointmentsByCustomer, cancelAppointment, getAllAppointments } from "../../services/appointmentSalon";
@@ -192,6 +193,12 @@ const ManagerAppointmentStaff = () => {
       </div>
     </div>
   );
+=======
+import React from "react";
+
+const ManagerAppoimentStaff = () => {
+  return <h2> Profile All</h2>;
+>>>>>>> TAT
 };
 
-export default ManagerAppointmentStaff;
+export default ManagerAppoimentStaff;

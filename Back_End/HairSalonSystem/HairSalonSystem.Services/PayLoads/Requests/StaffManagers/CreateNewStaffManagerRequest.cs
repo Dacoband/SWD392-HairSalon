@@ -24,7 +24,7 @@ namespace HairSalonSystem.Services.PayLoads.Requests.StaffManagers
 
         [BsonElement("branchID")]
         [BsonRepresentation(BsonType.String)] // BranchID stored as string in MongoDB
-        public Guid BranchID { get; set; }
+        public Guid? BranchID { get; set; }
 
         [Required(ErrorMessage = "Member name is required")]
         [StringLength(100, ErrorMessage = "Member name must be less than 100 characters")]

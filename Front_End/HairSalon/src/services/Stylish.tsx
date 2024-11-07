@@ -1,7 +1,11 @@
 import axios from "axios";
+<<<<<<< HEAD
 import { Stylish, Branches } from "../models/type";
 // Base URL for the API
 const BASE_URL = "https://api.vol-ka.studio/api/v1";
+=======
+import { Stylish } from "../models/type";
+>>>>>>> TAT
 
 export const getStylishByBranchID = async (
   branchId: string
@@ -27,6 +31,7 @@ export const getStylishRandom = async (
     throw error;
   }
 };
+<<<<<<< HEAD
 
 // Function to add a stylist or update if exists by stylist ID
 export const addStylishById = async (
@@ -107,3 +112,5 @@ export const deleteStylistById = async (
     }
   }
 };
+=======
+>>>>>>> TAT

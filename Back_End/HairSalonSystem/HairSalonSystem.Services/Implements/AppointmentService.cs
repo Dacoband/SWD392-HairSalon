@@ -1,9 +1,6 @@
 ﻿using Amazon.Runtime.Internal;
 using Amazon.Runtime.Internal.Util;
-<<<<<<< HEAD
-=======
 using Firebase.Auth;
->>>>>>> Thaiyud
 using HairSalonSystem.BusinessObject.Entities;
 using HairSalonSystem.Repositories.Interface;
 using HairSalonSystem.Services.Constant;
@@ -34,16 +31,10 @@ namespace HairSalonSystem.Services.Implements
         private readonly IBranchRespository _branchRepository;
         private readonly IAppointmentServiceRepository _appointmentServiceRepository;
         private readonly IMongoClient _mongoClient;
-<<<<<<< HEAD
-
-        public AppointmentService(IAppointmentRepository appointmentRepository, IStylistRepository stylistRepository, IServiceRepository serviceRepository
-, IAppointmentServiceRepository appointmentServiceRepository, IMongoClient mongoClient
-=======
         private readonly IMemberRepository _memberRepository;
 
         public AppointmentService(IAppointmentRepository appointmentRepository, IStylistRepository stylistRepository, IServiceRepository serviceRepository
 , IAppointmentServiceRepository appointmentServiceRepository, IMongoClient mongoClient, IMemberRepository memberRepository
->>>>>>> Thaiyud
 )
         {
             _mongoClient = mongoClient; 
@@ -51,10 +42,7 @@ namespace HairSalonSystem.Services.Implements
             _stylistRepository = stylistRepository;
             _serviceRepository = serviceRepository;
             _appointmentServiceRepository = appointmentServiceRepository;
-<<<<<<< HEAD
-=======
             _memberRepository = memberRepository;
->>>>>>> Thaiyud
 
         }
         public async Task<ActionResult<BusinessObject.Entities.Appointment>> CreateAppointment(CreateAppointmentRequest request, HttpContext context)
@@ -86,11 +74,7 @@ namespace HairSalonSystem.Services.Implements
             {
                 AppointmentId = Guid.NewGuid(),
                 TotalPrice = 0,
-<<<<<<< HEAD
-                CustomerId = (Guid)accountID,
-=======
                 CustomerId = (Guid)member.MemberId,
->>>>>>> Thaiyud
                 Status = 1,
                 InsDate = DateTime.Now,
                 UpDate = DateTime.Now
@@ -244,15 +228,6 @@ namespace HairSalonSystem.Services.Implements
                     StatusCode = StatusCodes.Status403Forbidden
                 };
             }
-<<<<<<< HEAD
-
-            // Fetch all appointments from the repository
-            var appointmentList = await _appointmentRepository.GetAllAppointment();
-
-            // Apply filters based on query parameters
-            if (query.BranchId != null)
-            {
-=======
 
             var roleName = UserUtil.GetRoleName(context);
             if(roleName == "MB")
@@ -275,7 +250,6 @@ namespace HairSalonSystem.Services.Implements
             // Apply filters based on query parameters
             if (query.BranchId != null)
             {
->>>>>>> Thaiyud
                 var stylistList = await _stylistRepository.GetStylistByBranchId((Guid)query.BranchId);
                 var stylistIds = stylistList.Select(stylist => stylist.StylistId).ToList();
                 appointmentList = appointmentList.Where(x => stylistIds.Contains(x.StylistId)).ToList();
@@ -295,29 +269,20 @@ namespace HairSalonSystem.Services.Implements
             {
                 appointmentList = appointmentList.Where(x => x.Status == query.Status).ToList();
             }
-
             if (query.StartTime.HasValue)
             {
-<<<<<<< HEAD
-                appointmentList = appointmentList.Where(x => x.StartTime >= query.StartTime).ToList();
-=======
                 var queryDate = query.StartTime.Value.Date; 
                 appointmentList = appointmentList
                     .Where(x => x.StartTime.Date == queryDate && x.StartTime >= query.StartTime)
                     .ToList();
->>>>>>> Thaiyud
             }
 
             if (query.EndTime.HasValue)
             {
-<<<<<<< HEAD
-                appointmentList = appointmentList.Where(x => x.EndTime <= query.EndTime).ToList();
-=======
                 var queryDate = query.StartTime.Value.Date; 
                 appointmentList = appointmentList
                     .Where(x => x.EndTime.Date == queryDate && x.EndTime <= query.EndTime)
                     .ToList();
->>>>>>> Thaiyud
             }
 
             if (query.pageIndex.HasValue && query.pageSize.HasValue)
@@ -394,67 +359,6 @@ namespace HairSalonSystem.Services.Implements
                 };
             }
 
-<<<<<<< HEAD
-=======
-            // Create AppointmentResponse objects asynchronously
-            var result = await Task.WhenAll(appointmentList.Select(async s => new AppointmentResponse
-            {
-                AppointmentId = s.AppointmentId,
-                CustomerId = s.CustomerId,
-                StylistId = s.StylistId,
-                Status = s.Status,
-                TotalPrice = s.TotalPrice,
-                InsDate = s.InsDate,
-                UpDate = s.UpDate,
-                StartTime = s.StartTime,
-                EndTime = s.EndTime,
-                SevicesList = await _appointmentServiceRepository.GetByAppointmentId(s.AppointmentId),
-            }));
-            return new OkObjectResult(result);
-
-
-        }
-
-        public async Task<ActionResult<List<DateTime>>> GetSuitableSlot(QuerySlot request, HttpContext context)
-        {
-            var accountID = UserUtil.GetAccountId(context);
-            if (accountID == null)
-            {
-                return new ObjectResult(MessageConstant.AppointmentMessage.NotRight)
-                {
-                    StatusCode = StatusCodes.Status403Forbidden
-                };
-            }
-
-            // Initiate schedule
-            DateTime startOfDay = request.date.Date.AddHours(8); 
-            DateTime endOfDay = request.date.Date.AddHours(17);
-            //validate service and initiate duration
-            var duration = 0;
-            foreach(var service in request.ServiceId)
-            {
-                var existingService = await _serviceRepository.GetServiceById(service);
-                if (existingService == null) {
-                    return new ObjectResult(MessageConstant.ServiceMessage.NotFound)
-                    {
-                        StatusCode = StatusCodes.Status404NotFound
-                    };
-
-                }
-                duration += existingService.Duration;
-
-            }
-            //validate stylist
-            var existStylist = await _stylistRepository.GetStylistById(request.StylistId);
-            if (existStylist == null)
-            {
-                return new ObjectResult(MessageConstant.StylistMessage.StylistNotFound)
-                {
-                    StatusCode = StatusCodes.Status404NotFound
-                };
-            }
-
->>>>>>> Thaiyud
             QueryAppointment queryAppointment = new QueryAppointment()
             {
                 StylistId = request.StylistId,
@@ -464,11 +368,7 @@ namespace HairSalonSystem.Services.Implements
             };
             // Get stylist appointment
             var appointmentList = await _appointmentRepository.GetAllAppointment();
-<<<<<<< HEAD
             var existingAppointments =  appointmentList.Where(x => x.StylistId == request.StylistId && x .Status == 2 && x.StartTime >= startOfDay).ToList();
-=======
-            var existingAppointments =  appointmentList.Where(x => x.StylistId == request.StylistId && (x .Status == 2 || x.Status == 1) && x.StartTime >= startOfDay).ToList();
->>>>>>> Thaiyud
             
             // Innitiate slot
             List<DateTime> allTimeSlots = Enumerable.Range(0, 11)
@@ -483,12 +383,6 @@ namespace HairSalonSystem.Services.Implements
 
             foreach (var appointment in existingAppointments)
             {
-<<<<<<< HEAD
-
-                // Remove appointment from available
-                availableTimeSlots.RemoveAll(slot =>
-                    slot.Hour >= appointment.StartTime.Hour && slot.Hour < appointment.EndTime.Hour);
-=======
                 // Remove appointment from available
                 if (appointment.EndTime.Minute == 0)
                 {
@@ -506,7 +400,6 @@ namespace HairSalonSystem.Services.Implements
                         (slot.Hour == appointment.EndTime.Hour && slot.Minute <= appointment.EndTime.Minute));
                 }
 
->>>>>>> Thaiyud
             }
 
             // Filter duration
@@ -517,18 +410,10 @@ namespace HairSalonSystem.Services.Implements
                 var slot = availableTimeSlots[i];
                 DateTime endServiceTime = slot.AddMinutes(duration); 
 
-<<<<<<< HEAD
-                if (endServiceTime <= endOfDay)
-                {
-                    if (i < availableTimeSlots.Count - 1)
-                    {
-                        DateTime nextSlot = availableTimeSlots.Find(x => x.Hour == endServiceTime.Hour);
-=======
                
                     if (i < availableTimeSlots.Count - 1)
                     {
                         DateTime nextSlot = availableTimeSlots.Find(x => x.Hour == endServiceTime.Hour );
->>>>>>> Thaiyud
                         if (nextSlot != default) 
                         {
                             suitableTimeSlots.Add(slot);
@@ -539,11 +424,6 @@ namespace HairSalonSystem.Services.Implements
                         suitableTimeSlots.Add(slot);
                     }
                 }
-<<<<<<< HEAD
-            }
-
-            return new ObjectResult(suitableTimeSlots);
-=======
             
 
             return new ObjectResult(suitableTimeSlots);
@@ -568,7 +448,7 @@ namespace HairSalonSystem.Services.Implements
                 {
                     return new ObjectResult(MessageConstant.ServiceMessage.NotFound)
                     {
-                        StatusCode = StatusCodes.Status404NotFound
+                        StatusCode = StatusCodes.Status403Forbidden
                     };
 
                 }
@@ -586,7 +466,6 @@ namespace HairSalonSystem.Services.Implements
 
 
             return new OkObjectResult(stylistList[0]);
->>>>>>> Thaiyud
         }
 
         public async Task<ActionResult> UpdateAppointmentStatus(Guid appointmentId, int status, HttpContext context)

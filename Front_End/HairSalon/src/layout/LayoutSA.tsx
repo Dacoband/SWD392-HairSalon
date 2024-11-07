@@ -20,6 +20,32 @@ const SidebarData = [
     heading: "Quản lí khu vực",
     navigate: "/ManagerBranch_AD",
   },
+  {
+    icon: ShoppingCartOutlined,
+    heading: "Quản lí nhân viên",
+    navigate: "/ManagerStaff_AD",
+  },
+  {
+    icon: ShoppingCartOutlined,
+    heading: "Quản lí lịch hẹn",
+    navigate: "/ManagerAppointment_AD",
+  },
+  {
+    icon: ShoppingCartOutlined,
+    heading: "Bảng thống kê",
+    navigate: "/ManagerChart_AD",
+  },
+
+  {
+    icon: ShoppingCartOutlined,
+    heading: "Quản lí nhà tạo mẫu",
+    navigate: "/ManagerStylist_AD",
+  },
+  {
+    icon: ShoppingCartOutlined,
+    heading: "Nhân viên tạo mẫu",
+    navigate: "/ManagerStaffStylist_AD",
+  },
 ];
 
 const LayoutSA: React.FC = () => {
@@ -40,12 +66,12 @@ const LayoutSA: React.FC = () => {
           className="h-full bg-[#c89c47]"
           breakpoint="lg"
           collapsedWidth="0"
-          onBreakpoint={(broken) => {
-            console.log(broken);
-          }}
-          onCollapse={(collapsed, type) => {
-            console.log(collapsed, type);
-          }}
+          // onBreakpoint={(broken) => {
+          //   console.log(broken);
+          // }}
+          // onCollapse={(collapsed, type) => {
+          //   console.log(collapsed, type);
+          // }}
         >
           <div className="mt-10">
             <FaCircleUser className="text-white mx-auto " size={70} />
@@ -61,7 +87,7 @@ const LayoutSA: React.FC = () => {
           />
         </Sider>
         <Layout>
-          <Content className="p-6 bg-gray-100">
+          <Content className="p-6 bg-gray-100 overflow-y-auto h-full">
             <Outlet />
           </Content>
         </Layout>

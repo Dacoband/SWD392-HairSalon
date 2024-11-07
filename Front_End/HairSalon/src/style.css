@@ -1,0 +1,111 @@
+/* Ẩn thanh gạch chân */
+.ant-tabs-ink-bar {
+    /* display: none; */
+   
+        background-color: black !important; /* Đổi màu gạch chân thành đen */
+      
+  }
+/* Thay đổi màu nút khi tab được chọn */
+.ant-tabs-tab-active .ant-btn {
+  padding-top:20px !important;
+  padding-bottom:20px !important;
+    background-color: black; /* Thay đổi màu nền thành trắng */
+    color: white; /* Đổi màu chữ thành đen để dễ nhìn */
+    /* border: 1px solid black; Tạo viền đen cho nút */
+  }
+  
+  .ant-btn:hover {
+    background-color: black !important; /* Giữ nguyên màu nền đen khi hover */
+    color: white !important; /* Giữ màu chữ trắng khi hover */
+    border-color: black !important; /* Giữ viền đen khi hover */
+    /* padding-top:20px !important;
+  padding-bottom:20px !important; */
+  }   
+  
+  .custom-dot .ant-steps-icon-dot {
+    background-color: White!important; /* Đặt màu nền của dot thành màu đỏ */
+    width: 15px  !important;/* Tăng kích thước dot */
+     height: 15px !important; /*Tăng kích thước dot  */
+     display: flex !important;
+     align-items: center !important;
+     justify-content: center !important;
+     border-radius: 100%  !important; /* Đảm bảo dot vẫn là hình tròn */
+     margin-left: 20px !important;
+     margin-right: 20px;
+   
+  }
+  .custom-dot .ant-steps-item-finish .ant-steps-item-tail::after {
+    background-color: #EDDBA5 !important; /* Đặt màu của đường kẻ thành màu đỏ */
+    height: 5px;
+    /* margin:0 100px !important; */
+   
+   
+  }
+  .custom-dot .ant-steps-item-title {
+    color: white !important; /* Đặt màu của title thành màu trắng */
+    font-size: 15px !important;
+    font-weight: 600;
+    
+  }
+  
+  .custom-dot .ant-steps-item-description {
+    color: lightgray !important; /* Đặt màu của description thành màu xám nhạt */
+    font-weight: 500;
+  }
+  /* .custom-dot .ant-steps-icon {
+    width: 50px; 
+    height: 50px; 
+    font-size: 30px; 
+  } */
+  
+
+  .custom-dot .ant-steps-item-icon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .custom-dot .ant-steps-item-wait .ant-steps-item-tail::after {
+    background-color: white !important; /* Đặt màu của đường kẻ thành màu trắng */
+  }
+  .custom-dot .ant-steps-item-process .ant-steps-item-tail::after {
+    background-color: white !important; /* Đặt màu của đường kẻ khi bước đang trong trạng thái hoạt động */
+  }
+
+
+
+  .custom-select .ant-select-selector {
+    font-size: 22px !important;
+    height: 60px !important;
+    padding: 20px 0px !important ;
+    display: flex;
+    align-items: center; 
+  }
+  
+  .custom-select .ant-select-selection-search-input {
+    font-size: 24px !important; 
+    padding:10px !important;
+  }
+  .custom-select .ant-select-selection-item {
+    font-size: 24px !important; /* Tăng kích thước chữ sau khi chọn */
+    padding: 8px !important; /* Tăng khoảng cách giữa chữ và viền */
+  }
+  
+  .line-clamp {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; 
+    overflow: hidden; 
+  }
+
+/* Thêm vào file CSS của bạn */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 2px !important; 
+}
+.custom-menu .ant-menu-item-selected {
+  background-color: #b78c39 !important; /* Change this to your desired color */
+  color: white !important; /* Change this to your desired text color */
+}
+
+.custom-menu .ant-menu-item:hover {
+  background-color: #b78c39 !important; /* Change this to your desired hover color */
+}

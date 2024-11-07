@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Appointment, Services} from "../models/type";
+import { Appointment} from "../models/type";
 export const getAppointmentsByCustomer = async (customerId: string): Promise<Appointment[] | string> => {
   try {
     const response = await axios.get(`https://api.vol-ka.studio/api/v1/appointment/get-all?CustomerId=${customerId}`, {
@@ -15,9 +15,14 @@ export const getAppointmentsByCustomer = async (customerId: string): Promise<App
       if (error.response && error.response.status === 403) {
         console.warn("Access forbidden. Response body:", error.response.data);
 
+<<<<<<< HEAD
         return error.response.data as string; 
       } else if (error.response && error.response.status === 404) {
         return error.response.data as string;
+=======
+        // Return the response body when a 403 error occurs
+        return error.response.data as string; // Return the response body as a string
+>>>>>>> TAT
       } else {
         console.error("Error fetching appointments:", error);
       }
@@ -48,46 +53,3 @@ export const getAppointmentsByCustomer = async (customerId: string): Promise<App
       throw new Error("Failed to cancel appointment");
     }
   };
-
-  // Fetch all appointments without filtering by customer ID
-export const getAllAppointments = async (): Promise<Appointment[]> => {
-  try {
-    const response = await axios.get(
-      `https://api.vol-ka.studio/api/v1/appointment/get-all`,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
-
-    return response.data as Appointment[];
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      if (error.response && error.response.status === 403) {
-        console.warn("Access forbidden. Response body:", error.response.data);
-        throw new Error("Access forbidden.");
-      } else {
-        console.error("Error fetching all appointments:", error.message);
-      }
-    } else {
-      console.error("Unexpected error:", error);
-    }
-    throw new Error("Failed to fetch all appointments");
-  }
-};
-
-export const getServicesByServiceId = async (serviceId: string): Promise<Services | null> => {
-  try {
-    const response = await axios.get(`https://api.vol-ka.studio/api/v1/service/get/${serviceId}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-
-    return response.data as Services;
-  } catch (error) {
-    console.error("Error fetching service by ID:", error);
-    return null; // Return null if the service cannot be fetched
-  }
-};

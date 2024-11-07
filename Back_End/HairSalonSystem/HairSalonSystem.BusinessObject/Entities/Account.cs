@@ -34,12 +34,12 @@ namespace HairSalonSystem.BusinessObject.Entities
         public string Password { get; set; }
 
         [BsonElement("insDate")]
-        public DateTime InsDate { get; set; }
+        public DateTime? InsDate { get; set; }
 
         [BsonElement("updDate")]
-        public DateTime UpdDate { get; set; }
+        public DateTime? UpdDate { get; set; }
 
         [BsonElement("delFlg")]
-        public bool DelFlg { get; set; }
+        public bool? DelFlg { get; set; }
     }
 }

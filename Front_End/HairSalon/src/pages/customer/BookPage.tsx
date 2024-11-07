@@ -7,7 +7,7 @@ import { RiMapPinUserFill } from "react-icons/ri";
 import { MdAccessTimeFilled } from "react-icons/md";
 
 import { SearchOutlined } from "@ant-design/icons";
-import "../../App.css";
+import "../../style.css";
 import { Select } from "antd";
 import { MdAddBox } from "react-icons/md";
 import { FaCheckSquare } from "react-icons/fa";

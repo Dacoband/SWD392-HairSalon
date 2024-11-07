@@ -13,12 +13,8 @@ namespace HairSalonSystem.Services.Interfaces
         Task<ActionResult> UpdateAppointmentStatus(Guid appointmentId,int status, HttpContext context);
         Task<ActionResult<List<AppointmentResponse>>> GetAppointmentList(QueryAppointment query, HttpContext context);
         Task<ActionResult<List<DateTime>>> GetSuitableSlot(QuerySlot request, HttpContext context);
-<<<<<<< HEAD
-        
-=======
         Task<ActionResult<Stylist>> GetSuitableStylist(QueryStylist query, HttpContext context);
 
 
->>>>>>> Thaiyud
     }
 }

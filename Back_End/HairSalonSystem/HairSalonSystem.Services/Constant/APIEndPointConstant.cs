@@ -101,11 +101,8 @@
             public const string UpdateAppointment = AppointmentEndpoint + "/update/{id}";
             public const string GetAllAppointment = AppointmentEndpoint + "/get-all";
             public const string GetSuitableSlot = AppointmentEndpoint + "/get-slot";
-<<<<<<< HEAD
-=======
             public const string GetAvailableStylist = AppointmentEndpoint + "/get-available-stylist";
 
->>>>>>> Thaiyud
         }
 
         public static class CancelAppointment
