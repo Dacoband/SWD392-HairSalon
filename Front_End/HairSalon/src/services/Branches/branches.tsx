@@ -27,16 +27,10 @@ export const getBranchesAll = async (): Promise<Branches[]> => {
   }
 };
 
-export const getBranchById = async (id: string): Promise<Branches[]> => {
-  const token = getAuthToken();
+export const getBranchById = async (id: string): Promise<Branches> => {
   try {
-    const response = await axios.get<Branches[]>(
-      `https://api.vol-ka.studio/api/v1/branch/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+    const response = await axios.get<Branches>(
+      `https://api.vol-ka.studio/api/v1/branch/${id}`
     );
     return response.data;
   } catch (error) {
