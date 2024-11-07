@@ -33,20 +33,18 @@ public class PaymentService
         {
             throw new Exception($"Appointment với ID {appointmentId} không tồn tại.");
         }
-        
-
+        var appoID = appointment.AppointmentId.ToString();
         long orderCode = DateTimeOffset.Now.ToUnixTimeMilliseconds();
         ItemData item = new ItemData($"Dịch vụ cuộc hẹn {appointment.AppointmentId.ToString().Substring(0, 4)}", 1, (int)appointment.TotalPrice);
         List<ItemData> items = new List<ItemData> { item };
         string description = "Thanh";
-
         PaymentData paymentData = new PaymentData(
              orderCode,
              (int)appointment.TotalPrice,
              description,  
              items,
-             "https://localhost:7072/api/Payment/cancel",
-             "https://localhost:7072/api/Payment/success"
+             $"https://localhost:7072/api/Payment/cancel?appointmentId={appoID}",
+             $"https://localhost:7072/api/Payment/success?appointmentId={appoID}"
         );
 
         // Gửi yêu cầu tạo liên kết thanh toán

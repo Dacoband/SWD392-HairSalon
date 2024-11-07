@@ -43,7 +43,7 @@ public class PaymentController : ControllerBase
             var paymentResult = await _paymentService.CreatePaymentLinkForAppointment(appointmentId);
 
             // Trả về `paymentLinkId` và `checkoutUrl`
-            return Ok(new { paymentLink = paymentResult.checkoutUrl, paymentLinkId = paymentResult.paymentLinkId });
+            return Ok(new { paymentLink = paymentResult.checkoutUrl, paymentLinkId = paymentResult.paymentLinkId, appointmentId });
         }
         catch (Exception ex)
         {
@@ -128,7 +128,7 @@ public class PaymentController : ControllerBase
         }
     }
     [HttpGet("success")]
-    public async Task<IActionResult> PaymentSuccess([FromQuery] string id, [FromQuery] string status)
+    public async Task<IActionResult> PaymentSuccess([FromQuery] string id, [FromQuery] string status, [FromQuery] string appointmentId)
     {
         // Log the PaymentLinkId value
         Console.WriteLine($"Received PaymentLinkId: {id}");
@@ -206,10 +206,12 @@ public class PaymentController : ControllerBase
            [FromQuery] string status,
            [FromQuery] string code,
            [FromQuery] string cancel,
-           [FromQuery] string orderCode)
+           [FromQuery] string orderCode,
+           [FromQuery] string  appointmentId)
     {
         // Log the PaymentLinkId value
         Console.WriteLine($"Received PaymentLinkId: {id}");
+        Console.WriteLine($"Received AppointmentId: {appointmentId}");
 
         // Retrieve payment information using the PaymentLinkId
         var payment = await _paymentRepository.GetPaymentByPaymentLinkId(id);
@@ -248,7 +250,7 @@ public class PaymentController : ControllerBase
                 }
             }
 
-            return Ok(new { message = "Thanh toán đã bị hủy và email đã được gửi", id, status });
+            return Ok(new { message = "Thanh toán đã bị hủy và email đã được gửi", id, status, });
         }
 
         return BadRequest(new { message = "Yêu cầu không hợp lệ" });
