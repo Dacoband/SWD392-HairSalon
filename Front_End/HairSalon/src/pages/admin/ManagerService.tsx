@@ -13,8 +13,17 @@ import {
 import type { ColumnsType } from "antd/es/table";
 import { getAuthToken } from "../../services/authSalon";
 import { SearchOutlined } from "@ant-design/icons";
-import { Services } from "../../models/type";
-import { getServicesByType } from "../../services/serviceSalon";
+
+interface Service {
+  serviceID: string;
+  serviceName: string;
+  type: number;
+  price: number;
+  description: string | null;
+  duration: number;
+  avatarImage: string;
+  delFlg: boolean;
+}
 
 const ManagerService: React.FC = () => {
   const [services, setServices] = useState<Services[]>([]);
@@ -23,7 +32,7 @@ const ManagerService: React.FC = () => {
   const [searchText, setSearchText] = useState<string>("");
   const [isAddModalVisible, setIsAddModalVisible] = useState(false); // State for modal visibility
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
-  const [currentService, setCurrentService] = useState<Services | null>(null);
+  const [currentService, setCurrentService] = useState<Service | null>(null);
   const [form] = Form.useForm(); // Form instance
   useEffect(() => {
     fetchServices();
@@ -186,7 +195,7 @@ const ManagerService: React.FC = () => {
       message.error("Lỗi khi cập nhật dịch vụ");
     }
   };
-  const openEditModal = (service: Services) => {
+  const openEditModal = (service: Service) => {
     setCurrentService(service);
     form.setFieldsValue({
       serviceName: service.serviceName,
