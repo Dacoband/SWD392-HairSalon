@@ -4,6 +4,7 @@ using HairSalonSystem.Repositories.Interface;
 using HairSalonSystem.Services.Constant;
 using HairSalonSystem.Services.Interfaces;
 using HairSalonSystem.Services.PayLoads.Requests.Cancellation;
+using HairSalonSystem.Services.PayLoads.Requests.Emails;
 using HairSalonSystem.Services.PayLoads.Responses.Cancellation;
 using HairSalonSystem.Services.Util;
 using Microsoft.AspNetCore.Http;
@@ -14,7 +15,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static HairSalonSystem.Services.Constant.APIEndPointConstant;
 
 namespace HairSalonSystem.Services.Implements
 {
@@ -23,11 +23,16 @@ namespace HairSalonSystem.Services.Implements
         private readonly IAppointmentCancellationRepository _cancellationRepo;
         private readonly IAppointmentRepository _appointmentRepo;
         private readonly IMemberRepository _memberRepo;
+        private readonly IEmailService _emailService;
+        private readonly IAccountRepository _accountRepo;
 
-        public AppointmentCancellationService(IAppointmentCancellationRepository cancellationRepo, IAppointmentRepository appointmentRepo)
+        public AppointmentCancellationService(IAppointmentCancellationRepository cancellationRepo, IAppointmentRepository appointmentRepo, IMemberRepository memberRepository, IEmailService emailService, IAccountRepository accountRepository)
         {
             _cancellationRepo = cancellationRepo;
             _appointmentRepo = appointmentRepo;
+            _memberRepo = memberRepository;
+            _emailService = emailService;
+            _accountRepo = accountRepository;
         }
         public async Task<ActionResult<AppointmentCancellation>> CreateCancellation(CreateCancellationReq req, HttpContext context)
         {
@@ -42,7 +47,7 @@ namespace HairSalonSystem.Services.Implements
 
 
             var roleName = UserUtil.GetRoleName(context);
-            if (roleName != "MB" && roleName !="SL" && roleName != "ST" )
+            if (roleName != "MB" && roleName != "SL" && roleName != "ST")
             {
                 return new ObjectResult(MessageConstant.CancelAppointmentMessage.CreateRight)
                 {
@@ -52,24 +57,26 @@ namespace HairSalonSystem.Services.Implements
             var memberList = await _memberRepo.GetAllMembers();
             var member = memberList.Where(x => x.AccountId == accountID).FirstOrDefault();
 
-           
+
 
             var existAppointment = await _appointmentRepo.GetAppointmentById(req.AppointmetId);
-            if (existAppointment == null) {
+            if (existAppointment == null)
+            {
                 return new ObjectResult(MessageConstant.AppointmentMessage.NotFound)
                 {
                     StatusCode = StatusCodes.Status403Forbidden
                 };
             }
 
-            if(existAppointment.CustomerId != member.MemberId && roleName != "ST") {
+            if (existAppointment.CustomerId != member.MemberId && roleName != "ST")
+            {
 
                 return new ObjectResult(MessageConstant.CancelAppointmentMessage.CreateRight)
                 {
                     StatusCode = StatusCodes.Status403Forbidden
                 };
             }
-            if(existAppointment.Status == 5)
+            if (existAppointment.Status == 4)
             {
                 return new ObjectResult(MessageConstant.CancelAppointmentMessage.CreateRight)
                 {
@@ -87,21 +94,22 @@ namespace HairSalonSystem.Services.Implements
                 DelFlg = true
 
             };
-            var status = existAppointment.Status;
-            if(roleName == "MB")
-            {
-                status = 3;
+            var status = 3;
+            var account = await _accountRepo.GetAccountById(accountID);
+            var appointment = await _appointmentRepo.GetAppointmentById(req.AppointmetId);
 
-            }
-            else
-            {
-                //chưa tặng voucher cho cus nếu salon hủy apopointment
-                status = 4;
-            }
             try
             {
 
                 await _appointmentRepo.UpdateAppointmentStatus(existAppointment.AppointmentId, status);
+                var emailSendingFormat = new EmailSendingFormat
+                {
+                    member = account.Email,
+                    Subject = "Thông Báo Hủy Đặt Lịch",
+                    Information = GenerateCancelAppointmentEmailBody(appointment)
+                };
+
+                await _emailService.SendEmail(emailSendingFormat);
                 await _cancellationRepo.CreateCancellation(model);
                 return new ObjectResult(MessageConstant.CancelAppointmentMessage.CreateSuccess)
                 {
@@ -118,6 +126,49 @@ namespace HairSalonSystem.Services.Implements
                 };
             }
         }
+        private string GenerateCancelAppointmentEmailBody(Appointment appointment)
+        {
+            string logoUrl = "https://drive.google.com/uc?export=view&id=1cjCSKHpV1HAQxgk-9vWDPZWaUJC4XYVr";
+
+            return $@"
+    <html>
+    <body style='font-family: Arial, sans-serif; color: #333; line-height: 1.6;'>
+        <div style='max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px;'>
+            <!-- Logo -->
+            <div style='text-align: center; padding-bottom: 20px;'>
+                <img src='{logoUrl}' alt='Salon Logo' style='width: 150px; height: auto;'/>
+            </div>
+
+            <!-- Nội dung Email -->
+            <h2 style='color: #FF0000; text-align: center;'>Thông Báo Hủy Đặt Lịch</h2>
+            <p style='text-align: center;'>Kính gửi <strong>{appointment.CustomerId}</strong>,</p>
+            
+            <p>Chúng tôi rất tiếc thông báo rằng cuộc hẹn của bạn vào ngày 
+                <strong>{appointment.InsDate.ToString("dd/MM/yyyy")}</strong> lúc 
+                <strong>{appointment.StartTime} - {appointment.EndTime}</strong> đã bị hủy.</p>
+
+            <p>Chi tiết cuộc hẹn đã bị hủy như sau:</p>
+            <ul style='list-style: none; padding-left: 0;'>
+                <li><strong>ID Cuộc Hẹn:</strong> {appointment.AppointmentId}</li>
+                <li><strong>Ngày:</strong> {appointment.InsDate.ToString("dd/MM/yyyy")}</li>
+                <li><strong>Thời Gian:</strong> {appointment.StartTime} - {appointment.EndTime}</li>
+                <li><strong>Khách Hàng:</strong> {appointment.CustomerId}</li>
+            </ul>
+
+            <p>Nếu bạn có bất kỳ câu hỏi nào hoặc muốn đặt lại lịch hẹn, vui lòng liên hệ với chúng tôi.</p>
+
+            <!-- Thông Tin Liên Hệ -->
+            <div style='border-top: 1px solid #ddd; padding-top: 20px; text-align: center; color: #888;'>
+                <p>Cảm ơn bạn đã chọn salon của chúng tôi. Chúng tôi mong được phục vụ bạn trong thời gian tới!</p>
+                <p>Trân trọng,<br>Đội ngũ Salon của bạn</p>
+                <p style='font-size: 12px;'>Liên hệ với chúng tôi: (+84) 0948780759 | info@hairsalon.com</p>
+                <p style='font-size: 12px; color: #888;'>© 2024 Hair Salon. Bảo lưu mọi quyền.</p>
+            </div>
+        </div>
+    </body>
+    </html>";
+        }
+
 
         public async Task<ActionResult<List<CancellationResponse>>> GetAll(HttpContext context, Pagination query)
         {
@@ -138,9 +189,9 @@ namespace HairSalonSystem.Services.Implements
                     StatusCode = StatusCodes.Status403Forbidden
                 };
             }
-            var  cancelationList  = await _cancellationRepo.GetAll();
+            var cancelationList = await _cancellationRepo.GetAll();
             var cancelResponse = new List<CancellationResponse>();
-            if (cancelationList == null ||  cancelationList.Count == 0)
+            if (cancelationList == null || cancelationList.Count == 0)
             {
                 return new ObjectResult(MessageConstant.AppointmentMessage.NotFound)
                 {
@@ -186,8 +237,8 @@ namespace HairSalonSystem.Services.Implements
             //        StatusCode = StatusCodes.Status403Forbidden
             //    };
             //}
-          
-           
+
+
             //if(appointment == null)
             //{
             //    return new ObjectResult(MessageConstant.AppointmentMessage.NotFound)
@@ -206,14 +257,14 @@ namespace HairSalonSystem.Services.Implements
 
             var cancellation = await _cancellationRepo.GetByAppointmentId(appointmentId);
 
-            if(cancellation == null)
+            if (cancellation == null)
             {
                 return new ObjectResult(MessageConstant.AppointmentMessage.NotFound)
                 {
                     StatusCode = StatusCodes.Status404NotFound
                 };
             }
-        
+
             var res = new CancellationResponse()
             {
                 CancellationId = cancellation.CancellationId,
@@ -233,7 +284,7 @@ namespace HairSalonSystem.Services.Implements
         {
             var accountID = UserUtil.GetAccountId(context);
             var roleName = UserUtil.GetRoleName(context);
-            var cancellation = await  _cancellationRepo.GetByCancellationId(cancellatonId);
+            var cancellation = await _cancellationRepo.GetByCancellationId(cancellatonId);
             var appointment = await _appointmentRepo.GetAppointmentById(cancellation.AppointmentId);
 
             //if (accountID == null)
