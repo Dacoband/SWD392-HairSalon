@@ -6,7 +6,7 @@ import {
   Stylish,
   UserInfoData,
 } from '../../models/type'
-import { Button } from 'antd'
+import { Button, Row, Col } from 'antd'
 
 const BookSucssess = () => {
   const formatCurrency = (amount: number) => {
@@ -113,19 +113,30 @@ const BookSucssess = () => {
       <div>Book success</div>
       <div className="pb-8 flex justify-center">
         <div className="w-[50%]  ml-5 border-2 px-5 bg-slate-100  rounded-md h-fit pb-8">
+          {/* title */}
           <div className="flex justify-center flex-col items-center mt-6">
             <div className="text-xl text-[#937b34] font-bold w-fit mb-2 text-center border-b-2 border-[#937b34]">
               Chi tiết lịch hẹn
             </div>
-            <div className="text-sm">Địa chỉ: Ho Chi Minh</div>
+            <Row className="text-sm">
+              <Col>
+                <b>Địa chỉ</b>
+              </Col>
+              <Col> {branch?.address}</Col>
+            </Row>
             <div className="text-sm">
               <b>Tổng thời gian</b>:{' '}
               {formatDuration(
                 service!.reduce((total, service) => total + service.duration, 0)
               )}
             </div>
+            <div className="text-sm">
+              <b>Stylist</b>: {stylist?.stylistName}
+            </div>
           </div>
-          <div>
+
+          {/* service */}
+          <div className="mt-16">
             {
               <>
                 {service?.map((service) => (
@@ -168,6 +179,7 @@ const BookSucssess = () => {
               </>
             }
           </div>
+          {/* action */}
           <div className="flex justify-center">
             {appointment?.status === 1 ? null : (
               <Button
