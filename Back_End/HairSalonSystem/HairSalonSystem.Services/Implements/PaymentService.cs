@@ -45,8 +45,8 @@ public class PaymentService
              (int)appointment.TotalPrice,
              description,  
              items,
-             "http://localhost:5173/bookStatus",
-             "http://localhost:5173/bookStatus"
+             "https://localhost:7072/api/Payment/cancel",
+             "https://localhost:7072/api/Payment/success"
         );
 
         // Gửi yêu cầu tạo liên kết thanh toán
