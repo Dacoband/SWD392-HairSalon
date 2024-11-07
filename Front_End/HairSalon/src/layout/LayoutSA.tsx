@@ -6,6 +6,8 @@ import {
   MenuUnfoldOutlined,
   ShoppingCartOutlined,
   ShopOutlined,
+  UserOutlined,
+  UsergroupAddOutlined,
 } from "@ant-design/icons";
 import HeaderSM from "../components/HeaderSM";
 import { FaCircleUser } from "react-icons/fa6";
@@ -21,12 +23,12 @@ const SidebarData = [
   },
   {
     icon: ShopOutlined,
-    heading: "Quản lí khu vực",
+    heading: "Quản lí của khu vực",
     navigate: "/ManagerBranch_AD",
   },
   {
-    icon: ShoppingCartOutlined,
-    heading: "Quản lí nhân viên",
+    icon: UserOutlined,
+    heading: "Quản lí Chi Nhánh",
     navigate: "/ManagerStaff_AD",
   },
   {
@@ -42,13 +44,13 @@ const SidebarData = [
 
   {
     icon: ShoppingCartOutlined,
-    heading: "Quản lí nhà tạo mẫu",
-    navigate: "/ManagerStylist_AD",
-  },
-  {
-    icon: ShoppingCartOutlined,
     heading: "Nhân viên tạo mẫu",
     navigate: "/ManagerStaffStylist_AD",
+  },
+  {
+    icon: UsergroupAddOutlined,
+    heading: "Stylish",
+    navigate: "/ManagerStylist_AD",
   },
 ];
 

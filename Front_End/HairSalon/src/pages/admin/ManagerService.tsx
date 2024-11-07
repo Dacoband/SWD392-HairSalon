@@ -12,7 +12,11 @@ import {
 } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { getAuthToken } from "../../services/authSalon";
-import { SearchOutlined } from "@ant-design/icons";
+import {
+  SearchOutlined,
+  EditOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
 
 interface Service {
   serviceID: string;
@@ -259,16 +263,17 @@ const ManagerService: React.FC = () => {
       key: "actions",
       render: (_, record) => (
         <>
-          <Button type="link" onClick={() => openEditModal(record)}>
-            Chỉnh sửa
-          </Button>
+          <Button
+            type="link"
+            icon={<EditOutlined />}
+            onClick={() => openEditModal(record)}
+          ></Button>
           <Button
             type="link"
             danger
+            icon={<DeleteOutlined />}
             onClick={() => handleDelete(record.serviceID)}
-          >
-            Xóa
-          </Button>
+          ></Button>
         </>
       ),
     },

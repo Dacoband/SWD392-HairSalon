@@ -26,28 +26,16 @@ import {
 } from "../../services/Admin/StaffManager";
 import moment from "moment";
 
-interface StaffManager {
-  staffManagerID: string;
-  branchID: string;
-  accountID: string;
-  staffManagerName: string;
-  dateOfBirth: string;
-  phoneNumber: string;
-  address: string;
-  // email: string;
-  insDate: string;
-  updDate: string;
-  delFlg: boolean;
-}
+import { StaffManager, Branches } from "../../models/type";
 
 const ManagerStaffManager: React.FC = () => {
   const [staffManagers, setStaffManagers] = useState<StaffManager[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState<string>("");
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [form] = Form.useForm();
-  const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
-  const [selectedStaff, setSelectedStaff] = useState<StaffManager | null>(null);
+  // const [isModalVisible, setIsModalVisible] = useState(false);
+  // const [form] = Form.useForm();
+  // const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
+  // const [selectedStaff, setSelectedStaff] = useState<StaffManager | null>(null);
   const [updateForm] = Form.useForm();
 
   useEffect(() => {
@@ -69,10 +57,10 @@ const ManagerStaffManager: React.FC = () => {
 
   const handleDelete = async (staffManagerId: string) => {
     Modal.confirm({
-      title: "Are you sure you want to delete this staff manager?",
+      title: "Bạn có muốn xóa quản lí này?",
       content: "This action cannot be undone.",
-      okText: "Yes",
-      okType: "danger",
+      okText: "Có",
+      okType: "Không Xóa",
       cancelText: "No",
       onOk: async () => {
         try {
@@ -88,66 +76,83 @@ const ManagerStaffManager: React.FC = () => {
     });
   };
 
-  const handleUpdate = async (values: any) => {
-    try {
-      if (!selectedStaff) return;
+  // const handleUpdate = async (values: any) => {
+  //   try {
+  //     if (!selectedStaff) return;
 
-      const updateData = {
-        staffManagerName: values.staffManagerName,
-        dateOfBirth: values.dateOfBirth.format("YYYY-MM-DD"),
-        phoneNumber: values.phoneNumber,
-        address: values.address,
-        // email: values.email,
-      };
+  //     const updateData = {
+  //       staffManagerName: values.staffManagerName,
+  //       dateOfBirth: values.dateOfBirth.format("YYYY-MM-DD"),
+  //       phoneNumber: values.phoneNumber,
+  //       address: values.address,
+  //       // email: values.email,
+  //     };
 
-      await updateStaffManager(selectedStaff.staffManagerID, updateData);
-      message.success("Staff manager updated successfully");
-      setIsUpdateModalVisible(false);
-      updateForm.resetFields();
-      fetchStaffManagers();
-    } catch (error: any) {
-      message.error(
-        error.response?.data?.message || "Failed to update staff manager"
-      );
-    }
-  };
+  //     await updateStaffManager(selectedStaff.staffManagerID, updateData);
+  //     message.success("Staff manager updated successfully");
+  //     setIsUpdateModalVisible(false);
+  //     updateForm.resetFields();
+  //     fetchStaffManagers();
+  //   } catch (error: any) {
+  //     message.error(
+  //       error.response?.data?.message || "Failed to update staff manager"
+  //     );
+  //   }
+  // };
 
-  const showUpdateModal = (record: StaffManager) => {
-    setSelectedStaff(record);
-    updateForm.setFieldsValue({
-      // email: record.email,
-      staffManagerName: record.staffManagerName,
-      dateOfBirth: moment(record.dateOfBirth),
-      phoneNumber: record.phoneNumber,
-      address: record.address,
-    });
-    setIsUpdateModalVisible(true);
-  };
+  // const showUpdateModal = (record: StaffManager) => {
+  //   setSelectedStaff(record);
+  //   updateForm.setFieldsValue({
+  //     // email: record.email,
+  //     staffManagerName: record.staffManagerName,
+  //     dateOfBirth: moment(record.dateOfBirth),
+  //     phoneNumber: record.phoneNumber,
+  //     address: record.address,
+  //   });
+  //   setIsUpdateModalVisible(true);
+  // };
 
   const columns: ColumnsType<StaffManager> = [
     {
-      title: "Name",
+      title: "Avatar",
+      dataIndex: "avatarImage",
+      key: "avatarImage",
+      render: (text: string) => (
+        <img
+          src={text}
+          alt="avatar"
+          style={{ width: 80, height: 80, borderRadius: "50%" }}
+        />
+      ),
+    },
+    {
+      title: "Họ và tên",
       dataIndex: "staffManagerName",
       key: "staffManagerName",
     },
     {
-      title: "Phone Number",
+      title: "Số Điện Thoại",
       dataIndex: "phoneNumber",
       key: "phoneNumber",
     },
     {
-      title: "Address",
+      title: "Địa chỉ",
       dataIndex: "address",
       key: "address",
     },
     {
-      title: "Date of Birth",
+      title: "Ngày tháng năm sinh",
       dataIndex: "dateOfBirth",
       key: "dateOfBirth",
       render: (date: string) => new Date(date).toLocaleDateString(),
     },
     {
-      title: "Action",
+      title: "ID Chi Nhánh",
+      dataIndex: "branchID", // Giả sử bạn có trường này trong dữ liệu StaffManager
+      key: "branchID",
+    },
+    {
+      title: "Hoạt động",
       key: "action",
       width: 120,
       render: (_, record) => (
@@ -155,7 +160,7 @@ const ManagerStaffManager: React.FC = () => {
           <Button
             type="text"
             icon={<EditOutlined />}
-            onClick={() => showUpdateModal(record)}
+            // onClick={() => showUpdateModal(record)}
           />
           <Button
             type="text"
@@ -175,31 +180,31 @@ const ManagerStaffManager: React.FC = () => {
     // (sm.email?.toLowerCase().includes(searchText.toLowerCase()) || false)
   );
 
-  const handleAddStaff = async (values: any) => {
-    try {
-      const formData = new FormData();
-      // formData.append('email', values.email);
-      formData.append("password", values.password);
-      formData.append("staffManagerName", values.staffManagerName);
-      formData.append("dateOfBirth", values.dateOfBirth.format("YYYY-MM-DD"));
-      formData.append("phoneNumber", values.phoneNumber);
-      formData.append("address", values.address);
-      if (values.avatarImage?.fileList[0]?.originFileObj) {
-        formData.append(
-          "avatarImage",
-          values.avatarImage.fileList[0].originFileObj
-        );
-      }
+  // const handleAddStaff = async (values: any) => {
+  //   try {
+  //     const formData = new FormData();
+  //     // formData.append('email', values.email);
+  //     formData.append("password", values.password);
+  //     formData.append("staffManagerName", values.staffManagerName);
+  //     formData.append("dateOfBirth", values.dateOfBirth.format("YYYY-MM-DD"));
+  //     formData.append("phoneNumber", values.phoneNumber);
+  //     formData.append("address", values.address);
+  //     if (values.avatarImage?.fileList[0]?.originFileObj) {
+  //       formData.append(
+  //         "avatarImage",
+  //         values.avatarImage.fileList[0].originFileObj
+  //       );
+  //     }
 
-      await createStaffManager(formData);
-      message.success("Staff added successfully");
-      setIsModalVisible(false);
-      form.resetFields();
-      fetchStaffManagers();
-    } catch (error: any) {
-      message.error(error.response?.data?.message || "Failed to add staff");
-    }
-  };
+  //     await createStaffManager(formData);
+  //     message.success("Staff added successfully");
+  //     setIsModalVisible(false);
+  //     form.resetFields();
+  //     fetchStaffManagers();
+  //   } catch (error: any) {
+  //     message.error(error.response?.data?.message || "Failed to add staff");
+  //   }
+  // };
 
   return (
     <div style={{ padding: "24px" }}>
@@ -218,9 +223,7 @@ const ManagerStaffManager: React.FC = () => {
           style={{ width: 300 }}
           allowClear
         />
-        <Button type="primary" onClick={() => setIsModalVisible(true)}>
-          Add Staff Manager
-        </Button>
+        <Button type="primary">Add Staff Manager</Button>
       </Space>
 
       <Table
@@ -231,14 +234,14 @@ const ManagerStaffManager: React.FC = () => {
         pagination={{ pageSize: 5 }}
       />
 
-      <Modal
+      {/* <Modal
         title="Add Staff Manager"
         open={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
         footer={null}
       >
-        <Form form={form} layout="vertical" onFinish={handleAddStaff}>
-          {/* <Form.Item
+        <Form form={form} layout="vertical" onFinish={handleAddStaff}> */}
+      {/* <Form.Item
             name="email"
             label="Email"
             rules={[
@@ -249,7 +252,7 @@ const ManagerStaffManager: React.FC = () => {
             <Input />
           </Form.Item> */}
 
-          <Form.Item
+      {/* <Form.Item
             name="password"
             label="Password"
             rules={[
@@ -335,8 +338,8 @@ const ManagerStaffManager: React.FC = () => {
               gridTemplateColumns: "1fr 1fr",
               gap: "16px",
             }}
-          >
-            {/* <Form.Item
+          > */}
+      {/* <Form.Item
               name="email"
               label="Email"
               rules={[
@@ -347,7 +350,7 @@ const ManagerStaffManager: React.FC = () => {
               <Input />
             </Form.Item> */}
 
-            <Form.Item
+      {/* <Form.Item
               name="staffManagerName"
               label="Staff Manager Name"
               rules={[{ required: true, message: "Please input name!" }]}
@@ -395,7 +398,7 @@ const ManagerStaffManager: React.FC = () => {
             </Space>
           </Form.Item>
         </Form>
-      </Modal>
+      </Modal> */}
     </div>
   );
 };

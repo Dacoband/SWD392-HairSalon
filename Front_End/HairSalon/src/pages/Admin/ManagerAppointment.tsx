@@ -91,12 +91,7 @@ const ManagerAppointment: React.FC = () => {
       key: "stylistName",
       width: 300,
     },
-    {
-      title: "Start Time",
-      dataIndex: "startTime",
-      key: "startTime",
-      render: (time: string) => formatDateTime(time),
-    },
+
     {
       title: "End Time",
       dataIndex: "endTime",
@@ -122,17 +117,13 @@ const ManagerAppointment: React.FC = () => {
       key: "totalPrice",
       render: (price: number) => `${price.toLocaleString()} VND`,
     },
-    {
-      title: "Services Count",
-      dataIndex: "sevicesList",
-      key: "servicesCount",
-      render: (services: Service[]) => services.length,
-    },
   ];
 
   const filteredAppointments = appointments.filter(
     (appointment) =>
-      appointment.memberName?.toLowerCase().includes(searchText.toLowerCase()) ||
+      appointment.memberName
+        ?.toLowerCase()
+        .includes(searchText.toLowerCase()) ||
       appointment.stylistName?.toLowerCase().includes(searchText.toLowerCase())
   );
 
@@ -157,7 +148,6 @@ const ManagerAppointment: React.FC = () => {
         rowKey="appointmentId"
         loading={loading}
         pagination={{ pageSize: 10 }}
-        scroll={{ x: 1500 }}
       />
     </div>
   );
