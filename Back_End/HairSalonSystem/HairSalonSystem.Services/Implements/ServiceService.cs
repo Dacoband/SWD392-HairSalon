@@ -38,7 +38,7 @@ namespace HairSalonSystem.Services.Implements
             }
 
             var roleName = UserUtil.GetRoleName(context);
-            if (roleName != "SA")
+            if (roleName != Enums.RoleEnums.SA.ToString())
             {
                 return new ObjectResult(MessageConstant.ServiceMessage.CreateRight)
                 {
@@ -81,7 +81,7 @@ namespace HairSalonSystem.Services.Implements
             }
 
             var roleName = UserUtil.GetRoleName(context);
-            if (roleName != "SA")
+            if (roleName != Enums.RoleEnums.SA.ToString())
             {
                 return new ObjectResult(MessageConstant.ServiceMessage.DeleteRight)
                 {
@@ -192,7 +192,7 @@ namespace HairSalonSystem.Services.Implements
             ////}
 
             var roleName = UserUtil.GetRoleName(context);
-            if (roleName != "SA")
+            if (roleName != Enums.RoleEnums.SA.ToString())
             {
                 return new ObjectResult(MessageConstant.ServiceMessage.UpdateRight)
                 {

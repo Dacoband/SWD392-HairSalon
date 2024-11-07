@@ -20,7 +20,7 @@ namespace HairSalonSystem.Services.PayLoads.Requests.Stylists
              ErrorMessage = "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.")]
         public required string Password { get; set; }
         [Required]
-        public Guid BranchId { get; set; }
+        public Guid BranchID { get; set; }
         [Required]
         public Guid StaffStylistId { get; set; }
         [Required]
@@ -32,6 +32,5 @@ namespace HairSalonSystem.Services.PayLoads.Requests.Stylists
         public required string PhoneNumber { get; set; }
         public string? Address { get; set; }
         public IFormFile? AvatarImage { get; set; }
-        public DateTime InsDate { get; set; } = DateTime.UtcNow;
     }
 }

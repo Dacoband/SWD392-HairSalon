@@ -15,6 +15,9 @@ namespace HairSalonSystem.Services.PayLoads.Requests.StaffManagers
         [BsonElement("staffManagerName")]
         public string StaffManagerName { get; set; }
 
+        [BsonElement("branchId")]
+        public Guid? BranchID { get; set; }
+
         [BsonElement("dateOfBirth")]
         public DateTime DateOfBirth { get; set; }
 

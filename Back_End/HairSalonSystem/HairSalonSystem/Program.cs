@@ -16,7 +16,7 @@ using HairSalonSystem.DAOs.Implements;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using HairSalonSystem.Services.PayLoads.Requests.Firebase;
-using static HairSalonSystem.Services.Constant.APIEndPointConstant;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>

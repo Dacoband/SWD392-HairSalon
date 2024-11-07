@@ -33,8 +33,6 @@ namespace HairSalonSystem.Services.Implements
         public async Task<CreateStylistResponse> CreateStylistAsync(CreateStylistRequest request, HttpContext httpContext)
         {
             var roleName = UserUtil.GetRoleName(httpContext);
-            if (roleName != Enums.RoleEnums.SL.ToString() && roleName != Enums.RoleEnums.SA.ToString())
-                return new CreateStylistResponse { Message = MessageConstant.StylistMessage.NotRights };
             var url = "";
             if (request.AvatarImage != null)
             {
@@ -57,7 +55,7 @@ namespace HairSalonSystem.Services.Implements
                 StylistId = Guid.NewGuid(),
                 AccountId = account.AccountId,
                 StaffStylistId = request.StaffStylistId,
-                BranchID = request.BranchId,
+                BranchID = request.BranchID,
                 AverageRating = request.AverageRating,
                 StylistName = request.StylistName,
                 PhoneNumber = request.PhoneNumber,
@@ -122,11 +120,6 @@ namespace HairSalonSystem.Services.Implements
         {
             var roleName = UserUtil.GetRoleName(httpContext);
             //var accountId = UserUtil.GetAccountId(httpContext);
-            if (roleName != "SL" || roleName != "SM" || string.IsNullOrEmpty(roleName))
-            {
-                throw new BadHttpRequestException(MessageConstant.MemberMessage.MemberNotRightsUpdate);
-
-            }
 
             var stylist = await _stylistRepository.GetStylistById(id);
             //var existingAccount = await _accountRepository.GetAccountById(accountId);
@@ -138,11 +131,11 @@ namespace HairSalonSystem.Services.Implements
                 url = await _firebaseService.UploadFile(request.AvatarImage);
             }
             stylist.StaffStylistId = request.StaffStylistId ?? stylist.StaffStylistId;
+            stylist.BranchID = request.BranchID ?? stylist.BranchID;
             stylist.StylistName = request.StylistName ?? stylist.StylistName;
             stylist.PhoneNumber = request.PhoneNumber ?? stylist.PhoneNumber;
             stylist.Address = request.Address ?? stylist.Address;
             stylist.AvatarImage = request.AvatarImage != null ? url : stylist.AvatarImage; ;
-            stylist.UpdDate = DateTime.Now;
 
             await _stylistRepository.UpdateStylist(id, stylist);
 
