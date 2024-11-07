@@ -7,10 +7,30 @@ import { UserOutlined } from "@ant-design/icons";
 const HeaderSM: React.FC = () => {
   const navigate = useNavigate();
 
+  const userData = localStorage.getItem("userData") ? JSON.parse(localStorage.getItem("userData")!) : null;
+
   const menu = (
     <Menu>
-      {/* <Menu.Item key="profile" onClick={() => navigate("/profile")}> */}
-      <Menu.Item>Thông Tin Cá Nhân</Menu.Item>
+      
+      {userData?.roleName && (
+        <Menu.Item
+        
+          key="profile"
+          onClick={() => { 
+            if (userData.roleName === "ST") {
+              navigate("/profile-StaffStylist");
+            } else if (userData.roleName === "SL") {
+              navigate("/profile-Stylist");
+            } else if (userData.roleName === "SM") {
+              navigate("/profile-StaffManager")
+            } else if (userData.roleName === "SA") {
+              navigate("/profile-StaffAdmin");
+            }
+          }}
+        >
+          Thông Tin Cá Nhân
+        </Menu.Item>
+      )}
       <Menu.Item
         key="logout"
         onClick={() => {
@@ -23,7 +43,6 @@ const HeaderSM: React.FC = () => {
       </Menu.Item>
     </Menu>
   );
-
   return (
     <div className="bg-white shadow-md h-16 flex items-center">
       <Row align="middle" className="w-full">

@@ -91,7 +91,7 @@ const AppRouter = () => {
           <Route
             path="/profile"
             element={
-              <PrivateRoute element={profileCustomer} allowedRoles={["MB"]} />
+              <PrivateRoute element={ProfileAll} allowedRoles={["MB"]} />
             }
           />
         </Route>
@@ -125,14 +125,15 @@ const AppRouter = () => {
             }
           />
         </Route>
-        <Route element={<LayoutSM />}>
+        <Route element={<LayoutSM/>}>
         <Route
-            path="/profile-Staff"
+            path="/profile-StaffManager"
             element={
-              <PrivateRoute element={ProfileAll} allowedRoles={["SM", "SA" , "SL"]} />
+              <PrivateRoute element={ProfileAll} allowedRoles={["SM"]} />
             }
           />
            </Route>
+
         {/* STYLISH */}
         <Route element={<LayoutMain />}>
           <Route
@@ -152,8 +153,17 @@ const AppRouter = () => {
           />
           <Route path="/manage-appointments" element={<Appointment />} />
         </Route>
+        <Route element={<LayoutSL/>}>
+        <Route
+            path="/profile-Stylist"
+            element={
+              <PrivateRoute element={ProfileAll} allowedRoles={["SL"]} />
+            }
+          />
+           </Route>
+
         {/* StaffStylish */}
-        <Route element={<LayoutSL />}>
+        <Route element={<LayoutST />}>
           <Route
             path="/StaffStylish"
             element={
@@ -179,6 +189,16 @@ const AppRouter = () => {
             }
           />
         </Route>
+        <Route element={<LayoutST/>}>
+        <Route
+            path="/profile-StaffStylist"
+            element={
+              <PrivateRoute element={ProfileAll} allowedRoles={["ST"]} />
+            }
+          />
+           </Route>
+
+           
         {/* ADMIN */}
         <Route element={<LayoutSA />}>
           <Route
@@ -194,6 +214,14 @@ const AppRouter = () => {
             }
           />
         </Route>
+        <Route element={<LayoutSA/>}>
+        <Route
+            path="/profile-StaffAdmin"
+            element={
+              <PrivateRoute element={ProfileAll} allowedRoles={["SA"]} />
+            }
+          />
+           </Route>
       </Routes>
     </Router>
   );
