@@ -38,7 +38,7 @@ namespace HairSalonSystem.Services.Implements
             }
 
             var roleName = UserUtil.GetRoleName(context);
-            if (roleName != "SA")
+            if (roleName != Enums.RoleEnums.SA.ToString())
             {
                 return new ObjectResult(MessageConstant.ServiceMessage.CreateRight)
                 {
@@ -81,7 +81,7 @@ namespace HairSalonSystem.Services.Implements
             }
 
             var roleName = UserUtil.GetRoleName(context);
-            if (roleName != "SA")
+            if (roleName != Enums.RoleEnums.SA.ToString())
             {
                 return new ObjectResult(MessageConstant.ServiceMessage.DeleteRight)
                 {
@@ -180,25 +180,25 @@ namespace HairSalonSystem.Services.Implements
 
         }
 
-        public async Task<ActionResult> UpdateService(Guid serviceId, CreateServiceRequest serviceModel, HttpContext context)
+        public async Task<ActionResult> UpdateService(Guid serviceId, UpdateServiceRequest serviceModel, HttpContext context)
         {
-            var accountID = UserUtil.GetAccountId(context);
-            //if (accountID == null)
-            //{
-            //    return new ObjectResult(MessageConstant.ServiceMessage.UpdateRight)
-            //    {
-            //        StatusCode = StatusCodes.Status403Forbidden
-            //    };
-            //}
+            //var accountID = UserUtil.GetAccountId(context);
+            ////if (accountID == null)
+            ////{
+            ////    return new ObjectResult(MessageConstant.ServiceMessage.UpdateRight)
+            ////    {
+            ////        StatusCode = StatusCodes.Status403Forbidden
+            ////    };
+            ////}
 
-            //var roleName = UserUtil.GetRoleName(context);
-            //if (roleName != "SA")
-            //{
-            //    return new ObjectResult(MessageConstant.ServiceMessage.UpdateRight)
-            //    {
-            //        StatusCode = StatusCodes.Status403Forbidden
-            //    };
-            //}
+            var roleName = UserUtil.GetRoleName(context);
+            if (roleName != Enums.RoleEnums.SA.ToString())
+            {
+                return new ObjectResult(MessageConstant.ServiceMessage.UpdateRight)
+                {
+                    StatusCode = StatusCodes.Status403Forbidden
+                };
+            }
             var oldService = await _serviceRepository.GetServiceById(serviceId);
             if (oldService == null)
             {
@@ -207,16 +207,17 @@ namespace HairSalonSystem.Services.Implements
                     StatusCode = StatusCodes.Status404NotFound
                 };
             }
-
-            var url = await _firebaseService.UploadFile(serviceModel.AvatarImage);
-            oldService.ServiceName = serviceModel.ServiceName;
-            oldService.Type = serviceModel.Type;
-            oldService.Price = serviceModel.Price;
-            oldService.Description = serviceModel.Description;
-            oldService.Duration = serviceModel.Duration;
-            oldService.AvatarImage = url;
+            var url = "";
+            if(serviceModel.AvatarImage != null){
+                url = await _firebaseService.UploadFile(serviceModel.AvatarImage);
+            }
+            oldService.ServiceName = serviceModel.ServiceName ?? oldService.ServiceName ;
+            oldService.Type = serviceModel.Type ?? oldService.Type;
+            oldService.Price = serviceModel.Price ?? oldService.Price;
+            oldService.Description = serviceModel.Description ?? oldService.Description;
+            oldService.Duration = serviceModel.Duration ?? oldService.Duration ;
+            oldService.AvatarImage = serviceModel.AvatarImage != null ? url : oldService.AvatarImage;
             oldService.UpdDate = DateTime.Now;
-            oldService.DelFlg = serviceModel.DelFlg;
             await _serviceRepository.UpdateService(oldService);
             return new ObjectResult(MessageConstant.ServiceMessage.UpdateSuccess);
 

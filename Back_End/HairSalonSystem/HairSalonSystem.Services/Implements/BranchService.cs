@@ -101,16 +101,27 @@ namespace HairSalonSystem.Services.Implements
             var existingBranch = await _branchRepository.GetBranchById(branchId);
             if (existingBranch == null)
             {
-                throw new BadHttpRequestException(MessageConstant.BranchMessage.BranchNotFound);
+                throw new BadHttpRequestException("Branch not found.");
             }
 
-            existingBranch.SalonBranches = string.IsNullOrEmpty(branchDto.SalonBranches) ? existingBranch.SalonBranches : branchDto.SalonBranches;
-            existingBranch.Address = string.IsNullOrEmpty(branchDto.Address) ? existingBranch.Address : branchDto.Address;
-            existingBranch.Phone = string.IsNullOrEmpty(branchDto.Phone) ? existingBranch.Phone : branchDto.Phone;
+            // Kiểm tra sự tồn tại của StaffManagerID
+            bool staffManagerExists = await _branchRepository.CheckStaffManagerExists(branchDto.StaffManagerID);
+            if (!staffManagerExists)
+            {
+                throw new BadHttpRequestException("Staff Manager not found.");
+            }
+
+            // Cập nhật thông tin
+            existingBranch.StaffManagerID = branchDto.StaffManagerID; // Cập nhật StaffManagerID
+            existingBranch.SalonBranches = branchDto.SalonBranches ?? existingBranch.SalonBranches;
+            existingBranch.Address = branchDto.Address ?? existingBranch.Address;
+            existingBranch.Phone = branchDto.Phone ?? existingBranch.Phone;
             existingBranch.UpdDate = DateTime.Now;
 
+            // Gọi phương thức cập nhật
             await _branchRepository.UpdateBranch(existingBranch);
             return true;
+
         }
 
 

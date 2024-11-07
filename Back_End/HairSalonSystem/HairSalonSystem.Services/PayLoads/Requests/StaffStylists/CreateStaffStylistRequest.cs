@@ -11,7 +11,7 @@ namespace HairSalonSystem.Services.PayLoads.Requests.StaffStylists
     public class CreateStaffStylistRequest
     {
         [Required(ErrorMessage = "BranchId is required.")]
-        public Guid BranchId { get; set; }
+        public Guid BranchID { get; set; }
 
         [Required(ErrorMessage = "Email is missing")]
         [EmailAddress] // Ensure valid email format

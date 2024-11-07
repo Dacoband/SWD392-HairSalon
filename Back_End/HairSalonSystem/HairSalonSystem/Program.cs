@@ -16,7 +16,7 @@ using HairSalonSystem.DAOs.Implements;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using HairSalonSystem.Services.PayLoads.Requests.Firebase;
-using static HairSalonSystem.Services.Constant.APIEndPointConstant;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
@@ -88,8 +88,7 @@ builder.Services.AddSingleton(firebaseApp);
 
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
 
-//Load VNPay settings
-builder.Services.Configure<VNPaySettings>(builder.Configuration.GetSection("VNPay"));
+
 
 
 // Add JWT Authentication
@@ -153,7 +152,6 @@ builder.Services.AddScoped<ISalaryRepository, SalaryRepository>();
 // Register Services
 builder.Services.AddScoped<IFirebaseService, FirebaseService>();
 
-builder.Services.AddScoped<IVNPayService, VNPayService>();
 builder.Services.AddScoped<IAccountService, AccountService>(); 
 builder.Services.AddScoped<IAuthService, AuthService>(); 
 builder.Services.AddScoped<IBranchService, BranchService>();
@@ -166,6 +164,8 @@ builder.Services.AddScoped<IStylistService, StylistService>();
 builder.Services.AddHttpClient<PaymentController>();
 builder.Services.AddScoped<IAppointmentService, HairSalonSystem.Services.Implements.AppointmentService>();
 builder.Services.AddScoped<PaymentService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+
 builder.Services.AddScoped<IAppointmentCacellationService,AppointmentCancellationService>();
 builder.Services.AddScoped<IFeedbackService, FeedbackService>();
 builder.Services.AddHostedService<MonthlySalaryService>();

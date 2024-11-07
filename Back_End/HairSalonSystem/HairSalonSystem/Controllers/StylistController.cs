@@ -48,7 +48,7 @@ namespace HairSalonSystem.API.Controllers
         [Route(APIEndPointConstant.Stylist.UpdateStylist)]
         public async Task<IActionResult> UpdateStylist([FromRoute] Guid id, [FromForm] UpdateStylistRequest request)
         {
-            await _stylistService.UpdateStylistAsync(id, request);
+            await _stylistService.UpdateStylistAsync(id, request,HttpContext);
             return Ok(new { Message = MessageConstant.StylistMessage.StylistUpdated });
         }
 
