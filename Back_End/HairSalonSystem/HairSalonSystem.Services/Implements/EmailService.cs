@@ -4,11 +4,12 @@ using MimeKit;
 using MimeKit.Text;  
 using System.Threading.Tasks;
 using MailKit.Net.Smtp;
+using HairSalonSystem.Services.Interfaces;
 
 
 namespace HairSalonSystem.Services.Implements
 {
-    public class EmailService
+    public class EmailService : IEmailService
     {
         private readonly IConfiguration _config;
         public EmailService(IConfiguration config)

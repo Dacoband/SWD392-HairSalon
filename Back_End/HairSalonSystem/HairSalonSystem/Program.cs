@@ -164,6 +164,8 @@ builder.Services.AddScoped<IStylistService, StylistService>();
 builder.Services.AddHttpClient<PaymentController>();
 builder.Services.AddScoped<IAppointmentService, HairSalonSystem.Services.Implements.AppointmentService>();
 builder.Services.AddScoped<PaymentService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+
 builder.Services.AddScoped<IAppointmentCacellationService,AppointmentCancellationService>();
 builder.Services.AddScoped<IFeedbackService, FeedbackService>();
 builder.Services.AddHostedService<MonthlySalaryService>();
