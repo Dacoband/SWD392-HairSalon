@@ -10,11 +10,9 @@ namespace HairSalonSystem.Services.PayLoads.Requests.Stylists
 {
     public class UpdateStylistRequest
     {
-        [Required]
-        [StringLength(100, ErrorMessage = "Stylist name must be at most 100 characters long.")]
-        public string StylistName { get; set; }
-        public Guid StaffStylistId { get; set; }
-        [Required]
+        public string? StylistName { get; set; }
+       // public string? Email { get; set; }
+        public Guid? StaffStylistId { get; set; }
         [RegularExpression(@"^[0-9]{10}$", ErrorMessage = "Phone number must be exactly 10 digits.")]
         public string? PhoneNumber { get; set; }
 

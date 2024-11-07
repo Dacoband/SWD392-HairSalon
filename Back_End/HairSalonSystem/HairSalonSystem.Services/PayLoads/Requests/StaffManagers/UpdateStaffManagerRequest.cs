@@ -24,8 +24,8 @@ namespace HairSalonSystem.Services.PayLoads.Requests.StaffManagers
         public string PhoneNumber { get; set; }
         
          // Ensure valid email format
-        [BsonElement("email")]
-        public string Email { get; set; }
+        //[BsonElement("email")]
+        //public string Email { get; set; }
         [BsonElement("address")]
         public string? Address { get; set; }
 

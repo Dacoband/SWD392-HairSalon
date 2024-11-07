@@ -12,9 +12,9 @@ namespace HairSalonSystem.Services.PayLoads.Requests.Members
         public string? MemberName { get; set; }
 
        
-        [EmailAddress] // Ensure valid email format
-        [BsonElement("email")]
-        public string? Email { get; set; }
+        //[EmailAddress] // Ensure valid email format
+        //[BsonElement("email")]
+        //public string? Email { get; set; }
 
        
         [StringLength(10, MinimumLength = 10, ErrorMessage = "Phone number must be exactly 10 digits")]

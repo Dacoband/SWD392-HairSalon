@@ -52,12 +52,12 @@ namespace HairSalonSystem.Services.Implements
                 throw new BadHttpRequestException(MessageConstant.MemberMessage.MemberNotRightsUpdate);
 
             }
-            var existingAccount = await _accountRepository.GetAccountById(accountIdFromToken);
-            if (existingAccount == null)
-            {
-                throw new BadHttpRequestException(MessageConstant.LoginMessage.NotFoundAccount);
+            //var existingAccount = await _accountRepository.GetAccountById(accountIdFromToken);
+            //if (existingAccount == null)
+            //{
+            //    throw new BadHttpRequestException(MessageConstant.LoginMessage.NotFoundAccount);
 
-            }
+            //}
             var url = "";
             if (memberRequest.AvatarImage != null)
             {
@@ -73,7 +73,7 @@ namespace HairSalonSystem.Services.Implements
 
 
             existingMember.MemberName = memberRequest.MemberName ?? existingMember.MemberName;
-            existingAccount.Email = memberRequest.Email ?? existingAccount.Email;
+           // existingAccount.Email = memberRequest.Email ?? existingAccount.Email;
             existingMember.PhoneNumber = memberRequest.PhoneNumber ?? existingMember.PhoneNumber;
             existingMember.Address = memberRequest.Address ?? existingMember.Address;
             existingMember.DateOfBirth = memberRequest.DateOfBirth ?? existingMember.DateOfBirth;
@@ -82,7 +82,7 @@ namespace HairSalonSystem.Services.Implements
 
 
             await _memberRepository.UpdateMember(existingMember);
-            await _accountRepository.UpdateEmailAsync(accountIdFromToken, existingAccount.Email);
+           // await _accountRepository.UpdateEmailAsync(accountIdFromToken, existingAccount.Email);
 
             return true;
         }
