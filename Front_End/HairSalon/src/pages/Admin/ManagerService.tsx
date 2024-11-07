@@ -153,6 +153,7 @@ const ManagerService: React.FC = () => {
         formData.append("AvatarImage", avatarImage);
       }
 
+      // Make the API call to update the service
       const response = await axios.patch(
         `https://api.vol-ka.studio/api/v1/service/update/${currentService?.serviceID}`,
         formData,
@@ -163,13 +164,21 @@ const ManagerService: React.FC = () => {
         }
       );
 
+      // Log the response data for debugging
+      console.log("Updated service response:", response.data);
+
+      // Optionally, you can re-fetch the services to ensure the latest data
+      fetchServices();
+
+      // Alternatively, update the local state directly
       setServices((prevServices) =>
         prevServices.map((service) =>
           service.serviceID === currentService?.serviceID
-            ? response.data
+            ? { ...service, ...response.data } // Merge the updated data
             : service
         )
       );
+
       message.success("Dịch vụ đã được cập nhật thành công!");
       setIsEditModalVisible(false);
       form.resetFields();
@@ -178,7 +187,6 @@ const ManagerService: React.FC = () => {
       message.error("Lỗi khi cập nhật dịch vụ");
     }
   };
-
   const openEditModal = (service: Service) => {
     setCurrentService(service);
     form.setFieldsValue({
