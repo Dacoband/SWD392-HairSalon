@@ -54,6 +54,8 @@
             public const string StaffManagerEndpoint = ApiEndpoint + "/staff-manager";
             public const string GetStaffManagerById = StaffManagerEndpoint + "/{id}";
             public const string GetAllStaffManagers = StaffManagerEndpoint + "/all";
+            public const string GetAllStaffManagersNotBranch = StaffManagerEndpoint + "/allnotbranch";
+
             public const string AddStaffManager = StaffManagerEndpoint + "/add";
             public const string UpdateStaffManager = StaffManagerEndpoint + "/update/{id}";
             public const string DeleteStaffManager = StaffManagerEndpoint + "/delete/{id}";

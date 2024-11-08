@@ -58,6 +58,7 @@
             public const string StaffManagerUpdatedSuccessfully = "Cập nhật thông tin nhân viên quản lý thành công.";
             public const string StaffManagerRemovedSuccessfully = "Xóa nhân viên quản lý thành công.";
             public const string StaffManagerInvalidData = "Dữ liệu nhân viên quản lý không hợp lệ.";
+            public const string StaffManagerNotRightsAdd = "Bạn không có quyền thêm thông tin nhân viên quản lý.";
         }
         public static class StaffStylistMessage
         {

@@ -15,5 +15,6 @@ namespace HairSalonSystem.Services.Interfaces
         Task<ActionResult> AddStaffManager(CreateNewStaffManagerRequest staffManager, HttpContext httpContext);
         Task<ActionResult> UpdateStaffManager(Guid id, UpdateStaffManagerRequest staffManagerRequest, HttpContext httpContext);
         Task RemoveStaffManager(Guid id);
+        Task<List<StaffManager>> GetAllStaffManagersNotBranch();
     }
 }
