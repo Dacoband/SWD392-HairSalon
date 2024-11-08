@@ -128,7 +128,7 @@ builder.Services.AddScoped<IFeedbackDAO, FeedbackDAO>();
 
 
 builder.Services.AddScoped<ISalaryDAO, SalaryDAO>();
-
+builder.Services.AddScoped<IOffScheduleDAO, OffScheduleDAO>();
 
 // Register Repositories
 builder.Services.AddScoped<IAccountRepository, AccountRepository>(); 
@@ -145,6 +145,7 @@ builder.Services.AddScoped<IAppointmentCancellationRepository,AppointmentCancell
 builder.Services.AddScoped<IFeedbackRepository, FeedbackRepository>();
 builder.Services.AddScoped<PaymentRepository>();
 builder.Services.AddScoped<ISalaryRepository, SalaryRepository>();
+builder.Services.AddScoped<IOffScheduleRepository,OffScheduleRepository>();
 
 
 
@@ -168,6 +169,7 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddScoped<IAppointmentCacellationService,AppointmentCancellationService>();
 builder.Services.AddScoped<IFeedbackService, FeedbackService>();
+builder.Services.AddScoped<IOffScheduleService,OffScheduleService>();
 builder.Services.AddHostedService<MonthlySalaryService>();
 
 builder.Services.AddScoped<ISalaryService,SalaryService>();

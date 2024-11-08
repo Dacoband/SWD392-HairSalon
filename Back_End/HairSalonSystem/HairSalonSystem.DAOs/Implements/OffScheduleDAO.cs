@@ -22,7 +22,7 @@ namespace HairSalonSystem.DAOs.Implements
 
         public async Task CreateSchedule(OffSchedule offSchedule)
         {
-           await _offSchedule.InsertOneAsync(offSchedule);
+            await _offSchedule.InsertOneAsync(offSchedule);
         }
 
         public async Task DeleteOffSchedule(Guid id)
@@ -41,6 +41,25 @@ namespace HairSalonSystem.DAOs.Implements
         public async Task<OffSchedule> GetByOffScheduleId(Guid id)
         {
             return await _offSchedule.Find(x => x.OffScheduleId == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<List<OffSchedule>> GetOffScheduleByStylist(Guid stylistId)
+        {
+            return await _offSchedule.Find(x => x.StylistId == stylistId && x.DelFlg == true).ToListAsync();
+        }
+
+        public async Task<List<OffSchedule>> GetOffScheduleInDate(Guid id, DateTime date)
+        {
+            return await _offSchedule
+                .Find(x => x.StylistId == id && x.OffDate.Date == date.Date && x.DelFlg == true)
+                .ToListAsync();
+        }
+
+        public async Task<List<OffSchedule>> GetOffScheduleInMonth(Guid id, DateTime date)
+        {
+            var startMonth = new DateTime(date.Year, date.Month, 1);
+            var endMonth = startMonth.AddMonths(1).AddDays(-1);
+            return await _offSchedule.Find(x => x.StylistId == id && x.OffDate >= startMonth && x.OffDate <= endMonth && x.DelFlg == true).ToListAsync();
         }
     }
 }

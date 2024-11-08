@@ -10,7 +10,7 @@ namespace HairSalonSystem.Services.PayLoads.Requests.OffSchedule
     public class CreateOffScheduleRequest
     {
         public Guid StylistId { get; set; } 
-        public DateOnly OffDate {  get; set; }
+        public DateTime OffDate {  get; set; }
         public SlotEnum OffSlot { get; set; }    
     }
 }

@@ -13,5 +13,8 @@ namespace HairSalonSystem.Repositories.Interface
         Task<List<OffSchedule>> GetAll();
         Task<OffSchedule> GetByOffScheduleId(Guid id);
         Task DeleteOffSchedule(Guid id);
+        Task<List<OffSchedule>> GetOffScheduleByStylist(Guid stylistId);
+        Task<List<OffSchedule>> GetOffScheduleInDate(Guid id, DateTime date);
+        Task<List<OffSchedule>> GetOffScheduleInMonth(Guid id, DateTime date);
     }
 }

@@ -32,5 +32,20 @@ namespace HairSalonSystem.Repositories.Implement
         {
             return await _offScheduleDAO.GetByOffScheduleId(id);
         }
+
+        public async Task<List<OffSchedule>> GetOffScheduleByStylist(Guid stylistId)
+        {
+            return await _offScheduleDAO.GetOffScheduleByStylist(stylistId);
+        }
+
+        public async Task<List<OffSchedule>> GetOffScheduleInDate(Guid id, DateTime date)
+        {
+            return await _offScheduleDAO.GetOffScheduleInDate(id, date);
+        }
+
+        public Task<List<OffSchedule>> GetOffScheduleInMonth(Guid id, DateTime date)
+        {
+            return _offScheduleDAO.GetOffScheduleInMonth(id, date);
+        }
     }
 }

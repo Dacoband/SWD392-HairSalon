@@ -141,6 +141,11 @@
         {
             public const string CreateRight = "Bạn không có quyền tạo lịch nghỉ";
             public const string NotRight = "Bạn không có quyền truy cập lịch nghỉ";
+            public const string ExistAppointment = "Đã có lịch hẹn trước, bạn không thể đăng ký lịch nghỉ";
+            public const string InvalidTime = "Bạn phải đăng ký lịch nghỉ trươc ít nhất 5 ngày";
+            public const string MaxSlot = "Bạn chỉ có thể nghỉ tối đa 8 slot trong 1 tháng";
+            public const string CreateSuccess = "Bạn đã tạo lịch nghỉ thành công";
+            public const string CreateFail = "Lỗi trong lúc tạo lịch nghỉ";
 
         }
     }
