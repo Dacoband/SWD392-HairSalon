@@ -199,7 +199,7 @@ const BookingPage: React.FC = () => {
       const response = await createAppointment(appointmentRequest)
       if (response != null) {
         setAppointment(response)
-        handleCreatePAyment(response.appointmentId)
+        // handleCreatePAyment(response.appointmentId)
       }
       console.log(response)
     } catch (error) {

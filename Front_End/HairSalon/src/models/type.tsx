@@ -53,38 +53,38 @@ export interface UserData {
 }
 
 export interface Stylish {
-  branchId: string;
-  email: string;
-  password: string;
-  stylistId: string;
-  staffStylistId: string;
-  stylistName: string;
-  averageRating: number;
-  phoneNumber: string;
-  address: string;
-  avatarImage: string;
-  insDate: Date;
-  updDate: Date;
+  branchId: string
+  email: string
+  password: string
+  stylistId: string
+  staffStylistId: string
+  stylistName: string
+  averageRating: number
+  phoneNumber: string
+  address: string
+  avatarImage: string
+  insDate: Date
+  updDate: Date
 }
 
 export interface UserInfoData {
-  email: string;
-  password: string;
-  memberName: string;
-  dateOfBirth: string;
-  phoneNumber: string;
-  address: string;
-  branchId?: string;
-  avatarImage?: string| File;
+  email: string
+  password: string
+  memberName: string
+  dateOfBirth: string
+  phoneNumber: string
+  address: string
+  branchId?: string
+  avatarImage?: string | File
 }
 export interface StaffStylist {
-  staffStylistId: string;
-  staffStylistName: string;
-  dateOfBirth: string;
-  phoneNumber: string;
-  address: string;
-  avatarImage?: string| File;
-  branchId: string;
+  staffStylistId: string
+  staffStylistName: string
+  dateOfBirth: string
+  phoneNumber: string
+  address: string
+  avatarImage?: string | File
+  branchId: string
 }
 export interface CreateAppointmentRequest {
   stylistId: string
@@ -94,19 +94,28 @@ export interface CreateAppointmentRequest {
 export interface CreatePaymentReponse {
   paymentLink: string
   paymentLinkId: string
-
 }
-
 
 export interface Member {
-  memberId: string; 
-  accountId: string; 
-  memberName: string; 
-  dateOfBirth: string; 
-  phoneNumber: string; 
-  address: string; 
-  avatarImage: string; 
-  insDate: string; 
-  updDate: string; 
+  memberId: string
+  accountId: string
+  memberName: string
+  dateOfBirth: string
+  phoneNumber: string
+  address: string
+  avatarImage: string
+  insDate: string
+  updDate: string
 }
-
+export interface offschedule {
+  offScheduleId: string
+  stylistId: string
+  offDate: Date
+  offSlot: BigInteger
+  delFlg: boolean
+}
+export interface createOffSchedule {
+  stylistId: string
+  offDate: string
+  offSlot: number
+}
