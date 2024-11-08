@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { Button, Modal, Input, notification } from "antd";
-import {
-  getAppointmentsByCustomer,
-  cancelAppointment,
-} from "../../../services/appointmentSalon";
+import { Button, Modal, Input, notification, Collapse  } from "antd";
+import { getAppointmentsByCustomer, cancelAppointment } from "../../../services/appointmentSalon";
 import { Appointment, Services } from "../../../models/type";
 import { getServicesByServiceId } from "../../../services/serviceSalon";
+import { getBranchById } from "../../../services/Branches/branches"; 
+import { getStylistByID } from "../../../services/Stylish"; 
 
 import "./Appointment.scss";
+
+const { Panel } = Collapse;
 
 const AppointmentPage = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [services, setServices] = useState<Record<string, Services | null>>({});
+  const [stylistDetails, setStylistDetails] = useState<any>(null);  // To store stylist details
+  const [branchDetails, setBranchDetails] = useState<any>(null);  // To store branch details
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
-  const [selectedAppointment, setSelectedAppointment] =
-    useState<Appointment | null>(null);
+  const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
   const [cancelReason, setCancelReason] = useState("");
   const [api, contextHolder] = notification.useNotification();
 
@@ -39,8 +41,7 @@ const AppointmentPage = () => {
         if (userData && userData.actorId) {
           const customerId = userData.actorId;
           const response = await getAppointmentsByCustomer(customerId);
-         
-         
+
           if (Array.isArray(response)) {
             setAppointments(response);
           } else {
@@ -60,6 +61,25 @@ const AppointmentPage = () => {
     fetchAppointments();
   }, []);
 
+  // Fetch stylist and branch details for appointments
+  useEffect(() => {
+    const fetchDetails = async () => {
+      try {
+        // Fetch Stylist Details
+        const stylistResponse = await getStylistByID("d1a63381-1b20-435d-8253-8490ebf65785");
+        setStylistDetails(stylistResponse);
+
+        // Fetch Branch Details
+        const branchResponse = await getBranchById("af638270-05e0-48b6-b47b-9fde0b937151");
+        setBranchDetails(branchResponse);
+      } catch (error) {
+        console.error("Error fetching stylist or branch details:", error);
+      }
+    };
+
+    fetchDetails();
+  }, []);
+
   // Fetch services details for appointments
   useEffect(() => {
     const fetchAllServiceDetails = async () => {
@@ -68,9 +88,7 @@ const AppointmentPage = () => {
         if (appointment.sevicesList) {
           for (const service of appointment.sevicesList) {
             if (service.serviceId && !newServices[service.serviceId]) {
-              const serviceData = await getServicesByServiceId(
-                service.serviceId
-              );
+              const serviceData = await getServicesByServiceId(service.serviceId);
               newServices[service.serviceId] = serviceData;
             }
           }
@@ -139,90 +157,108 @@ const AppointmentPage = () => {
     setCancelReason("");
   };
 
-  if (loading) return <p>Loading...</p>;
- if (error) return (
-  <div className="error-messageinAppointment">
-    <p>{error}</p>
-  </div>
-);
+  const formatDateTime = (dateTime: string) => {
+    const date = new Date(dateTime);
+    const formattedDate = date.toLocaleDateString("vi-VN"); // Vietnamese date format
+    const formattedTime = `${date.getHours()}:${date.getMinutes() < 10 ? "0" : ""}${date.getMinutes()}`;
+    return { formattedDate, formattedTime };
+  };
 
+  if (loading) return <p>Loading...</p>;
+  if (error) return (
+    <div className="error-messageinAppointment">
+      <p>{error}</p>
+    </div>
+  );
   return (
     <div className="container">
       <h1 className="heading">Lịch hẹn của bạn</h1>
       {contextHolder}
+
+      {/* If there are appointments, show them using Collapse */}
       {appointments.length > 0 ? (
-        <ul className="appointment-list">
-          {appointments.map((appointment) => (
-            <li key={appointment.appointmentId} className="appointment-item">
-              <div className="appointment-info">
-                <strong>Tổng thiệt hại:</strong> {appointment.totalPrice} VND
-              </div>
-              <div className="appointment-info">
-                <strong>Trạng Thái:</strong>{" "}
-                {statusMap[appointment.status] || "Unknown"}
-              </div>
-              <div className="appointment-info">
-                <strong>Start Time:</strong>{" "}
-                {new Date(appointment.startTime).toLocaleString()}
-              </div>
-              <div className="appointment-info">
-                <strong>End Time:</strong>{" "}
-                {new Date(appointment.endTime).toLocaleString()}
-              </div>
-              <div className="appointment-actions">
-                <Button
-                  type="primary"
-                  onClick={() => showServiceModal(appointment)}
-                >
-                  Xem dịch vụ
-                </Button>
-                {appointment.status === 1 && (
-                  <Button
-                    type="default"
-                    danger
-                    onClick={() => showCancelModal(appointment)}
-                  >
+        <Collapse accordion>
+          {appointments.map((appointment) => {
+            const { formattedDate, formattedTime } = formatDateTime(appointment.startTime);
+            const branchName = branchDetails ? branchDetails.salonBranches : "N/A";
+            const address = branchDetails ? branchDetails.address : "N/A";
+            const stylistName = stylistDetails ? stylistDetails.stylistName : "N/A";
+            const totalAmount = appointment.totalPrice || 0;
+            const status = statusMap[appointment.status] || "Chưa xác định";
+
+            return (
+              <Panel
+              className=""
+                key={appointment.appointmentId}
+                header={
+                  <div className="table-header" style={{ fontWeight: 300, padding: "20px 0", lineHeight: "1.6", fontFamily: 'Arial, sans-serif' }}>
+                  <div className="header-text" style={{ display: "flex", justifyContent: "space-between", marginBottom: "15px", fontSize: "16px", color: "#333" }}>
+                    <p style={{ fontWeight: "bold" }}><span style={{ color: "#444" }}>Bạn đã book lịch tại:</span> <span style={{ color: "#0056b3" }}>{branchName}</span></p>
+                    <p style={{ fontWeight: "bold" }}><span style={{ color: "#444" }}>Tên Stylist:</span> <span style={{ color: "#0056b3" }}>{stylistName}</span></p>
+                  </div>
+                
+                  <div className="header-text" style={{ display: "flex", justifyContent: "space-between", marginBottom: "15px", fontSize: "16px", color: "#333" }}>
+                    <p style={{ fontWeight: "bold" }}><span style={{ color: "#444" }}>Tổng thiệt hại:</span> <span style={{ color: "#f39c12" }}>{totalAmount} VND</span></p>
+                    <p style={{ fontWeight: "bold" }}><span style={{ color: "#444" }}>Trạng thái cuộc hẹn:</span> <span style={{ color: status === 'Completed' ? "#2ecc71" : "#e74c3c" }}>{status}</span></p>
+                  </div>
+                
+                  <div className="header-text" style={{ display: "flex", justifyContent: "space-between", marginBottom: "15px", fontSize: "16px", color: "#333" }}>
+                    <p style={{ fontWeight: "bold" }}><span style={{ color: "#444" }}>Ngày:</span> <span style={{ color: "#9b59b6" }}>{formattedDate}</span></p>
+                    <p style={{ fontWeight: "bold" }}><span style={{ color: "#444" }}>Thời gian:</span> <span style={{ color: "#9b59b6" }}>{formattedTime} - {formattedTime}</span></p>
+                  </div>
+                
+                  <div className="header-text" style={{ display: "flex", justifyContent: "space-between", marginBottom: "15px", fontSize: "16px", color: "#333" }}>
+                    <p style={{ fontWeight: "bold" }}><span style={{ color: "#444" }}>Địa chỉ tại:</span> <span style={{ color: "#2980b9" }}>{address}</span></p>
+                  </div>
+                </div>
+                }
+       
+                extra={null}  
+              >
+                {/* Services list inside panel */}
+                {appointment.sevicesList ? (
+                  <div>
+                    {appointment.sevicesList.map((service) => (
+                      <div key={service.serviceId} className="service-info">
+                        {services[service.serviceId] ? (
+                          <>
+                            <p>
+                              <strong>Dịch vụ:</strong>{" "}
+                              {services[service.serviceId]?.serviceName}
+                            </p>
+                            <p>
+                              <strong>Giá dịch vụ:</strong>{" "}
+                              {services[service.serviceId]?.price} VND
+                            </p>
+                            <p>
+                              <strong>Thời gian làm:</strong>{" "}
+                              {services[service.serviceId]?.duration} Phút
+                            </p>
+                          </>
+                        ) : (
+                          <p>Loading service details...</p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p>No services available</p>
+                )}
+
+                {/* Buttons on the bottom-right */}
+                <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "10px" }}>
+                  <Button onClick={() => showCancelModal(appointment)} style={{ marginRight: "10px" }} danger>
                     Hủy lịch
                   </Button>
-                )}
-              </div>
-            </li>
-          ))}
-        </ul>
+                  <Button onClick={() => showServiceModal(appointment)}>Xem dịch vụ</Button>
+                </div>
+              </Panel>
+            );
+          })}
+        </Collapse>
       ) : (
-        <p>Không có lịch hẹn nào.</p>
+        <p>No appointments found</p>
       )}
-
-      {/* Service Modal */}
-      <Modal
-        title="Chi tiết dịch vụ"
-        open={isServiceModalOpen}
-        onOk={handleServiceModalOk}
-        onCancel={() => setIsServiceModalOpen(false)}
-      >
-        {selectedAppointment?.sevicesList.map((service) => (
-          <div key={service.serviceId} className="service-info">
-            {services[service.serviceId] ? (
-              <>
-                <p>
-                  <strong>Dịch vụ:</strong>{" "}
-                  {services[service.serviceId]?.serviceName}
-                </p>
-                <p>
-                  <strong>Giá dịch vụ:</strong>{" "}
-                  {services[service.serviceId]?.price} VND
-                </p>
-                <p>
-                  <strong>Thời gian làm:</strong>{" "}
-                  {services[service.serviceId]?.duration} Phút
-                </p>
-              </>
-            ) : (
-              <p>Đang tải thông tin dịch vụ...</p>
-            )}
-          </div>
-        ))}
-      </Modal>
 
       {/* Cancel Modal */}
       <Modal
@@ -231,11 +267,11 @@ const AppointmentPage = () => {
         onOk={handleCancelModalOk}
         onCancel={handleCancelModalCancel}
       >
-        <p>Vui lòng nhập lý do hủy:</p>
-        <Input
+        <p>Nhập lý do hủy lịch hẹn:</p>
+        <Input.TextArea
+          rows={4}
           value={cancelReason}
           onChange={(e) => setCancelReason(e.target.value)}
-          placeholder="Nhập lý do tại đây"
         />
       </Modal>
     </div>

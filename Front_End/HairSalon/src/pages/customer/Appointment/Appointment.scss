@@ -1,45 +1,166 @@
-/* src/pages/Appointment.scss */
+// Appointment.scss
 
 .container {
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.heading {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.error-messageinAppointment {
+  color: #ff4d4f;
+  font-size: 1.2rem;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.ant-collapse-header {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.ant-collapse-header:hover {
+  background-color: #e6f7ff;
+}
+
+.ant-collapse-item {
+  margin-bottom: 10px;
+}
+
+.service-info {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.service-info p {
+  margin: 5px 0;
+  font-size: 1rem;
+}
+
+button {
+  margin: 5px;
+}
+
+button.ant-btn-primary {
+  background-color: #1890ff;
+  border-color: #1890ff;
+  color: #fff;
+}
+
+button.ant-btn-default {
+  border-color: #f5222d;
+  color: #f5222d;
+}
+
+button.ant-btn-danger {
+  background-color: #f5222d;
+  border-color: #f5222d;
+  color: #fff;
+
+  &:hover {
+    background-color: #ff4d4f;
+    border-color: #ff4d4f;
   }
-  
-  .heading {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  .appointment-list {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .appointment-item {
-    background-color: #f9f9f9;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .appointment-info {
-    margin-bottom: 10px;
-  }
-  
-  .service-info {
-    margin-top: 10px;
-    padding: 10px;
-    background-color: #e6e6e6;
-    border-radius: 6px;
-  }
-  .error-messageinAppointment {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 70vh;
-    font-size: 18px;
-    text-align: center;
-  }
+}
+
+.ant-modal-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.ant-modal-body {
+  font-size: 1.1rem;
+}
+
+.ant-input {
+  margin-top: 10px;
+  border-radius: 5px;
+  font-size: 1rem;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ant-btn {
+  font-size: 1rem;
+  padding: 10px 20px;
+}
+
+.ant-modal-footer {
+  text-align: center;
+}
+
+.ant-collapse {
+  margin-top: 20px;
+}
+
+.ant-btn-primary:focus,
+.ant-btn-danger:focus {
+  box-shadow: none;
+}
+
+.ant-btn-primary:hover,
+.ant-btn-danger:hover {
+  border-color: transparent;
+}
+
+// Add styling for header p tags for proper alignment
+.ant-collapse-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.ant-collapse-header p {
+  margin: 5px 0;
+  font-size: 1rem;
+}
+
+.ant-collapse-header p:nth-child(2) {
+  text-align: center; 
+  margin-top: 10px;
+}
+
+.ant-collapse-header p:last-child {
+  display: flex;
+  justify-content: space-between;  
+  margin-top: 10px;
+}
+
+.header-text {
+  font-size: 16px;
+  color: #333;
+}
+
+.header-text strong {
+  font-weight: 500;
+  color: #000;
+}
+
+.header-text span {
+  color: #555;
+}
