@@ -37,9 +37,21 @@ namespace HairSalonSystem.Services.Implements
         {
             return await _staffManagerRepository.GetAllStaffManagers();
         }
+        public async Task<List<StaffManager>> GetAllStaffManagersNotBranch()
+        { 
+           return await _staffManagerRepository.GetBranchesNotBranchIdAsync();
+        }
 
-        public async Task<ActionResult> AddStaffManager(CreateNewStaffManagerRequest staffManager,HttpContext httpContext)
+            public async Task<ActionResult> AddStaffManager(CreateNewStaffManagerRequest staffManager,HttpContext httpContext)
         {
+            var roleName = UserUtil.GetRoleName(httpContext);
+            if (roleName != "SA" && roleName !="SM" && string.IsNullOrEmpty(roleName))
+            {
+                return new ObjectResult(MessageConstant.StaffManagerMessage.StaffManagerNotRightsAdd)
+                {
+                    StatusCode = StatusCodes.Status403Forbidden
+                };
+            }
             var account = new Account()
             {
                 AccountId = Guid.NewGuid(),
@@ -98,6 +110,8 @@ namespace HairSalonSystem.Services.Implements
             
             if (RoleName != "SA" && RoleName != "SM" && string.IsNullOrEmpty(RoleName))
             {
+
+
                 throw new BadHttpRequestException(MessageConstant.StaffManagerMessage.StaffManagerNotRightsUpdate);
             }
             var existingStaffManager = await _staffManagerRepository.GetStaffManagerById(id);

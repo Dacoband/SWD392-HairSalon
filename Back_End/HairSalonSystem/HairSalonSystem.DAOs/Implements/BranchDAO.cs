@@ -63,5 +63,6 @@ namespace HairSalonSystem.DAOs.Implements
                 .Find(b => b.StaffManagerID == managerId && b.DelFlg == true)
                 .ToListAsync();
         }
+       
     }
 }

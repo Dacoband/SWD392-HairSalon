@@ -33,6 +33,13 @@ namespace HairSalonSystem.Services.Implements
         public async Task<CreateStylistResponse> CreateStylistAsync(CreateStylistRequest request, HttpContext httpContext)
         {
             var roleName = UserUtil.GetRoleName(httpContext);
+
+            if (roleName != "SM" && roleName != "SA" && string.IsNullOrEmpty(roleName))
+            {
+
+
+                throw new BadHttpRequestException(MessageConstant.StaffManagerMessage.StaffManagerNotRightsCreate);
+            }
             var url = "";
             if (request.AvatarImage != null)
             {
@@ -120,7 +127,12 @@ namespace HairSalonSystem.Services.Implements
         {
             var roleName = UserUtil.GetRoleName(httpContext);
             //var accountId = UserUtil.GetAccountId(httpContext);
+            if (roleName != "SM" && roleName != "SA" && string.IsNullOrEmpty(roleName))
+            {
 
+
+                throw new BadHttpRequestException(MessageConstant.StaffManagerMessage.StaffManagerNotRightsUpdate);
+            }
             var stylist = await _stylistRepository.GetStylistById(id);
             //var existingAccount = await _accountRepository.GetAccountById(accountId);
             if (stylist == null)
@@ -150,7 +162,7 @@ namespace HairSalonSystem.Services.Implements
         {
             var roleName = UserUtil.GetRoleName(httpContext);
 
-            if (roleName != Enums.RoleEnums.SA.ToString() && roleName != Enums.RoleEnums.SM.ToString())
+            if (roleName != Enums.RoleEnums.SA.ToString() && roleName != Enums.RoleEnums.SM.ToString() && string.IsNullOrEmpty(roleName))
             {
                 throw new UnauthorizedAccessException(MessageConstant.StylistMessage.StylistNotRightsDelete);
             }

@@ -43,5 +43,10 @@ namespace HairSalonSystem.Repositories.Implement
         {
             await _staffManagerDAO.DeleteStaffManagerAsync(id);
         }
+
+        public async Task<List<StaffManager>> GetBranchesNotBranchIdAsync()
+        {
+            return  await _staffManagerDAO.GetBranchesNotBranchIdAsync();
+        }
     }
 }
