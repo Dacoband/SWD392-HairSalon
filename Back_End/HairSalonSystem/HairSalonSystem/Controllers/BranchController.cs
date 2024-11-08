@@ -87,7 +87,7 @@ namespace HairSalonSystem.Services.Controllers
         [Authorize(Roles = "SA")]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
-        public async Task<bool> UpdateBranch([FromRoute] Guid id, [FromBody] UpdateBranchRequest branchDto)
+        public async Task<bool> UpdateBranch([FromRoute] Guid id, [FromForm] UpdateBranchRequest branchDto)
         {
             return await _branchService.UpdateBranch(id, branchDto);
         }

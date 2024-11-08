@@ -124,16 +124,19 @@ namespace HairSalonSystem.Services.Implements
             {
                 throw new BadHttpRequestException("Branch not found.");
             }
-
+            if(branchDto.StaffManagerID == null)
+            {
+                throw new BadHttpRequestException("Staff Manager not found.");
+            }
             // Kiểm tra sự tồn tại của StaffManagerID
-            bool staffManagerExists = await _branchRepository.CheckStaffManagerExists(branchDto.StaffManagerID);
+            bool staffManagerExists = await _branchRepository.CheckStaffManagerExists((Guid)branchDto.StaffManagerID);
             if (!staffManagerExists)
             {
                 throw new BadHttpRequestException("Staff Manager not found.");
             }   
 
             // Cập nhật thông tin
-            existingBranch.StaffManagerID = branchDto.StaffManagerID; // Cập nhật StaffManagerID
+            existingBranch.StaffManagerID = (Guid)branchDto.StaffManagerID; // Cập nhật StaffManagerID
             existingBranch.SalonBranches = branchDto.SalonBranches ?? existingBranch.SalonBranches;
             existingBranch.Address = branchDto.Address ?? existingBranch.Address;
             existingBranch.Phone = branchDto.Phone ?? existingBranch.Phone;
@@ -143,7 +146,7 @@ namespace HairSalonSystem.Services.Implements
             await _branchRepository.UpdateBranch(existingBranch);
 
             //Đồng bộ cập nhâjt thông tin StaffManager
-            var staffManager = await _staffManagerRepository.GetStaffManagerById(branchDto.StaffManagerID);
+            var staffManager = await _staffManagerRepository.GetStaffManagerById((Guid)branchDto.StaffManagerID);
             if (staffManager.BranchID != null)
             {
                 throw new BadHttpRequestException("Staff Manager is already assigned to another branch.");
@@ -152,10 +155,7 @@ namespace HairSalonSystem.Services.Implements
             {
                 
                 staffManager.BranchID = branchId;
-                await _staffManagerRepository.UpdateStaffManager(staffManager.StaffManagerID, new UpdateStaffManagerRequest
-                {
-                    BranchID = branchId,
-                }, null);
+                await _staffManagerRepository.UpdateStaffManagerBranchIdAsync(staffManager.StaffManagerID, branchId);
             }
             return true;
 
