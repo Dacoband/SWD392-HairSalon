@@ -13,6 +13,7 @@ import {
 import type { ColumnsType } from "antd/es/table";
 import { getAuthToken } from "../../services/authSalon";
 import { SearchOutlined } from "@ant-design/icons";
+import { Services } from "../../models/type";
 
 interface Service {
   serviceID: string;

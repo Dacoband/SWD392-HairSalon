@@ -80,6 +80,8 @@ export interface UserInfoData {
 export interface StaffStylist {
   staffStylistId: string;
   staffStylistName: string;
+  email:string;
+  password:string;
   dateOfBirth: string;
   phoneNumber: string;
   address: string;
@@ -106,4 +108,14 @@ export interface Member {
   avatarImage: string;
   insDate: string;
   updDate: string;
+}
+
+
+export interface Cancellation {
+  cancellationId: string;
+  reason: string;
+  insDate: string;
+  updDate: string;
+  delFlg: boolean;
+  appointment: Appointment;
 }
