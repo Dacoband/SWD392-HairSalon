@@ -14,12 +14,12 @@ import type { ColumnsType } from "antd/es/table";
 import {
   getStaffAll,
   getStaffWithoutBranch,
-  updateStaffManager,
 } from "../../services/Admin/StaffManager";
 import {
   getBranchesAll,
   deleteBranch,
   addBranch,
+  updateBranch,
 } from "../../services/Branches/branches";
 import { SearchOutlined } from "@ant-design/icons";
 const { Option } = Select;
@@ -34,6 +34,8 @@ const ManagerBranch = () => {
     StaffManager[]
   >([]);
   const [form] = Form.useForm();
+  const [isEditModalVisible, setIsEditModalVisible] = useState<boolean>(false);
+  const [currentBranch, setCurrentBranch] = useState<Branches | null>(null);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -95,6 +97,8 @@ const ManagerBranch = () => {
       // Update the branch list after adding
       const newBranch = { ...values, branchID: Date.now().toString() }; // Assuming branchID is unique
       setBranches([...branches, newBranch]);
+      const availableStaffData = await getStaffWithoutBranch();
+      setAvailableStaffManagers(availableStaffData);
       message.success("Chi nhánh đã được thêm thành công");
     } catch (error) {
       message.error("Có lỗi xảy ra khi thêm chi nhánh");
@@ -103,7 +107,54 @@ const ManagerBranch = () => {
       form.resetFields();
     }
   };
-
+  const handleEditBranch = (branch: Branches) => {
+    setCurrentBranch(branch); // Lưu chi nhánh hiện tại để chỉnh sửa
+    form.setFieldsValue(branch); // Thiết lập giá trị cho form
+    setIsEditModalVisible(true); // Hiển thị modal chỉnh sửa
+  };
+  // const handleUpdateBranch = async (values: any) => {
+  //   if (currentBranch) {
+  //     try {
+  //       await updateBranch(currentBranch.branchID, values); // Gọi hàm updateBranch
+  //       setBranches(
+  //         branches.map((branch) =>
+  //           branch.branchID === currentBranch.branchID
+  //             ? { ...branch, ...values }
+  //             : branch
+  //         )
+  //       );
+  //       message.success("Chi nhánh đã được cập nhật thành công");
+  //     } catch (error) {
+  //       message.error("Có lỗi xảy ra khi cập nhật chi nhánh");
+  //     } finally {
+  //       setIsEditModalVisible(false);
+  //       form.resetFields();
+  //       setCurrentBranch(null);
+  //     }
+  //   }
+  // };
+  const handleUpdateBranch = async (values: any) => {
+    if (currentBranch) {
+      try {
+        await updateBranch(currentBranch.branchID, values); // Gọi hàm updateBranch
+        setBranches(
+          branches.map((branch) =>
+            branch.branchID === currentBranch.branchID
+              ? { ...branch, ...values }
+              : branch
+          )
+        );
+        message.success("Chi nhánh đã được cập nhật thành công");
+      } catch (error) {
+        console.error("Error during branch update:", error); // In lỗi chi tiết
+        message.error("Có lỗi xảy ra khi cập nhật chi nhánh");
+      } finally {
+        setIsEditModalVisible(false);
+        form.resetFields();
+        setCurrentBranch(null);
+      }
+    }
+  };
   const columns: ColumnsType<Branches> = [
     {
       title: "Tên chi nhánh",
@@ -127,13 +178,18 @@ const ManagerBranch = () => {
       title: "Hành động",
       dataIndex: "action",
       render: (_, record) => (
-        <Button
-          type="link"
-          danger
-          onClick={() => showDeleteConfirm(record.branchID)}
-        >
-          Xóa
-        </Button>
+        <div>
+          <Button type="link" onClick={() => handleEditBranch(record)}>
+            Chỉnh sửa
+          </Button>
+          <Button
+            type="link"
+            danger
+            onClick={() => showDeleteConfirm(record.branchID)}
+          >
+            Xóa
+          </Button>
+        </div>
       ),
     },
 
@@ -234,6 +290,63 @@ const ManagerBranch = () => {
           <Form.Item>
             <Button type="primary" htmlType="submit">
               Thêm
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
+      <Modal
+        title="Chỉnh sửa chi nhánh"
+        visible={isEditModalVisible}
+        onCancel={() => setIsEditModalVisible(false)}
+        footer={null}
+      >
+        <Form form={form} onFinish={handleUpdateBranch}>
+          <Form.Item
+            name="staffManagerID"
+            label="Người quản lí"
+            rules={[
+              { required: true, message: "Vui lòng chọn người quản lí!" },
+            ]}
+          >
+            <Select placeholder="Chọn người quản lí">
+              {availableStaffManagers.map((manager) => (
+                <Option
+                  key={manager.staffManagerID}
+                  value={manager.staffManagerID}
+                >
+                  {manager.staffManagerName}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+          <Form.Item
+            name="salonBranches"
+            label="Tên chi nhánh"
+            rules={[
+              { required: true, message: "Vui lòng nhập tên chi nhánh!" },
+            ]}
+          >
+            <Input placeholder="Nhập tên chi nhánh" />
+          </Form.Item>
+          <Form.Item
+            name="address"
+            label="Địa chỉ"
+            rules={[{ required: true, message: "Vui lòng nhập địa chỉ!" }]}
+          >
+            <Input placeholder="Nhập địa chỉ" />
+          </Form.Item>
+          <Form.Item
+            name="phone"
+            label="Số điện thoại"
+            rules={[
+              { required: true, message: "Vui lòng nhập số điện thoại!" },
+            ]}
+          >
+            <Input placeholder="Nhập số điện thoại" />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Cập nhật
             </Button>
           </Form.Item>
         </Form>
