@@ -78,7 +78,7 @@ namespace HairSalonSystem.Services.Implements
             }
             if (existAppointment.Status == 4)
             {
-                return new ObjectResult(MessageConstant.CancelAppointmentMessage.CreateRight)
+                return new ObjectResult("Cuộc hẹn đã hoàn thành không thể hủy lịch hẹn")
                 {
                     StatusCode = StatusCodes.Status403Forbidden
                 };
@@ -94,7 +94,28 @@ namespace HairSalonSystem.Services.Implements
                 DelFlg = true
 
             };
-            var status = 3;
+            var status = 5;
+            if(existAppointment.Status == 1) {
+                status = 3;
+                try
+                {
+                    await _appointmentRepo.UpdateAppointmentStatus(existAppointment.AppointmentId, status);
+                    return new ObjectResult(MessageConstant.CancelAppointmentMessage.CreateSuccess)
+                    {
+                        StatusCode = StatusCodes.Status201Created,
+                        Value = model
+                    };
+                } catch (Exception ex)
+                {
+                    return new ObjectResult(MessageConstant.CancelAppointmentMessage.Exception)
+                    {
+                        StatusCode = StatusCodes.Status500InternalServerError,
+                        Value = ex.Message
+                    };
+                }
+               
+            }
+            
             var account = await _accountRepo.GetAccountById(accountID);
             var appointment = await _appointmentRepo.GetAppointmentById(req.AppointmetId);
 

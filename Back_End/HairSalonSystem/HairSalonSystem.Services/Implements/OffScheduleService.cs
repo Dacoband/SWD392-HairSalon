@@ -21,6 +21,7 @@ namespace HairSalonSystem.Services.Implements
         private readonly IOffScheduleRepository _offScheduleRepo;
         private readonly IStylistRepository _stylistRepo;
         private readonly IAppointmentRepository _appointmentRepo;
+        
         public OffScheduleService(IOffScheduleRepository offScheduleRepo, IStylistRepository stylistRepo, IAppointmentRepository appointmentRepo)
         {
             _offScheduleRepo = offScheduleRepo;
@@ -91,7 +92,17 @@ namespace HairSalonSystem.Services.Implements
                     StatusCode = StatusCodes.Status400BadRequest
                 };
             }
+            //check stylist off
+            var stylistOffSchedule = await _offScheduleRepo.GetAll();
+            var requestStylist = await _stylistRepo.GetStylistById(request.StylistId);
 
+            var stylistList = await _stylistRepo.GetStylistByBranchId(requestStylist.BranchID);
+            var stylistListIds = stylistList.Select(x => x.StylistId).ToList();
+            stylistOffSchedule = stylistOffSchedule
+    .Where(x => x.OffDate.Date == request.OffDate.Date
+                && (int)x.OffSlot == (int)request.OffSlot
+                && stylistListIds.Contains(x.StylistId))
+    .ToList();
             //check date(8slot/month)
             var existingOffSchedule = await _offScheduleRepo.GetOffScheduleInMonth(request.StylistId, request.OffDate);
             if(existingOffSchedule.Count >= 8)
