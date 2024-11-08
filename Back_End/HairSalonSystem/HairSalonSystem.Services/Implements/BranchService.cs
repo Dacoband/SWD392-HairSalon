@@ -19,10 +19,12 @@ namespace HairSalonSystem.Services.Implements
     public class BranchService : IBranchService
     {
         private readonly IBranchRespository _branchRepository;
+        private readonly IStaffManagerRepository _staffManagerRepository;
 
-        public BranchService(IBranchRespository branchRepository)
+        public BranchService(IBranchRespository branchRepository, IStaffManagerRepository staffManagerRepository)
         {
             _branchRepository = branchRepository;
+            _staffManagerRepository = staffManagerRepository;
         }
 
         public async Task<ActionResult<Branch>> GetBranchById(Guid branchId)
@@ -83,6 +85,23 @@ namespace HairSalonSystem.Services.Implements
                 UpdDate = DateTime.Now,
                 DelFlg = true
             };
+            var staffManagerExists = await _staffManagerRepository.GetStaffManagerById(branchDto.StaffManagerID);
+            if(staffManagerExists == null)
+            {
+                return new ObjectResult(MessageConstant.StaffManagerMessage.StaffManagerNotFound)
+                {
+                    StatusCode = StatusCodes.Status404NotFound
+                };
+            }
+            if(staffManagerExists.BranchID != null)
+            {
+                return new ObjectResult(MessageConstant.StaffManagerMessage.StaffManagerNotBranchNotFound)
+                {
+                    StatusCode = StatusCodes.Status404NotFound
+                };
+
+            }
+            await _staffManagerRepository.UpdateStaffManagerBranchIdAsync(branchDto.StaffManagerID, branch.BranchID);
             await _branchRepository.AddBranch(branch);
 
             var response = new CreateNewBrachResponse
