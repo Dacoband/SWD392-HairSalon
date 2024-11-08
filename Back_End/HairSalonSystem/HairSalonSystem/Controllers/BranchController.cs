@@ -90,12 +90,17 @@ namespace HairSalonSystem.Services.Controllers
             return await _branchService.UpdateBranch(id, branchDto);
         }
         [HttpDelete(APIEndPointConstant.Branch.DeleteBranch)]
-        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-        [ProducesErrorResponseType(typeof(ProblemDetails))]
-        public async Task<IActionResult> RemoveBranch([FromRoute] Guid id)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesErrorResponseType(typeof(NotFoundResult))]
+        public async Task<ActionResult> RemoveBranch([FromRoute] Guid id)
         {
+           var existingBranch = await _branchService.GetBranchById(id);
+            if (existingBranch == null)
+            {
+                return NotFound();
+            }
             await _branchService.RemoveBranch(id);
-            return Problem(MessageConstant.BranchMessage.BranchDeleted);
+            return Content (MessageConstant.BranchMessage.BranchDeleted);
         }
 
     }

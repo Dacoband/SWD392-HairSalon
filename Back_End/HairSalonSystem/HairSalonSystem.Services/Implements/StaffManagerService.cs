@@ -45,7 +45,7 @@ namespace HairSalonSystem.Services.Implements
             public async Task<ActionResult> AddStaffManager(CreateNewStaffManagerRequest staffManager,HttpContext httpContext)
         {
             var roleName = UserUtil.GetRoleName(httpContext);
-            if (roleName != "SA"  && string.IsNullOrEmpty(roleName))
+            if (roleName != "SA" && roleName !="SM" && string.IsNullOrEmpty(roleName))
             {
                 return new ObjectResult(MessageConstant.StaffManagerMessage.StaffManagerNotRightsAdd)
                 {

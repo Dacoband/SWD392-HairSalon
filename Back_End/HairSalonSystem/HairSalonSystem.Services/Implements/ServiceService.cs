@@ -45,6 +45,7 @@ namespace HairSalonSystem.Services.Implements
                     StatusCode = StatusCodes.Status403Forbidden
                 };
             }
+
             var url = await _firebaseService.UploadFile(serviceModel.AvatarImage);
             var service = new BusinessObject.Entities.Service
             {

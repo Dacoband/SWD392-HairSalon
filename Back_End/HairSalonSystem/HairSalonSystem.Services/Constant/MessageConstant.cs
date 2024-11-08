@@ -52,7 +52,9 @@
         public static class StaffManagerMessage
         {
             public const string StaffManagerNotFound = "Không tìm thấy nhân viên quản lý.";
+            public const string StaffManagerNotRightsCreate = "Bạn không có quyền tạo thông tin nhân viên quản lý.";
             public const string StaffManagerNotRightsUpdate = "Bạn không có quyền cập nhật thông tin nhân viên quản lý.";
+
             public const string StaffManagerAlreadyExists = "Nhân viên quản lý đã tồn tại.";
             public const string StaffManagerAddedSuccessfully = "Thêm nhân viên quản lý thành công.";
             public const string StaffManagerUpdatedSuccessfully = "Cập nhật thông tin nhân viên quản lý thành công.";
@@ -136,7 +138,19 @@
             public const string CreateRight = "Bạn không có quyền thay đổi mức lương";
             public const string NotFound = "Không tìm thấy mức lương";
             public const string NotRight = "Bạn không có quyền truy cập các mức lương";
+        }
 
+        public static class OffScheduleMessage
+        {
+            public const string CreateRight = "Bạn không có quyền tạo lịch nghỉ";
+            public const string NotRight = "Bạn không có quyền truy cập lịch nghỉ";
+            public const string ExistAppointment = "Đã có lịch hẹn trước, bạn không thể đăng ký lịch nghỉ";
+            public const string InvalidTime = "Bạn phải đăng ký lịch nghỉ trươc ít nhất 5 ngày";
+            public const string MaxSlot = "Bạn chỉ có thể nghỉ tối đa 8 slot trong 1 tháng";
+            public const string CreateSuccess = "Bạn đã tạo lịch nghỉ thành công";
+            public const string CreateFail = "Internal Exception";
+            public const string NotFound = "Không tìm thấy lịch nghỉ";
+            public const string DeleteSuccess = "Xóa lịch nghỉ thành công";
 
         }
     }

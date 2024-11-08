@@ -178,16 +178,19 @@ namespace HairSalonSystem.Services.Implements
 
             foreach (var stylist in staffStylists)
             {
-                responseList.Add(new StaffStylistResponse
+                if (stylist != null)
                 {
-                    StaffStylistId = stylist.StaffStylistId,
-                    StaffStylistName = stylist.StaffStylistName,
-                    BranchId = stylist.BranchID,
-                    DateOfBirth = stylist.DateOfBirth,
-                    PhoneNumber = stylist.PhoneNumber,
-                    Address = stylist.Address,
-                    AvatarImage = stylist.AvatarImage
-                });
+                    responseList.Add(new StaffStylistResponse
+                    {
+                        StaffStylistId = stylist.StaffStylistId,
+                        StaffStylistName = stylist.StaffStylistName,
+                        BranchId = stylist.BranchID,
+                        DateOfBirth = stylist.DateOfBirth,
+                        PhoneNumber = stylist.PhoneNumber,
+                        Address = stylist.Address,
+                        AvatarImage = stylist.AvatarImage
+                    });
+                }
             }
 
             return responseList;
