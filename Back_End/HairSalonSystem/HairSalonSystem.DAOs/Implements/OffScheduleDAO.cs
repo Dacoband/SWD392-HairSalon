@@ -51,8 +51,10 @@ namespace HairSalonSystem.DAOs.Implements
         public async Task<List<OffSchedule>> GetOffScheduleInDate(Guid id, DateTime date)
         {
             return await _offSchedule
-                .Find(x => x.StylistId == id && x.OffDate.Date == date.Date && x.DelFlg == true)
-                .ToListAsync();
+      .Find(x => x.StylistId == id
+              && x.OffDate.Date == date.Date
+              && x.DelFlg == true)
+      .ToListAsync();
         }
 
         public async Task<List<OffSchedule>> GetOffScheduleInMonth(Guid id, DateTime date)

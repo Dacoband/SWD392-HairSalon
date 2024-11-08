@@ -52,6 +52,8 @@
         public static class StaffManagerMessage
         {
             public const string StaffManagerNotFound = "Không tìm thấy nhân viên quản lý.";
+            public const string StaffManagerNotBranchNotFound = "Quản lý đã có branch không được quản lý bất kì branch nào nữa";
+
             public const string StaffManagerNotRightsCreate = "Bạn không có quyền tạo thông tin nhân viên quản lý.";
             public const string StaffManagerNotRightsUpdate = "Bạn không có quyền cập nhật thông tin nhân viên quản lý.";
 

@@ -104,16 +104,16 @@ namespace HairSalonSystem.Services.Implements
 
         public async Task<ActionResult> UpdateStaffManager(Guid id, UpdateStaffManagerRequest staffManagerRequest, HttpContext httpContext)
         {
-            var RoleName = UserUtil.GetRoleName(httpContext);
-           // Guid? accountIdFromToken = UserUtil.GetAccountId(httpContext);
+           // var RoleName = UserUtil.GetRoleName(httpContext);
+           //// Guid? accountIdFromToken = UserUtil.GetAccountId(httpContext);
            
             
-            if (RoleName != "SA" && RoleName != "SM" && string.IsNullOrEmpty(RoleName))
-            {
+           // if (RoleName != "SA" && RoleName != "SM" && string.IsNullOrEmpty(RoleName))
+           // {
 
 
-                throw new BadHttpRequestException(MessageConstant.StaffManagerMessage.StaffManagerNotRightsUpdate);
-            }
+           //     throw new BadHttpRequestException(MessageConstant.StaffManagerMessage.StaffManagerNotRightsUpdate);
+           // }
             var existingStaffManager = await _staffManagerRepository.GetStaffManagerById(id);
 
             //var existingAccount = await _accountRepository.GetAccountById(accountIdFromToken);
