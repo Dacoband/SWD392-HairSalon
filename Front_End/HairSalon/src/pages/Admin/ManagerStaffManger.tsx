@@ -42,18 +42,6 @@ const ManagerStaffManager: React.FC = () => {
     fetchStaffManagers();
   }, []);
 
-  // const fetchStaffManagers = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const data = await getStaffAll();
-  //     setStaffManagers(data);
-  //   } catch (error) {
-  //     console.error("Error fetching staff managers:", error);
-  //     message.error("Error fetching staff managers");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
   const fetchStaffManagers = async () => {
     setLoading(true);
     try {
@@ -70,23 +58,7 @@ const ManagerStaffManager: React.FC = () => {
       setLoading(false);
     }
   };
-  const handleUpdateStaff = async (values: any) => {
-    if (!selectedStaff) return;
-    try {
-      const updatedData = {
-        ...selectedStaff,
-        ...values,
-        dateOfBirth: values.dateOfBirth.format("YYYY-MM-DD"),
-      };
-      await updateStaffManager(selectedStaff.staffManagerID, updatedData);
-      message.success("Staff updated successfully");
-      setIsUpdateModalVisible(false);
-      fetchStaffManagers();
-    } catch (error: any) {
-      console.error("Error updating staff:", error);
-      message.error(error.response?.data?.message || "Failed to update staff");
-    }
-  };
+
   const handleDelete = async (staffManagerId: string) => {
     Modal.confirm({
       title: "Bạn có muốn xóa quản lí này?",
@@ -145,6 +117,49 @@ const ManagerStaffManager: React.FC = () => {
       message.error(error.response?.data?.message || "Failed to add staff");
     }
   };
+  const openAddServiceModal = () => {
+    form.resetFields(); // Reset form fields
+    setIsAddModalVisible(true); // Mở modal thêm dịch vụ
+  };
+  const openUpdateModal = (staffManager: StaffManager) => {
+    setSelectedStaff(staffManager);
+    form.setFieldsValue({
+      staffManagerName: staffManager.staffManagerName,
+      dateOfBirth: moment(staffManager.dateOfBirth),
+      phoneNumber: staffManager.phoneNumber,
+      address: staffManager.address,
+    });
+    setIsUpdateModalVisible(true);
+  };
+  const handleUpdateStaff = async (values: any) => {
+    if (!selectedStaff) return;
+
+    try {
+      const formData = new FormData();
+      formData.append("staffManagerName", values.staffManagerName);
+      formData.append("dateOfBirth", values.dateOfBirth.format("YYYY-MM-DD"));
+      formData.append("phoneNumber", values.phoneNumber);
+      formData.append("address", values.address);
+
+      // If an avatar image is selected, append it to the form data
+      if (avatarImage) {
+        formData.append("AvatarImage", avatarImage);
+      }
+
+      // Log FormData for debugging
+      console.log("FormData before update:", Array.from(formData.entries()));
+
+      // Make the API call to update the staff manager
+      await updateStaffManager(selectedStaff.staffManagerID, formData);
+      message.success("Staff updated successfully");
+      setIsUpdateModalVisible(false);
+      form.resetFields();
+      fetchStaffManagers();
+    } catch (error: any) {
+      console.error("Error updating staff:", error);
+      message.error(error.response?.data?.message || "Failed to update staff");
+    }
+  };
 
   const columns: ColumnsType<StaffManager> = [
     {
@@ -152,11 +167,7 @@ const ManagerStaffManager: React.FC = () => {
       dataIndex: "avatarImage",
       key: "avatarImage",
       render: (text: string) => (
-        <img
-          src={text}
-          alt="avatar"
-          style={{ width: 80, height: 80, borderRadius: "50%" }}
-        />
+        <img src={text} alt="avatar" style={{ width: 80, height: 90 }} />
       ),
     },
     {
@@ -198,17 +209,7 @@ const ManagerStaffManager: React.FC = () => {
           <Button
             type="link"
             icon={<EditOutlined />}
-            // onClick={() => {
-            //   setSelectedStaff(record);
-            //   form.setFieldsValue({
-            //     // email: record.email,
-            //     staffManagerName: record.staffManagerName,
-            //     dateOfBirth: moment(record.dateOfBirth),
-            //     phoneNumber: record.phoneNumber,
-            //     address: record.address,
-            //   });
-            //   setIsUpdateModalVisible(true);
-            // }}
+            onClick={() => openUpdateModal(record)}
           />
           <Button
             type="text"
@@ -244,7 +245,7 @@ const ManagerStaffManager: React.FC = () => {
           style={{ width: 300 }}
           allowClear
         />
-        <Button type="primary" onClick={() => setIsAddModalVisible(true)}>
+        <Button type="primary" onClick={openAddServiceModal}>
           Thêm Quản lí
         </Button>
       </Space>
@@ -342,7 +343,7 @@ const ManagerStaffManager: React.FC = () => {
             label="Ngày tháng năm sinh"
             rules={[{ required: true, message: "Vui lòng chọn ngày sinh!" }]}
           >
-            <DatePicker format="DD/MM/YYYY" />
+            <DatePicker inputReadOnly={false} format="DD/MM/YYYY" />
           </Form.Item>
           <Form.Item
             name="phoneNumber"
@@ -360,7 +361,7 @@ const ManagerStaffManager: React.FC = () => {
           >
             <Input />
           </Form.Item>
-          <Form.Item>
+          <Form.Item label="Cập nhật hình ảnh đại diện">
             <div>
               <input
                 type="file"

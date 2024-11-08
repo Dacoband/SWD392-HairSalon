@@ -37,23 +37,26 @@ export const createStaffManager = async (formData: FormData) => {
   }
 };
 
-export const updateStaffManager = async (id: string, data: any) => {
+export const updateStaffManager = async (id: string, formData: FormData) => {
   const token = getAuthToken();
+  for (const [key, value] of formData.entries()) {
+    console.log(`${key}:`, value);
+  }
   try {
     const response = await axios.patch(
       `https://api.vol-ka.studio/api/v1/staff-manager/update/${id}`,
-      data,
+      formData,
       {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
         },
       }
     );
-    return response.data;
-  } catch (error: any) {
-    console.error("API Error:", error.response?.data || error.message);
-    throw error;
+    return response.data; // Trả về dữ liệu phản hồi
+  } catch (error) {
+    console.error("Error updating staff manager api:", error);
+    throw error; // Ném lỗi để xử lý ở nơi gọi
   }
 };
 
