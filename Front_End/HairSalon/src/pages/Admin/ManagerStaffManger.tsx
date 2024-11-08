@@ -8,13 +8,10 @@ import {
   Modal,
   Form,
   DatePicker,
-  Upload,
 } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import {
   SearchOutlined,
-  PlusOutlined,
-  UploadOutlined,
   DeleteOutlined,
   EditOutlined,
 } from "@ant-design/icons";
@@ -25,28 +22,47 @@ import {
   updateStaffManager,
 } from "../../services/Admin/StaffManager";
 import moment from "moment";
-
 import { StaffManager, Branches } from "../../models/type";
-
+import { getBranchesAll } from "../../services/Branches/branches";
 const ManagerStaffManager: React.FC = () => {
   const [staffManagers, setStaffManagers] = useState<StaffManager[]>([]);
   const [loading, setLoading] = useState(false);
+  const [avatarImage, setSelectedFile] = useState<File | null>(null);
   const [searchText, setSearchText] = useState<string>("");
-  // const [isModalVisible, setIsModalVisible] = useState(false);
+  const [branches, setBranches] = useState<Branches[]>([]);
+  const [isAddModalVisible, setIsAddModalVisible] = useState(false);
+  const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
+  const [selectedStaff, setSelectedStaff] = useState<StaffManager | null>(null);
   // const [form] = Form.useForm();
   // const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
   // const [selectedStaff, setSelectedStaff] = useState<StaffManager | null>(null);
-  const [updateForm] = Form.useForm();
+  const [form] = Form.useForm();
 
   useEffect(() => {
     fetchStaffManagers();
   }, []);
 
+  // const fetchStaffManagers = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const data = await getStaffAll();
+  //     setStaffManagers(data);
+  //   } catch (error) {
+  //     console.error("Error fetching staff managers:", error);
+  //     message.error("Error fetching staff managers");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
   const fetchStaffManagers = async () => {
     setLoading(true);
     try {
-      const data = await getStaffAll();
-      setStaffManagers(data);
+      const staffData = await getStaffAll();
+      setStaffManagers(staffData);
+
+      // Fetch all branches data
+      const branchData = await getBranchesAll();
+      setBranches(branchData); // Store branches in state
     } catch (error) {
       console.error("Error fetching staff managers:", error);
       message.error("Error fetching staff managers");
@@ -54,18 +70,34 @@ const ManagerStaffManager: React.FC = () => {
       setLoading(false);
     }
   };
-
+  const handleUpdateStaff = async (values: any) => {
+    if (!selectedStaff) return;
+    try {
+      const updatedData = {
+        ...selectedStaff,
+        ...values,
+        dateOfBirth: values.dateOfBirth.format("YYYY-MM-DD"),
+      };
+      await updateStaffManager(selectedStaff.staffManagerID, updatedData);
+      message.success("Staff updated successfully");
+      setIsUpdateModalVisible(false);
+      fetchStaffManagers();
+    } catch (error: any) {
+      console.error("Error updating staff:", error);
+      message.error(error.response?.data?.message || "Failed to update staff");
+    }
+  };
   const handleDelete = async (staffManagerId: string) => {
     Modal.confirm({
       title: "Bạn có muốn xóa quản lí này?",
       content: "This action cannot be undone.",
       okText: "Có",
-      okType: "Không Xóa",
-      cancelText: "No",
+      okType: "danger",
+      cancelText: "Hủy",
       onOk: async () => {
         try {
           await deleteStaffManager(staffManagerId);
-          message.success("Staff manager deleted successfully");
+          message.success("Quản lí đã bị xóa");
           fetchStaffManagers(); // Refresh the list
         } catch (error: any) {
           message.error(
@@ -75,42 +107,44 @@ const ManagerStaffManager: React.FC = () => {
       },
     });
   };
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files ? event.target.files[0] : null;
+    if (file) {
+      setSelectedFile(file);
+    }
+  };
+  const handleAddStaff = async (values: any) => {
+    try {
+      console.log(values);
+      const formData = new FormData();
+      formData.append("email", values.email);
+      formData.append("password", values.password);
+      //formData.append("branchID", null); // Default branchID is null
+      formData.append("staffManagerName", values.staffManagerName);
+      formData.append("dateOfBirth", values.dateOfBirth.format("YYYY-MM-DD"));
+      formData.append("phoneNumber", values.phoneNumber);
+      formData.append("address", values.address);
+      if (avatarImage) {
+        if (avatarImage instanceof File) {
+          formData.append("AvatarImage", avatarImage);
+        } else {
+          const response = await fetch(avatarImage, { mode: "no-cors" });
+          const blob = await response.blob();
+          const file = new File([blob], "avatarImage.jpg", { type: blob.type });
+          formData.append("AvatarImage", file);
+        }
+      }
 
-  // const handleUpdate = async (values: any) => {
-  //   try {
-  //     if (!selectedStaff) return;
-
-  //     const updateData = {
-  //       staffManagerName: values.staffManagerName,
-  //       dateOfBirth: values.dateOfBirth.format("YYYY-MM-DD"),
-  //       phoneNumber: values.phoneNumber,
-  //       address: values.address,
-  //       // email: values.email,
-  //     };
-
-  //     await updateStaffManager(selectedStaff.staffManagerID, updateData);
-  //     message.success("Staff manager updated successfully");
-  //     setIsUpdateModalVisible(false);
-  //     updateForm.resetFields();
-  //     fetchStaffManagers();
-  //   } catch (error: any) {
-  //     message.error(
-  //       error.response?.data?.message || "Failed to update staff manager"
-  //     );
-  //   }
-  // };
-
-  // const showUpdateModal = (record: StaffManager) => {
-  //   setSelectedStaff(record);
-  //   updateForm.setFieldsValue({
-  //     // email: record.email,
-  //     staffManagerName: record.staffManagerName,
-  //     dateOfBirth: moment(record.dateOfBirth),
-  //     phoneNumber: record.phoneNumber,
-  //     address: record.address,
-  //   });
-  //   setIsUpdateModalVisible(true);
-  // };
+      await createStaffManager(formData);
+      message.success("Staff added successfully");
+      setIsAddModalVisible(false);
+      form.resetFields();
+      fetchStaffManagers();
+    } catch (error: any) {
+      console.error("Error adding staff:", error);
+      message.error(error.response?.data?.message || "Failed to add staff");
+    }
+  };
 
   const columns: ColumnsType<StaffManager> = [
     {
@@ -147,9 +181,13 @@ const ManagerStaffManager: React.FC = () => {
       render: (date: string) => new Date(date).toLocaleDateString(),
     },
     {
-      title: "ID Chi Nhánh",
-      dataIndex: "branchID", // Giả sử bạn có trường này trong dữ liệu StaffManager
-      key: "branchID",
+      title: "Chi Nhánh",
+      key: "branchName",
+      render: (_, record) => {
+        // Find the branch using the branchID
+        const branch = branches.find((b) => b.branchID === record.branchID);
+        return branch ? branch.salonBranches : "Chưa có chi nhánh";
+      },
     },
     {
       title: "Hoạt động",
@@ -158,9 +196,19 @@ const ManagerStaffManager: React.FC = () => {
       render: (_, record) => (
         <Space>
           <Button
-            type="text"
+            type="link"
             icon={<EditOutlined />}
-            // onClick={() => showUpdateModal(record)}
+            // onClick={() => {
+            //   setSelectedStaff(record);
+            //   form.setFieldsValue({
+            //     // email: record.email,
+            //     staffManagerName: record.staffManagerName,
+            //     dateOfBirth: moment(record.dateOfBirth),
+            //     phoneNumber: record.phoneNumber,
+            //     address: record.address,
+            //   });
+            //   setIsUpdateModalVisible(true);
+            // }}
           />
           <Button
             type="text"
@@ -177,34 +225,7 @@ const ManagerStaffManager: React.FC = () => {
     (sm) =>
       sm.staffManagerName?.toLowerCase().includes(searchText.toLowerCase()) ||
       false
-    // (sm.email?.toLowerCase().includes(searchText.toLowerCase()) || false)
   );
-
-  // const handleAddStaff = async (values: any) => {
-  //   try {
-  //     const formData = new FormData();
-  //     // formData.append('email', values.email);
-  //     formData.append("password", values.password);
-  //     formData.append("staffManagerName", values.staffManagerName);
-  //     formData.append("dateOfBirth", values.dateOfBirth.format("YYYY-MM-DD"));
-  //     formData.append("phoneNumber", values.phoneNumber);
-  //     formData.append("address", values.address);
-  //     if (values.avatarImage?.fileList[0]?.originFileObj) {
-  //       formData.append(
-  //         "avatarImage",
-  //         values.avatarImage.fileList[0].originFileObj
-  //       );
-  //     }
-
-  //     await createStaffManager(formData);
-  //     message.success("Staff added successfully");
-  //     setIsModalVisible(false);
-  //     form.resetFields();
-  //     fetchStaffManagers();
-  //   } catch (error: any) {
-  //     message.error(error.response?.data?.message || "Failed to add staff");
-  //   }
-  // };
 
   return (
     <div style={{ padding: "24px" }}>
@@ -216,14 +237,16 @@ const ManagerStaffManager: React.FC = () => {
         }}
       >
         <Input
-          placeholder="Search by name"
+          placeholder="Tìm kiếm tên"
           prefix={<SearchOutlined />}
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
           style={{ width: 300 }}
           allowClear
         />
-        <Button type="primary">Add Staff Manager</Button>
+        <Button type="primary" onClick={() => setIsAddModalVisible(true)}>
+          Thêm Quản lí
+        </Button>
       </Space>
 
       <Table
@@ -233,172 +256,126 @@ const ManagerStaffManager: React.FC = () => {
         loading={loading}
         pagination={{ pageSize: 5 }}
       />
-
-      {/* <Modal
-        title="Add Staff Manager"
-        open={isModalVisible}
-        onCancel={() => setIsModalVisible(false)}
+      <Modal
+        title="Thêm Quản Lí"
+        visible={isAddModalVisible}
+        onCancel={() => setIsAddModalVisible(false)}
         footer={null}
       >
-        <Form form={form} layout="vertical" onFinish={handleAddStaff}> */}
-      {/* <Form.Item
+        <Form form={form} onFinish={handleAddStaff}>
+          <Form.Item
             name="email"
             label="Email"
-            rules={[
-              { required: true, message: 'Please input email!' },
-              { type: 'email', message: 'Please enter a valid email!' }
-            ]}
+            rules={[{ required: true, message: "Vui lòng nhập email!" }]}
           >
             <Input />
-          </Form.Item> */}
-
-      {/* <Form.Item
+          </Form.Item>
+          <Form.Item
             name="password"
             label="Password"
-            rules={[
-              { required: true, message: "Please input password!" },
-              { min: 6, message: "Password must be at least 6 characters!" },
-            ]}
+            rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }]}
           >
             <Input.Password />
           </Form.Item>
-
           <Form.Item
             name="staffManagerName"
-            label="Staff Manager Name"
-            rules={[{ required: true, message: "Please input name!" }]}
+            label="Họ và tên"
+            rules={[{ required: true, message: "Vui lòng nhập họ và tên!" }]}
           >
             <Input />
           </Form.Item>
-
           <Form.Item
             name="dateOfBirth"
-            label="Date of Birth"
-            rules={[
-              { required: true, message: "Please select date of birth!" },
-            ]}
+            label="Ngày tháng năm sinh"
+            rules={[{ required: true, message: "Vui lòng chọn ngày sinh!" }]}
           >
-            <DatePicker style={{ width: "100%" }} />
+            <DatePicker inputReadOnly={false} format="DD/MM/YYYY" />
           </Form.Item>
-
           <Form.Item
             name="phoneNumber"
-            label="Phone Number"
-            rules={[{ required: true, message: "Please input phone number!" }]}
+            label="Số điện thoại"
+            rules={[
+              { required: true, message: "Vui lòng nhập số điện thoại!" },
+            ]}
           >
             <Input />
           </Form.Item>
-
           <Form.Item
             name="address"
-            label="Address"
-            rules={[{ required: true, message: "Please input address!" }]}
+            label="Địa chỉ"
+            rules={[{ required: true, message: "Vui lòng nhập địa chỉ!" }]}
           >
             <Input />
           </Form.Item>
-
-          <Form.Item
-            name="avatarImage"
-            label="Avatar Image"
-            valuePropName="file"
-          >
-            <Upload maxCount={1} beforeUpload={() => false} listType="picture">
-              <Button icon={<UploadOutlined />}>Click to Upload</Button>
-            </Upload>
-          </Form.Item>
-
           <Form.Item>
-            <Space>
-              <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-              <Button onClick={() => setIsModalVisible(false)}>Cancel</Button>
-            </Space>
+            <div>
+              <input
+                type="file"
+                name="AvatarImage"
+                onChange={handleFileChange}
+              />
+            </div>
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Thêm
+            </Button>
           </Form.Item>
         </Form>
       </Modal>
-
       <Modal
-        title="Update Staff Manager"
-        open={isUpdateModalVisible}
+        title="Cập nhật Quản Lí"
+        visible={isUpdateModalVisible}
         onCancel={() => setIsUpdateModalVisible(false)}
         footer={null}
-        width={600}
-        style={{ top: 20 }}
       >
-        <Form
-          form={updateForm}
-          layout="vertical"
-          onFinish={handleUpdate}
-          style={{ maxWidth: "100%" }}
-        >
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "16px",
-            }}
-          > */}
-      {/* <Form.Item
-              name="email"
-              label="Email"
-              rules={[
-                { required: true, message: 'Please input email!' },
-                { type: 'email', message: 'Please enter a valid email!' }
-              ]}
-            >
-              <Input />
-            </Form.Item> */}
-
-      {/* <Form.Item
-              name="staffManagerName"
-              label="Staff Manager Name"
-              rules={[{ required: true, message: "Please input name!" }]}
-            >
-              <Input />
-            </Form.Item>
-
-            <Form.Item
-              name="dateOfBirth"
-              label="Date of Birth"
-              rules={[
-                { required: true, message: "Please select date of birth!" },
-              ]}
-            >
-              <DatePicker style={{ width: "100%" }} />
-            </Form.Item>
-
-            <Form.Item
-              name="phoneNumber"
-              label="Phone Number"
-              rules={[
-                { required: true, message: "Please input phone number!" },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </div>
-
+        <Form form={form} onFinish={handleUpdateStaff}>
           <Form.Item
-            name="address"
-            label="Address"
-            rules={[{ required: true, message: "Please input address!" }]}
+            name="staffManagerName"
+            label="Họ và tên"
+            rules={[{ required: true, message: "Vui lòng nhập họ và tên!" }]}
           >
             <Input />
           </Form.Item>
-
-          <Form.Item style={{ marginBottom: 0, textAlign: "right" }}>
-            <Space>
-              <Button onClick={() => setIsUpdateModalVisible(false)}>
-                Cancel
-              </Button>
-              <Button type="primary" htmlType="submit">
-                Update
-              </Button>
-            </Space>
+          <Form.Item
+            name="dateOfBirth"
+            label="Ngày tháng năm sinh"
+            rules={[{ required: true, message: "Vui lòng chọn ngày sinh!" }]}
+          >
+            <DatePicker format="DD/MM/YYYY" />
+          </Form.Item>
+          <Form.Item
+            name="phoneNumber"
+            label="Số điện thoại"
+            rules={[
+              { required: true, message: "Vui lòng nhập số điện thoại!" },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="address"
+            label="Địa chỉ"
+            rules={[{ required: true, message: "Vui lòng nhập địa chỉ!" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item>
+            <div>
+              <input
+                type="file"
+                name="AvatarImage"
+                onChange={handleFileChange}
+              />
+            </div>
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Cập nhật
+            </Button>
           </Form.Item>
         </Form>
-      </Modal> */}
+      </Modal>
     </div>
   );
 };

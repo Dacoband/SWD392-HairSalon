@@ -50,21 +50,21 @@ const ManagerAppointment: React.FC = () => {
     let text = "";
 
     switch (status) {
-      case 0:
-        color = "gold";
-        text = "Pending";
-        break;
       case 1:
-        color = "blue";
-        text = "Confirmed";
+        color = "cyan";
+        text = "Đặt lịch thành công";
         break;
       case 2:
-        color = "green";
-        text = "Completed";
+        color = "blue";
+        text = "Thanh toán thành công";
         break;
       case 3:
         color = "red";
-        text = "Cancelled";
+        text = "Hủy hẹn";
+        break;
+      case 4:
+        color = "green";
+        text = "Hoàn Thành";
         break;
       default:
         color = "default";
@@ -80,42 +80,42 @@ const ManagerAppointment: React.FC = () => {
 
   const columns = [
     {
-      title: "Customer Name",
+      title: "Tên Khách Hàng",
       dataIndex: "memberName",
       key: "memberName",
       width: 300,
     },
     {
-      title: "Stylist Name",
+      title: "Tên Stylish",
       dataIndex: "stylistName",
       key: "stylistName",
       width: 300,
     },
 
     {
-      title: "End Time",
+      title: "Thời gian hẹn",
       dataIndex: "endTime",
       key: "endTime",
       render: (time: string) => formatDateTime(time),
     },
     {
-      title: "Status",
+      title: "Tổng thanh toán",
+      dataIndex: "totalPrice",
+      key: "totalPrice",
+      render: (price: number) => `${price.toLocaleString()} VND`,
+    },
+    {
+      title: "Trạng Thái",
       dataIndex: "status",
       key: "status",
       render: (status: number) => getStatusTag(status),
       filters: [
-        { text: "Pending", value: 0 },
-        { text: "Confirmed", value: 1 },
-        { text: "Completed", value: 2 },
-        { text: "Cancelled", value: 3 },
+        { text: "Đặt lịch thành công", value: 1 },
+        { text: "Đã thanh toán", value: 2 },
+        { text: "Đã Hủy", value: 3 },
+        { text: "Đã hoàn thành", value: 4 },
       ],
       onFilter: (value: any, record: any) => record.status === value,
-    },
-    {
-      title: "Total Price",
-      dataIndex: "totalPrice",
-      key: "totalPrice",
-      render: (price: number) => `${price.toLocaleString()} VND`,
     },
   ];
 
@@ -129,11 +129,11 @@ const ManagerAppointment: React.FC = () => {
 
   return (
     <div style={{ padding: "24px" }}>
-      <h2>Appointment Management</h2>
+      <h2>Quản lí lịch hẹn</h2>
 
       <Space style={{ marginBottom: 16 }}>
         <Input
-          placeholder="Search by Customer or Stylist Name"
+          placeholder="Nhập tên khách hàng hoặc stylish"
           prefix={<SearchOutlined />}
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}

@@ -361,8 +361,9 @@ const ManagerService: React.FC = () => {
               { required: true, message: "Vui lòng nhập thời gian!" },
               {
                 type: "number",
-                min: 29,
-                message: "Thời gian phải lớn hơn 30 phút!",
+                min: 10,
+                max: 480,
+                message: "Thời gian phải lớn hơn 10 phút và ít hơn 480 phút!",
               },
             ]}
           >

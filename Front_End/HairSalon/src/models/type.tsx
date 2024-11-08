@@ -29,6 +29,8 @@ export interface StaffManager {
   insDate: string;
   updDate: string;
   delFlg: boolean;
+  password: string;
+  email: string;
 }
 
 export interface AppointmentService {

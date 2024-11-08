@@ -11,7 +11,11 @@ import {
 } from "antd";
 import { Branches, StaffManager } from "../../models/type";
 import type { ColumnsType } from "antd/es/table";
-import { getStaffAll } from "../../services/Admin/StaffManager";
+import {
+  getStaffAll,
+  getStaffWithoutBranch,
+  updateStaffManager,
+} from "../../services/Admin/StaffManager";
 import {
   getBranchesAll,
   deleteBranch,
@@ -26,14 +30,19 @@ const ManagerBranch = () => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [branchToDelete, setBranchToDelete] = useState<string | null>(null);
   const [isAddModalVisible, setIsAddModalVisible] = useState<boolean>(false);
+  const [availableStaffManagers, setAvailableStaffManagers] = useState<
+    StaffManager[]
+  >([]);
   const [form] = Form.useForm();
   useEffect(() => {
     const fetchData = async () => {
       try {
         const branchesData = await getBranchesAll();
         const staffData = await getStaffAll();
+        const availableStaffData = await getStaffWithoutBranch();
         setBranches(branchesData);
         setStaffManagers(staffData);
+        setAvailableStaffManagers(availableStaffData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -83,8 +92,8 @@ const ManagerBranch = () => {
   const handleAddBranch = async (values: any) => {
     try {
       await addBranch(values);
-      // Cập nhật lại danh sách chi nhánh sau khi thêm
-      const newBranch = { ...values, branchID: Date.now().toString() }; // Giả sử branchID là duy nhất
+      // Update the branch list after adding
+      const newBranch = { ...values, branchID: Date.now().toString() }; // Assuming branchID is unique
       setBranches([...branches, newBranch]);
       message.success("Chi nhánh đã được thêm thành công");
     } catch (error) {
@@ -94,6 +103,7 @@ const ManagerBranch = () => {
       form.resetFields();
     }
   };
+
   const columns: ColumnsType<Branches> = [
     {
       title: "Tên chi nhánh",
@@ -112,13 +122,7 @@ const ManagerBranch = () => {
       title: "Số điện thoại",
       dataIndex: "phone",
     },
-    {
-      title: "Ngày tạo",
-      dataIndex: "insDate",
-      render: (date: Date) => (
-        <span>{new Date(date).toLocaleDateString()}</span>
-      ),
-    },
+
     {
       title: "Hành động",
       dataIndex: "action",
@@ -192,7 +196,7 @@ const ManagerBranch = () => {
             ]}
           >
             <Select placeholder="Chọn người quản lí">
-              {staffManagers.map((manager) => (
+              {availableStaffManagers.map((manager) => (
                 <Option
                   key={manager.staffManagerID}
                   value={manager.staffManagerID}
