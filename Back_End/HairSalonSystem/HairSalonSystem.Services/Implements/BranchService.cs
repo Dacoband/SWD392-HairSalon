@@ -12,6 +12,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using HairSalonSystem.Services.PayLoads.Requests.Branchs;
+using HairSalonSystem.Services.PayLoads.Requests.StaffManagers;
+using HairSalonSystem.Repositories.Implement;
 
 
 namespace HairSalonSystem.Services.Implements
@@ -19,10 +21,12 @@ namespace HairSalonSystem.Services.Implements
     public class BranchService : IBranchService
     {
         private readonly IBranchRespository _branchRepository;
+        private readonly IStaffManagerRepository _staffManagerRepository;
 
-        public BranchService(IBranchRespository branchRepository)
+        public BranchService(IBranchRespository branchRepository, IStaffManagerRepository staffManagerRepository)
         {
             _branchRepository = branchRepository;
+            _staffManagerRepository = staffManagerRepository;
         }
 
         public async Task<ActionResult<Branch>> GetBranchById(Guid branchId)
@@ -109,7 +113,7 @@ namespace HairSalonSystem.Services.Implements
             if (!staffManagerExists)
             {
                 throw new BadHttpRequestException("Staff Manager not found.");
-            }
+            }   
 
             // Cập nhật thông tin
             existingBranch.StaffManagerID = branchDto.StaffManagerID; // Cập nhật StaffManagerID
@@ -120,6 +124,22 @@ namespace HairSalonSystem.Services.Implements
 
             // Gọi phương thức cập nhật
             await _branchRepository.UpdateBranch(existingBranch);
+
+            //Đồng bộ cập nhâjt thông tin StaffManager
+            var staffManager = await _staffManagerRepository.GetStaffManagerById(branchDto.StaffManagerID);
+            if (staffManager.BranchID != null)
+            {
+                throw new BadHttpRequestException("Staff Manager is already assigned to another branch.");
+            }
+            if (staffManager != null)
+            {
+                
+                staffManager.BranchID = branchId;
+                await _staffManagerRepository.UpdateStaffManager(staffManager.StaffManagerID, new UpdateStaffManagerRequest
+                {
+                    BranchID = branchId,
+                }, null);
+            }
             return true;
 
         }

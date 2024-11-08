@@ -33,6 +33,7 @@ namespace HairSalonSystem.Services.Controllers
             return await _branchService.GetAllBranches();
         }
         [HttpPost(APIEndPointConstant.Branch.AddBranch)]
+        [Authorize(Roles = "SA")]
         [ProducesResponseType(typeof(CreateNewBrachResponse), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
         public async Task<ActionResult> AddBranch([FromBody] CreateNewBranchRequest branchDto)
@@ -83,6 +84,7 @@ namespace HairSalonSystem.Services.Controllers
         //    return CreatedAtAction(nameof(AddBranch),reponse);
         //}
         [HttpPut(APIEndPointConstant.Branch.UpdateBranch)]
+        [Authorize(Roles = "SA")]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
         public async Task<bool> UpdateBranch([FromRoute] Guid id, [FromBody] UpdateBranchRequest branchDto)
@@ -90,6 +92,7 @@ namespace HairSalonSystem.Services.Controllers
             return await _branchService.UpdateBranch(id, branchDto);
         }
         [HttpDelete(APIEndPointConstant.Branch.DeleteBranch)]
+        [Authorize(Roles = "SA")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesErrorResponseType(typeof(NotFoundResult))]
         public async Task<ActionResult> RemoveBranch([FromRoute] Guid id)
