@@ -14,5 +14,6 @@ namespace HairSalonSystem.Repositories.Interface
         Task AddStaffManager(StaffManager staffManager);
         Task UpdateStaffManager(StaffManager staffManager);
         Task RemoveStaffManager(Guid id);
+        Task<List<StaffManager>> GetBranchesNotBranchIdAsync();
     }
 }
