@@ -16,5 +16,6 @@ namespace HairSalonSystem.DAOs.Interfaces
         Task<List<StaffManager>> GetAllStaffManagersAsync();
         Task<List<StaffManager>> GetStaffManagersByBranchIdAsync(Guid branchId);
         Task<List<StaffManager>> GetBranchesNotBranchIdAsync();
+        Task UpdateStaffManagerBranchIdAsync(Guid staffManagerId, Guid? branchId);
     }
 }

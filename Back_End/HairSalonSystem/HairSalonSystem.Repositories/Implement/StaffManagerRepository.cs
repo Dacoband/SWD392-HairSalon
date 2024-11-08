@@ -48,5 +48,9 @@ namespace HairSalonSystem.Repositories.Implement
         {
             return  await _staffManagerDAO.GetBranchesNotBranchIdAsync();
         }
+        public async Task UpdateStaffManagerBranchIdAsync(Guid staffManagerId, Guid? branchId)
+        {
+            await _staffManagerDAO.UpdateStaffManagerBranchIdAsync(staffManagerId, branchId);
+        }
     }
 }
