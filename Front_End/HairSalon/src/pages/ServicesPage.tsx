@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import bg from "../assets/images/bgsdn.jpg";
 import { Tabs } from "antd";
-import "../App.css";
+import "../style.css";
 import { Button } from "antd";
 // import { Services } from "../models/type";
 import { Col, Row } from "antd";

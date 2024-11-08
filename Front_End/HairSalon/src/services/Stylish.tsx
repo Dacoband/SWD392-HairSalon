@@ -1,5 +1,7 @@
 import axios from "axios";
-import { Stylish } from "../models/type";
+import { Stylish, Branches } from "../models/type";
+// Base URL for the API
+const BASE_URL = "https://api.vol-ka.studio/api/v1";
 
 export const getStylishByBranchID = async (
   branchId: string
@@ -23,5 +25,85 @@ export const getStylishRandom = async (
   } catch (error) {
     console.error("Lỗi khi lấy dữ liệu:", error);
     throw error;
+  }
+};
+
+// Function to add a stylist or update if exists by stylist ID
+export const addStylishById = async (
+  stylistId: string,
+  stylistData: Stylish,
+  token: string
+): Promise<void> => {
+  const url = `https://api.vol-ka.studio/api/v1/stylist/add`;
+
+  try {
+    const response = await axios.put(url, stylistData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    console.log("Stylist added or updated successfully:", response.data);
+  } catch (error) {
+    console.error("Error adding or updating stylist:", error);
+    throw error; // Re-throw error for higher-level handling
+  }
+};
+
+// Function to update stylist information by stylist ID
+export const updateStylistById = async (
+  stylistId: string,
+  stylistData: Stylish,
+  token: string
+): Promise<void> => {
+  const url = `https://api.vol-ka.studio/api/v1/stylist/update/${stylistId}`;
+
+  try {
+    const response = await axios.put(url, stylistData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    console.log("Stylist updated successfully:", response.data);
+  } catch (error) {
+    console.error("Error updating stylist:", error);
+    throw error; // Re-throw error for higher-level handling
+  }
+};
+
+export const deleteStylistById = async (
+  stylistId: string,
+  token: string
+): Promise<string> => {  // Returning a message or status as a string
+  const url = `https://api.vol-ka.studio/api/v1/stylist/delete/${stylistId}`;
+
+  try {
+    const response = await axios.delete(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.status === 200) {
+      console.log("Stylist deleted successfully:", response.data);
+      return "Stylist deleted successfully";  // Return success message
+    } else {
+      console.warn("Unexpected response status:", response.status);
+      return `Error: Unexpected status ${response.status}`;
+    }
+  } catch (error: any) {
+    // Check if it's an Axios error with a response
+    if (error.response) {
+      console.error("Error deleting stylist:", error.response.data);
+      return `Error deleting stylist: ${error.response.data.message || error.response.data}`;
+    } else if (error.request) {
+      console.error("No response received:", error.request);
+      return "Error deleting stylist: No response from the server.";
+    } else {
+      console.error("Error:", error.message);
+      return `Error: ${error.message}`;
+    }
   }
 };

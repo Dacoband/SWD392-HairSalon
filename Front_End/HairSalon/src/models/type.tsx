@@ -53,27 +53,39 @@ export interface UserData {
 }
 
 export interface Stylish {
-  branchId: string
-  stylistId: string
-  stylistName: string
-  averageRating: number
-  phoneNumber: string
-  address: string
-  avatarImage: string
-  insDate: Date
-  updDate: Date
+  branchId: string;
+  email: string;
+  password: string;
+  stylistId: string;
+  staffStylistId: string;
+  stylistName: string;
+  averageRating: number;
+  phoneNumber: string;
+  address: string;
+  avatarImage: string;
+  insDate: Date;
+  updDate: Date;
 }
 
 export interface UserInfoData {
-  Email: string
-  Password: string
-  MemberName: string
-  DateOfBirth: string
-  PhoneNumber: string
-  Address: string
-  avatarImage?: string
+  email: string;
+  password: string;
+  memberName: string;
+  dateOfBirth: string;
+  phoneNumber: string;
+  address: string;
+  branchId?: string;
+  avatarImage?: string| File;
 }
-
+export interface StaffStylist {
+  staffStylistId: string;
+  staffStylistName: string;
+  dateOfBirth: string;
+  phoneNumber: string;
+  address: string;
+  avatarImage?: string| File;
+  branchId: string;
+}
 export interface CreateAppointmentRequest {
   stylistId: string
   appointmentDate: string
@@ -82,4 +94,19 @@ export interface CreateAppointmentRequest {
 export interface CreatePaymentReponse {
   paymentLink: string
   paymentLinkId: string
+
 }
+
+
+export interface Member {
+  memberId: string; 
+  accountId: string; 
+  memberName: string; 
+  dateOfBirth: string; 
+  phoneNumber: string; 
+  address: string; 
+  avatarImage: string; 
+  insDate: string; 
+  updDate: string; 
+}
+

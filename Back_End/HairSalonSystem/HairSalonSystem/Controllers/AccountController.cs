@@ -83,11 +83,9 @@ namespace HairSalonSystem.API.Controllers
             var loginResponse = new LoginResponse
             {
                 Token = token,
-                AccountId = account.AccountId,
                 actorId = actorId ?? Guid.Empty,
                 Email = account.Email,
-                RoleName = account.RoleName,
-                AccountID = account.AccountId,
+                RoleName = account.RoleName
             };
             return Ok(loginResponse);
         }

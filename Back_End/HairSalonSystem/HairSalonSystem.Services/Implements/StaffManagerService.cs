@@ -38,22 +38,6 @@ namespace HairSalonSystem.Services.Implements
 
         public async Task<ActionResult> AddStaffManager(CreateNewStaffManagerRequest staffManager,HttpContext httpContext)
         {
-            var accountID = UserUtil.GetAccountId(httpContext);
-            if (accountID == null)
-            {
-                return new ObjectResult(MessageConstant.BranchMessage.NotRights)
-                {
-                    StatusCode = StatusCodes.Status403Forbidden
-                };
-            }
-            var roleName = UserUtil.GetRoleName(httpContext);
-            if (roleName != "SA")
-            {
-                return new ObjectResult(MessageConstant.BranchMessage.NotRights)
-                {
-                    StatusCode = StatusCodes.Status403Forbidden
-                };
-            }
             var account = new Account()
             {
                 AccountId = Guid.NewGuid(),
@@ -80,14 +64,14 @@ namespace HairSalonSystem.Services.Implements
                 UpdDate =DateTime.Now,
                 DelFlg = true 
                 };
-            var brach = await _branchRespository.GetBranchById(staffManager.BranchID);
-            if (brach == null)
-            {
-                return new ObjectResult(MessageConstant.BranchMessage.BranchNotFound)
-                {
-                    StatusCode = StatusCodes.Status404NotFound
-                };
-            }
+            //var brach = await _branchRespository.GetBranchById(staffManager.BranchID);
+            //if (brach == null)
+            //{
+            //    return new ObjectResult(MessageConstant.BranchMessage.BranchNotFound)
+            //    {
+            //        StatusCode = StatusCodes.Status404NotFound
+            //    };
+            //}
 
             await _staffManagerRepository.AddStaffManager(staffmanager);
 
