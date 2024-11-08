@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using HairSalonSystem.Services.PayLoads.Requests.Branchs;
 using HairSalonSystem.Services.PayLoads.Requests.StaffManagers;
 using HairSalonSystem.Repositories.Implement;
+using System.Net.WebSockets;
 
 
 namespace HairSalonSystem.Services.Implements
@@ -165,7 +166,16 @@ namespace HairSalonSystem.Services.Implements
         public async Task RemoveBranch(Guid branchId)
         {
 
-             await _branchRepository.RemoveBranch(branchId);
+            var branch = await _branchRepository.GetBranchById(branchId);
+            var existingStaffManager = await _staffManagerRepository.GetStaffManagerById(branch.StaffManagerID);
+            if (existingStaffManager != null)
+            {
+                existingStaffManager.BranchID = null;
+                await _staffManagerRepository.UpdateStaffManagerBranchIdAsync(existingStaffManager.StaffManagerID, null);
+            }
+
+
+            await _branchRepository.RemoveBranch(branchId);
        
 
         }
