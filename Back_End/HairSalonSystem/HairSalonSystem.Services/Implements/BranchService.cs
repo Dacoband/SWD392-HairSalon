@@ -127,7 +127,10 @@ namespace HairSalonSystem.Services.Implements
 
         public async Task RemoveBranch(Guid branchId)
         {
-            await _branchRepository.RemoveBranch(branchId);
+
+             await _branchRepository.RemoveBranch(branchId);
+       
+
         }
 
         public async Task<List<Branch>> GetBranchesByManagerId(Guid managerId)
