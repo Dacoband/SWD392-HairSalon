@@ -10,6 +10,7 @@ import {
   Button,
   DatePicker,
   message,
+  ConfigProvider,
 } from 'antd'
 import { getOffSchedule, insertOffSchedule } from '../../services/OffSchedule'
 import { createOffSchedule } from '../../models/type'
@@ -21,6 +22,7 @@ const ManagerSchedule: React.FC = () => {
   const userDataString = localStorage.getItem('userData')
   const userData = userDataString ? JSON.parse(userDataString) : null
   const [isCreate, setIsCreate] = useState(false)
+  const [selectDate, setSelectDay] = useState<any>(new Date(Date.now()))
   const fetchOffSchedule = async () => {
     try {
       const schedule = await getOffSchedule({
@@ -35,15 +37,15 @@ const ManagerSchedule: React.FC = () => {
     }
   }
 
-  const handleInsertOffSchedule = async (offSchedule: createOffSchedule) => {
-    try {
-      await insertOffSchedule(offSchedule)
-      fetchOffSchedule()
-    } catch (error) {
-      console.log(offSchedule)
-      console.error('Failed to insert off schedule:', error)
-    }
-  }
+  // const handleInsertOffSchedule = async (offSchedule: createOffSchedule) => {
+  //   try {
+
+  //     fetchOffSchedule()
+  //   } catch (error) {
+  //     console.log(offSchedule)
+  //     console.error('Failed to insert off schedule:', error)
+  //   }
+  // }
 
   const showModal = () => {
     setIsModalVisible(true)
@@ -58,22 +60,28 @@ const ManagerSchedule: React.FC = () => {
         offSlot: values.offSlot,
         stylistId: userData?.actorId,
       }
-      const res = await handleInsertOffSchedule(offSchedule)
-      console.log(res)
+      const res = await insertOffSchedule(offSchedule)
+      if (res) {
+        console.log(res)
+      }
       message.success('Tạo lịch nghỉ thành công !')
-
       setIsModalVisible(false)
       form.resetFields()
+      fetchOffSchedule()
     } catch (error) {
-      message.error('Xảy ra lỗi trong lúc tạo lịch nghỉ')
-      console.error('Validation Failed:', error)
+      message.error(error?.response?.data)
+      console.error(error?.response?.data)
     }
   }
 
   const handleCancel = () => {
     setIsModalVisible(false)
   }
-
+  const handleSelectDate = (value: any) => {
+    setSelectDay(value)
+    fetchOffSchedule()
+    console.log(value)
+  }
   const isDateValid = (date: any) => {
     const today = new Date()
     const fiveDaysLater = new Date(today.setDate(today.getDate() + 5))
@@ -93,7 +101,7 @@ const ManagerSchedule: React.FC = () => {
     )
 
     return slots.length > 0 ? (
-      <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col items-start justify-start">
         {slots.map((schedule) => (
           <Tag className="my-1" color="red" key={schedule.offSlot}>
             Nghỉ {handleDisplaySlotOff[schedule.offSlot]}
@@ -118,10 +126,27 @@ const ManagerSchedule: React.FC = () => {
 
   return (
     <Layout className="min-h-full">
-      <Calendar dateCellRender={dateCellRender} onSelect={onSelect} />
-      <Button type="primary" onClick={showModal}>
-        Thêm lịch nghỉ
-      </Button>
+      <div className="flex justify-end mb-4">
+        <Button className="w-[20%]" type="primary" onClick={showModal}>
+          Thêm lịch nghỉ
+        </Button>
+      </div>
+      <ConfigProvider
+        theme={{
+          components: {
+            Calendar: {
+              miniContentHeight: 400,
+            },
+          },
+        }}
+      >
+        <Calendar
+          fullscreen={false}
+          dateCellRender={dateCellRender}
+          onSelect={onSelect}
+          onChange={handleSelectDate}
+        />
+      </ConfigProvider>
 
       <Modal
         title="Insert Off Schedule"

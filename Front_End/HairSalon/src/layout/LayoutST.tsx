@@ -2,11 +2,7 @@ import React from 'react'
 import { Layout, Menu } from 'antd'
 import { Outlet, useNavigate } from 'react-router-dom'
 import '../App.css'
-import {
-  MenuUnfoldOutlined,
-  ShoppingCartOutlined,
-  CalendarOutlined,
-} from '@ant-design/icons'
+import { MenuUnfoldOutlined, ShoppingCartOutlined } from '@ant-design/icons'
 import HeaderSM from '../components/HeaderSM'
 import { FaCircleUser } from 'react-icons/fa6'
 
@@ -25,7 +21,12 @@ const SidebarData = [
     navigate: '/staff-stylish',
   },
   {
-    icon: CalendarOutlined,
+    icon: ShoppingCartOutlined,
+    heading: 'Quản lí ',
+    navigate: '/managerSchedule',
+  },
+  {
+    icon: ShoppingCartOutlined,
     heading: 'Quản lí lịch làm',
     navigate: '/managerSchedule',
   },

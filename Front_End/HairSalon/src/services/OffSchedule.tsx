@@ -32,7 +32,7 @@ export const getOffSchedule = async (query: {
 
 export const insertOffSchedule = async (
   offSchedule: createOffSchedule
-): Promise<any> => {
+): Promise<offschedule> => {
   try {
     const response = await axios.post<offschedule>(
       `${SCHEDULE_APPOINTMENT}/create`,
