@@ -141,7 +141,7 @@
             public const string CreateOffSchedule = OffScheduleEndpoint + "/create";
             public const string GetOffScheduleById = OffScheduleEndpoint + "{id}";
             public const string DeleteOffSchedule = OffScheduleEndpoint + "/delete/{id}";
-            public const string GetAllSalary = OffScheduleEndpoint + "/get-all";
+            public const string GetAllOffSchedule = OffScheduleEndpoint + "/get-all";
         }
     }
 }

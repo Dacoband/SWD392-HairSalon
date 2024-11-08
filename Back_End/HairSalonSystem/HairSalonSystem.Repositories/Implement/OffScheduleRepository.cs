@@ -12,7 +12,10 @@ namespace HairSalonSystem.Repositories.Implement
     public class OffScheduleRepository : IOffScheduleRepository
     {
         private readonly IOffScheduleDAO _offScheduleDAO;
-        
+        public OffScheduleRepository(IOffScheduleDAO offScheduleDAO)
+        {
+            _offScheduleDAO = offScheduleDAO;
+        }
         public async Task CreateSchedule(OffSchedule offSchedule)
         {
            await _offScheduleDAO.CreateSchedule(offSchedule);

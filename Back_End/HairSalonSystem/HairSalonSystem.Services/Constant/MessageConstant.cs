@@ -145,7 +145,9 @@
             public const string InvalidTime = "Bạn phải đăng ký lịch nghỉ trươc ít nhất 5 ngày";
             public const string MaxSlot = "Bạn chỉ có thể nghỉ tối đa 8 slot trong 1 tháng";
             public const string CreateSuccess = "Bạn đã tạo lịch nghỉ thành công";
-            public const string CreateFail = "Lỗi trong lúc tạo lịch nghỉ";
+            public const string CreateFail = "Internal Exception";
+            public const string NotFound = "Không tìm thấy lịch nghỉ";
+            public const string DeleteSuccess = "Xóa lịch nghỉ thành công";
 
         }
     }

@@ -13,6 +13,9 @@ namespace HairSalonSystem.Services.Interfaces
     public interface IOffScheduleService
     {
         Task<ActionResult<OffSchedule>> CreateOffSchedule(CreateOffScheduleRequest request, HttpContext context);
+        Task<ActionResult<List<OffSchedule>>> GetAllSchedule(OffScheduleQuery query, HttpContext context);
+        Task<ActionResult<OffSchedule>> GetScheduleById(Guid id, HttpContext context);
 
+        Task<ActionResult<OffSchedule>> DeleteSchedule(Guid id, HttpContext context);
     }
 }

@@ -29,5 +29,39 @@ namespace HairSalonSystem.API.Controllers
             var result = await _offScheduleService.CreateOffSchedule(request, HttpContext);
             return result;
         }
+
+        [HttpGet]
+        [Route(APIEndPointConstant.OffSchedule.GetAllOffSchedule)]
+        [ProducesResponseType(typeof(List<OffSchedule>), StatusCodes.Status200OK)]
+        [ProducesErrorResponseType(typeof(ProblemDetails))]
+        [Authorize]
+        public async Task<ActionResult<List<OffSchedule>>> GetOffSchedule([FromQuery] OffScheduleQuery query)
+        {
+            var result = await _offScheduleService.GetAllSchedule(query, HttpContext);
+            return result;
+        }
+        [HttpPatch]
+        [Route(APIEndPointConstant.OffSchedule.DeleteOffSchedule)]
+        [ProducesResponseType(typeof(OffSchedule), StatusCodes.Status200OK)]
+        [ProducesErrorResponseType(typeof(ProblemDetails))]
+        [Authorize]
+        public async Task<ActionResult<OffSchedule>> DeleteOffSchedule([FromRoute] Guid id)
+        {
+            var result = await _offScheduleService.DeleteSchedule(id, HttpContext);
+            return result;
+        }
+
+        [HttpGet]
+        [Route(APIEndPointConstant.OffSchedule.GetOffScheduleById)]
+        [ProducesResponseType(typeof(OffSchedule), StatusCodes.Status200OK)]
+        [ProducesErrorResponseType(typeof(ProblemDetails))]
+        [Authorize]
+        public async Task<ActionResult<OffSchedule>> GetOffScheduleById([FromRoute] Guid id)
+        {
+            var result = await _offScheduleService.GetScheduleById(id, HttpContext);
+            return result;
+        }
+
+
     }
 }
