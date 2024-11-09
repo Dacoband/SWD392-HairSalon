@@ -146,3 +146,17 @@ export interface Cancellation {
   appointment: Appointment;
 }
 
+
+export interface StaffManager {
+  staffManagerID: string;  
+  branchID: string;       
+  accountID: string;      
+  staffManagerName: string; 
+  dateOfBirth: string;     
+  phoneNumber: string;   
+  address: string;        
+  avatarImage: string;    
+  insDate: string;        
+  updDate: string;         
+ 
+}

@@ -1,46 +1,71 @@
-import React, { useEffect, useState } from "react"; 
-import { Table,  Space, message, Button, Modal, Form, Input, DatePicker, Upload, Popconfirm } from "antd"; 
-import type { ColumnsType } from "antd/es/table"; 
-import { StaffStylist } from "../../models/type"; 
-import { UserInfoData } from '../../models/type';
-import { getStaffStylistByBranchID, addStaffStylish, updateStaffStylishById, getStaffAll, } from "../../services/StaffStylish"; 
-import moment from "moment"; 
-import { SearchOutlined, PlusOutlined, UploadOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import React, { useEffect, useState } from "react";
+import {
+  Table,
+  Space,
+  message,
+  Button,
+  Modal,
+  Form,
+  Input,
+  DatePicker,
+  Upload,
+  Popconfirm,
+} from "antd";
+import type { ColumnsType } from "antd/es/table";
+import { StaffStylist } from "../../models/type";
+import { UserInfoData } from "../../models/type";
+import {
+  getStaffStylistByBranchID,
+  addStaffStylish,
+  updateStaffStylishById,
+  getStaffAll,
+  deleteStaffStylistById,
+} from "../../services/StaffStylish";
+import moment from "moment";
+import {
+  SearchOutlined,
+  PlusOutlined,
+  UploadOutlined,
+  DeleteOutlined,
+  EditOutlined,
+} from "@ant-design/icons";
 
-const ManagerStaff: React.FC = () => { 
+const ManagerStaff: React.FC = () => {
   const [userData, setUserData] = useState<UserInfoData | null>(null);
-  const [staffList, setStaffList] = useState<StaffStylist[]>([]); 
-  const [loading, setLoading] = useState(false); 
-  const [isModalVisible, setIsModalVisible] = useState(false); 
-  const [isEditModalVisible, setIsEditModalVisible] = useState(false); 
-  const [editingStaff, setEditingStaff] = useState<StaffStylist | null>(null); 
-  const [form] = Form.useForm(); 
+  const [staffList, setStaffList] = useState<StaffStylist[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+  const [editingStaff, setEditingStaff] = useState<StaffStylist | null>(null);
+  const [form] = Form.useForm();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [apiErrors, setApiErrors] = useState<Record<string, string[]>>({});
   const [searchText, setSearchText] = useState<string>("");
   const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
+  useEffect(() => {
+    const branchId = localStorage.getItem("branchId");
+    if (branchId) {
+      fetchStaffList(branchId);
+    } else {
+      message.error("Branch ID not found in local storage.");
+    }
+  }, []);
 
-  useEffect(() => { 
-    const branchId = localStorage.getItem("branchId"); 
-    if (branchId) { 
-      fetchStaffList(branchId); 
-    } else { 
-      message.error("Branch ID not found in local storage."); 
-    } 
-  }, []); 
-
-  const fetchStaffList = async (branchId: string) => { 
-    setLoading(true); 
-    try { 
-      const data = await getStaffStylistByBranchID(branchId); 
-      setStaffList(data); 
-    } catch (error) { 
-      message.error("Error fetching staff data."); 
-    } finally { 
-      setLoading(false); 
-    } 
+  const fetchStaffList = async (branchId: string) => {
+    setLoading(true);
+    try {
+      const data = await getStaffStylistByBranchID(branchId);
+      setStaffList(data);
+    } catch (error) {
+      message.error("Error fetching staff data.");
+    } finally {
+      setLoading(false);
+    }
   };
+
   const fetchStaffAll = async () => {
     setLoading(true);
     try {
@@ -57,19 +82,17 @@ const ManagerStaff: React.FC = () => {
   const filteredStaffManagers = staffList.filter(
     (st) =>
       st.staffStylistName?.toLowerCase().includes(searchText.toLowerCase()) ||
-      false
-    // (sm.email?.toLowerCase().includes(searchText.toLowerCase()) || false)
+      st.email?.toLowerCase().includes(searchText.toLowerCase()) ||
+      st.phoneNumber?.includes(searchText)
   );
-
-
 
   const getImageSrc = () => {
     const avatarImage = userData?.avatarImage;
     if (avatarImage instanceof File) {
       return URL.createObjectURL(avatarImage);
     }
-   
-    return avatarImage || '../../assets/images/demo.jpg';
+
+    return avatarImage || "../../assets/images/demo.jpg";
   };
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
@@ -79,64 +102,60 @@ const ManagerStaff: React.FC = () => {
   };
 
   const handleAddStaff = async (values: any) => {
+    const branchId = localStorage.getItem("branchId");
+    if (!branchId) {
+      message.error("Branch ID not found in local storage.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("staffStylistName", values.staffStylistName);
+    formData.append("email", values.email);
+    formData.append("password", values.password);
+    formData.append("dateOfBirth", values.dateOfBirth.format("YYYY-MM-DD"));
+    formData.append("phoneNumber", values.phoneNumber);
+    formData.append("address", values.address);
+    if (selectedFile) {
+      formData.append("avatarImage", selectedFile);
+    }
+    formData.append("branchId", branchId);
+
+    // Log the formData for debugging
+    console.log("Form Data being sent:", formData);
+
     try {
-      const formData = new FormData();
-      formData.append("email", values.email);
-      formData.append("password", values.password);
-      formData.append("staffStylistName", values.staffStylistName);
-      formData.append("dateOfBirth", values.dateOfBirth.format("YYYY/MM/DD"));
-      formData.append("phoneNumber", values.phoneNumber);
-      formData.append("address", values.address);
-
-      // Check if avatar image exists and append it to FormData
-      if (values.avatarImage?.fileList[0]?.originFileObj) {
-        formData.append(
-          "avatarImage",
-          values.avatarImage.fileList[0].originFileObj
-        );
-      }
-
-      await addStaffStylish(formData);
+      const newStaff = await addStaffStylish(formData);
       message.success("Staff added successfully");
+      fetchStaffList(branchId);
       setIsModalVisible(false);
       form.resetFields();
-
-      // Fetch updated staff list
-      const branchId = localStorage.getItem("branchId");
-      if (branchId) {
-        fetchStaffList(branchId);
-      }
     } catch (error: any) {
-      message.error(error.response?.data?.message || "Failed to add staff");
+      console.error("Error adding staff stylist:", error.response?.data);
+      // You can also display the error message from the API if it's in the response data
+      message.error(
+        error.response?.data?.message || "Failed to add staff stylist"
+      );
     }
   };
 
-  
-  const handleEditStaff = (record: StaffStylist) => {
-    setEditingStaff(record);
-    form.setFieldsValue({
-      staffStylistName: record.staffStylistName,
-      dateOfBirth: moment(record.dateOfBirth),
-      phoneNumber: record.phoneNumber,
-      address: record.address,
-      avatarImage: record.avatarImage ? [{ url: record.avatarImage }] : [],
-    });
-    setIsEditModalVisible(true);
-  };
-  
   const handleUpdateStaffStylist = async (values: any) => {
     if (!editingStaff) return;
-  
+
     const updatedStaffData = {
       staffStylistName: values.staffStylistName,
       dateOfBirth: values.dateOfBirth.format("YYYY/MM/DD"),
       phoneNumber: values.phoneNumber,
       address: values.address,
-      avatarImage: values.avatarImage?.fileList?.[0]?.originFileObj || editingStaff.avatarImage,
+      avatarImage:
+        values.avatarImage?.fileList?.[0]?.originFileObj ||
+        editingStaff.avatarImage,
     };
-  
+
     try {
-      await updateStaffStylishById(editingStaff.staffStylistId, updatedStaffData);
+      await updateStaffStylishById(
+        editingStaff.staffStylistId,
+        updatedStaffData
+      );
       message.success("Staff updated successfully");
       setIsEditModalVisible(false);
       form.resetFields();
@@ -152,9 +171,20 @@ const ManagerStaff: React.FC = () => {
       );
     }
   };
-  
 
-
+  const handleDeleteStaffStylish = async (staffStylistId: string) => {
+    try {
+      await deleteStaffStylistById(staffStylistId);
+      message.success("Staff stylist deleted successfully");
+      // After deletion, refresh the list of staff
+      const branchId = localStorage.getItem("branchId");
+      if (branchId) {
+        fetchStaffList(branchId);
+      }
+    } catch (error) {
+      message.error("Error deleting staff stylist");
+    }
+  };
 
   const columns: ColumnsType<StaffStylist> = [
     {
@@ -162,11 +192,15 @@ const ManagerStaff: React.FC = () => {
       dataIndex: "avatarImage",
       key: "avatarImage",
       render: (text: string) => (
-        <img src={text} alt="avatar" style={{ width: 50, height: 50, borderRadius: "50%" }} />
+        <img
+          src={text}
+          alt="avatar"
+          style={{ width: 50, height: 50, borderRadius: "50%" }}
+        />
       ),
     },
     {
-      title: "Name",
+      title: "staffStylistName",
       dataIndex: "staffStylistName",
       key: "staffStylistName",
     },
@@ -193,7 +227,7 @@ const ManagerStaff: React.FC = () => {
         <>
           <Button
             icon={<EditOutlined />}
-            onClick={() => handleEditStaff(record)} // Set the staff to be edited
+            // Set the staff to be edited
             size="small"
           >
             Edit
@@ -202,7 +236,7 @@ const ManagerStaff: React.FC = () => {
           <Popconfirm
             title="Delete Stylist"
             description="Are you sure you want to delete this stylist?"
-            // onConfirm={() => handleDelete(record.staffStylistId)}
+            onConfirm={() => handleDeleteStaffStylish(record.staffStylistId)} // Pass the correct ID
             okText="Yes"
             cancelText="No"
           >
@@ -217,7 +251,7 @@ const ManagerStaff: React.FC = () => {
 
   return (
     <div style={{ padding: "24px" }}>
-  <Space
+      <Space
         style={{
           marginBottom: 16,
           justifyContent: "space-between",
@@ -238,11 +272,18 @@ const ManagerStaff: React.FC = () => {
       </Space>
 
       <Table
-        dataSource={staffList}
+        dataSource={filteredStaffManagers}
         columns={columns}
-                rowKey="staffstylistID"
+        rowKey="staffstylistID"
         loading={loading}
-        pagination={{ pageSize: 5 }}
+        pagination={{
+          current: currentPage,
+          pageSize: 4,
+          total: filteredStaffManagers.length,
+          onChange: (page) => {
+            setCurrentPage(page); // Update the current page in state
+          },
+        }}
       />
 
       {/* Add Staff Modal */}
@@ -266,22 +307,34 @@ const ManagerStaff: React.FC = () => {
             name="email"
             label="Email"
             rules={[
-              { required: true, message: 'Please input email!' },
-              { type: 'email', message: 'Please enter a valid email!' }
+              { required: true, message: "Please input email!" },
+              { type: "email", message: "Please enter a valid email!" },
             ]}
           >
             <Input />
           </Form.Item>
+
           <Form.Item
             name="password"
             label="Password"
             rules={[
               { required: true, message: "Please input password!" },
-              { min: 6, message: "Password must be at least 6 characters!" },
+              {
+                min: 8,
+                message:
+                  "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.",
+              },
+              {
+                pattern:
+                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                message:
+                  "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.",
+              },
             ]}
           >
             <Input.Password />
           </Form.Item>
+
           <Form.Item
             name="dateOfBirth"
             label="Date of Birth"
@@ -291,15 +344,21 @@ const ManagerStaff: React.FC = () => {
           >
             <DatePicker style={{ width: "100%" }} />
           </Form.Item>
+
           <Form.Item
             name="phoneNumber"
             label="Phone Number"
             rules={[
               { required: true, message: "Please enter the phone number" },
+              {
+                pattern: /^(0)[1-9]{1}[0-9]{8}$/,
+                message: "Phone number must be exactly 10 digits and valid.",
+              },
             ]}
           >
             <Input />
           </Form.Item>
+
           <Form.Item
             name="address"
             label="Address"
@@ -327,9 +386,6 @@ const ManagerStaff: React.FC = () => {
         </Form>
       </Modal>
 
-
-
-
       {/* Edit Staff Modal */}
       <Modal
         title="Edit Staff"
@@ -338,13 +394,14 @@ const ManagerStaff: React.FC = () => {
         footer={null}
         width={600}
         style={{ top: 20 }}
-      > 
-      <Form form={form} 
-      layout="vertical" 
-      onFinish={handleUpdateStaffStylist}
-      style={{ maxWidth: "100%" }}
       >
-        <div
+        <Form
+          form={form}
+          layout="vertical"
+          onFinish={handleUpdateStaffStylist}
+          style={{ maxWidth: "100%" }}
+        >
+          <div
             style={{
               display: "grid",
               gridTemplateColumns: "1fr 1fr",
@@ -387,9 +444,9 @@ const ManagerStaff: React.FC = () => {
             <Input />
           </Form.Item>
           <Form.Item>
-            <div > 
-              <div >
-                <img src={getImageSrc()} alt=""  />
+            <div>
+              <div>
+                <img src={getImageSrc()} alt="" />
               </div>
               <div>
                 <input
@@ -399,9 +456,12 @@ const ManagerStaff: React.FC = () => {
                 />
               </div>
             </div>
-            {apiErrors.AvatarImage && apiErrors.AvatarImage.map((error, index) => (
-              <span key={index} className="error-message">{error}</span>
-            ))}
+            {apiErrors.AvatarImage &&
+              apiErrors.AvatarImage.map((error, index) => (
+                <span key={index} className="error-message">
+                  {error}
+                </span>
+              ))}
           </Form.Item>
           <Form.Item style={{ marginBottom: 0, textAlign: "right" }}>
             <Space>
