@@ -86,7 +86,7 @@ namespace HairSalonSystem.Services.Implements
 
             AppointmentCancellation model = new AppointmentCancellation()
             {
-                CancellationId = new Guid(),
+                CancellationId = Guid.NewGuid(),
                 AppointmentId = req.AppointmetId,
                 Reason = req.Reason,
                 InsDate = DateTime.Now,

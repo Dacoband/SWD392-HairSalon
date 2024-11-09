@@ -201,9 +201,10 @@ namespace HairSalonSystem.Services.Implements
             {
                 existingOffSchedule = existingOffSchedule.AsQueryable().Where(x => x.StylistId == query.StylistId).ToList();
             }
+           
             if(query.GetBy == 1)
             {
-                DateTime date = DateTime.Now;
+                DateTime date = query.StartTime;
                 int diffStart = (7 + (date.DayOfWeek - DayOfWeek.Monday)) % 7;
                 DateTime firstDayOfWeek = date.AddDays(-1 * diffStart).Date;
 
@@ -215,8 +216,8 @@ namespace HairSalonSystem.Services.Implements
 
             if(query.GetBy == 2)
             {
-                DateTime startMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-                DateTime endMonth = new DateTime(DateTime.Now.Year,DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year,DateTime.Now.Month));
+                DateTime startMonth = new DateTime(query.StartTime.Year, query.StartTime.Month, 1);
+                DateTime endMonth = new DateTime(query.StartTime.Year, query.StartTime.Month, DateTime.DaysInMonth(query.StartTime.Year, query.StartTime.Month));
 
                 existingOffSchedule = existingOffSchedule.AsQueryable().Where(x => x.OffDate>=startMonth && x.OffDate <= endMonth).ToList();    
             }

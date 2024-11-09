@@ -10,7 +10,6 @@ namespace HairSalonSystem.Services.PayLoads.Requests.Feedbacks
 {
     public class CreateNewFeedbackRequest
     {
-        public Guid FeedbackId { get; set; }
         public Guid StylistId { get; set; }
         [BsonElement("Rating")]
         public int Rating { get; set; }
@@ -18,3 +17,4 @@ namespace HairSalonSystem.Services.PayLoads.Requests.Feedbacks
         public string Comment { get; set; } = string.Empty;
     }
 }
+  

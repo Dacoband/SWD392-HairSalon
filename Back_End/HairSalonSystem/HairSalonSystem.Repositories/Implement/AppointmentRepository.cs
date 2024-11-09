@@ -41,5 +41,10 @@ namespace HairSalonSystem.Repositories.Implement
         {
             await _appointmentDAO.UpdateAppointmentStatus(appointmentId, status);
         }
+        public async Task<Dictionary<Guid, decimal>> GetTotalRevenueForAllBranches()
+        {
+            return await _appointmentDAO.GetTotalRevenueForAllBranches();
+        }
+
     }
 }
