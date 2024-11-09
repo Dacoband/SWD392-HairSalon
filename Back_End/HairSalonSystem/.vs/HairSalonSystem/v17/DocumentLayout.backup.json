@@ -96,7 +96,7 @@
               "RelativeDocumentMoniker": "HairSalonSystem.Services\\Implements\\PaymentService.cs",
               "ToolTip": "D:\\FPT_Learning\\SWD392\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.Services\\Implements\\PaymentService.cs",
               "RelativeToolTip": "HairSalonSystem.Services\\Implements\\PaymentService.cs",
-              "ViewState": "AgIAACIAAAAAAAAAAAAswDEAAAAKAAAAAAAAAA==",
+              "ViewState": "AgIAACIAAAAAAAAAAAAswDAAAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-09T05:42:44.609Z",
               "EditorCaption": ""
@@ -123,8 +123,7 @@
               "RelativeToolTip": "HairSalonSystem\\Controllers\\BranchController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-09T03:45:54.488Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-09T03:45:54.488Z"
             },
             {
               "$type": "Document",
@@ -136,8 +135,7 @@
               "RelativeToolTip": "HairSalonSystem\\Controllers\\FeedbackController.cs",
               "ViewState": "AgIAAC0AAAAAAAAAAABBwEgAAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-09T03:34:54.65Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-09T03:34:54.65Z"
             },
             {
               "$type": "Document",
@@ -149,8 +147,7 @@
               "RelativeToolTip": "HairSalonSystem.Services\\Implements\\FeedbackService.cs",
               "ViewState": "AgIAACUAAAAAAAAAAAAswDMAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-09T03:33:17.463Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-09T03:33:17.463Z"
             },
             {
               "$type": "Document",

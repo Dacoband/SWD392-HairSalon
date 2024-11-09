@@ -45,8 +45,8 @@ public class PaymentService
              (int)appointment.TotalPrice,
              description,  
              items,
-             "https://api.vol-ka.studio/api/Payment/cancel",
-             "https://api.vol-ka.studio/api/Payment/success"
+             "http://localhost:5173/manage-appointments/cancel",
+             "http://localhost:5173/manage-appointments/success"
         );
 
         // Gửi yêu cầu tạo liên kết thanh toán
