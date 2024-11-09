@@ -27,10 +27,16 @@ export const getBranchesAll = async (): Promise<Branches[]> => {
   }
 };
 
-export const getBranchById = async (id: string): Promise<Branches> => {
+export const getBranchById = async (id: string): Promise<Branches[]> => {
+  const token = getAuthToken();
   try {
-    const response = await axios.get<Branches>(
-      `https://api.vol-ka.studio/api/v1/branch/${id}`
+    const response = await axios.get<Branches[]>(
+      `https://api.vol-ka.studio/api/v1/branch/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     return response.data;
   } catch (error) {
@@ -39,7 +45,8 @@ export const getBranchById = async (id: string): Promise<Branches> => {
   }
 };
 
-export const addBranch = async (branchData: Branches[]) => {
+
+export const addBranch = async (branchData: any) => {
   const token = getAuthToken();
   try {
     const response = await axios.post(

@@ -134,3 +134,15 @@ export interface createOffSchedule {
   offDate: string
   offSlot: number
 }
+
+
+
+export interface Cancellation {
+  cancellationId: string;
+  reason: string;
+  insDate: string;
+  updDate: string;
+  delFlg: boolean;
+  appointment: Appointment;
+}
+

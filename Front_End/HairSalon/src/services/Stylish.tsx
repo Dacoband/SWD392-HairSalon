@@ -3,6 +3,7 @@ import { Stylish, Branches } from "../models/type";
 // Base URL for the API
 const BASE_URL = "https://api.vol-ka.studio/api/v1";
 
+
 export const getStylishByBranchID = async (
   branchId: string
 ): Promise<Stylish[]> => {
@@ -27,6 +28,7 @@ export const getStylishRandom = async (
     throw error;
   }
 };
+
 
 // Function to add a stylist or update if exists by stylist ID
 export const addStylishById = async (

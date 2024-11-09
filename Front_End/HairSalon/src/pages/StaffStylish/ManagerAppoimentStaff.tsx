@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 import {
   Table,
   Button,
@@ -8,168 +8,207 @@ import {
   message,
   Select,
   Pagination,
-} from 'antd'
+} from "antd";
 import {
   getAppointmentsByCustomer,
   cancelAppointment,
   getAllAppointments,
-} from '../../services/appointmentSalon'
-import { Appointment, Services, Stylish, Member } from '../../models/type'
-import { getStylishByBranchID } from '../../services/Stylish'
-import { getAppointmentDetails, getMemberById } from '../../services/Member'
-import './AppointmentStaff.scss'
+  getAppointmentById,
+} from "../../services/appointmentSalon";
+import {
+  Appointment,
+  Services,
+  Stylish,
+  Member,
+  Cancellation,
+} from "../../models/type";
+import { getStylishByBranchID } from "../../services/Stylish";
+import { getAppointmentDetails, getMemberById } from "../../services/Member";
+import { getCancelAppointmentById } from "../../services/appointmentSalon"; // Update to correct path if needed
+import "./AppointmentStaff.scss";
 
-const { Option } = Select
+const { Option } = Select;
 
 const ManagerAppointmentStaff = () => {
-  const [appointments, setAppointments] = useState<Appointment[]>([])
-  const [loading, setLoading] = useState<boolean>(true)
-  const [stylists, setStylists] = useState<Stylish[]>([])
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [stylists, setStylists] = useState<Stylish[]>([]);
   const [members, setMembers] = useState<
     Record<string, { name: string; phoneNumber: string }>
-  >({}) // State to hold member names and phone numbers
-  const [currentPage, setCurrentPage] = useState(1)
-  const [filteredStatus, setFilteredStatus] = useState<number | null>(null)
+  >({});
+  const [cancellations, setCancellations] = useState<Record<string, string>>(
+    {}
+  ); // Map of appointmentId to reason
+  const [currentPage, setCurrentPage] = useState(1);
+  const [filteredStatus, setFilteredStatus] = useState<number | null>(null);
 
-  const appointmentsPerPage = 4
+  const appointmentsPerPage = 4;
   const statusMap: { [key: number]: string } = {
-    1: 'Đã đặt lịch thành công',
-    2: 'Đã thanh toán',
-    3: 'Đã hủy',
-    4: 'Đã hoàn thành',
-  }
+    1: "Đã đặt lịch thành công",
+    2: "Đã thanh toán",
+    3: "Đã hủy",
+    4: "Đã hoàn thành",
+  };
 
   const fetchStylists = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
-      const userDataString = localStorage.getItem('userData')
-      const userData = userDataString ? JSON.parse(userDataString) : null // Parse the userData string
-      console.log(userData?.branchId)
-      if (userData?.branchId) {
-        const fetchedStylists = await getStylishByBranchID(userData.branchId) // Use branchId directly
-        setStylists(fetchedStylists)
-        await fetchAppointments(fetchedStylists.map((s) => s.stylistId))
+      const branchId = localStorage.getItem("branchId");
+      if (branchId) {
+        const fetchedStylists = await getStylishByBranchID(branchId);
+        setStylists(fetchedStylists);
+        await fetchAppointments(fetchedStylists.map((s) => s.stylistId));
       } else {
-        message.error('Branch ID not found. User may not be logged in.')
+        message.error("Branch ID not found. User may not be logged in.");
       }
     } catch (error) {
-      console.error('Failed to fetch stylists:', error)
-      message.error('Failed to fetch stylists')
+      console.error("Failed to fetch stylists:", error);
+      message.error("Failed to fetch stylists");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const fetchAppointments = async (stylistIds: string[]) => {
     try {
-      const allAppointments = await getAllAppointments()
+      const allAppointments = await getAllAppointments();
       const filteredAppointments = allAppointments.filter(
         (appointment: Appointment) => stylistIds.includes(appointment.stylistId)
-      )
-      setAppointments(filteredAppointments)
-      await fetchMemberDetails(filteredAppointments)
+      );
+      setAppointments(filteredAppointments);
+      await fetchMemberDetails(filteredAppointments);
+      await fetchCancellations(filteredAppointments); // Fetch cancellations for appointments
     } catch (error) {
-      console.error('Failed to fetch appointments:', error)
-      message.error('Failed to fetch appointments')
+      console.error("Failed to fetch appointments:", error);
+      message.error("Failed to fetch appointments");
     }
-  }
+  };
 
   const fetchMemberDetails = async (appointments: Appointment[]) => {
     try {
-      const membersMap: Record<string, { name: string; phoneNumber: string }> =
-        {} // To store member details
-      const appointmentMap: Record<string, { customerId: string }> = {} // To map customerId to appointmentId
+      const memberDetailsMap: Record<
+        string,
+        { name: string; phoneNumber: string }
+      > = {}; // Map to store member details by customerId
 
-      // Create a list of promises to fetch member details for each appointment
+      // Use Promise.all to fetch details of multiple members concurrently
       const memberPromises = appointments.map(async (appointment) => {
-        const customerId = appointment.customerId // Use customerId to fetch member details
-        // Assuming getMemberById fetches member data by customerId
-        const member = await getMemberById(customerId)
+        const customerId = appointment.customerId;
 
-        // Map the customerId to member details
-        membersMap[customerId] = {
-          name: member.memberName, // Corrected member name field
-          phoneNumber: member.phoneNumber,
+        if (!memberDetailsMap[customerId]) {
+          // Fetch member data only if it hasn't been fetched already
+          const member = await getMemberById(customerId);
+
+          // Add member details to the map
+          memberDetailsMap[customerId] = {
+            name: member.memberName,
+            phoneNumber: member.phoneNumber,
+          };
         }
+      });
 
-        // You can also populate the appointmentMap if necessary (optional)
-        appointmentMap[appointment.appointmentId] = {
-          customerId: customerId,
-        }
-      })
+      // Wait for all member details to be fetched
+      await Promise.all(memberPromises);
 
-      // Wait for all member data to be fetched
-      await Promise.all(memberPromises)
-
-      // Update state with all member details at once
-      setMembers(membersMap)
+      // Set the member details in the state
+      setMembers(memberDetailsMap);
     } catch (error) {
-      console.error('Failed to fetch member details:', error)
-      message.error('Failed to fetch member details')
+      console.error("Failed to fetch member details:", error);
+      message.error("Failed to fetch member details");
     }
-  }
+  };
+
+  // Fetch cancellations for each appointment
+  const fetchCancellations = async (appointments: Appointment[]) => {
+    try {
+      const cancellationsMap: Record<string, string> = {};
+      const cancellationPromises = appointments.map(async (appointment) => {
+        if (appointment.status === 3) {
+          // Only fetch if appointment is canceled
+          const cancellation = await getCancelAppointmentById(
+            appointment.appointmentId
+          );
+          if (cancellation) {
+            cancellationsMap[appointment.appointmentId] = cancellation.reason;
+          }
+        }
+      });
+      await Promise.all(cancellationPromises);
+      setCancellations(cancellationsMap);
+    } catch (error) {
+      console.error("Failed to fetch cancellations:", error);
+      message.error("Failed to fetch cancellation data");
+    }
+  };
 
   useEffect(() => {
-    fetchStylists()
-  }, [])
+    fetchStylists();
+  }, []);
 
   const handlePageChange = (page: number) => {
-    setCurrentPage(page)
-  }
+    setCurrentPage(page);
+  };
 
   const handleStatusFilterChange = (value: number | null) => {
-    setFilteredStatus(value)
-    setCurrentPage(1)
-  }
+    setFilteredStatus(value);
+    setCurrentPage(1);
+  };
 
   const filteredAppointments = appointments.filter((appointment) =>
     filteredStatus !== null ? appointment.status === filteredStatus : true
-  )
+  );
 
   const paginatedAppointments = filteredAppointments.slice(
     (currentPage - 1) * appointmentsPerPage,
     currentPage * appointmentsPerPage
-  )
+  );
 
   const columns = [
     {
-      title: 'Member',
-      dataIndex: 'customerId',
-      render: (text: string) => <span>{members[text]?.name || 'Unknown'}</span>,
+      title: "Member",
+      dataIndex: "customerId",
+      render: (text: string) => <span>{members[text]?.name || "vô danh"}</span>,
     },
     {
-      title: 'Phone Number',
-      dataIndex: 'customerId',
-      render: (text: string) => (
-        <span>{members[text]?.phoneNumber || 'Unknown'}</span> // Sử dụng customerId để tra cứu phoneNumber
+      title: "Số điện thoại",
+      dataIndex: "phoneNumber",
+      render: (text: number) => (
+        <span>{members[text]?.phoneNumber || "Không có"}</span>
       ),
     },
     {
-      title: 'Tổng tiền',
-      dataIndex: 'totalPrice',
+      title: "Tổng tiền",
+      dataIndex: "totalPrice",
       render: (text: number) => <span>{text} VND</span>,
     },
     {
-      title: 'Trạng Thái',
-      dataIndex: 'status',
-      render: (text: number) => <span>{statusMap[text] || 'Unknown'}</span>,
+      title: "Trạng Thái",
+      dataIndex: "status",
+      render: (text: number) => <span>{statusMap[text] || "Unknown"}</span>,
     },
     {
-      title: 'Start Time',
-      dataIndex: 'startTime',
+      title: "Start Time",
+      dataIndex: "startTime",
       render: (text: string) => <span>{new Date(text).toLocaleString()}</span>,
     },
     {
-      title: 'End Time',
-      dataIndex: 'endTime',
+      title: "End Time",
+      dataIndex: "endTime",
       render: (text: string) => <span>{new Date(text).toLocaleString()}</span>,
     },
-  ]
+    {
+      title: "Reason for Cancellation",
+      dataIndex: "appointmentId",
+      render: (appointmentId: string) => (
+        <span>{cancellations[appointmentId] || "N/A"}</span>
+      ),
+    },
+  ];
 
   return (
     <div className="container">
       <h1
-        style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '16px' }}
+        style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "16px" }}
       >
         Manage Appointments
       </h1>
@@ -193,10 +232,9 @@ const ManagerAppointmentStaff = () => {
         dataSource={paginatedAppointments}
         rowKey="appointmentId"
         loading={loading}
-        pagination={false} // Disable table pagination, we'll use custom pagination
+        pagination={false}
       />
 
-      {/* Pagination */}
       <div className="pagination-container" style={{ marginTop: 16 }}>
         <Pagination
           current={currentPage}
@@ -206,7 +244,7 @@ const ManagerAppointmentStaff = () => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ManagerAppointmentStaff
+export default ManagerAppointmentStaff;

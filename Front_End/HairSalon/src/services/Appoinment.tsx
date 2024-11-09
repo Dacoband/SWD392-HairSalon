@@ -1,10 +1,14 @@
-// service/appointmentApi.ts
+
 
 import axios from 'axios'
 import { Appointment, Stylish, CreateAppointmentRequest } from '../models/type'
 
 const API_URL = 'https://api.vol-ka.studio/api/v1/appointment/create'
 const API_APPOINTMENT = 'https://api.vol-ka.studio/api/v1/appointment'
+
+
+
+
 export const createAppointment = async (
   appointment: CreateAppointmentRequest
 ): Promise<Appointment> => {
