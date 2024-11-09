@@ -176,7 +176,7 @@ const ManagerStaffStylist: React.FC = () => {
           allowClear
         />
         <Button type="primary" onClick={openAddServiceModal}>
-          Thêm Quản Lí
+          Thêm nhân viên quản lý stylist
         </Button>
       </Space>
 

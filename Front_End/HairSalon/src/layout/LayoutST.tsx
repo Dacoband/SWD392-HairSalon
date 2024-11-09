@@ -20,11 +20,11 @@ const SidebarData = [
     heading: 'Quản lí stylish',
     navigate: '/staff-stylish',
   },
-  {
-    icon: ShoppingCartOutlined,
-    heading: 'Quản lí ',
-    navigate: '/managerSchedule',
-  },
+  // {
+  //   icon: ShoppingCartOutlined,
+  //   heading: 'Quản lí ',
+  //   navigate: '/managerSchedule',
+  // },
   {
     icon: ShoppingCartOutlined,
     heading: 'Quản lí lịch làm',
