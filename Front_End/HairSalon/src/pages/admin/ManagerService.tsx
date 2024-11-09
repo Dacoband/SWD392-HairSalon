@@ -12,7 +12,11 @@ import {
 } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { getAuthToken } from "../../services/authSalon";
-import { SearchOutlined } from "@ant-design/icons";
+import {
+  SearchOutlined,
+  EditOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
 
 interface Service {
   serviceID: string;
@@ -26,7 +30,7 @@ interface Service {
 }
 
 const ManagerService: React.FC = () => {
-  const [services, setServices] = useState<Services[]>([]);
+  const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(false);
   const [avatarImage, setSelectedFile] = useState<File | null>(null);
   const [searchText, setSearchText] = useState<string>("");
@@ -213,7 +217,7 @@ const ManagerService: React.FC = () => {
       service.serviceName.toLowerCase().includes(searchText.toLowerCase())
     );
 
-  const columns: ColumnsType<Services> = [
+  const columns: ColumnsType<Service> = [
     {
       title: "Avatar",
       dataIndex: "avatarImage",
@@ -259,16 +263,17 @@ const ManagerService: React.FC = () => {
       key: "actions",
       render: (_, record) => (
         <>
-          <Button type="link" onClick={() => openEditModal(record)}>
-            Chỉnh sửa
-          </Button>
+          <Button
+            type="link"
+            icon={<EditOutlined />}
+            onClick={() => openEditModal(record)}
+          ></Button>
           <Button
             type="link"
             danger
+            icon={<DeleteOutlined />}
             onClick={() => handleDelete(record.serviceID)}
-          >
-            Xóa
-          </Button>
+          ></Button>
         </>
       ),
     },
@@ -328,9 +333,21 @@ const ManagerService: React.FC = () => {
           <Form.Item
             name="price"
             label="Giá"
-            rules={[{ required: true, message: "Vui lòng nhập giá!" }]}
+            rules={[
+              { required: true, message: "Vui lòng nhập giá!" },
+              {
+                type: "number",
+                min: 999,
+                message: "Giá phải lớn hơn 10,000!",
+              },
+            ]}
           >
-            <Input type="number" />
+            <Input
+              type="number"
+              onChange={(e) =>
+                form.setFieldsValue({ price: parseFloat(e.target.value) })
+              }
+            />
           </Form.Item>
 
           <Form.Item name="description" label="Mô tả">
@@ -340,9 +357,22 @@ const ManagerService: React.FC = () => {
           <Form.Item
             name="duration"
             label="Thời gian (phút)"
-            rules={[{ required: true, message: "Vui lòng nhập thời gian!" }]}
+            rules={[
+              { required: true, message: "Vui lòng nhập thời gian!" },
+              {
+                type: "number",
+                min: 10,
+                max: 480,
+                message: "Thời gian phải lớn hơn 10 phút và ít hơn 480 phút!",
+              },
+            ]}
           >
-            <Input type="number" />
+            <Input
+              type="number"
+              onChange={(e) =>
+                form.setFieldsValue({ duration: parseFloat(e.target.value) })
+              }
+            />
           </Form.Item>
 
           {/* <Form.Item

@@ -1,9 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { Bar } from 'react-chartjs-2';
-import { getAppointmentsWithDetails } from '../../services/Admin/Appointment'; // Đường dẫn đến file API của bạn
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import React, { useEffect, useState } from "react";
+import { Bar } from "react-chartjs-2";
+import { getAppointmentsWithDetails } from "../../services/Admin/Appointment"; // Đường dẫn đến file API của bạn
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const AppointmentChart: React.FC = () => {
   const [chartData, setChartData] = useState<any>(null);
@@ -23,10 +38,10 @@ const AppointmentChart: React.FC = () => {
           labels: topPrices.map((appointment: any) => appointment.stylistName),
           datasets: [
             {
-              label: 'Top 5 Total Prices',
+              label: "Top 5 Total Prices",
               data: topPrices.map((appointment: any) => appointment.totalPrice),
-              backgroundColor: 'rgba(75, 192, 192, 0.6)',
-              borderColor: 'rgba(75, 192, 192, 1)',
+              backgroundColor: "rgba(75, 192, 192, 0.6)",
+              borderColor: "rgba(75, 192, 192, 1)",
               borderWidth: 1,
             },
           ],
@@ -34,7 +49,7 @@ const AppointmentChart: React.FC = () => {
 
         setChartData(data);
       } catch (error) {
-        console.error('Error fetching appointments:', error);
+        console.error("Error fetching appointments:", error);
       }
     };
 
@@ -45,40 +60,41 @@ const AppointmentChart: React.FC = () => {
     <div>
       {chartData ? (
         <Bar
+          className="mx-20 flex justify-center"
           data={chartData}
           options={{
             responsive: true,
             plugins: {
               legend: {
-                position: 'top',
+                position: "top",
               },
               title: {
                 display: true,
-                text: 'Top 5 Appointments by Total Price',
+                text: "Top 5 Appointments by Total Price",
               },
             },
             scales: {
               x: {
                 title: {
                   display: true,
-                  text: 'Tên nhà tạo mẫu',
+                  text: "Tên nhà tạo mẫu",
                   font: {
                     size: 14,
-                    weight: 'bold'
-                  }
-                }
+                    weight: "bold",
+                  },
+                },
               },
               y: {
                 title: {
                   display: true,
-                  text: 'Tổng tiền (VNĐ)',
+                  text: "Tổng tiền (VNĐ)",
                   font: {
                     size: 14,
-                    weight: 'bold'
-                  }
-                }
-              }
-            }
+                    weight: "bold",
+                  },
+                },
+              },
+            },
           }}
         />
       ) : (
