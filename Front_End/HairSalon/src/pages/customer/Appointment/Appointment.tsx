@@ -5,6 +5,7 @@ import { Appointment, Services } from "../../../models/type";
 import { getServicesByServiceId } from "../../../services/serviceSalon";
 import { getBranchById } from "../../../services/Branches/branches"; 
 import { getStylistByID } from "../../../services/Stylish"; 
+import { CheckCircleFilled } from '@ant-design/icons';
 
 import "./Appointment.scss";
 
@@ -28,6 +29,7 @@ const AppointmentPage = () => {
     2: "Đã thanh toán",
     3: "Đã hủy",
     4: "Đã hoàn thành",
+    5: "Đang chờ hoàn tiền",
   };
 
   // Fetch appointments when component mounts
@@ -164,7 +166,25 @@ const AppointmentPage = () => {
     return { formattedDate, formattedTime };
   };
 
-  if (loading) return <p>Loading...</p>;
+  const getStatusStyle = (status: number) => {
+    const styles: { [key: number]: { color: string; background: string } } = {
+      1: { color: '#1890ff', background: '#e6f7ff' },
+      2: { color: '#52c41a', background: '#f6ffed' },
+      3: { color: '#ff4d4f', background: '#fff1f0' },
+      4: { color: '#722ed1', background: '#f9f0ff' },
+    };
+    return styles[status] || { color: '#000000', background: '#f5f5f5' };
+  };
+
+  if (loading) return (
+    <div className="container">
+      <div className="loading-wrapper">
+        <div className="loading-item" style={{height: "200px", marginBottom: "20px"}}></div>
+        <div className="loading-item" style={{height: "200px", marginBottom: "20px"}}></div>
+        <div className="loading-item" style={{height: "200px"}}></div>
+      </div>
+    </div>
+  );
   if (error) return (
     <div className="error-messageinAppointment">
       <p>{error}</p>
@@ -188,31 +208,42 @@ const AppointmentPage = () => {
 
             return (
               <Panel
-              className=""
                 key={appointment.appointmentId}
                 header={
-                  <div className="table-header" style={{ fontWeight: 300, padding: "20px 0", lineHeight: "1.6", fontFamily: 'Arial, sans-serif' }}>
-                  <div className="header-text" style={{ display: "flex", justifyContent: "space-between", marginBottom: "15px", fontSize: "16px", color: "#333" }}>
-                    <p style={{ fontWeight: "bold" }}><span style={{ color: "#444" }}>Bạn đã book lịch tại:</span> <span style={{ color: "#0056b3" }}>{branchName}</span></p>
-                    <p style={{ fontWeight: "bold" }}><span style={{ color: "#444" }}>Tên Stylist:</span> <span style={{ color: "#0056b3" }}>{stylistName}</span></p>
+                  <div className="table-header">
+                    {appointment.status === 4 && (
+                      <div className="completed-icon">
+                        <CheckCircleFilled />
+                      </div>
+                    )}
+                    <div className="header-text">
+                      <p>
+                        <span>Chi nhánh</span>
+                        <span>{branchName}</span>
+                      </p>
+                      <p>
+                        <span>Stylist</span>
+                        <span>{stylistName}</span>
+                      </p>
+                      <p className="highlight">
+                        <span>Tổng tiền</span>
+                        <span>{totalAmount.toLocaleString()} VND</span>
+                      </p>
+                      <p className="highlight">
+                        <span>Trạng thái</span>
+                        <span>{status}</span>
+                      </p>
+                      <p>
+                        <span>Thời gian</span>
+                        <span>{formattedDate} | {formattedTime}</span>
+                      </p>
+                      <p>
+                        <span>Địa chỉ</span>
+                        <span>{address}</span>
+                      </p>
+                    </div>
                   </div>
-                
-                  <div className="header-text" style={{ display: "flex", justifyContent: "space-between", marginBottom: "15px", fontSize: "16px", color: "#333" }}>
-                    <p style={{ fontWeight: "bold" }}><span style={{ color: "#444" }}>Tổng thiệt hại:</span> <span style={{ color: "#f39c12" }}>{totalAmount} VND</span></p>
-                    <p style={{ fontWeight: "bold" }}><span style={{ color: "#444" }}>Trạng thái cuộc hẹn:</span> <span style={{ color: status === 'Completed' ? "#2ecc71" : "#e74c3c" }}>{status}</span></p>
-                  </div>
-                
-                  <div className="header-text" style={{ display: "flex", justifyContent: "space-between", marginBottom: "15px", fontSize: "16px", color: "#333" }}>
-                    <p style={{ fontWeight: "bold" }}><span style={{ color: "#444" }}>Ngày:</span> <span style={{ color: "#9b59b6" }}>{formattedDate}</span></p>
-                    <p style={{ fontWeight: "bold" }}><span style={{ color: "#444" }}>Thời gian:</span> <span style={{ color: "#9b59b6" }}>{formattedTime} - {formattedTime}</span></p>
-                  </div>
-                
-                  <div className="header-text" style={{ display: "flex", justifyContent: "space-between", marginBottom: "15px", fontSize: "16px", color: "#333" }}>
-                    <p style={{ fontWeight: "bold" }}><span style={{ color: "#444" }}>Địa chỉ tại:</span> <span style={{ color: "#2980b9" }}>{address}</span></p>
-                  </div>
-                </div>
                 }
-       
                 extra={null}  
               >
                 {/* Services list inside panel */}
@@ -223,34 +254,47 @@ const AppointmentPage = () => {
                         {services[service.serviceId] ? (
                           <>
                             <p>
-                              <strong>Dịch vụ:</strong>{" "}
-                              {services[service.serviceId]?.serviceName}
+                              <strong>Dịch vụ</strong>
+                              <span>{services[service.serviceId]?.serviceName}</span>
                             </p>
                             <p>
-                              <strong>Giá dịch vụ:</strong>{" "}
-                              {services[service.serviceId]?.price} VND
+                              <strong>Giá dịch vụ</strong>
+                              <span>{services[service.serviceId]?.price.toLocaleString()} VND</span>
                             </p>
                             <p>
-                              <strong>Thời gian làm:</strong>{" "}
-                              {services[service.serviceId]?.duration} Phút
+                              <strong>Thời gian làm</strong>
+                              <span>{services[service.serviceId]?.duration} phút</span>
                             </p>
                           </>
                         ) : (
-                          <p>Loading service details...</p>
+                          <p>Đang tải thông tin dịch vụ...</p>
                         )}
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <p>No services available</p>
+                  <p>Không có dịch vụ nào</p>
                 )}
 
                 {/* Buttons on the bottom-right */}
                 <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "10px" }}>
-                  <Button onClick={() => showCancelModal(appointment)} style={{ marginRight: "10px" }} danger>
-                    Hủy lịch
-                  </Button>
-                  <Button onClick={() => showServiceModal(appointment)}>Xem dịch vụ</Button>
+                  {(appointment.status === 1 || appointment.status === 2) && (
+                    <Button 
+                      onClick={() => showCancelModal(appointment)} 
+                      className="cancel-button"
+                    >
+                      Hủy lịch
+                    </Button>
+                  )}
+                  
+                  {appointment.status === 4 && (
+                    <Button 
+                      onClick={() => handleReviewClick(appointment)}
+                      className="review-button"
+                    >
+                      Đánh giá stylist
+                    </Button>
+                  )}
                 </div>
               </Panel>
             );
