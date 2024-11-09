@@ -84,5 +84,14 @@ namespace HairSalonSystem.API.Controllers
             var result = await _appointmentService.GetSuitableStylist(query, HttpContext);
             return result;
         }
+        [HttpGet]
+        [Route(APIEndPointConstant.Appointment.GetTotalRevenueForAllBranches)]
+        [ProducesResponseType(typeof(Dictionary<Guid, decimal>), StatusCodes.Status200OK)]
+        [ProducesErrorResponseType(typeof(ProblemDetails))]
+        public async Task<ActionResult<Dictionary<Guid, decimal>>> GetTotalRevenueForAllBranches()
+        {
+            var result = await _appointmentService.GetTotalRevenueForAllBranches(HttpContext);
+            return result;
+        }
     }
 }
