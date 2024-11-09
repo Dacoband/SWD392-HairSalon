@@ -39,6 +39,7 @@ export const getStylishRandom = async (
   }
 };
 
+
 // Function to add a stylist or update if exists by stylist ID
 export const addStylishById = async (
   stylistId: string,

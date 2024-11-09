@@ -125,6 +125,18 @@ const AppRouter = () => {
             }
           />
         </Route>
+
+
+        {/* STYLISH */}
+        <Route element={<LayoutST />}>
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute element={ProfileAll} allowedRoles={["ST"]} />
+            }
+          />
+        </Route>
+
         <Route element={<LayoutSM/>}>
         <Route
             path="/profile-StaffManager"

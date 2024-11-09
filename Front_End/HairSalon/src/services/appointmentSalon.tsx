@@ -1,5 +1,36 @@
 import axios from "axios";
-import { Appointment} from "../models/type";
+import { Appointment, Cancellation } from "../models/type";
+import { getAuthToken } from "../services/authSalon"; // assuming this function exists to retrieve auth token
+
+const BASE_URL = "https://api.vol-ka.studio/api/v1"; // replace with the correct base URL if different
+
+export const getCancelAppointmentById = async (cancellationId: string): Promise<Cancellation | null> => {
+  try {
+    const token = getAuthToken(); // Retrieve the authentication token if necessary
+    const response = await axios.get(`https://api.vol-ka.studio/api/v1/cancel-appointment/get-by-appointment/${cancellationId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data as Cancellation;
+  } catch (error) {
+    console.error("Error fetching cancellation data:", error);
+    return null; // Return null or handle the error as needed
+  }
+};
+
+
+export const getAppointmentById = async (appointmentId: string): Promise<Appointment | null> => {
+  try {
+    const response = await axios.get<Appointment>(`https://api.vol-ka.studio/api/v1/appointment${appointmentId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching appointment by ID:", error);
+    return null;
+  }
+};
+
+
 export const getAppointmentsByCustomer = async (customerId: string): Promise<Appointment[] | string> => {
   try {
     const response = await axios.get(`https://api.vol-ka.studio/api/v1/appointment/get-all?CustomerId=${customerId}`, {
@@ -75,3 +106,4 @@ export const getAllAppointments = async (): Promise<Appointment[]> => {
       throw new Error("Failed to cancel appointment");
     }
   };
+
