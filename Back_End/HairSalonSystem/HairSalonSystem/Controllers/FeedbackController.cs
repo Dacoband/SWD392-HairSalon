@@ -61,10 +61,10 @@ namespace HairSalonSystem.API.Controllers
         [HttpPost(APIEndPointConstant.Feedback.AddFeedback)]
         [ProducesResponseType(typeof(CreateFeedbackRepsonse), StatusCodes.Status201Created)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
-        public async Task<ActionResult<Feedback>> AddFeedback([FromBody] CreateNewFeedbackRequest feedback)
+        public async Task<ActionResult<CreateFeedbackRepsonse>> AddFeedback([FromBody] CreateNewFeedbackRequest feedback)
         {
-            await _feedbackService.CreateFeedbackAsync(feedback, HttpContext);
-            return CreatedAtAction(nameof(GetFeedbackById), new { id = feedback.FeedbackId}, feedback);
+            var response = await _feedbackService.CreateFeedbackAsync(feedback, HttpContext);
+            return CreatedAtAction(nameof(GetFeedbackById), new { id = response.FeedbackId }, response);
         }
 
         [HttpDelete(APIEndPointConstant.Feedback.DeleteFeedback)]
