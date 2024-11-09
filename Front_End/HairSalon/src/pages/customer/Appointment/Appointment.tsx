@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import {  Modal, Input, notification, Collapse  } from "antd";
+import {  Modal, Input, notification, Collapse, Rate  } from "antd";
 import { getAppointmentsByCustomer, cancelAppointment } from "../../../services/appointmentSalon";
 import { Appointment, Services } from "../../../models/type";
 import { getServicesByServiceId } from "../../../services/serviceSalon";
 import { getBranchById } from "../../../services/Branches/branches"; 
 import { getStylistByID } from "../../../services/Stylish"; 
 import { CheckCircleFilled } from '@ant-design/icons';
+import { submitReview } from "../../../services/Feedback";
 
 import "./Appointment.scss";
 
@@ -15,6 +16,9 @@ const AppointmentPage = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [rating, setRating] = useState<number | null>(null); 
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+const [reviewText, setReviewText] = useState("");
   const [services, setServices] = useState<Record<string, Services | null>>({});
   const [stylistDetails, setStylistDetails] = useState<any>(null);  // To store stylist details
   const [branchDetails, setBranchDetails] = useState<any>(null);  // To store branch details
@@ -98,6 +102,39 @@ const AppointmentPage = () => {
     }
   }, [appointments]);
 
+  const handleReviewSubmit = async () => {
+    if (!selectedAppointment || !rating) {
+      api.warning({
+        message: "Vui lòng nhập đánh giá và xếp hạng",
+        description: "Bạn cần điền đầy đủ thông tin để đánh giá stylist.",
+      });
+      return;
+    }
+  
+    try {
+      console.log("selectedAppointment  ",selectedAppointment.stylistId);
+      const message = await submitReview({
+        stylistId: selectedAppointment.stylistId,
+        rating,
+        comment: reviewText,
+      });
+  
+      api.success({
+        message: "Đánh giá thành công",
+        description: message,
+      });
+  
+      setIsReviewModalOpen(false);
+      setReviewText("");
+      setRating(null);
+    } catch (error: any) {
+      api.error({
+        message: "Lỗi đánh giá",
+        description: error,
+      });
+    }
+  };
+  
   // Fetch services details for appointments
   useEffect(() => {
     const fetchAllServiceDetails = async () => {
@@ -125,6 +162,10 @@ const AppointmentPage = () => {
     setIsCancelModalOpen(true);
   };
 
+  const showReviewModal = (appointment: Appointment) => {
+    setSelectedAppointment(appointment);
+    setIsReviewModalOpen(true);
+  };
   const handleCancelModalOk = async () => {
     if (!selectedAppointment) return;
 
@@ -202,7 +243,7 @@ const AppointmentPage = () => {
              const { formattedDate, formattedTime } = formatDateTime(appointment.startTime);
              const totalAmount = appointment.totalPrice || 0;
         
-             console.log("stylistde  ",currentStylist);
+            //  console.log("stylistde  ",currentStylist);
            
             // const status = statusMap[appointment.status] || "Chưa xác định";
 
@@ -295,7 +336,7 @@ const AppointmentPage = () => {
                     </button>
                   )}
                   
-                  {appointment.status === 4 ||appointment.status === 2 && (
+                  {(appointment.status === 4) && (
                     <button 
                       onClick={() => showReviewModal(appointment)}
                       className="custom-button review"
@@ -342,6 +383,40 @@ const AppointmentPage = () => {
           onChange={(e) => setCancelReason(e.target.value)}
         />
       </Modal>
+      <Modal
+  title="Đánh giá Stylist"
+  open={isReviewModalOpen}
+  onOk={handleReviewSubmit}
+  onCancel={() => setIsReviewModalOpen(false)}
+  footer={[
+    <button 
+      key="cancel" 
+      onClick={() => setIsReviewModalOpen(false)} 
+      className="custom-button cancel"
+    >
+      Hủy
+    </button>,
+    <button 
+      key="submit" 
+      onClick={handleReviewSubmit} 
+      className="custom-button review"
+    >
+      Gửi đánh giá
+    </button>
+  ]}
+>
+  <p>Vui lòng để lại nhận xét và xếp hạng:</p>
+  <Input.TextArea
+    rows={4}
+    value={reviewText}
+    onChange={(e) => setReviewText(e.target.value)}
+    placeholder="Nhập nhận xét của bạn..."
+  />
+  <div style={{ marginTop: "10px" }}>
+    <p>Đánh giá của bạn:</p>
+    <Rate onChange={(value: number) => setRating(value)} value={rating ?? undefined} />
+  </div>
+</Modal>
     </div>
   );
 };
