@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Modal, Input, notification, Collapse  } from "antd";
+import {  Modal, Input, notification, Collapse  } from "antd";
 import { getAppointmentsByCustomer, cancelAppointment } from "../../../services/appointmentSalon";
 import { Appointment, Services } from "../../../models/type";
 import { getServicesByServiceId } from "../../../services/serviceSalon";
@@ -73,10 +73,10 @@ const AppointmentPage = () => {
           if (!stylistDetailsMap[appointment.stylistId]) {
             const stylistResponse = await getStylistByID(appointment.stylistId);
             stylistDetailsMap[appointment.stylistId] = stylistResponse;
-
             if (!branchDetailsMap[stylistResponse.branchId]) {
               const branchResponse = await getBranchById(stylistResponse.branchId);
               branchDetailsMap[stylistResponse.branchId] = branchResponse;
+              console.log(branchResponse);
             }
           }
         }
@@ -191,12 +191,11 @@ const AppointmentPage = () => {
       {appointments.length > 0 ? (
         <Collapse accordion>
           {appointments.map((appointment) => {
-                        console.log(appointment.status);
-            const currentStylist = stylistDetails?.[appointment.stylistId];
-            const currentBranch = currentStylist ? branchDetails?.[currentStylist.branchId] : null;
-            const { formattedDate, formattedTime } = formatDateTime(appointment.startTime);
-            const totalAmount = appointment.totalPrice || 0;
-            const status = statusMap[appointment.status] || "Chưa xác định";
+             const currentStylist = stylistDetails?.[appointment.stylistId];
+             const currentBranch = currentStylist ? branchDetails?.[currentStylist.branchId] : null;
+             const { formattedDate, formattedTime } = formatDateTime(appointment.startTime);
+             const totalAmount = appointment.totalPrice || 0;
+            // const status = statusMap[appointment.status] || "Chưa xác định";
 
             return (
               <Panel
@@ -212,19 +211,20 @@ const AppointmentPage = () => {
                     <div className="header-text">
                       <p>
                         <span>Chi nhánh</span>
-                        <span>{currentBranch?.salonBranches || "N/A"}</span>
+                        <span>{currentBranch?.salonBranches
+                        }</span>
                       </p>
                       <p>
                         <span>Stylist</span>
-                        <span>{currentStylist?.stylistName || "N/A"}</span>
+                        <span>{currentStylist?.stylistName}</span>
                       </p>
                       <p className="highlight">
                         <span>Tổng tiền</span>
-                        <span>{totalAmount.toLocaleString()} VND</span>
+                        <span className="price">{totalAmount.toLocaleString()} VND</span>
                       </p>
                       <p className="highlight">
                         <span>Trạng thái</span>
-                        <span>{status}</span>
+                        <span className="status">{statusMap[appointment.status]}</span>
                       </p>
                       <p>
                         <span>Thời gian</span>
@@ -232,7 +232,7 @@ const AppointmentPage = () => {
                       </p>
                       <p>
                         <span>Địa chỉ</span>
-                        <span>{currentBranch?.address || "N/A"}</span>
+                        <span>{currentBranch?.address}</span>
                       </p>
                     </div>
                     <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "10px" }}>
@@ -277,26 +277,22 @@ const AppointmentPage = () => {
                 {/* Buttons on the bottom-right */}
                 <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "10px" }}>
              
-                  {(appointment.status === 1 || appointment.status === 2 ) && (
-                    
-                    <Button 
+                  {(appointment.status === 1 || appointment.status === 2) && (
+                    <button 
                       onClick={() => showCancelModal(appointment)} 
-                      className="cancel-button"
-                      type="default"
+                      className="custom-button cancel"
                     >
-                      {appointment.status }
-                  
                       Hủy lịch
-                    </Button>
+                    </button>
                   )}
                   
                   {appointment.status === 4 && (
-                    <Button 
+                    <button 
                       onClick={() => handleReviewClick(appointment)}
-                      className="review-button"
+                      className="custom-button review"
                     >
                       Đánh giá stylist
-                    </Button>
+                    </button>
                   )}
                 </div>
               </Panel>
@@ -313,6 +309,22 @@ const AppointmentPage = () => {
         open={isCancelModalOpen}
         onOk={handleCancelModalOk}
         onCancel={handleCancelModalCancel}
+        footer={[
+          <button 
+            key="cancel" 
+            onClick={handleCancelModalCancel}
+            className="custom-button cancel"
+          >
+            Hủy
+          </button>,
+          <button 
+            key="submit" 
+            onClick={handleCancelModalOk}
+            className="custom-button review"
+          >
+            Xác nhận
+          </button>
+        ]}
       >
         <p>Nhập lý do hủy lịch hẹn:</p>
         <Input.TextArea

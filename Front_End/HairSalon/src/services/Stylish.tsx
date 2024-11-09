@@ -4,16 +4,6 @@ import { Stylish, Branches } from "../models/type";
 const BASE_URL = "https://api.vol-ka.studio/api/v1";
 
 
-export const getStylistByID = async (stylistId: string) : Promise<Stylish> => {
-  try {
-    const response = await axios.get<Stylish>(`https://api.vol-ka.studio/api/v1/stylist/${stylistId}`);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching stylist details:", error);
-    throw error;
-  }
-};
-
 export const getStylishByBranchID = async (
   branchId: string
 ): Promise<Stylish[]> => {
@@ -26,6 +16,16 @@ export const getStylishByBranchID = async (
     throw error;
   }
 };
+export const getStylistByID = async (stylistId: string) : Promise<Stylish> => {
+  try {
+    const response = await axios.get<Stylish>(`https://api.vol-ka.studio/api/v1/stylist/${stylistId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching stylist details:", error);
+    throw error;
+  }
+};
+
 export const getStylishRandom = async (
   branchId: string
 ): Promise<Stylish[]> => {
