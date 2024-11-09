@@ -203,6 +203,7 @@ const BookingPage: React.FC = () => {
       }
       console.log(response)
     } catch (error) {
+      message.error(error?.response?.data)
       console.log('Error creating appointment ', error)
     }
   }
