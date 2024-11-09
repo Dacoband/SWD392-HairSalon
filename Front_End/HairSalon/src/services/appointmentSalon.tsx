@@ -122,12 +122,12 @@ export const getAppointmentsByCustomer = async (customerId: string): Promise<App
   }
 };
 
-  export const cancelAppointment = async (appointmentId: string, reason: string) => {
+  export const cancelAppointment = async (appointmetId : string, reason: string) => {
     try {
       const response = await axios.post(
         `https://api.vol-ka.studio/api/v1/cancel-appointment/create`,
         {
-          appointmentId,
+          appointmetId ,
           reason,
         },
         {
