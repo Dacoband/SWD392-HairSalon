@@ -110,10 +110,10 @@ const SignInForm = () => {
           }
           icon={FaLock}
         />
-        {/* {error && <div className="error-message">{error}</div>}
-        <a onClick={handleForgotPassword} className="forgot-password">
+        {error && <div className="error-message">{error}</div>}
+        {/* {/* <a onClick={handleForgotPassword} className="forgot-password">
           Quên mật khẩu
-        </a> */}
+        </a> */ }
       </div>
       <button type="submit" className="sign-in-button">
         Đăng nhập
