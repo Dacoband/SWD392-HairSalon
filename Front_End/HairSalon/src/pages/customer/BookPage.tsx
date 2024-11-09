@@ -836,7 +836,7 @@ const BookingPage: React.FC = () => {
                         <span className="flex justify-center items-center">
                           <FaStar size={20} className="text-yellow-500" />
                           <span className="font-bold">
-                            {stylist.averageRating}/5
+                            {stylist.averageRating.toFixed(1)}/5
                           </span>
                         </span>
                       </div>
