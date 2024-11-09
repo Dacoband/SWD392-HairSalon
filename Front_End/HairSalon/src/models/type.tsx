@@ -100,6 +100,7 @@ export interface CreatePaymentReponse {
 
 export interface Member {
   memberId: string;
+  customerId?: string;
   accountId: string;
   memberName: string;
   dateOfBirth: string;
@@ -118,4 +119,19 @@ export interface Cancellation {
   updDate: string;
   delFlg: boolean;
   appointment: Appointment;
+}
+
+
+export interface StaffManager {
+  staffManagerID: string;  
+  branchID: string;       
+  accountID: string;      
+  staffManagerName: string; 
+  dateOfBirth: string;     
+  phoneNumber: string;   
+  address: string;        
+  avatarImage: string;    
+  insDate: string;        
+  updDate: string;         
+ 
 }

@@ -23,13 +23,13 @@ import {
   Cancellation,
 } from "../../models/type";
 import { getStylishByBranchID } from "../../services/Stylish";
-import { getAppointmentDetails, getMemberById } from "../../services/Member";
+import { getAppointmentDetails, getMemberById, getAllMember} from "../../services/Member";
 import { getCancelAppointmentById } from "../../services/appointmentSalon"; // Update to correct path if needed
-import "./AppointmentStaff.scss";
+import "../StaffStylish/AppointmentStaff.scss";
 
 const { Option } = Select;
 
-const ManagerAppointmentStaff = () => {
+const ManagerAppointments = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [stylists, setStylists] = useState<Stylish[]>([]);
@@ -76,47 +76,35 @@ const ManagerAppointmentStaff = () => {
         (appointment: Appointment) => stylistIds.includes(appointment.stylistId)
       );
       setAppointments(filteredAppointments);
-      await fetchMemberDetails(filteredAppointments);
-      await fetchCancellations(filteredAppointments); // Fetch cancellations for appointments
+  
+      // Call functions without arguments if they don't expect any
+      await fetchMemberDetails();
+      await fetchCancellations;
     } catch (error) {
       console.error("Failed to fetch appointments:", error);
       message.error("Failed to fetch appointments");
     }
   };
+  
 
-  const fetchMemberDetails = async (appointments: Appointment[]) => {
+  const fetchMemberDetails = async () => {
     try {
-      const memberDetailsMap: Record<
-        string,
-        { name: string; phoneNumber: string }
-      > = {}; // Map to store member details by customerId
-
-      // Use Promise.all to fetch details of multiple members concurrently
-      const memberPromises = appointments.map(async (appointment) => {
-        const customerId = appointment.customerId;
-
-        if (!memberDetailsMap[customerId]) {
-          // Fetch member data only if it hasn't been fetched already
-          const member = await getMemberById(customerId);
-
-          // Add member details to the map
-          memberDetailsMap[customerId] = {
-            name: member.memberName,
-            phoneNumber: member.phoneNumber,
-          };
-        }
-      });
-
-      // Wait for all member details to be fetched
-      await Promise.all(memberPromises);
-
-      // Set the member details in the state
+      const membersData = await getAllMember();
+      const memberDetailsMap = membersData.reduce((acc, member) => {
+        acc[member.customerId || member.memberId] = {
+          name: member.memberName,
+          phoneNumber: member.phoneNumber,
+        };
+        return acc;
+      }, {} as Record<string, { name: string; phoneNumber: string }>);
       setMembers(memberDetailsMap);
     } catch (error) {
       console.error("Failed to fetch member details:", error);
       message.error("Failed to fetch member details");
     }
   };
+  
+
 
   // Fetch cancellations for each appointment
   const fetchCancellations = async (appointments: Appointment[]) => {
@@ -154,11 +142,12 @@ const ManagerAppointmentStaff = () => {
     setCurrentPage(1);
   };
 
-  const filteredAppointments = appointments.filter((appointment) =>
+  const filteredList = appointments.filter((appointment: Appointment) =>
     filteredStatus !== null ? appointment.status === filteredStatus : true
   );
+  
 
-  const paginatedAppointments = filteredAppointments.slice(
+  const paginatedAppointments = filteredList.slice(
     (currentPage - 1) * appointmentsPerPage,
     currentPage * appointmentsPerPage
   );
@@ -171,7 +160,7 @@ const ManagerAppointmentStaff = () => {
     },
     {
       title: "Số điện thoại",
-      dataIndex: "phoneNumber",
+      dataIndex: "customerId",
       render: (text: number) => (
         <span>{members[text]?.phoneNumber || "Không có"}</span>
       ),
@@ -239,7 +228,7 @@ const ManagerAppointmentStaff = () => {
         <Pagination
           current={currentPage}
           pageSize={appointmentsPerPage}
-          total={filteredAppointments.length}
+          total={filteredList.length}
           onChange={handlePageChange}
         />
       </div>
@@ -247,4 +236,4 @@ const ManagerAppointmentStaff = () => {
   );
 };
 
-export default ManagerAppointmentStaff;
+export default ManagerAppointments;

@@ -1,8 +1,27 @@
 import axios from "axios";
-import { Member, Appointment } from "../models/type";  // Ensure correct model import
+import { Member,Appointment } from "../models/type";  // Ensure correct model import
 
 // Base URL for the API
 const BASE_URL = "https://api.vol-ka.studio/api/v1";
+
+// Function to get all members with memberId renamed to customerId
+export const getAllMember = async (): Promise<Member[]> => {
+  try {
+    const response = await axios.get(`${BASE_URL}/member/all`);
+    // Map through the response data to replace memberId with customerId
+    const modifiedData = response.data.map((member: any) => ({
+      ...member,
+      customerId: member.memberId,
+      memberId: undefined, // Optionally remove the original memberId key
+    }));
+    return modifiedData;
+  } catch (error) {
+    console.error("Error fetching members:", error);
+    throw error;
+  }
+};
+
+
 
 // Function to fetch the member data by memberId (customerId from Appointment)
 export const getMemberById = async (memberId: string): Promise<Member> => {
