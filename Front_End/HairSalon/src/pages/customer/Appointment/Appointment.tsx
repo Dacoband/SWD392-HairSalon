@@ -336,7 +336,7 @@ const [reviewText, setReviewText] = useState("");
                     </button>
                   )}
                   
-                  {(appointment.status === 4 || appointment.status === 2) && (
+                  {(appointment.status === 4) && (
                     <button 
                       onClick={() => showReviewModal(appointment)}
                       className="custom-button review"
