@@ -28,6 +28,14 @@ namespace HairSalonSystem.API.Controllers
             }
             return Ok(staffManager);
         }
+        [HttpGet(APIEndPointConstant.StaffManager.GetAllStaffManagersNotBranch)]
+        [ProducesResponseType(typeof(List<StaffManager>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<StaffManager>>> GetAllStaffManagersNotBranch()
+        {
+            var staffManagers = await _staffManagerService.GetAllStaffManagersNotBranch();
+            return Ok(staffManagers);
+        }
+
         [HttpGet(APIEndPointConstant.StaffManager.GetAllStaffManagers)]
         [ProducesResponseType(typeof(List<StaffManager>), StatusCodes.Status200OK)]
         public async Task<ActionResult<List<StaffManager>>> GetAllStaffManagers()
@@ -60,5 +68,6 @@ namespace HairSalonSystem.API.Controllers
             await _staffManagerService.RemoveStaffManager(id);
             return NoContent();
         }
+
     }
 }

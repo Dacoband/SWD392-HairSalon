@@ -15,7 +15,10 @@ namespace HairSalonSystem.DAOs.Interfaces
         Task UpdateAppointment(Appointment appointment);
         Task<List<Appointment>> GetAllAppointment();
         Task<Appointment> GetAppointmentById(Guid appointmentId);
-       
+        Task<Dictionary<Guid, decimal>> GetTotalRevenueForAllBranches();
+
+
+
 
     }
 }

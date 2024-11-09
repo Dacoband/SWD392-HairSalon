@@ -33,6 +33,7 @@ namespace HairSalonSystem.Services.Controllers
             return await _branchService.GetAllBranches();
         }
         [HttpPost(APIEndPointConstant.Branch.AddBranch)]
+        [Authorize(Roles = "SA")]
         [ProducesResponseType(typeof(CreateNewBrachResponse), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
         public async Task<ActionResult> AddBranch([FromBody] CreateNewBranchRequest branchDto)
@@ -82,20 +83,27 @@ namespace HairSalonSystem.Services.Controllers
 
         //    return CreatedAtAction(nameof(AddBranch),reponse);
         //}
-        [HttpPatch(APIEndPointConstant.Branch.UpdateBranch)]
+        [HttpPut(APIEndPointConstant.Branch.UpdateBranch)]
+        [Authorize(Roles = "SA")]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
-        public async Task<bool> UpdateBranch([FromRoute] Guid id, [FromBody] UpdateBranchRequest branchDto)
+        public async Task<bool> UpdateBranch([FromRoute] Guid id, [FromForm] UpdateBranchRequest branchDto)
         {
             return await _branchService.UpdateBranch(id, branchDto);
         }
         [HttpDelete(APIEndPointConstant.Branch.DeleteBranch)]
-        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-        [ProducesErrorResponseType(typeof(ProblemDetails))]
-        public async Task<IActionResult> RemoveBranch([FromRoute] Guid id)
+        [Authorize(Roles = "SA")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesErrorResponseType(typeof(NotFoundResult))]
+        public async Task<ActionResult> RemoveBranch([FromRoute] Guid id)
         {
+           var existingBranch = await _branchService.GetBranchById(id);
+            if (existingBranch == null)
+            {
+                return NotFound();
+            }
             await _branchService.RemoveBranch(id);
-            return Problem(MessageConstant.BranchMessage.BranchDeleted);
+            return Content (MessageConstant.BranchMessage.BranchDeleted);
         }
 
     }

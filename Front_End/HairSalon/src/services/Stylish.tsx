@@ -41,7 +41,9 @@ export const getStylishByBranchID = async (
 };
 export const getStylistByID = async (stylistId: string) : Promise<Stylish> => {
   try {
+
     const response = await axios.get<Stylish>(`https://api.vol-ka.studio/api/v1/stylist/${stylistId}`);
+    // console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching stylist details:", error);

@@ -71,15 +71,20 @@ const AppointmentPage = () => {
 
         for (const appointment of appointments) {
           if (!stylistDetailsMap[appointment.stylistId]) {
+            //  console.log("id stylist "+ appointment.stylistId);
             const stylistResponse = await getStylistByID(appointment.stylistId);
             stylistDetailsMap[appointment.stylistId] = stylistResponse;
             if (!branchDetailsMap[stylistResponse.branchId]) {
+           
               const branchResponse = await getBranchById(stylistResponse.branchId);
               branchDetailsMap[stylistResponse.branchId] = branchResponse;
-              console.log(branchResponse);
+              // console.log("branchResponse  ",branchResponse);
             }
           }
+        // console.log("request st   "+stylistDetailsMap);
+
         }
+        // console.log("request st   "+stylistDetailsMap);
 
         setStylistDetails(stylistDetailsMap);
         setBranchDetails(branchDetailsMap);
@@ -191,10 +196,14 @@ const AppointmentPage = () => {
       {appointments.length > 0 ? (
         <Collapse accordion>
           {appointments.map((appointment) => {
+           
              const currentStylist = stylistDetails?.[appointment.stylistId];
              const currentBranch = currentStylist ? branchDetails?.[currentStylist.branchId] : null;
              const { formattedDate, formattedTime } = formatDateTime(appointment.startTime);
              const totalAmount = appointment.totalPrice || 0;
+        
+             console.log("stylistde  ",currentStylist);
+           
             // const status = statusMap[appointment.status] || "Chưa xác định";
 
             return (
@@ -238,7 +247,7 @@ const AppointmentPage = () => {
                     <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "10px" }}>
              
            
-           </div>
+                    </div>
                   </div>
                   
                 }
@@ -286,9 +295,9 @@ const AppointmentPage = () => {
                     </button>
                   )}
                   
-                  {appointment.status === 4 && (
+                  {appointment.status === 4 ||appointment.status === 2 && (
                     <button 
-                      onClick={() => handleReviewClick(appointment)}
+                      onClick={() => showReviewModal(appointment)}
                       className="custom-button review"
                     >
                       Đánh giá stylist

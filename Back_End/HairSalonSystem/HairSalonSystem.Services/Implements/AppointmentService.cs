@@ -32,9 +32,10 @@ namespace HairSalonSystem.Services.Implements
         private readonly IAppointmentServiceRepository _appointmentServiceRepository;
         private readonly IMongoClient _mongoClient;
         private readonly IMemberRepository _memberRepository;
+        private readonly IOffScheduleRepository _offScheduleRepository;
 
         public AppointmentService(IAppointmentRepository appointmentRepository, IStylistRepository stylistRepository, IServiceRepository serviceRepository
-, IAppointmentServiceRepository appointmentServiceRepository, IMongoClient mongoClient, IMemberRepository memberRepository
+, IAppointmentServiceRepository appointmentServiceRepository, IMongoClient mongoClient, IMemberRepository memberRepository, IOffScheduleRepository offScheduleRepository
 )
         {
             _mongoClient = mongoClient; 
@@ -43,7 +44,7 @@ namespace HairSalonSystem.Services.Implements
             _serviceRepository = serviceRepository;
             _appointmentServiceRepository = appointmentServiceRepository;
             _memberRepository = memberRepository;
-
+            _offScheduleRepository = offScheduleRepository;
         }
         public async Task<ActionResult<BusinessObject.Entities.Appointment>> CreateAppointment(CreateAppointmentRequest request, HttpContext context)
         {
@@ -297,7 +298,7 @@ namespace HairSalonSystem.Services.Implements
             {
                 return new ObjectResult(MessageConstant.AppointmentMessage.NotFound)
                 {
-                    StatusCode = StatusCodes.Status403Forbidden
+                    StatusCode = StatusCodes.Status404NotFound
                 };
             }
 
@@ -315,7 +316,7 @@ namespace HairSalonSystem.Services.Implements
                 EndTime = s.EndTime,
                 SevicesList = await _appointmentServiceRepository.GetByAppointmentId(s.AppointmentId),
             }));
-            return new OkObjectResult(result);
+            return new OkObjectResult(result.OrderBy(x => x.UpDate));
 
 
         }
@@ -325,7 +326,7 @@ namespace HairSalonSystem.Services.Implements
             var accountID = UserUtil.GetAccountId(context);
             if (accountID == null)
             {
-                return new ObjectResult(MessageConstant.AppointmentMessage.NotFound)
+                return new ObjectResult(MessageConstant.AppointmentMessage.NotRight)
                 {
                     StatusCode = StatusCodes.Status403Forbidden
                 };
@@ -334,6 +335,8 @@ namespace HairSalonSystem.Services.Implements
             // Initiate schedule
             DateTime startOfDay = request.date.Date.AddHours(8); 
             DateTime endOfDay = request.date.Date.AddHours(17);
+            DateTime breakTime = request.date.Date.AddHours(13);
+
             //validate service and initiate duration
             var duration = 0;
             foreach(var service in request.ServiceId)
@@ -342,7 +345,7 @@ namespace HairSalonSystem.Services.Implements
                 if (existingService == null) {
                     return new ObjectResult(MessageConstant.ServiceMessage.NotFound)
                     {
-                        StatusCode = StatusCodes.Status403Forbidden
+                        StatusCode = StatusCodes.Status404NotFound
                     };
 
                 }
@@ -368,7 +371,7 @@ namespace HairSalonSystem.Services.Implements
             };
             // Get stylist appointment
             var appointmentList = await _appointmentRepository.GetAllAppointment();
-            var existingAppointments =  appointmentList.Where(x => x.StylistId == request.StylistId && x .Status == 2 && x.StartTime >= startOfDay).ToList();
+            var existingAppointments =  appointmentList.Where(x => x.StylistId == request.StylistId && (x .Status == 2 || x.Status == 1) && x.StartTime >= startOfDay).ToList();
             
             // Innitiate slot
             List<DateTime> allTimeSlots = Enumerable.Range(0, 11)
@@ -380,7 +383,25 @@ namespace HairSalonSystem.Services.Implements
             }
             // Stylist available slot
             List<DateTime> availableTimeSlots = new List<DateTime>(allTimeSlots);
-
+            //filter OffSchedule
+            var existOffSchedule =await _offScheduleRepository.GetAll();
+            existOffSchedule = existOffSchedule.AsQueryable().Where(x => x.StylistId == request.StylistId && x.OffDate.Date == request.date.Date).ToList();
+            List<DateTime> offSlot = new List<DateTime>();
+            if(existOffSchedule.Count > 0)
+            {
+                foreach(var item in existOffSchedule)
+                {
+                    if(item.OffSlot == 1)
+                    {
+                       offSlot = Enumerable.Range(0,5).Select(i => startOfDay.AddHours(i)).ToList();
+                    }
+                    else
+                    {
+                        offSlot = Enumerable.Range(0,5).Select(i => breakTime.AddHours(i)).ToList();
+                    }
+                    availableTimeSlots = availableTimeSlots.Except(offSlot).ToList();
+                }
+            }
             foreach (var appointment in existingAppointments)
             {
                 // Remove appointment from available
@@ -424,7 +445,7 @@ namespace HairSalonSystem.Services.Implements
                         suitableTimeSlots.Add(slot);
                     }
                 }
-            
+           
 
             return new ObjectResult(suitableTimeSlots);
         }
@@ -448,7 +469,7 @@ namespace HairSalonSystem.Services.Implements
                 {
                     return new ObjectResult(MessageConstant.ServiceMessage.NotFound)
                     {
-                        StatusCode = StatusCodes.Status403Forbidden
+                        StatusCode = StatusCodes.Status404NotFound
                     };
 
                 }
@@ -458,12 +479,20 @@ namespace HairSalonSystem.Services.Implements
             var stylistList = await _stylistRepository.GetStylistByBranchId(query.BranchId);
             var appointmentList = await _appointmentRepository.GetAllAppointment();
             appointmentList = appointmentList
-    .Where(x => x.StartTime < endTime && x.EndTime > query.StartTime && x.Status == 2)
+    .Where(x => x.StartTime < endTime && x.EndTime > query.StartTime && (x.Status == 2 || x.Status == 1))
     .ToList();
             var stylistIds = appointmentList.Select(x => x.StylistId).Distinct().ToList();
 
             stylistList.RemoveAll(stylist => stylistIds.Contains(stylist.StylistId));
-
+            var offSlot = 2;
+            if(query.StartTime.Hour >= 8 && query.StartTime.Hour <= 13)
+            {
+               offSlot = 1;
+            }
+            var offStylist = await _offScheduleRepository.GetAll();
+            offStylist = offStylist.AsQueryable().Where(x => DateOnly.FromDateTime(x.OffDate) == DateOnly.FromDateTime(query.StartTime) && x.OffSlot == offSlot && x.DelFlg == true).ToList();
+            var offStylistIds = offStylist.Select(x => x.StylistId).Distinct().ToList();
+            stylistList.RemoveAll(stylist => offStylistIds.Contains(stylist.StylistId));
 
             return new OkObjectResult(stylistList[0]);
         }
@@ -557,6 +586,31 @@ namespace HairSalonSystem.Services.Implements
 
 
 
+
+        }
+        public async Task<ActionResult<Dictionary<Guid, decimal>>> GetTotalRevenueForAllBranches(HttpContext context)
+        {
+            var accountID = UserUtil.GetAccountId(context);
+            if (accountID == null)
+            {
+                return new ObjectResult(MessageConstant.AppointmentMessage.NotFound)
+                {
+                    StatusCode = StatusCodes.Status403Forbidden
+                };
+            }
+
+            var roleName = UserUtil.GetRoleName(context);
+            if (roleName != "SA")
+            {
+                return new ObjectResult(MessageConstant.AppointmentMessage.NotFound)
+                {
+                    StatusCode = StatusCodes.Status403Forbidden
+                };
+            }
+            var revenueByBranch = await _appointmentRepository.GetTotalRevenueForAllBranches();
+
+
+            return new OkObjectResult(revenueByBranch);
         }
 
     }

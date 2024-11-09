@@ -54,6 +54,8 @@
             public const string StaffManagerEndpoint = ApiEndpoint + "/staff-manager";
             public const string GetStaffManagerById = StaffManagerEndpoint + "/{id}";
             public const string GetAllStaffManagers = StaffManagerEndpoint + "/all";
+            public const string GetAllStaffManagersNotBranch = StaffManagerEndpoint + "/allnotbranch";
+
             public const string AddStaffManager = StaffManagerEndpoint + "/add";
             public const string UpdateStaffManager = StaffManagerEndpoint + "/update/{id}";
             public const string DeleteStaffManager = StaffManagerEndpoint + "/delete/{id}";
@@ -102,6 +104,7 @@
             public const string GetAllAppointment = AppointmentEndpoint + "/get-all";
             public const string GetSuitableSlot = AppointmentEndpoint + "/get-slot";
             public const string GetAvailableStylist = AppointmentEndpoint + "/get-available-stylist";
+            public const string GetTotalRevenueForAllBranches = AppointmentEndpoint + "/get-total-revenue";
 
         }
 
@@ -131,8 +134,17 @@
             public const string SalaryEndpoint = ApiEndpoint + "/salary";
             public const string CreateSalary = SalaryEndpoint + "/create";
             public const string GetSalaryById = SalaryEndpoint + "{id}";
-            public const string UpdateSalảy = SalaryEndpoint + "/update/{id}";
+            public const string UpdateSalary = SalaryEndpoint + "/update/{id}";
             public const string GetAllSalary = SalaryEndpoint + "/get-all";
+        }
+
+        public static class OffSchedule
+        {
+            public const string OffScheduleEndpoint = ApiEndpoint + "/offschedule";
+            public const string CreateOffSchedule = OffScheduleEndpoint + "/create";
+            public const string GetOffScheduleById = OffScheduleEndpoint + "{id}";
+            public const string DeleteOffSchedule = OffScheduleEndpoint + "/delete/{id}";
+            public const string GetAllOffSchedule = OffScheduleEndpoint + "/get-all";
         }
     }
 }

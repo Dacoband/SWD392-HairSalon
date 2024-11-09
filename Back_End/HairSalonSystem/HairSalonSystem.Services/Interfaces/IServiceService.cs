@@ -16,7 +16,7 @@ namespace HairSalonSystem.Services.Interfaces
         Task<ActionResult<ServiceResponse>> GetServiceById(Guid serviceId);
         Task<ActionResult> CreateService(CreateServiceRequest service, HttpContext context);
         Task<ActionResult<List<ServiceResponse>>> GetServiceList(QueryService query);
-        Task<ActionResult> UpdateService(Guid serviceId, CreateServiceRequest request, HttpContext context);
+        Task<ActionResult> UpdateService(Guid serviceId, UpdateServiceRequest request, HttpContext context);
         Task<ActionResult> DeleteService(Guid serviceId,HttpContext context);
     }
 }

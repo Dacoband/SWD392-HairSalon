@@ -1,4 +1,5 @@
-﻿using HairSalonSystem.BusinessObject.Entities;
+﻿using Amazon.Runtime.Internal;
+using HairSalonSystem.BusinessObject.Entities;
 using HairSalonSystem.Repositories.Interface;
 using HairSalonSystem.Services.Constant;
 using HairSalonSystem.Services.Interfaces;
@@ -8,6 +9,7 @@ using HairSalonSystem.Services.PayLoads.Responses.StaffManagers;
 using HairSalonSystem.Services.Util;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace HairSalonSystem.Services.Implements
 {
@@ -35,9 +37,21 @@ namespace HairSalonSystem.Services.Implements
         {
             return await _staffManagerRepository.GetAllStaffManagers();
         }
+        public async Task<List<StaffManager>> GetAllStaffManagersNotBranch()
+        { 
+           return await _staffManagerRepository.GetBranchesNotBranchIdAsync();
+        }
 
-        public async Task<ActionResult> AddStaffManager(CreateNewStaffManagerRequest staffManager,HttpContext httpContext)
+            public async Task<ActionResult> AddStaffManager(CreateNewStaffManagerRequest staffManager,HttpContext httpContext)
         {
+            var roleName = UserUtil.GetRoleName(httpContext);
+            if (roleName != "SA" && roleName !="SM" && string.IsNullOrEmpty(roleName))
+            {
+                return new ObjectResult(MessageConstant.StaffManagerMessage.StaffManagerNotRightsAdd)
+                {
+                    StatusCode = StatusCodes.Status403Forbidden
+                };
+            }
             var account = new Account()
             {
                 AccountId = Guid.NewGuid(),
@@ -90,43 +104,51 @@ namespace HairSalonSystem.Services.Implements
 
         public async Task<ActionResult> UpdateStaffManager(Guid id, UpdateStaffManagerRequest staffManagerRequest, HttpContext httpContext)
         {
-            var RoleName = UserUtil.GetRoleName(httpContext);
-            Guid? accountIdFromToken = UserUtil.GetAccountId(httpContext);
+           // var RoleName = UserUtil.GetRoleName(httpContext);
+           //// Guid? accountIdFromToken = UserUtil.GetAccountId(httpContext);
            
             
-            if (RoleName != "SA" && RoleName != "SM" && string.IsNullOrEmpty(RoleName))
-            {
-                throw new BadHttpRequestException(MessageConstant.StaffManagerMessage.StaffManagerNotRightsUpdate);
-            }
+           // if (RoleName != "SA" && RoleName != "SM" && string.IsNullOrEmpty(RoleName))
+           // {
+
+
+           //     throw new BadHttpRequestException(MessageConstant.StaffManagerMessage.StaffManagerNotRightsUpdate);
+           // }
             var existingStaffManager = await _staffManagerRepository.GetStaffManagerById(id);
 
-            var existingAccount = await _accountRepository.GetAccountById(accountIdFromToken);
-            if (existingAccount == null)
-            {
-                throw new BadHttpRequestException(MessageConstant.LoginMessage.NotFoundAccount);
-            }
+            //var existingAccount = await _accountRepository.GetAccountById(accountIdFromToken);
+            //if (existingAccount == null)
+            //{
+            //    throw new BadHttpRequestException(MessageConstant.LoginMessage.NotFoundAccount);
+            //}
 
             
             if (existingStaffManager == null)
             {
                 throw new BadHttpRequestException(MessageConstant.StaffManagerMessage.StaffManagerNotFound);
             }
-            var url = await _firebaseService.UploadFile(staffManagerRequest.AvatarImage);
+            var url = "";
+            if (staffManagerRequest.AvatarImage != null)
+            {
+                url = await _firebaseService.UploadFile(staffManagerRequest.AvatarImage);
+
+            }
             // Cập nhật thông tin StaffManager và Account
             existingStaffManager.StaffManagerName = staffManagerRequest.StaffManagerName ?? existingStaffManager.StaffManagerName;
-            existingAccount.Email = staffManagerRequest.Email ?? existingAccount.Email;
+            existingStaffManager.BranchID = staffManagerRequest.BranchID ?? existingStaffManager.BranchID;
+            //existingAccount.Email = staffManagerRequest.Email ?? existingAccount.Email;
             existingStaffManager.PhoneNumber = staffManagerRequest.PhoneNumber ?? existingStaffManager.PhoneNumber;
             existingStaffManager.Address = staffManagerRequest.Address ?? existingStaffManager.Address;
             existingStaffManager.DateOfBirth = staffManagerRequest.DateOfBirth != DateTime.MinValue ? staffManagerRequest.DateOfBirth : existingStaffManager.DateOfBirth;
-            existingStaffManager.AvatarImage = url;
+            existingStaffManager.AvatarImage = staffManagerRequest.AvatarImage != null ? url : existingStaffManager.AvatarImage;
             existingStaffManager.UpdDate = DateTime.Now;
 
              await _staffManagerRepository.UpdateStaffManager(existingStaffManager);
-            await _accountRepository.UpdateEmailAsync(accountIdFromToken, existingAccount.Email);
+           // await _accountRepository.UpdateEmailAsync(accountIdFromToken, existingAccount.Email);
             var response = new UpdateStaffManagerResponse()
             {
                 BranchID = existingStaffManager.BranchID,
-                Email = existingAccount.Email,
+                //Email = existingAccount.Email,
                 StaffManagerName = existingStaffManager.StaffManagerName,
                 DateOfBirth = existingStaffManager.DateOfBirth,
                 PhoneNumber = existingStaffManager.PhoneNumber,

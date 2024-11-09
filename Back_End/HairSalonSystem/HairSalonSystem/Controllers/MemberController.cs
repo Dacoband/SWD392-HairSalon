@@ -58,8 +58,11 @@ namespace HairSalonSystem.Services.Controllers
             if (isEmailExist)
             {
                 return Problem(MessageConstant.MemberMessage.EmailExist);
-            }           
-            var url = await _firebaseService.UploadFile(memberRequest.AvatarImage);
+            }
+            var url = "";
+            if(memberRequest.AvatarImage != null) {
+                url = await _firebaseService.UploadFile(memberRequest.AvatarImage);
+            }
 
             var account = new Account()
             {

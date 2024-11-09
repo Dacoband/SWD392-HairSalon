@@ -62,6 +62,20 @@ namespace HairSalonSystem.DAOs.Implements
                         & Builders<StaffManager>.Filter.Eq(sm => sm.DelFlg, true);
             return await GetAllAsync(filter);
         }
+        public async Task<List<StaffManager>> GetBranchesNotBranchIdAsync()
+        {
+            var  filter = Builders<StaffManager>.Filter.Eq(sm => sm.BranchID, null);
+                return await GetAllAsync(filter);
+        }
+        public async Task UpdateStaffManagerBranchIdAsync(Guid staffManagerId, Guid? branchId)
+        {
+            var filter = Builders<StaffManager>.Filter.Eq(sm => sm.StaffManagerID, staffManagerId);
+            var update = Builders<StaffManager>.Update
+                .Set(sm => sm.BranchID, branchId)
+                .Set(sm => sm.UpdDate, DateTime.UtcNow); 
+
+            await UpdateAsync(filter, update);
+        }
     }
 
 }

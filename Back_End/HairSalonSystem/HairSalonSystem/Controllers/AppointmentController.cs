@@ -37,7 +37,7 @@ namespace HairSalonSystem.API.Controllers
         [Route(APIEndPointConstant.Appointment.GetAppointmentById)]
         [ProducesResponseType(typeof(AppointmentResponse), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
-        [Authorize(Roles = "SL,ST,SA")]
+        [Authorize(Roles = "SL,ST,SA,MB")]
         public async Task<ActionResult<AppointmentResponse>> GetAppointmentById([FromRoute] Guid id)
         {
             var result = await _appointmentService.GetAppointmentById(id, HttpContext);
@@ -82,6 +82,15 @@ namespace HairSalonSystem.API.Controllers
         public async Task<ActionResult<Stylist>> GetStylist([FromQuery] QueryStylist query)
         {
             var result = await _appointmentService.GetSuitableStylist(query, HttpContext);
+            return result;
+        }
+        [HttpGet]
+        [Route(APIEndPointConstant.Appointment.GetTotalRevenueForAllBranches)]
+        [ProducesResponseType(typeof(Dictionary<Guid, decimal>), StatusCodes.Status200OK)]
+        [ProducesErrorResponseType(typeof(ProblemDetails))]
+        public async Task<ActionResult<Dictionary<Guid, decimal>>> GetTotalRevenueForAllBranches()
+        {
+            var result = await _appointmentService.GetTotalRevenueForAllBranches(HttpContext);
             return result;
         }
     }

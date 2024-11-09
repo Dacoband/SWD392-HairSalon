@@ -7,6 +7,7 @@ using HairSalonSystem.Services.PayLoads.Requests.Branchs;
 using HairSalonSystem.Services.PayLoads.Requests.Service;
 using HairSalonSystem.Services.PayLoads.Responses.Branchs;
 using HairSalonSystem.Services.PayLoads.Responses.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HairSalonSystem.API.Controllers
@@ -29,6 +30,7 @@ namespace HairSalonSystem.API.Controllers
         }
 
         [HttpPost(APIEndPointConstant.Service.CreateService)]
+        [Authorize(Roles = "SA")]
         [ProducesResponseType(typeof(Service), StatusCodes.Status201Created)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
         public async Task<ActionResult> CreateService([FromForm] CreateServiceRequest serviceModel)
@@ -46,13 +48,15 @@ namespace HairSalonSystem.API.Controllers
         }
 
         [HttpPatch(APIEndPointConstant.Service.UpdateService)]
+        [Authorize(Roles = "SA")]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
-        public async Task<ActionResult> UpdateService([FromRoute] Guid id, [FromForm] CreateServiceRequest request)
+        public async Task<ActionResult> UpdateService([FromRoute] Guid id, [FromForm] UpdateServiceRequest request)
         {
             return await _serviceService.UpdateService(id, request,HttpContext);
         }
         [HttpPatch(APIEndPointConstant.Service.DeleteService)]
+        [Authorize(Roles = "SA")]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ProblemDetails))]
         public async Task<ActionResult> DeleteService([FromRoute] Guid id)
