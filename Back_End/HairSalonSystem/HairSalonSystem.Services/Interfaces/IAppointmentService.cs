@@ -14,6 +14,7 @@ namespace HairSalonSystem.Services.Interfaces
         Task<ActionResult<List<AppointmentResponse>>> GetAppointmentList(QueryAppointment query, HttpContext context);
         Task<ActionResult<List<DateTime>>> GetSuitableSlot(QuerySlot request, HttpContext context);
         Task<ActionResult<Stylist>> GetSuitableStylist(QueryStylist query, HttpContext context);
+        Task<Dictionary<Guid, decimal>> GetTotalRevenueForAllBranches();
 
 
     }

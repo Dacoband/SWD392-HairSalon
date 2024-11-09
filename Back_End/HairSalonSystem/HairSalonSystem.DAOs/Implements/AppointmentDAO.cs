@@ -14,10 +14,13 @@ namespace HairSalonSystem.DAOs.Implements
     {
         private readonly IMongoCollection<Appointment> _appointmentCollection;
         private readonly IMongoCollection<AppointmentService> _appointmentServiceCollection;
+        private readonly IMongoCollection<Stylist> _stylistCollection;
+
 
         public AppointmentDAO(HairSalonContext context)
         {
             _appointmentCollection = context.Appointment;
+            _stylistCollection = context.Stylists;
         }
         public async Task CreateAppointment(Appointment appointment, IClientSessionHandle session = null)
         {
@@ -53,5 +56,27 @@ namespace HairSalonSystem.DAOs.Implements
 
             await _appointmentCollection.UpdateOneAsync(filter, update);
         }
+        public async Task<Dictionary<Guid, decimal>> GetTotalRevenueForAllBranches()
+        {
+            // Step 1: Get the list of all stylists with corresponding branchId
+            var allStylists = await _stylistCollection.Find(_ => true).ToListAsync();
+            var branchStylistMap = allStylists.ToDictionary(s => s.StylistId, s => s.BranchID);
+
+            // Step 2: Find all appointments and group by branchId
+            var appointments = await _appointmentCollection.Find(_ => true).ToListAsync();
+
+            // Step 3: Group and sum TotalPrice for each branchId
+            var revenueByBranch = appointments
+                .Where(a => branchStylistMap.ContainsKey(a.StylistId)) // Filter only valid Appointments with valid Stylists
+                .GroupBy(a => branchStylistMap[a.StylistId])           // Group by branchId
+                .ToDictionary(
+                    g => g.Key,                                        // branchId
+                    g => g.Sum(a => (decimal)a.TotalPrice)             // Sum revenue for branchId, cast TotalPrice to decimal
+                );
+
+            return revenueByBranch; 
+        }
+
+
     }
 }
