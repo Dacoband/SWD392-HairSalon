@@ -396,6 +396,9 @@ button.ant-btn-danger {
   border: 1px solid #d4380d;
   border-radius: 4px;
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
   
   &:hover {
     color: #fff;

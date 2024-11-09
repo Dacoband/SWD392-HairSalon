@@ -18,7 +18,6 @@ const AppointmentPage = () => {
   const [services, setServices] = useState<Record<string, Services | null>>({});
   const [stylistDetails, setStylistDetails] = useState<any>(null);  // To store stylist details
   const [branchDetails, setBranchDetails] = useState<any>(null);  // To store branch details
-  const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
   const [cancelReason, setCancelReason] = useState("");
@@ -67,20 +66,32 @@ const AppointmentPage = () => {
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        // Fetch Stylist Details
-        const stylistResponse = await getStylistByID("d1a63381-1b20-435d-8253-8490ebf65785");
-        setStylistDetails(stylistResponse);
+        const stylistDetailsMap = { ...stylistDetails };
+        const branchDetailsMap = { ...branchDetails };
 
-        // Fetch Branch Details
-        const branchResponse = await getBranchById("af638270-05e0-48b6-b47b-9fde0b937151");
-        setBranchDetails(branchResponse);
+        for (const appointment of appointments) {
+          if (!stylistDetailsMap[appointment.stylistId]) {
+            const stylistResponse = await getStylistByID(appointment.stylistId);
+            stylistDetailsMap[appointment.stylistId] = stylistResponse;
+
+            if (!branchDetailsMap[stylistResponse.branchId]) {
+              const branchResponse = await getBranchById(stylistResponse.branchId);
+              branchDetailsMap[stylistResponse.branchId] = branchResponse;
+            }
+          }
+        }
+
+        setStylistDetails(stylistDetailsMap);
+        setBranchDetails(branchDetailsMap);
       } catch (error) {
-        console.error("Error fetching stylist or branch details:", error);
+        console.error("Error fetching details:", error);
       }
     };
 
-    fetchDetails();
-  }, []);
+    if (appointments.length > 0) {
+      fetchDetails();
+    }
+  }, [appointments]);
 
   // Fetch services details for appointments
   useEffect(() => {
@@ -104,19 +115,9 @@ const AppointmentPage = () => {
     }
   }, [appointments]);
 
-  const showServiceModal = (appointment: Appointment) => {
-    setSelectedAppointment(appointment);
-    setIsServiceModalOpen(true);
-  };
-
   const showCancelModal = (appointment: Appointment) => {
     setSelectedAppointment(appointment);
     setIsCancelModalOpen(true);
-  };
-
-  const handleServiceModalOk = () => {
-    setIsServiceModalOpen(false);
-    setSelectedAppointment(null);
   };
 
   const handleCancelModalOk = async () => {
@@ -161,20 +162,11 @@ const AppointmentPage = () => {
 
   const formatDateTime = (dateTime: string) => {
     const date = new Date(dateTime);
-    const formattedDate = date.toLocaleDateString("vi-VN"); // Vietnamese date format
+    const formattedDate = date.toLocaleDateString("vi-VN"); 
     const formattedTime = `${date.getHours()}:${date.getMinutes() < 10 ? "0" : ""}${date.getMinutes()}`;
     return { formattedDate, formattedTime };
   };
 
-  const getStatusStyle = (status: number) => {
-    const styles: { [key: number]: { color: string; background: string } } = {
-      1: { color: '#1890ff', background: '#e6f7ff' },
-      2: { color: '#52c41a', background: '#f6ffed' },
-      3: { color: '#ff4d4f', background: '#fff1f0' },
-      4: { color: '#722ed1', background: '#f9f0ff' },
-    };
-    return styles[status] || { color: '#000000', background: '#f5f5f5' };
-  };
 
   if (loading) return (
     <div className="container">
@@ -199,16 +191,17 @@ const AppointmentPage = () => {
       {appointments.length > 0 ? (
         <Collapse accordion>
           {appointments.map((appointment) => {
+                        console.log(appointment.status);
+            const currentStylist = stylistDetails?.[appointment.stylistId];
+            const currentBranch = currentStylist ? branchDetails?.[currentStylist.branchId] : null;
             const { formattedDate, formattedTime } = formatDateTime(appointment.startTime);
-            const branchName = branchDetails ? branchDetails.salonBranches : "N/A";
-            const address = branchDetails ? branchDetails.address : "N/A";
-            const stylistName = stylistDetails ? stylistDetails.stylistName : "N/A";
             const totalAmount = appointment.totalPrice || 0;
             const status = statusMap[appointment.status] || "Chưa xác định";
 
             return (
               <Panel
                 key={appointment.appointmentId}
+                
                 header={
                   <div className="table-header">
                     {appointment.status === 4 && (
@@ -219,11 +212,11 @@ const AppointmentPage = () => {
                     <div className="header-text">
                       <p>
                         <span>Chi nhánh</span>
-                        <span>{branchName}</span>
+                        <span>{currentBranch?.salonBranches || "N/A"}</span>
                       </p>
                       <p>
                         <span>Stylist</span>
-                        <span>{stylistName}</span>
+                        <span>{currentStylist?.stylistName || "N/A"}</span>
                       </p>
                       <p className="highlight">
                         <span>Tổng tiền</span>
@@ -239,10 +232,15 @@ const AppointmentPage = () => {
                       </p>
                       <p>
                         <span>Địa chỉ</span>
-                        <span>{address}</span>
+                        <span>{currentBranch?.address || "N/A"}</span>
                       </p>
                     </div>
+                    <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "10px" }}>
+             
+           
+           </div>
                   </div>
+                  
                 }
                 extra={null}  
               >
@@ -278,11 +276,16 @@ const AppointmentPage = () => {
 
                 {/* Buttons on the bottom-right */}
                 <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "10px" }}>
-                  {(appointment.status === 1 || appointment.status === 2) && (
+             
+                  {(appointment.status === 1 || appointment.status === 2 ) && (
+                    
                     <Button 
                       onClick={() => showCancelModal(appointment)} 
                       className="cancel-button"
+                      type="default"
                     >
+                      {appointment.status }
+                  
                       Hủy lịch
                     </Button>
                   )}
