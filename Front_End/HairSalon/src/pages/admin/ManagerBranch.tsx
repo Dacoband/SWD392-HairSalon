@@ -135,6 +135,8 @@ const ManagerBranch = () => {
   // };
   const handleUpdateBranch = async (values: any) => {
     if (currentBranch) {
+      // console.log(values);
+      // console.log(currentBranch.branchID);
       try {
         await updateBranch(currentBranch.branchID, values); // Gọi hàm updateBranch
         setBranches(
