@@ -71,9 +71,11 @@ const AppointmentPage = () => {
 
         for (const appointment of appointments) {
           if (!stylistDetailsMap[appointment.stylistId]) {
+            // console.log("id"+ appointment.stylistId);
             const stylistResponse = await getStylistByID(appointment.stylistId);
             stylistDetailsMap[appointment.stylistId] = stylistResponse;
             if (!branchDetailsMap[stylistResponse.branchId]) {
+              console.log("request"+stylistResponse.branchId);
               const branchResponse = await getBranchById(stylistResponse.branchId);
               branchDetailsMap[stylistResponse.branchId] = branchResponse;
               console.log(branchResponse);
@@ -195,6 +197,7 @@ const AppointmentPage = () => {
              const currentBranch = currentStylist ? branchDetails?.[currentStylist.branchId] : null;
              const { formattedDate, formattedTime } = formatDateTime(appointment.startTime);
              const totalAmount = appointment.totalPrice || 0;
+           
             // const status = statusMap[appointment.status] || "Chưa xác định";
 
             return (
@@ -286,7 +289,7 @@ const AppointmentPage = () => {
                     </button>
                   )}
                   
-                  {appointment.status === 4 && (
+                  {appointment.status === 4 ||appointment.status === 4 && (
                     <button 
                       onClick={() => handleReviewClick(appointment)}
                       className="custom-button review"
