@@ -66,13 +66,13 @@ const SignInForm = () => {
     }
   };
 
-  const handleForgotPassword = () => {
-    alert("Forgot password functionality not implemented yet.");
-  };
+  // const handleForgotPassword = () => {
+  //   alert("Forgot password functionality not implemented yet.");
+  // };
 
-  const handleGoogleLogin = () => {
-    alert("Login with Google functionality not implemented yet.");
-  };
+  // // const handleGoogleLogin = () => {
+  // //   alert("Login with Google functionality not implemented yet.");
+  // // };
   const handleSignUp = () => {
     navigate("/SignUp");
   };
@@ -111,27 +111,27 @@ const SignInForm = () => {
           icon={FaLock}
         />
         {error && <div className="error-message">{error}</div>}
-        <a onClick={handleForgotPassword} className="forgot-password">
+        {/* <a onClick={handleForgotPassword} className="forgot-password">
           Quên mật khẩu
-        </a>
+        </a> */}
       </div>
       <button type="submit" className="sign-in-button">
         Đăng nhập
       </button>
-
+{/* 
       <div className="divider">
         <hr className="divider-line" />
         <span>hoặc tiếp tục với</span>
         <hr className="divider-line" />
-      </div>
+      </div> */}
 
-      <button
+      {/* <button
         type="button"
         className="google-login-button"
         onClick={handleGoogleLogin}
       >
         <FaGoogle className="google-icon" /> Đăng nhập bằng Google
-      </button>
+      </button> */}
       <p className="prompt">
         Chưa có tài khoản?
         <a onClick={handleSignUp} className="sign-up-link">
