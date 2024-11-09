@@ -5,15 +5,11 @@ import axios from "axios";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import demo from "../../assets/images/demo.jpg";
-interface Service {
-  serviceID: number;
-  avatarImage: string;
-  serviceName: string;
-}
+import { Services } from "../../models/type";
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
-  const [services, setServices] = useState<Service[]>([]);
+  const [services, setServices] = useState<Services[]>([]);
 
   const settings = {
     dots: true,
@@ -88,22 +84,33 @@ const HomePage: React.FC = () => {
           <Slider {...settings}>
             {services.map((service) => (
               <div
-                key={service.serviceID}
-                className="flex flex-col items-center p-4 transition-transform transform hover:scale-105"
-              >
-                <div className="w-48 h-60 rounded-lg shadow-lg overflow-hidden bg-white transition-shadow hover:shadow-2xl">
-                  <img
-                    src="https://i.mydramalist.com/WPdAVD_5c.jpg"
-                    className="w-full h-48 object-cover transition-transform duration-300 hover:scale-110"
-                  />
-                  <div className="bg-[#c89c47] mt-0 px-4 py-2 text-center">
-                    <span className="text-white font-semibold">
-                      {service.serviceName}
-                    </span>
-                  </div>
+              key={service.serviceID}
+              className="flex flex-col items-center p-4 transition-transform transform hover:scale-105"
+            >
+              <div className="w-48 h-60 rounded-lg shadow-lg overflow-hidden bg-white transition-shadow hover:shadow-2xl">
+                <div className="mt-0 px-4 py-2 text-center">
+                  {service.avatarImage ? (
+                    <img
+                      src={service.avatarImage}
+                      alt={service.serviceName}
+                      className="w-full h-48 object-cover transition-transform duration-300 hover:scale-110"
+                    />
+                  ) : (
+                    <img
+                      src="path/to/default/image.jpg" // Fallback image when avatarImage is null
+                      alt="Default service image"
+                      className="w-full h-48 object-cover transition-transform duration-300 hover:scale-110"
+                    />
+                  )}
+                </div>
+                <div className="bg-[#c89c47] mt-0 px-4 py-2 text-center">
+                  <span className="text-white font-semibold">
+                    {service.serviceName}
+                  </span>
                 </div>
               </div>
-            ))}
+            </div>
+          ))}
           </Slider>
         </div>
 
