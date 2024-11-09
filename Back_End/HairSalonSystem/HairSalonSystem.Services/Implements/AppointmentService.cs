@@ -238,7 +238,7 @@ namespace HairSalonSystem.Services.Implements
                 var member = memberList.Where(x => x.AccountId == accountID).FirstOrDefault();
                 query.CustomerId = member.MemberId;
             }
-            if (roleName == "ST")
+            if (roleName == "SL")
             {
                 var stylistList = await _stylistRepository.GetAllStylist();
                 var stylist = stylistList.Where(x => x.AccountId != accountID).FirstOrDefault();
