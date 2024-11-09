@@ -3,7 +3,7 @@ import { Table, Button, Modal, Input, Form, message, Upload } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { Stylish, StaffStylist } from "../../models/type";
 import { getStylishByBranchID, addStylishById, deleteStylistById } from "../../services/Stylish";
-import { getStaffStylistByBranchID, getStaffStylistIdsByBranchID } from "../../services/StaffStylish";
+// import { getStaffStylistByBranchID, getStaffStylistIdsByBranchID } from "../../services/StaffStylish";
 
 const ManagerStylish_staff: React.FC = () => {
   const [stylists, setStylists] = useState<Stylish[]>([]);

@@ -15,11 +15,11 @@ const SidebarData = [
     heading: "Quản lí cuộc hẹn",
     navigate: "/Appoiment-Stylish",
   },
-  {
-    icon: ShoppingCartOutlined,
-    heading: "Quản lí lương",
-    navigate: "/manager-money",
-  },
+  // {
+  //   icon: ShoppingCartOutlined,
+  //   heading: "Quản lí lương",
+  //   navigate: "/manager-money",
+  // },
 ];
 
 const LayoutSL: React.FC = () => {
