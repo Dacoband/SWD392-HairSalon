@@ -71,14 +71,25 @@ export const updateBranch = async (
   branchData: Branches // Chỉ định là một đối tượng, không phải mảng
 ): Promise<Branches> => {
   const token = getAuthToken(); // Lấy token xác thực
+  const formData = new FormData();
+
+  // Thêm các trường cần thiết vào formData
+  formData.append("StaffManagerID", branchData.staffManagerID || "");
+  formData.append("SalonBranches", branchData.salonBranches || "");
+  formData.append("Address", branchData.address || "");
+  formData.append("Phone", branchData.phone || "");
+
+  formData.forEach((value, key) => {
+    console.log(`${key}: ${value}`);
+  });
   try {
     const response = await axios.put<Branches>(
       `https://api.vol-ka.studio/api/v1/branch/update/${id}`,
-      branchData, // Gửi dữ liệu như một đối tượng
+      formData, // Gửi dữ liệu như một đối tượng
       {
         headers: {
           Authorization: `Bearer ${token}`, // Thêm token vào headers
-          "Content-Type": "application/json", // Đảm bảo gửi dữ liệu ở định dạng JSON
+          //"Content-Type": "application/json", // Đảm bảo gửi dữ liệu ở định dạng JSON
         },
       }
     );

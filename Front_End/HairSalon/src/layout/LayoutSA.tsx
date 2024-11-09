@@ -9,6 +9,8 @@ import {
   UserOutlined,
   UsergroupAddOutlined,
   LineChartOutlined,
+  TeamOutlined,
+  ScheduleOutlined,
 } from "@ant-design/icons";
 import HeaderSM from "../components/HeaderSM";
 import { FaCircleUser } from "react-icons/fa6";
@@ -23,7 +25,7 @@ const SidebarData = [
     navigate: "/ManagerChart_AD",
   },
   {
-    icon: ShoppingCartOutlined,
+    icon: ScheduleOutlined,
     heading: "Quản lí lịch hẹn",
     navigate: "/ManagerAppointment_AD",
   },
@@ -44,7 +46,7 @@ const SidebarData = [
   },
 
   {
-    icon: ShoppingCartOutlined,
+    icon: TeamOutlined,
     heading: "Nhân viên",
     navigate: "/ManagerStaffStylist_AD",
   },
