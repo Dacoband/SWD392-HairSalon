@@ -104,6 +104,7 @@
             public const string GetAllAppointment = AppointmentEndpoint + "/get-all";
             public const string GetSuitableSlot = AppointmentEndpoint + "/get-slot";
             public const string GetAvailableStylist = AppointmentEndpoint + "/get-available-stylist";
+            public const string GetTotalRevenueForAllBranches = AppointmentEndpoint + "/get-total-revenue";
 
         }
 

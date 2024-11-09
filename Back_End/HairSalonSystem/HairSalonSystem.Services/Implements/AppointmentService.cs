@@ -586,6 +586,31 @@ namespace HairSalonSystem.Services.Implements
 
 
 
+
+        }
+        public async Task<ActionResult<Dictionary<Guid, decimal>>> GetTotalRevenueForAllBranches(HttpContext context)
+        {
+            var accountID = UserUtil.GetAccountId(context);
+            if (accountID == null)
+            {
+                return new ObjectResult(MessageConstant.AppointmentMessage.NotFound)
+                {
+                    StatusCode = StatusCodes.Status403Forbidden
+                };
+            }
+
+            var roleName = UserUtil.GetRoleName(context);
+            if (roleName != "SA")
+            {
+                return new ObjectResult(MessageConstant.AppointmentMessage.NotFound)
+                {
+                    StatusCode = StatusCodes.Status403Forbidden
+                };
+            }
+            var revenueByBranch = await _appointmentRepository.GetTotalRevenueForAllBranches();
+
+
+            return new OkObjectResult(revenueByBranch);
         }
 
     }

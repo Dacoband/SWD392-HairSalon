@@ -8143,23 +8143,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\bolic\\.nuget\\packages\\": {},
+    "C:\\Users\\THY\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\FPT_Learning\\SWD392\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem\\HairSalonSystem.API.csproj",
+      "projectUniqueName": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem\\HairSalonSystem.API.csproj",
       "projectName": "HairSalonSystem.API",
-      "projectPath": "D:\\FPT_Learning\\SWD392\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem\\HairSalonSystem.API.csproj",
-      "packagesPath": "C:\\Users\\bolic\\.nuget\\packages\\",
-      "outputPath": "D:\\FPT_Learning\\SWD392\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem\\obj\\",
+      "projectPath": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem\\HairSalonSystem.API.csproj",
+      "packagesPath": "C:\\Users\\THY\\.nuget\\packages\\",
+      "outputPath": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\bolic\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\THY\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -8175,8 +8175,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\FPT_Learning\\SWD392\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.Services\\HairSalonSystem.Services.csproj": {
-              "projectPath": "D:\\FPT_Learning\\SWD392\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.Services\\HairSalonSystem.Services.csproj"
+            "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.Services\\HairSalonSystem.Services.csproj": {
+              "projectPath": "D:\\SWD392-HairSalon\\Back_End\\HairSalonSystem\\HairSalonSystem.Services\\HairSalonSystem.Services.csproj"
             }
           }
         }
