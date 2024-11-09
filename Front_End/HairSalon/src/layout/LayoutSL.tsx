@@ -15,6 +15,11 @@ const SidebarData = [
     heading: "Quản lí cuộc hẹn",
     navigate: "/Appoiment-Stylish",
   },
+  {
+    icon: MenuUnfoldOutlined,
+    heading: "Quản lí lịch nghỉ",
+    navigate: "/managerSchedule",
+  },
   // {
   //   icon: ShoppingCartOutlined,
   //   heading: "Quản lí lương",

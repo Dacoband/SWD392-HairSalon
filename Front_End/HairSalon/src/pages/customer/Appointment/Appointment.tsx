@@ -75,13 +75,14 @@ const AppointmentPage = () => {
             const stylistResponse = await getStylistByID(appointment.stylistId);
             stylistDetailsMap[appointment.stylistId] = stylistResponse;
             if (!branchDetailsMap[stylistResponse.branchId]) {
-              console.log("request"+stylistResponse.branchId);
+           
               const branchResponse = await getBranchById(stylistResponse.branchId);
               branchDetailsMap[stylistResponse.branchId] = branchResponse;
-              console.log(branchResponse);
+              console.log("branchResponse  ",branchResponse);
             }
           }
         }
+        console.log("request st   "+stylistDetailsMap);
 
         setStylistDetails(stylistDetailsMap);
         setBranchDetails(branchDetailsMap);
@@ -193,6 +194,8 @@ const AppointmentPage = () => {
       {appointments.length > 0 ? (
         <Collapse accordion>
           {appointments.map((appointment) => {
+            console.log("appointment  ",appointment);
+            console.log("stylistde  ",stylistDetails);
              const currentStylist = stylistDetails?.[appointment.stylistId];
              const currentBranch = currentStylist ? branchDetails?.[currentStylist.branchId] : null;
              const { formattedDate, formattedTime } = formatDateTime(appointment.startTime);

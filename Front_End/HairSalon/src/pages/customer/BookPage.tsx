@@ -836,8 +836,7 @@ const BookingPage: React.FC = () => {
                         <span className="flex justify-center items-center">
                           <FaStar size={20} className="text-yellow-500" />
                           <span className="font-bold">
-                            {stylist.averageRating}/5
-                          </span>
+                          {stylist.averageRating.toFixed(0)}/5                          </span>
                         </span>
                       </div>
                     ))}
@@ -887,7 +886,7 @@ const BookingPage: React.FC = () => {
                     <div>
                       <Calendar
                         disabledDate={(current) =>
-                          current && current <= dayjs().startOf('day')
+                          current && current < dayjs().endOf('day')
                         }
                         fullscreen={false}
                         onChange={handleSelectDate}
