@@ -1,25 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Button, Modal, Input, notification, Collapse  } from "antd";
-import { getAppointmentsByCustomer, cancelAppointment } from "../../../services/appointmentSalon";
+import { Button, Modal, Input, notification } from "antd";
+import {
+  getAppointmentsByCustomer,
+  cancelAppointment,
+} from "../../../services/appointmentSalon";
 import { Appointment, Services } from "../../../models/type";
 import { getServicesByServiceId } from "../../../services/serviceSalon";
-import { getBranchById } from "../../../services/Branches/branches"; 
-import { getStylistByID } from "../../../services/Stylish"; 
-import { CheckCircleFilled } from '@ant-design/icons';
 
 import "./Appointment.scss";
-
-const { Panel } = Collapse;
 
 const AppointmentPage = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [services, setServices] = useState<Record<string, Services | null>>({});
-  const [stylistDetails, setStylistDetails] = useState<any>(null);  // To store stylist details
-  const [branchDetails, setBranchDetails] = useState<any>(null);  // To store branch details
+  const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
-  const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
+  const [selectedAppointment, setSelectedAppointment] =
+    useState<Appointment | null>(null);
   const [cancelReason, setCancelReason] = useState("");
   const [api, contextHolder] = notification.useNotification();
 
@@ -28,7 +26,6 @@ const AppointmentPage = () => {
     2: "Đã thanh toán",
     3: "Đã hủy",
     4: "Đã hoàn thành",
-    5: "Đang chờ hoàn tiền",
   };
 
   // Fetch appointments when component mounts
@@ -42,7 +39,8 @@ const AppointmentPage = () => {
         if (userData && userData.actorId) {
           const customerId = userData.actorId;
           const response = await getAppointmentsByCustomer(customerId);
-
+         
+         
           if (Array.isArray(response)) {
             setAppointments(response);
           } else {
@@ -62,37 +60,6 @@ const AppointmentPage = () => {
     fetchAppointments();
   }, []);
 
-  // Fetch stylist and branch details for appointments
-  useEffect(() => {
-    const fetchDetails = async () => {
-      try {
-        const stylistDetailsMap = { ...stylistDetails };
-        const branchDetailsMap = { ...branchDetails };
-
-        for (const appointment of appointments) {
-          if (!stylistDetailsMap[appointment.stylistId]) {
-            const stylistResponse = await getStylistByID(appointment.stylistId);
-            stylistDetailsMap[appointment.stylistId] = stylistResponse;
-
-            if (!branchDetailsMap[stylistResponse.branchId]) {
-              const branchResponse = await getBranchById(stylistResponse.branchId);
-              branchDetailsMap[stylistResponse.branchId] = branchResponse;
-            }
-          }
-        }
-
-        setStylistDetails(stylistDetailsMap);
-        setBranchDetails(branchDetailsMap);
-      } catch (error) {
-        console.error("Error fetching details:", error);
-      }
-    };
-
-    if (appointments.length > 0) {
-      fetchDetails();
-    }
-  }, [appointments]);
-
   // Fetch services details for appointments
   useEffect(() => {
     const fetchAllServiceDetails = async () => {
@@ -101,7 +68,9 @@ const AppointmentPage = () => {
         if (appointment.sevicesList) {
           for (const service of appointment.sevicesList) {
             if (service.serviceId && !newServices[service.serviceId]) {
-              const serviceData = await getServicesByServiceId(service.serviceId);
+              const serviceData = await getServicesByServiceId(
+                service.serviceId
+              );
               newServices[service.serviceId] = serviceData;
             }
           }
@@ -115,9 +84,19 @@ const AppointmentPage = () => {
     }
   }, [appointments]);
 
+  const showServiceModal = (appointment: Appointment) => {
+    setSelectedAppointment(appointment);
+    setIsServiceModalOpen(true);
+  };
+
   const showCancelModal = (appointment: Appointment) => {
     setSelectedAppointment(appointment);
     setIsCancelModalOpen(true);
+  };
+
+  const handleServiceModalOk = () => {
+    setIsServiceModalOpen(false);
+    setSelectedAppointment(null);
   };
 
   const handleCancelModalOk = async () => {
@@ -160,152 +139,90 @@ const AppointmentPage = () => {
     setCancelReason("");
   };
 
-  const formatDateTime = (dateTime: string) => {
-    const date = new Date(dateTime);
-    const formattedDate = date.toLocaleDateString("vi-VN"); 
-    const formattedTime = `${date.getHours()}:${date.getMinutes() < 10 ? "0" : ""}${date.getMinutes()}`;
-    return { formattedDate, formattedTime };
-  };
+  if (loading) return <p>Loading...</p>;
+ if (error) return (
+  <div className="error-messageinAppointment">
+    <p>{error}</p>
+  </div>
+);
 
-
-  if (loading) return (
-    <div className="container">
-      <div className="loading-wrapper">
-        <div className="loading-item" style={{height: "200px", marginBottom: "20px"}}></div>
-        <div className="loading-item" style={{height: "200px", marginBottom: "20px"}}></div>
-        <div className="loading-item" style={{height: "200px"}}></div>
-      </div>
-    </div>
-  );
-  if (error) return (
-    <div className="error-messageinAppointment">
-      <p>{error}</p>
-    </div>
-  );
   return (
     <div className="container">
       <h1 className="heading">Lịch hẹn của bạn</h1>
       {contextHolder}
-
-      {/* If there are appointments, show them using Collapse */}
       {appointments.length > 0 ? (
-        <Collapse accordion>
-          {appointments.map((appointment) => {
-                        console.log(appointment.status);
-            const currentStylist = stylistDetails?.[appointment.stylistId];
-            const currentBranch = currentStylist ? branchDetails?.[currentStylist.branchId] : null;
-            const { formattedDate, formattedTime } = formatDateTime(appointment.startTime);
-            const totalAmount = appointment.totalPrice || 0;
-            const status = statusMap[appointment.status] || "Chưa xác định";
-
-            return (
-              <Panel
-                key={appointment.appointmentId}
-                
-                header={
-                  <div className="table-header">
-                    {appointment.status === 4 && (
-                      <div className="completed-icon">
-                        <CheckCircleFilled />
-                      </div>
-                    )}
-                    <div className="header-text">
-                      <p>
-                        <span>Chi nhánh</span>
-                        <span>{currentBranch?.salonBranches || "N/A"}</span>
-                      </p>
-                      <p>
-                        <span>Stylist</span>
-                        <span>{currentStylist?.stylistName || "N/A"}</span>
-                      </p>
-                      <p className="highlight">
-                        <span>Tổng tiền</span>
-                        <span>{totalAmount.toLocaleString()} VND</span>
-                      </p>
-                      <p className="highlight">
-                        <span>Trạng thái</span>
-                        <span>{status}</span>
-                      </p>
-                      <p>
-                        <span>Thời gian</span>
-                        <span>{formattedDate} | {formattedTime}</span>
-                      </p>
-                      <p>
-                        <span>Địa chỉ</span>
-                        <span>{currentBranch?.address || "N/A"}</span>
-                      </p>
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "10px" }}>
-             
-           
-           </div>
-                  </div>
-                  
-                }
-                extra={null}  
-              >
-                {/* Services list inside panel */}
-                {appointment.sevicesList ? (
-                  <div>
-                    {appointment.sevicesList.map((service) => (
-                      <div key={service.serviceId} className="service-info">
-                        {services[service.serviceId] ? (
-                          <>
-                            <p>
-                              <strong>Dịch vụ</strong>
-                              <span>{services[service.serviceId]?.serviceName}</span>
-                            </p>
-                            <p>
-                              <strong>Giá dịch vụ</strong>
-                              <span>{services[service.serviceId]?.price.toLocaleString()} VND</span>
-                            </p>
-                            <p>
-                              <strong>Thời gian làm</strong>
-                              <span>{services[service.serviceId]?.duration} phút</span>
-                            </p>
-                          </>
-                        ) : (
-                          <p>Đang tải thông tin dịch vụ...</p>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p>Không có dịch vụ nào</p>
+        <ul className="appointment-list">
+          {appointments.map((appointment) => (
+            <li key={appointment.appointmentId} className="appointment-item">
+              <div className="appointment-info">
+                <strong>Tổng thiệt hại:</strong> {appointment.totalPrice} VND
+              </div>
+              <div className="appointment-info">
+                <strong>Trạng Thái:</strong>{" "}
+                {statusMap[appointment.status] || "Unknown"}
+              </div>
+              <div className="appointment-info">
+                <strong>Start Time:</strong>{" "}
+                {new Date(appointment.startTime).toLocaleString()}
+              </div>
+              <div className="appointment-info">
+                <strong>End Time:</strong>{" "}
+                {new Date(appointment.endTime).toLocaleString()}
+              </div>
+              <div className="appointment-actions">
+                <Button
+                  type="primary"
+                  onClick={() => showServiceModal(appointment)}
+                >
+                  Xem dịch vụ
+                </Button>
+                {appointment.status === 1 && (
+                  <Button
+                    type="default"
+                    danger
+                    onClick={() => showCancelModal(appointment)}
+                  >
+                    Hủy lịch
+                  </Button>
                 )}
-
-                {/* Buttons on the bottom-right */}
-                <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "10px" }}>
-             
-                  {(appointment.status === 1 || appointment.status === 2 ) && (
-                    
-                    <Button 
-                      onClick={() => showCancelModal(appointment)} 
-                      className="cancel-button"
-                      type="default"
-                    >
-                      {appointment.status }
-                  
-                      Hủy lịch
-                    </Button>
-                  )}
-                  
-                  {appointment.status === 4 && (
-                    <Button 
-                      onClick={() => handleReviewClick(appointment)}
-                      className="review-button"
-                    >
-                      Đánh giá stylist
-                    </Button>
-                  )}
-                </div>
-              </Panel>
-            );
-          })}
-        </Collapse>
+              </div>
+            </li>
+          ))}
+        </ul>
       ) : (
-        <p>No appointments found</p>
+        <p>Không có lịch hẹn nào.</p>
       )}
+
+      {/* Service Modal */}
+      <Modal
+        title="Chi tiết dịch vụ"
+        open={isServiceModalOpen}
+        onOk={handleServiceModalOk}
+        onCancel={() => setIsServiceModalOpen(false)}
+      >
+        {selectedAppointment?.sevicesList.map((service) => (
+          <div key={service.serviceId} className="service-info">
+            {services[service.serviceId] ? (
+              <>
+                <p>
+                  <strong>Dịch vụ:</strong>{" "}
+                  {services[service.serviceId]?.serviceName}
+                </p>
+                <p>
+                  <strong>Giá dịch vụ:</strong>{" "}
+                  {services[service.serviceId]?.price} VND
+                </p>
+                <p>
+                  <strong>Thời gian làm:</strong>{" "}
+                  {services[service.serviceId]?.duration} Phút
+                </p>
+              </>
+            ) : (
+              <p>Đang tải thông tin dịch vụ...</p>
+            )}
+          </div>
+        ))}
+      </Modal>
 
       {/* Cancel Modal */}
       <Modal
@@ -314,11 +231,11 @@ const AppointmentPage = () => {
         onOk={handleCancelModalOk}
         onCancel={handleCancelModalCancel}
       >
-        <p>Nhập lý do hủy lịch hẹn:</p>
-        <Input.TextArea
-          rows={4}
+        <p>Vui lòng nhập lý do hủy:</p>
+        <Input
           value={cancelReason}
           onChange={(e) => setCancelReason(e.target.value)}
+          placeholder="Nhập lý do tại đây"
         />
       </Modal>
     </div>
