@@ -6,6 +6,11 @@ import {
   MenuUnfoldOutlined,
   ShoppingCartOutlined,
   ShopOutlined,
+  UserOutlined,
+  UsergroupAddOutlined,
+  LineChartOutlined,
+  TeamOutlined,
+  ScheduleOutlined,
 } from "@ant-design/icons";
 import HeaderSM from "../components/HeaderSM";
 import { FaCircleUser } from "react-icons/fa6";
@@ -15,40 +20,40 @@ const { Content, Sider } = Layout;
 // Dữ liệu Sidebar
 const SidebarData = [
   {
+    icon: LineChartOutlined,
+    heading: "Bảng thống kê",
+    navigate: "/ManagerChart_AD",
+  },
+  {
+    icon: ScheduleOutlined,
+    heading: "Quản lí lịch hẹn",
+    navigate: "/ManagerAppointment_AD",
+  },
+  {
     icon: MenuUnfoldOutlined,
     heading: "Quản lí dịch vụ",
     navigate: "/manageService",
   },
   {
     icon: ShopOutlined,
-    heading: "Quản lí khu vực",
+    heading: "Quản lí chi nhánh",
     navigate: "/ManagerBranch_AD",
   },
   {
-    icon: ShoppingCartOutlined,
-    heading: "Quản lí nhân viên",
+    icon: UserOutlined,
+    heading: "Nhân viên quản lí ",
     navigate: "/ManagerStaff_AD",
-  },
-  {
-    icon: ShoppingCartOutlined,
-    heading: "Quản lí lịch hẹn",
-    navigate: "/ManagerAppointment_AD",
-  },
-  {
-    icon: ShoppingCartOutlined,
-    heading: "Bảng thống kê",
-    navigate: "/ManagerChart_AD",
   },
 
   {
-    icon: ShoppingCartOutlined,
-    heading: "Quản lí nhà tạo mẫu",
-    navigate: "/ManagerStylist_AD",
+    icon: TeamOutlined,
+    heading: "Nhân viên",
+    navigate: "/ManagerStaffStylist_AD",
   },
   {
-    icon: ShoppingCartOutlined,
-    heading: "Nhân viên tạo mẫu",
-    navigate: "/ManagerStaffStylist_AD",
+    icon: UsergroupAddOutlined,
+    heading: "Stylish",
+    navigate: "/ManagerStylist_AD",
   },
 ];
 

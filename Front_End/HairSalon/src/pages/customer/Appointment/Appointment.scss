@@ -1,45 +1,171 @@
-/* src/pages/Appointment.scss */
+// Variables
+$primary: #AA9144;
+$primary-light: #d4b56b;
+$primary-dark: #8a7436;
+$text-dark: #2d3436;
+$text-light: #636e72;
+$text-gray: #64748b;
+$success: #10b981;
+$error: #ef4444;
+$background-light: #FAFAFA;
+$transition: all 0.3s ease;
 
+// Base styles
 .container {
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-  }
+  padding: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: $background-light;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+}
+
+// Table header styles
+.table-header {
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
   
-  .heading {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    text-align: center;
+  .header-text {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    
+    p {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      align-items: center;
+      margin: 0;
+      font-size: 14px;
+      
+      span:first-child {
+        color: $text-gray;
+        font-weight: normal;
+        text-align: left;
+      }
+
+      span:last-child {
+        color: $text-dark;
+        font-weight: 500;
+      }
+
+      &.highlight {
+        span:last-child {
+          &.price {
+            color: $primary;
+            font-weight: 600;
+          }
+          
+          &.status {
+            color: $error;
+            font-weight: 600;
+          }
+        }
+      }
+    }
   }
+}
+
+// Service info styles
+.service-info {
+  background: white;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 12px 0;
+  border-left: 3px solid $primary;
   
-  .appointment-list {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .appointment-item {
-    background-color: #f9f9f9;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .appointment-info {
-    margin-bottom: 10px;
-  }
-  
-  .service-info {
-    margin-top: 10px;
-    padding: 10px;
-    background-color: #e6e6e6;
-    border-radius: 6px;
-  }
-  .error-messageinAppointment {
+  p {
     display: flex;
-    justify-content: center;
     align-items: center;
-    height: 70vh;
-    font-size: 18px;
-    text-align: center;
+    margin: 8px 0;
+    
+    strong {
+      min-width: 120px;
+      color: $text-gray;
+      font-weight: 500;
+    }
+    
+    span {
+      color: $text-dark;
+      font-weight: 500;
+    }
   }
+}
+
+// Modal styles
+.modal-wrapper {
+  .modal-header {
+    padding: 20px;
+    border-bottom: 1px solid rgba($text-light, 0.1);
+    
+    .modal-title {
+      font-size: 20px;
+      color: $text-dark;
+      font-weight: 600;
+    }
+  }
+  
+  .modal-body {
+    padding: 24px;
+    
+    textarea {
+      width: 100%;
+      border: 2px solid rgba($primary, 0.2);
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 14px;
+      resize: vertical;
+      min-height: 100px;
+      transition: $transition;
+      
+      &:focus {
+        outline: none;
+        border-color: $primary;
+        box-shadow: 0 0 0 3px rgba($primary, 0.1);
+      }
+    }
+  }
+  
+  .modal-footer {
+    padding: 16px 20px;
+    border-top: 1px solid rgba($text-light, 0.1);
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+}
+
+// Custom buttons
+.custom-button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: $transition;
+  border: 1px solid transparent;
+  margin-left: 8px;
+
+  &.cancel {
+    background-color: white;
+    border-color: $error;
+    color: $error;
+
+    &:hover {
+      background-color: $error;
+      color: white;
+    }
+  }
+
+  &.review {
+    background-color: white;
+    border-color: $primary;
+    color: $primary;
+
+    &:hover {
+      background-color: $primary;
+      color: white;
+    }
+  }
+}

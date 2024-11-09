@@ -1,7 +1,31 @@
 import axios from "axios";
-import { Stylish, Branches } from "../models/type";
+import { Stylish } from "../models/type";
+
 // Base URL for the API
 const BASE_URL = "https://api.vol-ka.studio/api/v1";
+
+// Function to get a stylist by ID
+export const getStylishById = async (stylistId: string): Promise<Stylish> => {
+  try {
+    const response = await axios.get(`${BASE_URL}/stylist/${stylistId}`);
+    return response.data as Stylish;
+  } catch (error) {
+    console.error("Error fetching stylist by ID:", error);
+    throw new Error("Failed to fetch stylist by ID");
+  }
+};
+
+// Function to get all stylists
+export const getAllStylish = async (): Promise<Stylish[]> => {
+  try {
+    const response = await axios.get(`${BASE_URL}/stylist/all`);
+    return response.data as Stylish[];
+  } catch (error) {
+    console.error("Error fetching all stylists:", error);
+    throw new Error("Failed to fetch all stylists");
+  }
+};
+
 
 export const getStylishByBranchID = async (
   branchId: string
@@ -15,6 +39,16 @@ export const getStylishByBranchID = async (
     throw error;
   }
 };
+export const getStylistByID = async (stylistId: string) : Promise<Stylish> => {
+  try {
+    const response = await axios.get<Stylish>(`https://api.vol-ka.studio/api/v1/stylist/${stylistId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching stylist details:", error);
+    throw error;
+  }
+};
+
 export const getStylishRandom = async (
   branchId: string
 ): Promise<Stylish[]> => {
@@ -27,6 +61,7 @@ export const getStylishRandom = async (
     throw error;
   }
 };
+
 
 // Function to add a stylist or update if exists by stylist ID
 export const addStylishById = async (

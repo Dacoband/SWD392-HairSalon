@@ -41,7 +41,9 @@ const ManageStylist: React.FC = () => {
   const handleDelete = async (id: string) => {
     try {
       await deleteStylist(id);
-      setStylists((prevStylists) => prevStylists.filter(stylist => stylist.stylistId !== id));
+      setStylists((prevStylists) =>
+        prevStylists.filter((stylist) => stylist.stylistId !== id)
+      );
       message.success("Stylist deleted successfully");
     } catch (error) {
       console.error("Error deleting stylist:", error);
@@ -51,32 +53,32 @@ const ManageStylist: React.FC = () => {
 
   const columns: ColumnsType<Stylist> = [
     {
-      title: "Stylist Name",
+      title: "Tên Stylist",
       dataIndex: "stylistName",
       key: "stylistName",
       sorter: (a, b) => a.stylistName.localeCompare(b.stylistName),
     },
     {
-      title: "Phone Number",
+      title: "Số Điện Thoại",
       dataIndex: "phoneNumber",
       key: "phoneNumber",
     },
     {
-      title: "Address",
+      title: "Đại chỉ",
       dataIndex: "address",
       key: "address",
       ellipsis: true,
     },
     {
-      title: "Rating",
+      title: "Đánh giá",
       dataIndex: "averageRating",
       key: "averageRating",
       render: (rating: number) => (
-        <Rate 
-          disabled 
-          defaultValue={rating} 
-          allowHalf 
-          style={{ fontSize: '16px' }}
+        <Rate
+          disabled
+          defaultValue={rating}
+          allowHalf
+          style={{ fontSize: "16px" }}
         />
       ),
       sorter: (a, b) => a.averageRating - b.averageRating,
@@ -85,34 +87,33 @@ const ManageStylist: React.FC = () => {
       title: "Avatar",
       dataIndex: "avatarImage",
       key: "avatarImage",
-      render: (avatar: string) => (
+      render: (avatar: string) =>
         avatar ? (
-          <img 
-            src={avatar} 
-            alt="Avatar" 
-            style={{ 
-              width: '40px', 
-              height: '40px', 
-              borderRadius: '50%',
-              objectFit: 'cover'
-            }} 
+          <img
+            src={avatar}
+            alt="Avatar"
+            style={{
+              width: "40px",
+              height: "40px",
+              borderRadius: "50%",
+              objectFit: "cover",
+            }}
           />
         ) : (
-          <div 
-            style={{ 
-              width: '40px', 
-              height: '40px', 
-              borderRadius: '50%',
-              backgroundColor: '#f0f0f0',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
+          <div
+            style={{
+              width: "40px",
+              height: "40px",
+              borderRadius: "50%",
+              backgroundColor: "#f0f0f0",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
             N/A
           </div>
-        )
-      ),
+        ),
     },
     {
       title: "Action",
@@ -134,7 +135,7 @@ const ManageStylist: React.FC = () => {
 
   const filteredStylists = stylists.filter((stylist) => {
     if (!searchText) return true;
-    
+
     const searchLower = searchText.toLowerCase();
     return (
       stylist.stylistName?.toLowerCase().includes(searchLower) ||
@@ -146,8 +147,14 @@ const ManageStylist: React.FC = () => {
   return (
     <div style={{ padding: "24px" }}>
       <h2>Stylist Management</h2>
-      
-      <Space style={{ marginBottom: 16, justifyContent: 'space-between', width: '100%' }}>
+
+      <Space
+        style={{
+          marginBottom: 16,
+          justifyContent: "space-between",
+          width: "100%",
+        }}
+      >
         <Input
           placeholder="Search by name, phone or address"
           prefix={<SearchOutlined />}
@@ -163,10 +170,10 @@ const ManageStylist: React.FC = () => {
         dataSource={filteredStylists}
         rowKey="stylistId"
         loading={loading}
-        pagination={{ 
+        pagination={{
           pageSize: 10,
           showSizeChanger: true,
-          showTotal: (total) => `Total ${total} stylists`
+          showTotal: (total) => `Total ${total} stylists`,
         }}
         scroll={{ x: 1000 }}
       />

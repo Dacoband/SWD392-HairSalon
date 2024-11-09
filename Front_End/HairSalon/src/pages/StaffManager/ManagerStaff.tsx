@@ -1,111 +1,189 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Table, Button, Modal, Input, Form, message } from "antd";
+import {
+  Table,
+  Space,
+  message,
+  Button,
+  Modal,
+  Form,
+  Input,
+  DatePicker,
+  Upload,
+  Popconfirm,
+} from "antd";
 import type { ColumnsType } from "antd/es/table";
-
-// Define the data type for a stylist
-interface StaffStylist {
-  staffStylistId: string;
-  staffStylistName: string;
-  dateOfBirth: string;
-  phoneNumber: string;
-  address: string;
-  avatarImage: string;
-}
+import { StaffStylist } from "../../models/type";
+import { UserInfoData } from "../../models/type";
+import {
+  getStaffStylistByBranchID,
+  addStaffStylish,
+  updateStaffStylishById,
+  getStaffAll,
+  deleteStaffStylistById,
+} from "../../services/StaffStylish";
+import moment from "moment";
+import {
+  SearchOutlined,
+  PlusOutlined,
+  UploadOutlined,
+  DeleteOutlined,
+  EditOutlined,
+} from "@ant-design/icons";
 
 const ManagerStaff: React.FC = () => {
+  const [userData, setUserData] = useState<UserInfoData | null>(null);
   const [staffList, setStaffList] = useState<StaffStylist[]>([]);
   const [loading, setLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isAddModalVisible, setIsAddModalVisible] = useState(false);
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [editingStaff, setEditingStaff] = useState<StaffStylist | null>(null);
+  const [form] = Form.useForm();
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [apiErrors, setApiErrors] = useState<Record<string, string[]>>({});
+  const [searchText, setSearchText] = useState<string>("");
+  const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    fetchStaffList();
+    const branchId = localStorage.getItem("branchId");
+    if (branchId) {
+      fetchStaffList(branchId);
+    } else {
+      message.error("Branch ID not found in local storage.");
+    }
   }, []);
 
-  const fetchStaffList = async () => {
+  const fetchStaffList = async (branchId: string) => {
     setLoading(true);
     try {
-      const response = await axios.get<StaffStylist[]>(
-        "https://api.vol-ka.studio/api/v1/staff-stylist/all"
-      );
-      setStaffList(response.data);
+      const data = await getStaffStylistByBranchID(branchId);
+      setStaffList(data);
     } catch (error) {
-      console.error("Error fetching staff list:", error);
-      message.error("Error fetching staff list");
+      message.error("Error fetching staff data.");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleEdit = (staff: StaffStylist) => {
-    setEditingStaff(staff);
-    setIsModalVisible(true);
-  };
-
-  const handleDelete = async (staffStylistId: string) => {
+  const fetchStaffAll = async () => {
+    setLoading(true);
     try {
-      await axios.delete(
-        `https://api.vol-ka.studio/api/v1/staff-stylist/delete/${staffStylistId}`
-      );
-      setStaffList(
-        staffList.filter((staff) => staff.staffStylistId !== staffStylistId)
-      );
-      message.success("Staff deleted successfully");
+      const data = await getStaffAll();
+      setStaffList(data);
     } catch (error) {
-      console.error("Error deleting staff:", error);
-      message.error("Error deleting staff");
+      console.error("Error fetching staff managers:", error);
+      message.error("Error fetching staff managers");
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleModalOk = async (values: Partial<StaffStylist>) => {
-    if (editingStaff) {
-      try {
-        const response = await axios.put(
-          `https://api.vol-ka.studio/api/v1/staff-stylist/update/${editingStaff.staffStylistId}`,
-          values
-        );
-        const updatedStaff = response.data;
-        setStaffList((prevList) =>
-          prevList.map((staff) =>
-            staff.staffStylistId === updatedStaff.staffStylistId
-              ? updatedStaff
-              : staff
-          )
-        );
-        message.success("Staff updated successfully");
-      } catch (error) {
-        console.error("Error updating staff:", error);
-        message.error("Error updating staff");
-      }
+  const filteredStaffManagers = staffList.filter(
+    (st) =>
+      st.staffStylistName?.toLowerCase().includes(searchText.toLowerCase()) ||
+      st.email?.toLowerCase().includes(searchText.toLowerCase()) ||
+      st.phoneNumber?.includes(searchText)
+  );
+
+  const getImageSrc = () => {
+    const avatarImage = userData?.avatarImage;
+    if (avatarImage instanceof File) {
+      return URL.createObjectURL(avatarImage);
     }
-    setIsModalVisible(false);
-    setEditingStaff(null);
+
+    return avatarImage || "../../assets/images/demo.jpg";
+  };
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files ? event.target.files[0] : null;
+    if (file) {
+      setSelectedFile(file);
+    }
   };
 
-  const handleAddModalOk = async (values: StaffStylist) => {
+  const handleAddStaff = async (values: any) => {
+    const branchId = localStorage.getItem("branchId");
+    if (!branchId) {
+      message.error("Branch ID not found in local storage.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("staffStylistName", values.staffStylistName);
+    formData.append("email", values.email);
+    formData.append("password", values.password);
+    formData.append("dateOfBirth", values.dateOfBirth.format("YYYY-MM-DD"));
+    formData.append("phoneNumber", values.phoneNumber);
+    formData.append("address", values.address);
+    if (selectedFile) {
+      formData.append("avatarImage", selectedFile);
+    }
+    formData.append("branchId", branchId);
+
+    // Log the formData for debugging
+    console.log("Form Data being sent:", formData);
+
     try {
-      const response = await axios.post(
-        "https://api.vol-ka.studio/api/v1/staff-stylist/create",
-        values
-      );
-      setStaffList([...staffList, response.data]);
+      const newStaff = await addStaffStylish(formData);
       message.success("Staff added successfully");
-    } catch (error) {
-      console.error("Error adding staff:", error);
-      message.error("Error adding staff");
+      fetchStaffList(branchId);
+      setIsModalVisible(false);
+      form.resetFields();
+    } catch (error: any) {
+      console.error("Error adding staff stylist:", error.response?.data);
+      // You can also display the error message from the API if it's in the response data
+      message.error(
+        error.response?.data?.message || "Failed to add staff stylist"
+      );
     }
-    setIsAddModalVisible(false);
   };
 
-  const handleModalCancel = () => {
-    setIsModalVisible(false);
-    setEditingStaff(null);
+  const handleUpdateStaffStylist = async (values: any) => {
+    if (!editingStaff) return;
+
+    const updatedStaffData = {
+      staffStylistName: values.staffStylistName,
+      dateOfBirth: values.dateOfBirth.format("YYYY/MM/DD"),
+      phoneNumber: values.phoneNumber,
+      address: values.address,
+      avatarImage:
+        values.avatarImage?.fileList?.[0]?.originFileObj ||
+        editingStaff.avatarImage,
+    };
+
+    try {
+      await updateStaffStylishById(
+        editingStaff.staffStylistId,
+        updatedStaffData
+      );
+      message.success("Staff updated successfully");
+      setIsEditModalVisible(false);
+      form.resetFields();
+      fetchStaffAll();
+      // Fetch updated staff list
+      const branchId = localStorage.getItem("branchId");
+      if (branchId) {
+        fetchStaffList(branchId);
+      }
+    } catch (error: any) {
+      message.error(
+        error.response?.data?.message || "Failed to update staff stylish"
+      );
+    }
   };
 
-  const handleAddModalCancel = () => {
-    setIsAddModalVisible(false);
+  const handleDeleteStaffStylish = async (staffStylistId: string) => {
+    try {
+      await deleteStaffStylistById(staffStylistId);
+      message.success("Staff stylist deleted successfully");
+      // After deletion, refresh the list of staff
+      const branchId = localStorage.getItem("branchId");
+      if (branchId) {
+        fetchStaffList(branchId);
+      }
+    } catch (error) {
+      message.error("Error deleting staff stylist");
+    }
   };
 
   const columns: ColumnsType<StaffStylist> = [
@@ -122,7 +200,7 @@ const ManagerStaff: React.FC = () => {
       ),
     },
     {
-      title: "Name",
+      title: "staffStylistName",
       dataIndex: "staffStylistName",
       key: "staffStylistName",
     },
@@ -147,22 +225,258 @@ const ManagerStaff: React.FC = () => {
       key: "actions",
       render: (_, record) => (
         <>
-          <Button type="link" onClick={() => handleEdit(record)}>
+          <Button
+            icon={<EditOutlined />}
+            // Set the staff to be edited
+            size="small"
+          >
             Edit
           </Button>
-          <Button
-            type="link"
-            danger
-            onClick={() => handleDelete(record.staffStylistId)}
+
+          <Popconfirm
+            title="Delete Stylist"
+            description="Are you sure you want to delete this stylist?"
+            onConfirm={() => handleDeleteStaffStylish(record.staffStylistId)} // Pass the correct ID
+            okText="Yes"
+            cancelText="No"
           >
-            Delete
-          </Button>
+            <Button danger icon={<DeleteOutlined />} size="small">
+              Delete
+            </Button>
+          </Popconfirm>
         </>
       ),
     },
   ];
 
-  return <>ok</>;
+  return (
+    <div style={{ padding: "24px" }}>
+      <Space
+        style={{
+          marginBottom: 16,
+          justifyContent: "space-between",
+          width: "100%",
+        }}
+      >
+        <Input
+          placeholder="Search by name"
+          prefix={<SearchOutlined />}
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+          style={{ width: 300 }}
+          allowClear
+        />
+        <Button type="primary" onClick={() => setIsModalVisible(true)}>
+          Add Staff Stylish
+        </Button>
+      </Space>
+
+      <Table
+        dataSource={filteredStaffManagers}
+        columns={columns}
+        rowKey="staffstylistID"
+        loading={loading}
+        pagination={{
+          current: currentPage,
+          pageSize: 4,
+          total: filteredStaffManagers.length,
+          onChange: (page) => {
+            setCurrentPage(page); // Update the current page in state
+          },
+        }}
+      />
+
+      {/* Add Staff Modal */}
+      <Modal
+        title="Add New Staff"
+        open={isModalVisible}
+        onCancel={() => setIsModalVisible(false)}
+        footer={null}
+      >
+        <Form form={form} layout="vertical" onFinish={handleAddStaff}>
+          <Form.Item
+            name="staffStylistName"
+            label="staffStylistName"
+            rules={[
+              { required: true, message: "Please enter the staffStylistName" },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="email"
+            label="Email"
+            rules={[
+              { required: true, message: "Please input email!" },
+              { type: "email", message: "Please enter a valid email!" },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            name="password"
+            label="Password"
+            rules={[
+              { required: true, message: "Please input password!" },
+              {
+                min: 8,
+                message:
+                  "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.",
+              },
+              {
+                pattern:
+                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                message:
+                  "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.",
+              },
+            ]}
+          >
+            <Input.Password />
+          </Form.Item>
+
+          <Form.Item
+            name="dateOfBirth"
+            label="Date of Birth"
+            rules={[
+              { required: true, message: "Please select date of birth!" },
+            ]}
+          >
+            <DatePicker style={{ width: "100%" }} />
+          </Form.Item>
+
+          <Form.Item
+            name="phoneNumber"
+            label="Phone Number"
+            rules={[
+              { required: true, message: "Please enter the phone number" },
+              {
+                pattern: /^(0)[1-9]{1}[0-9]{8}$/,
+                message: "Phone number must be exactly 10 digits and valid.",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            name="address"
+            label="Address"
+            rules={[{ required: true, message: "Please enter the address" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="avatarImage"
+            label="Avatar Image"
+            valuePropName="file"
+          >
+            <Upload maxCount={1} beforeUpload={() => false} listType="picture">
+              <Button icon={<UploadOutlined />}>Click to Upload</Button>
+            </Upload>
+          </Form.Item>
+          <Form.Item>
+            <Space>
+              <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+              <Button onClick={() => setIsModalVisible(false)}>Cancel</Button>
+            </Space>
+          </Form.Item>
+        </Form>
+      </Modal>
+
+      {/* Edit Staff Modal */}
+      <Modal
+        title="Edit Staff"
+        open={isEditModalVisible}
+        onCancel={() => setIsEditModalVisible(false)}
+        footer={null}
+        width={600}
+        style={{ top: 20 }}
+      >
+        <Form
+          form={form}
+          layout="vertical"
+          onFinish={handleUpdateStaffStylist}
+          style={{ maxWidth: "100%" }}
+        >
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "16px",
+            }}
+          >
+            <Form.Item
+              name="staffStylistName"
+              label="Staff Stytist Name"
+              rules={[{ required: true, message: "Please input name!" }]}
+            >
+              <Input />
+            </Form.Item>
+
+            <Form.Item
+              name="dateOfBirth"
+              label="Date of Birth"
+              rules={[
+                { required: true, message: "Please select date of birth!" },
+              ]}
+            >
+              <DatePicker style={{ width: "100%" }} />
+            </Form.Item>
+
+            <Form.Item
+              name="phoneNumber"
+              label="Phone Number"
+              rules={[
+                { required: true, message: "Please input phone number!" },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+          </div>
+          <Form.Item
+            name="address"
+            label="Address"
+            rules={[{ required: true, message: "Please enter the address" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item>
+            <div>
+              <div>
+                <img src={getImageSrc()} alt="" />
+              </div>
+              <div>
+                <input
+                  type="file"
+                  name="AvatarImage"
+                  onChange={handleFileChange}
+                />
+              </div>
+            </div>
+            {apiErrors.AvatarImage &&
+              apiErrors.AvatarImage.map((error, index) => (
+                <span key={index} className="error-message">
+                  {error}
+                </span>
+              ))}
+          </Form.Item>
+          <Form.Item style={{ marginBottom: 0, textAlign: "right" }}>
+            <Space>
+              <Button onClick={() => setIsUpdateModalVisible(false)}>
+                Cancel
+              </Button>
+              <Button type="primary" htmlType="submit">
+                Update
+              </Button>
+            </Space>
+          </Form.Item>
+        </Form>
+      </Modal>
+    </div>
+  );
 };
 
 export default ManagerStaff;
