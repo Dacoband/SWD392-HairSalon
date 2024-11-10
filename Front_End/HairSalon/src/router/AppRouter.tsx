@@ -136,6 +136,12 @@ const AppRouter = () => {
         </Route>
         {/* STYLISH */}
         <Route element={<LayoutSL />}>
+        <Route
+            path="/managerSchedule"
+            element={
+              <PrivateRoute element={ManagerSchedule} allowedRoles={["SL"]} />
+            }
+          />
           <Route
             path="/profile-Stylist"
             element={
@@ -179,12 +185,7 @@ const AppRouter = () => {
               />
             }
           />
-          <Route
-            path="/managerSchedule"
-            element={
-              <PrivateRoute element={ManagerSchedule} allowedRoles={["ST"]} />
-            }
-          />
+          
         </Route>
         <Route element={<LayoutST />}>
           <Route

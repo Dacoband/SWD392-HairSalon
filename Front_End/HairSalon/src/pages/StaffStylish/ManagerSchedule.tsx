@@ -30,6 +30,7 @@ const ManagerSchedule: React.FC = () => {
         BranchId: '',
         GetBy: 2,
         DelFlg: true,
+        StartDate: selectDate,
       })
       setOffSchedules(schedule)
     } catch (error) {

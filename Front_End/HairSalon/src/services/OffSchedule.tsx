@@ -8,6 +8,7 @@ export const getOffSchedule = async (query: {
   BranchId: string
   GetBy: number
   DelFlg: boolean
+  StartDate: Date
 }): Promise<offschedule> => {
   try {
     const response = await axios.get(`${SCHEDULE_APPOINTMENT}/get-all`, {

@@ -273,8 +273,42 @@ const ManagerStaffManager: React.FC = () => {
           </Form.Item>
           <Form.Item
             name="password"
-            label="Password"
-            rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }]}
+            label="Mật khẩu"
+            rules={[
+              { required: true, message: "Vui lòng nhập mật khẩu!" },
+              {
+                min: 8,
+                message:
+                  "Mật khẩu phải có ít nhất 8 ký tự và chứa ít nhất một chữ hoa, một chữ thường, một số và một ký tự đặc biệt.",
+              },
+              {
+                pattern:
+                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                message:
+                  "Mật khẩu phải chứa ít nhất một chữ hoa, một chữ thường, một số và một ký tự đặc biệt.",
+              },
+            ]}
+          >
+            <Input.Password />
+          </Form.Item>
+
+          <Form.Item
+            name="confirmPassword"
+            label="Xác nhận mật khẩu"
+            dependencies={["password"]}
+            rules={[
+              { required: true, message: "Vui lòng xác nhận mật khẩu!" },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("password") === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error("Hai mật khẩu không khớp!")
+                  );
+                },
+              }),
+            ]}
           >
             <Input.Password />
           </Form.Item>
